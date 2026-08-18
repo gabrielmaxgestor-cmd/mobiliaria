@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+  <script src="/jsonld.js" defer></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living Canvas — Imóveis de Alto Padrão</title>
+<meta name="description" content="Encontre seu cenário ideal com curadoria de imóveis de alto padrão, bairros exclusivos e atendimento consultivo.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/home.html">
+<meta property="og:title" content="Living Canvas — Imóveis de Alto Padrão">
+<meta property="og:description" content="Encontre seu cenário ideal com curadoria de imóveis de alto padrão, bairros exclusivos e atendimento consultivo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/home.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Living Canvas — Imóveis de Alto Padrão">
+<meta name="twitter:description" content="Encontre seu cenário ideal com curadoria de imóveis de alto padrão, bairros exclusivos e atendimento consultivo.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  /* Bloqueia scroll durante intro */
+  body.intro-active {
+    overflow: hidden;
+    height: 100vh;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: var(--weight-body);
+  }
+  
+  /* ============================================ */
+  /* NOVA INTRO - REVELAÇÃO ELEGANTE              */
+  /* ============================================ */
+  .video-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--emerald-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .video-intro.ended {
+    opacity: 0;
+    transform: scale(1.05);
+    pointer-events: none;
+  }
+  
+  /* Textura sutil de fundo */
+  .video-intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(212, 175, 122, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(212, 175, 122, 0.05) 0%, transparent 50%);
+    animation: ambientShift 6s ease-in-out infinite alternate;
+  }
+  
+  @keyframes ambientShift {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+  }
+  
+  .intro-stage {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-6);
+  }
+  
+  /* Logo animado */
+  .intro-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: var(--text-2xl);
+    letter-spacing: 8px;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(20px);
+    margin-bottom: 2rem;
+  }
+  
+  .intro-logo span {
+    font-style: italic;
+    color: var(--cream);
+    letter-spacing: 4px;
+  }
+  
+  .intro-logo.show {
+    animation: logoReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  
+  @keyframes logoReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      letter-spacing: 20px;
+      filter: blur(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      letter-spacing: 8px;
+      filter: blur(0);
+    }
+  }
+  
+  /* Linha dourada central */
+  .intro-line {
+    position: relative;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      var(--gold) 20%, 
+      var(--gold-soft) 50%, 
+      var(--gold) 80%, 
+      transparent 100%);
+    margin: var(--space-4) 0 var(--space-6);
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .intro-line.draw {
+    animation: lineDraw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+  
+  @keyframes lineDraw {
+    0% { width: 0; opacity: 0; }
+    30% { opacity: 1; }
+    100% { width: min(500px, 60vw); opacity: 1; }
+  }
+  
+  /* Diamante central na linha */
+  .intro-diamond {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg) scale(0);
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .intro-diamond.show {
+    animation: diamondPop 0.6s 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  
+  @keyframes diamondPop {
+    0% { transform: translate(-50%, -50%) rotate(45deg) scale(0); }
+    100% { transform: translate(-50%, -50%) rotate(45deg) scale(1); }
+  }
+  
+  /* Tagline */
+  .intro-tagline {
+    color: var(--cream);
+    font-size: var(--text-xs);
+    letter-spacing: 0;
+    text-transform: uppercase;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  .intro-tagline.show {
+    animation: taglineReveal 1.5s 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  
+  @keyframes taglineReveal {
+    0% {
+      opacity: 0;
+      letter-spacing: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+      letter-spacing: 6px;
+    }
+  }
+  
+  /* Ornamentos laterais */
+  .intro-ornament {
+    position: absolute;
+    color: var(--gold);
+    opacity: 0;
+    font-size: var(--text-lg);
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .intro-ornament.left {
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-20px);
+  }
+  
+  .intro-ornament.right {
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%) translateX(20px);
+  }
+  
+  .intro-ornament.show {
+    animation: ornamentFade 1s 2.2s ease-out forwards;
+  }
+  
+  @keyframes ornamentFade {
+    to {
+      opacity: 0.4;
+      transform: translateY(-50%) translateX(0);
+    }
+  }
+  
+  /* Botão pular */
+  .skip-intro {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeIn 1s 2.5s forwards;
+  }
+  
+  .skip-intro:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+  }
+  
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  
+  /* Contador sutil de progresso */
+  .intro-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--gold);
+    width: 0;
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .intro-progress.run {
+    animation: progressFill 4.5s linear forwards;
+  }
+  
+  @keyframes progressFill {
+    to { width: 100%; }
+  }
+  
+  /* ============================================ */
+  /* RESTO DO SITE (mantido igual)                */
+  /* ============================================ */
+  
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: var(--space-5) var(--space-7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: var(--space-4) var(--space-7);
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: var(--text-lg);
+    letter-spacing: 2px;
+    color: var(--gold);
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: var(--space-6);
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: var(--space-3) var(--space-5);
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    letter-spacing: 1px;
+    font-weight: var(--weight-medium);
+    transition: all 0.3s;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 7vw, 4rem);
+    overflow: hidden;
+  }
+  
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: url('/hero_historic_city.jpg') center top / cover no-repeat;
+    background-attachment: scroll;
+  }
+  .hero-video video {
+    display: none;
+  }
+  .hero-video::after {
+    display: none;
+  }
+
+  @keyframes heroIntro {
+    from { transform: scale(1.08) translateY(0); }
+    to   { transform: scale(1) translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video { animation: none; transform: none; }
+    .hero-video video { display: none; }
+    .hero-video { background: linear-gradient(135deg, rgba(10,46,42,0.85), rgba(10,46,42,0.4)), url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80') center/cover; }
+  }
+
+
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 1000px;
+  }
+  
+  .hero-eyebrow {
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-size: var(--text-sm);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+  
+  .hero h1 {
+    font-size: var(--text-2xl);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.85), 0 0 30px rgba(0,0,0,0.6);
+  }
+  
+  .hero h1 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .hero-sub {
+    font-size: var(--text-md);
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto var(--space-7);
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .search-tabs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 1s forwards;
+  }
+  
+  .search-tab {
+    padding: var(--space-3) var(--space-6);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+  
+  .search-tab.active {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+    font-weight: var(--weight-body);
+  }
+  
+  .vibe-search {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+    box-shadow: var(--shadow-inset-dark);
+    display: none;
+  }
+  
+  .vibe-search.active { display: block; }
+  
+  .vibe-search-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--gold);
+    font-size: var(--text-sm);
+    margin-bottom: 0.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .vibe-search input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--cream);
+    font-size: var(--text-md);
+    padding: var(--space-2) 0;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .vibe-search input::placeholder {
+    color: rgba(245, 241, 232, 0.5);
+    font-style: italic;
+  }
+  
+  .vibe-tags {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  
+  .vibe-tag {
+    padding: var(--space-2) var(--space-4);
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid rgba(212, 175, 122, 0.3);
+    border-radius: var(--radius-xl);
+    font-size: var(--text-sm);
+    color: var(--gold-soft);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .vibe-tag:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: translateY(-2px);
+  }
+  
+  .filter-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    max-width: 1000px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+    box-shadow: var(--shadow-inset-dark);
+    display: none;
+  }
+  
+  .filter-container.active { display: block; }
+  
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: 1.5rem;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .filter-group label {
+    font-size: var(--text-sm);
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .filter-group select {
+    padding: var(--space-3) var(--space-4);
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: var(--text-base);
+    outline: none;
+    transition: all 0.3s;
+  }
+  
+  .filter-group select:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+  }
+  
+  .filter-group select option {
+    background: var(--emerald-deep);
+    color: var(--cream);
+  }
+  
+  .filter-submit {
+    width: 100%;
+    padding: var(--space-4);
+    background: var(--gold);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--emerald-deep);
+    font-size: var(--text-base);
+    font-weight: var(--weight-body);
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .filter-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .section {
+    padding: var(--space-10) var(--space-7);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: var(--text-xs);
+    margin-bottom: 1rem;
+  }
+  
+  .section-title {
+    font-size: var(--text-xl);
+    line-height: 1.1;
+  }
+  
+  .section-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .section-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 3px;
+    transition: all 0.3s;
+  }
+  
+  .section-link:hover {
+    color: var(--cream);
+    border-color: var(--cream);
+  }
+  
+  .properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-6);
+  }
+  
+  .property-card {
+    position: relative;
+    height: 500px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .property-card:hover { transform: translateY(-10px); }
+  
+  .card-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
+  }
+  
+  .card-image-exterior { opacity: 1; }
+  .card-image-interior { opacity: 0; }
+  
+  .property-card:hover .card-image-exterior {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  
+  .property-card:hover .card-image-interior {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,46,42,0.95) 0%, rgba(10,46,42,0.3) 50%, transparent 100%);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 2;
+  }
+  
+  .card-badge {
+    position: absolute;
+    top: 1.5rem; left: 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-xl);
+    font-size: var(--text-xs);
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  
+  .card-title {
+    font-size: var(--text-lg);
+    margin-bottom: 0.3rem;
+  }
+  
+  .card-location {
+    color: var(--gold-soft);
+    font-size: var(--text-sm);
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+  }
+  
+  .card-story {
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    font-size: var(--text-base);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s 0.2s;
+  }
+  
+  .property-card:hover .card-story {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .card-meta {
+    display: flex;
+    gap: var(--space-5);
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+    font-size: var(--text-sm);
+    color: var(--text-light);
+  }
+  
+  .card-price {
+    position: relative;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-xl);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-sm);
+    display: inline-block;
+  }
+  
+  .neighborhoods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-6);
+  }
+  
+  .neighborhood-card {
+    position: relative;
+    height: 450px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .neighborhood-card:hover { transform: translateY(-10px); }
+  
+  .neighborhood-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1s;
+  }
+  
+  .neighborhood-card:hover .neighborhood-image { transform: scale(1.1); }
+  
+  .neighborhood-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,46,42,0.98) 0%, rgba(10,46,42,0.4) 60%, transparent 100%);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 2;
+  }
+  
+  .neighborhood-badge {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-xl);
+    font-size: var(--text-xs);
+    letter-spacing: 1px;
+    color: var(--gold);
+  }
+  
+  .neighborhood-title { font-size: var(--text-lg); margin-bottom: 0.5rem; }
+  
+  .neighborhood-location {
+    color: var(--gold-soft);
+    font-size: var(--text-sm);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  
+  .neighborhood-description {
+    font-size: var(--text-base);
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  
+  .neighborhood-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: 1.5rem;
+  }
+  
+  .highlight-tag {
+    padding: var(--space-1) var(--space-3);
+    background: rgba(212, 175, 122, 0.15);
+    border: 1px solid rgba(212, 175, 122, 0.3);
+    border-radius: var(--radius-xl);
+    font-size: var(--text-xs);
+    color: var(--gold-soft);
+  }
+  
+  .neighborhood-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    letter-spacing: 1px;
+    transition: gap 0.3s;
+  }
+  
+  .neighborhood-cta:hover { gap: var(--space-4); }
+  
+  .inline-cta {
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-7);
+    text-align: center;
+    margin: var(--space-8) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .inline-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .inline-cta-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .inline-cta h3 { font-size: var(--text-lg); margin-bottom: 1rem; }
+  
+  .inline-cta p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .inline-cta-btn {
+    display: inline-block;
+    padding: var(--space-4) var(--space-6);
+    background: var(--gold);
+    color: var(--emerald-deep);
+    text-decoration: none;
+    border-radius: var(--radius-xl);
+    font-weight: var(--weight-body);
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+  
+  .inline-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* Moradia universitária */
+  .uni-card {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-7);
+    align-items: center;
+    background: linear-gradient(135deg, #f8f5ef 0%, #ffffff 100%);
+    border: 1px solid rgba(10,46,42,0.08);
+    border-radius: var(--radius-lg);
+    padding: var(--space-7);
+    box-shadow: var(--shadow-lg);
+  }
+  .uni-lead {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--text-md);
+    line-height: 1.7;
+    color: #3a3a3a;
+    margin-bottom: 2rem;
+  }
+  .uni-badges { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: 2rem; }
+  .uni-badge {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: #fff; color: var(--emerald-deep);
+    border: 1px solid rgba(10,46,42,0.15);
+    border-radius: var(--radius-pill);
+    font-family: 'Inter', sans-serif; font-size: var(--text-sm); font-weight: var(--weight-medium); letter-spacing: 0.02em;
+  }
+  .uni-badge--solid { background: var(--emerald-deep); color: #fff; border-color: transparent; }
+  .uni-cta {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    background: var(--emerald-deep); color: #fff;
+    border-radius: var(--radius-pill);
+    font-family: 'Inter', sans-serif; font-size: var(--text-base); font-weight: var(--weight-body); letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .uni-cta:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .uni-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+  .uni-stat {
+    background: #fff; border: 1px solid rgba(10,46,42,0.1);
+    padding: var(--space-6) var(--space-5); border-radius: var(--radius-md); text-align: center;
+  }
+  .uni-stat--solid { background: var(--emerald-deep); color: #fff; border-color: transparent; }
+  .uni-num {
+    font-family: 'Playfair Display', serif; font-size: var(--text-xl); font-weight: var(--weight-display);
+    line-height: 1; color: var(--emerald-deep);
+  }
+  .uni-stat--solid .uni-num { color: #fff; }
+  .uni-num span { font-size: var(--text-md); margin-left: 0.15rem; }
+  .uni-stat p {
+    font-family: 'Inter', sans-serif; font-size: var(--text-sm); margin-top: 0.75rem; color: #666;
+  }
+  .uni-stat--solid p { color: rgba(255,255,255,0.85); }
+  @media (max-width: 900px) {
+    .uni-card { grid-template-columns: 1fr; padding: var(--space-6); gap: var(--space-6); }
+  }
+
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-6);
+    margin-top: 4rem;
+  }
+  
+  .team-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .team-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .team-image {
+    width: 100%;
+    height: 350px;
+    background-size: cover;
+    background-position: center top;
+    position: relative;
+  }
+  
+  .team-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(10,46,42,0.8) 100%);
+  }
+  
+  .team-content { padding: var(--space-6); position: relative; }
+  .team-name { font-size: var(--text-lg); margin-bottom: 0.3rem; }
+  
+  .team-role {
+    color: var(--gold);
+    font-size: var(--text-sm);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .team-bio {
+    color: var(--text-light);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .team-stats {
+    display: flex;
+    gap: var(--space-6);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  
+  .team-stat { text-align: center; }
+  
+  .team-stat-value {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-display);
+    color: var(--gold);
+    display: block;
+  }
+  
+  .team-stat-label {
+    font-size: var(--text-sm);
+    color: var(--text-light);
+  }
+  
+  .team-social {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    display: flex;
+    gap: var(--space-2);
+  }
+  
+  .team-social a {
+    width: 40px; height: 40px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-pill);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  
+  .team-social a:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: translateY(-3px);
+  }
+  
+  .testimonials-section {
+    background: linear-gradient(180deg, var(--emerald-mid) 0%, var(--emerald-deep) 100%);
+    padding: var(--space-10) 0;
+    overflow: hidden;
+  }
+  
+  .testimonials-container { max-width: 1400px; margin: 0 auto; padding: 0 var(--space-7); }
+
+  /* MARQUEE TESTIMONIALS STYLES */
+  .marquee-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow: hidden;
+    margin-top: 3rem;
+    padding: 1rem 0;
+  }
+
+  .marquee-wrapper::before,
+  .marquee-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 15%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .marquee-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--emerald-deep), transparent);
+  }
+
+  .marquee-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--emerald-deep), transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 1.25rem;
+  }
+
+  .marquee-content {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-around;
+    gap: 1.25rem;
+    min-width: 100%;
+    animation: marquee-scroll 22s linear infinite;
+  }
+
+  .marquee-track-reverse .marquee-content {
+    animation-direction: reverse;
+  }
+
+  .marquee-track:hover .marquee-content {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translateX(0%); }
+    to { transform: translateX(-100%); }
+  }
+
+  .marquee-card {
+    width: 320px;
+    flex-shrink: 0;
+    background: rgba(19, 78, 74, 0.45);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  .marquee-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(212, 175, 122, 0.15);
+  }
+
+  .marquee-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .marquee-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--gold);
+    flex-shrink: 0;
+  }
+
+  .marquee-info h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin: 0;
+  }
+
+  .marquee-info p {
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  .marquee-text {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--cream-dark);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-6);
+    margin-top: 4rem;
+  }
+  
+  .testimonial-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  .testimonial-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .testimonial-quote {
+    font-size: var(--text-xl);
+    color: var(--gold);
+    opacity: 0.5;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-text {
+    font-size: var(--text-md);
+    line-height: 1.7;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  
+  .testimonial-avatar {
+    width: 60px; height: 60px;
+    border-radius: var(--radius-pill);
+    background-size: cover;
+    background-position: center;
+    border: 2px solid var(--gold);
+  }
+  
+  .testimonial-info h4 { font-size: var(--text-md); margin-bottom: 0.2rem; }
+  .testimonial-info p { font-size: var(--text-sm); color: var(--gold-soft); }
+  
+  .testimonial-rating {
+    position: absolute;
+    top: 2rem; right: 2rem;
+    color: var(--gold);
+    font-size: var(--text-md);
+  }
+  
+  .stats-bar {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: var(--space-8) var(--space-7);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-6);
+    max-width: 1400px;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+    margin-top: -4rem;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .stat-item { text-align: center; }
+  
+  .stat-number {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-display);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-label {
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: var(--radius-pill);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--text-lg);
+    box-shadow: 0 10px 26px -8px rgba(37,211,102,0.34), 0 2px 6px rgba(10,46,42,0.14);
+    cursor: pointer;
+    transition: transform 320ms var(--ease-premium), box-shadow 320ms var(--ease-premium);
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 18px 38px -10px rgba(37,211,102,0.40), 0 4px 10px rgba(10,46,42,0.18); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-sm);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-sm);
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: var(--space-8) var(--space-7) var(--space-6);
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-7);
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: var(--text-sm);
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: var(--text-sm);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: var(--text-sm);
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: var(--space-4) var(--space-5); }
+    .nav-links { display: none; }
+    .section, .testimonials-section { padding: var(--space-8) var(--space-5); }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .filter-grid { grid-template-columns: 1fr; }
+    .neighborhoods-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .intro-ornament { display: none; }
+  }
+
+  /* ---------- Chips de ícone (sistema) ---------- */
+  .ic-chip{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
+    border-radius:var(--radius-pill);background:rgba(10,46,42,0.06);color:#134e4a;flex-shrink:0;
+    transition:background 300ms var(--ease-premium),transform 300ms var(--ease-premium);}
+  .ic-chip svg{stroke-width:1.5;}
+  .ic-chip--lg{width:48px;height:48px;
+    background:linear-gradient(135deg,rgba(19,78,74,0.08) 0%,rgba(212,175,122,0.08) 100%);}
+  .ic-chip--onDark{background:rgba(255,255,255,0.10);color:#e8c9a0;}
+  a:hover>.ic-chip,*:hover>.ic-chip{background:rgba(10,46,42,0.10);}
+  .lc-svg{stroke-width:1.5;}
+
+  .card-meta span,.similar-meta span{display:inline-flex;align-items:center;gap:var(--space-2);}
+  .ic-label{font-size:var(--text-sm);font-weight:var(--weight-medium);color:inherit;}
+  .card-overlay .ic-chip,.similar-meta .ic-chip{background:rgba(255,255,255,0.12);color:#e8c9a0;}
+  .card-overlay .ic-label{color:#f8f5ef;}
+  .lc-svg--inline{vertical-align:-2px;margin-right:0.35rem;stroke-width:1.5;}
+  .quick-stat-icon.ic-chip{font-size:0;}
+  .feature-icon.ic-chip--lg{color:#134e4a;}
+
+  .card-meta{flex-wrap:wrap;}
+  .ic-label{white-space:nowrap;}
+
+  /* ---------- Acessibilidade: foco visível por teclado ---------- */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible,
+  [role="button"]:focus-visible,
+  .property-card:focus-visible,
+  .card:focus-visible {
+    outline: 2px solid var(--gold, #d4af7a);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+  a:focus:not(:focus-visible),
+  button:focus:not(:focus-visible) { outline: none; }
+
+</style>
+<link rel="stylesheet" href="/design-tokens.css">
+  <link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="home.html" class="logo">LIVING<span>canvas</span></a>
+  <button class="nav-cta" onclick="scrollToFilter()">Buscar Imóvel</button>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero" id="imoveis">
+  <div class="hero-video"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Curadoria de Espaços Únicos </p>
+    <h1>Não procure um endereço.<br>Encontre seu <em>cenário</em>.</h1>
+    <p class="hero-sub">Cada espaço tem uma história. Deixe-nos ajudar você a encontrar o capítulo perfeito da sua.</p>
+    
+    <div class="search-tabs">
+      <button class="search-tab active" onclick="switchSearch('vibe', this)">✨ Busca por Vibe</button>
+      <button class="search-tab" onclick="switchSearch('traditional', this)">🔍 Busca Tradicional</button>
+    </div>
+    
+    <div class="vibe-search active" id="vibeSearch">
+      <div class="vibe-search-label">
+        <span>✨</span> Descreva a vida que você imagina
+      </div>
+      <form id="homeVibeForm" onsubmit="handleHomeVibeSearch(event)" style="display: flex; gap: 10px; width: 100%; margin-top: 10px; flex-wrap: wrap;">
+        <input type="text" id="homeVibeInput" placeholder="Quero mornings com luz natural, café artesanal na esquina e silêncio à noite..." style="flex: 1; min-width: 260px;">
+        <button type="submit" class="vibe-search-submit-btn" style="background: linear-gradient(135deg, #D4AF7A 0%, #E8C9A0 100%); color: #072320; border: none; border-radius: 50px; padding: 14px 24px; font-weight: 700; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(212, 175, 122, 0.3);">
+          <span>✨ Buscar por Vibe</span>
+        </button>
+      </form>
+      <div class="vibe-tags" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;">
+        <span class="vibe-tag" onclick="selectVibeTag(this)" style="cursor: pointer;">🌿 Pet-friendly</span>
+        <span class="vibe-tag" onclick="selectVibeTag(this)" style="cursor: pointer;">☀️ Sol da manhã</span>
+        <span class="vibe-tag" onclick="selectVibeTag(this)" style="cursor: pointer;">🏃 Perto de parques</span>
+        <span class="vibe-tag" onclick="selectVibeTag(this)" style="cursor: pointer;">🎨 Bairro artístico</span>
+        <span class="vibe-tag" onclick="selectVibeTag(this)" style="cursor: pointer;">🍷 Vida noturna</span>
+      </div>
+    </div>
+    
+    <div class="filter-container" id="filterContainer">
+      <div class="filter-grid">
+        <div class="filter-group">
+          <label>Tipo de Imóvel</label>
+          <select>
+            <option value="">Todos os tipos</option>
+            <option value="casa">Casa</option>
+            <option value="apartamento">Apartamento</option>
+            <option value="cobertura">Cobertura</option>
+            <option value="studio">Studio</option>
+            <option value="comercial">Comercial</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Finalidade</label>
+          <select>
+            <option value="">Comprar ou Alugar</option>
+            <option value="compra">Comprar</option>
+            <option value="aluguel">Alugar</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Bairro</label>
+          <select>
+            <option value="">Todos os bairros</option>
+            <option value="jardim-europa">Jardim Europa</option>
+            <option value="vila-madalena">Vila Madalena</option>
+            <option value="pinheiros">Pinheiros</option>
+            <option value="itaim-bibi">Itaim Bibi</option>
+            <option value="moema">Moema</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Faixa de Preço</label>
+          <select>
+            <option value="">Qualquer valor</option>
+            <option value="0-500000">Até R$ 500 mil</option>
+            <option value="500000-1000000">R$ 500 mil - 1 milhão</option>
+            <option value="1000000-2000000">R$ 1 - 2 milhões</option>
+            <option value="2000000+">Acima de R$ 2 milhões</option>
+          </select>
+        </div>
+      </div>
+      <button class="filter-submit" onclick="applyFilters()">🔍 Buscar Imóveis</button>
+    </div>
+  </div>
+</section>
+
+<!-- CATÁLOGO DE IMÓVEIS -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">Catálogo Completo</p>
+      <h2 class="section-title">Todos os imóveis <em>disponíveis</em></h2>
+    </div>
+    <a href="imoveis.html" class="section-link">Ver todos →</a>
+  </div>
+  
+  <div class="properties-grid">
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Exclusivo</span>
+        <span class="card-price">R$ 2.8M</span>
+        <h3 class="card-title">Casa do Bosque</h3>
+        <p class="card-location">Jardim Europa • 420m²</p>
+        <p class="card-story">"Onde o silêncio da floresta encontra o design contemporâneo."</p>
+        <div class="card-meta">
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">4 suítes</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></span><span class="ic-label">Jardim</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg></span><span class="ic-label">4 vagas</span></span>
+        </div>
+      </div>
+    </article>
+    
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Novo</span>
+        <span class="card-price">R$ 1.5M</span>
+        <h3 class="card-title">Loft Horizonte</h3>
+        <p class="card-location">Vila Madalena • 180m²</p>
+        <p class="card-story">"Pé-direito duplo, alma artística e o pôr do sol como testemunha."</p>
+        <div class="card-meta">
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">2 suítes</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="14" cy="8.5" r="1"/><circle cx="16.5" cy="13" r="1"/><path d="M12 21a3 3 0 0 1 0-6 2 2 0 0 0 0-4"/></svg></span><span class="ic-label">Ateliê</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v5M4.5 10.5 6 12M18 12l1.5-1.5M2 18h20M6 18a6 6 0 0 1 12 0M4 22h16"/></svg></span><span class="ic-label">Vista</span></span>
+        </div>
+      </div>
+    </article>
+    
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Assinatura</span>
+        <span class="card-price">R$ 4.2M</span>
+        <h3 class="card-title">Refúgio Oceano</h3>
+        <p class="card-location">Riviera • 560m²</p>
+        <p class="card-story">"Acordar com o som das ondas não tem preço — mas tem endereço."</p>
+        <div class="card-meta">
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">5 suítes</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c1.6 0 1.6 1.2 3.2 1.2S6.8 15 8.4 15s1.6 1.2 3.2 1.2S13.2 15 14.8 15s1.6 1.2 3.2 1.2S19.6 15 22 15M2 19.5c1.6 0 1.6 1.2 3.2 1.2s1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 2.4-1.2 4-1.2M8 15V5a2 2 0 0 1 4 0v10M16 15V5"/></svg></span><span class="ic-label">Piscina</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8c1.6 0 1.6 1.5 3.3 1.5S6.9 8 8.5 8s1.7 1.5 3.3 1.5S13.5 8 15.2 8s1.6 1.5 3.3 1.5S20.4 8 22 8M2 14c1.6 0 1.6 1.5 3.3 1.5S6.9 14 8.5 14s1.7 1.5 3.3 1.5S13.5 14 15.2 14s1.6 1.5 3.3 1.5S20.4 14 22 14M2 20c1.6 0 1.6 1.5 3.3 1.5S6.9 20 8.5 20"/></svg></span><span class="ic-label">Frente mar</span></span>
+        </div>
+      </div>
+    </article>
+    
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Destaque</span>
+        <span class="card-price">R$ 3.1M</span>
+        <h3 class="card-title">Penthouse Urbano</h3>
+        <p class="card-location">Itaim Bibi • 320m²</p>
+        <p class="card-story">"No coração da cidade, um oásis de tranquilidade e sofisticação."</p>
+        <div class="card-meta">
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">3 suítes</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V9l6-3v15M9 21V13l6-3v11M15 21V11l6-2v12M2 21h20"/></svg></span><span class="ic-label">Vista 360°</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21h10M6 3.8A3.2 3.2 0 0 1 12 3a3.2 3.2 0 0 1 6 .8 3.2 3.2 0 0 1-1.5 5.9V17h-9V9.7A3.2 3.2 0 0 1 6 3.8"/></svg></span><span class="ic-label">Chef kitchen</span></span>
+        </div>
+      </div>
+    </article>
+    
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Premium</span>
+        <span class="card-price">R$ 5.5M</span>
+        <h3 class="card-title">Villa Tropical</h3>
+        <p class="card-location">Alphaville • 680m²</p>
+        <p class="card-story">"Privacidade absoluta em meio à natureza exuberante."</p>
+        <div class="card-meta">
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">6 suítes</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c0-6 .5-9 1.5-11M13.5 10c2-3 5.5-3 7.5-1-2.5-.5-4.5.5-6 2M13.5 10c-2.5-2.5-6-2-7.5 1 2-1.5 4.5-1 6 1M13.5 10c0-3.5 2-6 5-6-2 1-3 3-3 5"/></svg></span><span class="ic-label">Jardim</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M17 9h4M3 15h4M17 15h4"/></svg></span><span class="ic-label">Cinema</span></span>
+        </div>
+      </div>
+    </article>
+    
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Exclusivo</span>
+        <span class="card-price">R$ 1.9M</span>
+        <h3 class="card-title">Studio Artístico</h3>
+        <p class="card-location">Pinheiros • 95m²</p>
+        <p class="card-story">"Criatividade e funcionalidade em cada metro quadrado."</p>
+        <div class="card-meta">
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">1 suíte</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="14" cy="8.5" r="1"/><circle cx="16.5" cy="13" r="1"/><path d="M12 21a3 3 0 0 1 0-6 2 2 0 0 0 0-4"/></svg></span><span class="ic-label">Studio</span></span>
+          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 9h1.5a2.5 2.5 0 0 1 0 5H17M6 2v3M10 2v3M14 2v3"/></svg></span><span class="ic-label">Varanda</span></span>
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  <!-- CALLOUT - VER TODOS OS IMÓVEIS -->
+  <div class="cta-banner-wrapper">
+    <a href="imoveis.html" class="featured-cta-button property-cta">
+      <span class="cta-glow-bg"></span>
+      <span class="cta-shimmer-bar"></span>
+      <span class="cta-title">Ver Todos os Imóveis</span>
+      <span class="cta-arrow-circle">
+        <svg class="lc-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </span>
+    </a>
+  </div>
+  
+  <div class="inline-cta">
+    <div class="inline-cta-content">
+      <h3>Não encontrou o imóvel ideal?</h3>
+      <p>Descreva o que você busca e nossa IA encontrará as melhores opções. Ou fale diretamente com um especialista.</p>
+      <a href="contato.html" class="inline-cta-btn">Falar com Especialista</a>
+    </div>
+  </div>
+</section>
+
+<!-- MORADIA UNIVERSITÁRIA -->
+<section class="section" id="universitarios">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">Vida Universitária</p>
+      <h2 class="section-title">Pra quem chega em Valença <em>pra estudar</em></h2>
+    </div>
+  </div>
+  <div class="uni-card">
+    <div>
+      <p class="uni-lead">
+        Chegou pra fazer faculdade em Valença? A gente entende a sua rotina. Selecionamos imóveis <strong>pertinho da UNIFAA</strong>, com <strong>processo de locação simplificado</strong> e <strong>contratos flexíveis</strong> alinhados ao período letivo — pra você focar no que importa: os estudos.
+      </p>
+      <div class="uni-badges">
+        <span class="uni-badge uni-badge--solid"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11"/><circle cx="12" cy="10" r="2.5"/></svg>Próximo à UNIFAA</span>
+        <span class="uni-badge"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L20 8a2.8 2.8 0 0 0-4-4L4 16z"/></svg>Processo simplificado</span>
+        <span class="uni-badge"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Resposta rápida</span>
+      </div>
+      <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Sou%20universit%C3%A1rio(a)%20e%20busco%20um%20im%C3%B3vel%20perto%20da%20UNIFAA." target="_blank" rel="noopener" class="uni-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+    <div class="uni-stats">
+      <div class="uni-stat uni-stat--solid"><div class="uni-num">5<span>min</span></div><p>da UNIFAA em média</p></div>
+      <div class="uni-stat"><div class="uni-num">6<span>meses</span></div><p>contrato mínimo</p></div>
+      <div class="uni-stat"><div class="uni-num">100<span>%</span></div><p>digital</p></div>
+      <div class="uni-stat uni-stat--solid"><div class="uni-num">24<span>h</span></div><p>resposta garantida</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BAIRROS -->
+<section class="section" id="bairros">
+  <div class="section-header">
+    <div>
+      <p class="section-eyebrow">Explore por Região</p>
+      <h2 class="section-title">Bairros com <em>alma e história</em></h2>
+    </div>
+    <a href="bairros.html" class="section-link">Ver todos os bairros →</a>
+  </div>
+  
+  <div class="neighborhoods-grid">
+    <article class="neighborhood-card">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80')"></div>
+      <div class="neighborhood-overlay">
+        <span class="neighborhood-badge">12 imóveis</span>
+        <h3 class="neighborhood-title">Jardim Europa</h3>
+        <p class="neighborhood-location"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11"/><circle cx="12" cy="10" r="2.5"/></svg> Zona Sul • São Paulo</p>
+        <p class="neighborhood-description">
+          Um dos bairros mais nobres de SP, conhecido por suas ruas arborizadas, mansões históricas e proximidade com o Parque Ibirapuera.
+        </p>
+        <div class="neighborhood-highlights">
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg>Arborizado</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9 12 4l9 5M5 9v9M10 9v9M14 9v9M19 9v9M3 21h18"/></svg>Cultural</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2v8a2 2 0 0 0 4 0V2M8 10v12M17 2c-1.5 1.5-2 3.5-2 6 0 1.7.7 2.8 2 3v11"/></svg>Gastronomia</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 10h14M8.5 13h.01M15.5 13h.01M7 20l-1.5 2M17 20l1.5 2M8 16h8"/></svg>Metrô</span>
+        </div>
+        <a href="bairro.html" class="neighborhood-cta">Explorar bairro →</a>
+      </div>
+    </article>
+    
+    <article class="neighborhood-card">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80')"></div>
+      <div class="neighborhood-overlay">
+        <span class="neighborhood-badge">8 imóveis</span>
+        <h3 class="neighborhood-title">Vila Madalena</h3>
+        <p class="neighborhood-location"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11"/><circle cx="12" cy="10" r="2.5"/></svg> Zona Oeste • São Paulo</p>
+        <p class="neighborhood-description">
+          Berço da boemia paulistana, a Vila Madalena une arte de rua, bares charmosos e uma vibe criativa única na cidade.
+        </p>
+        <div class="neighborhood-highlights">
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="14" cy="8.5" r="1"/><circle cx="16.5" cy="13" r="1"/><path d="M12 21a3 3 0 0 1 0-6 2 2 0 0 0 0-4"/></svg>Arte Urbana</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8l-.7 5a3.3 3.3 0 0 1-6.6 0zM12 13v7M8.5 20h7"/></svg>Vida Noturna</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v6a8 8 0 0 1-16 0z"/><path d="M9 9h.01M15 9h.01M9.5 13a3 3 0 0 0 5 0"/></svg>Cultural</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4.5" r="1.8"/><path d="M11 21l1.5-6-3-2.5 1-4.5 3 1.5 1.5 3 3 1M12.5 15 9 21"/></svg>Walkable</span>
+        </div>
+        <a href="bairro.html" class="neighborhood-cta">Explorar bairro →</a>
+      </div>
+    </article>
+    
+    <article class="neighborhood-card">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')"></div>
+      <div class="neighborhood-overlay">
+        <span class="neighborhood-badge">15 imóveis</span>
+        <h3 class="neighborhood-title">Itaim Bibi</h3>
+        <p class="neighborhood-location"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11"/><circle cx="12" cy="10" r="2.5"/></svg> Zona Sul • São Paulo</p>
+        <p class="neighborhood-description">
+          Centro financeiro pulsante com restaurantes premiados, vida noturna sofisticada e fácil acesso a toda a cidade.
+        </p>
+        <div class="neighborhood-highlights">
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></svg>Business</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8l-.7 5a3.3 3.3 0 0 1-6.6 0zM12 13v7M8.5 20h7"/></svg>Fine Dining</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg>Moderno</span>
+          <span class="highlight-tag"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 10h14M8.5 13h.01M15.5 13h.01M7 20l-1.5 2M17 20l1.5 2M8 16h8"/></svg>Transporte</span>
+        </div>
+        <a href="bairro.html" class="neighborhood-cta">Explorar bairro →</a>
+      </div>
+    </article>
+  </div>
+  
+  <!-- CALLOUT - EXPLORAR TODOS OS BAIRROS -->
+  <div class="cta-banner-wrapper">
+    <a href="bairros.html" class="featured-cta-button neighborhood-cta">
+      <span class="cta-glow-bg"></span>
+      <span class="cta-shimmer-bar"></span>
+      <span class="cta-title">Explorar Todos os Bairros</span>
+      <span class="cta-arrow-circle">
+        <svg class="lc-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar" id="statsBar">
+  <div class="stat-item">
+    <span class="stat-number" data-count-to="500" data-count-suffix="+">0+</span>
+    <span class="stat-label">Imóveis Vendidos</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number" data-count-to="98" data-count-suffix="%">0%</span>
+    <span class="stat-label">Clientes Satisfeitos</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number" data-count-to="15" data-count-suffix="">0</span>
+    <span class="stat-label">Anos de Mercado</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number" data-count-to="24" data-count-suffix="h">0h</span>
+    <span class="stat-label">Atendimento</span>
+  </div>
+
+</div>
+
+<!-- EQUIPE -->
+<section class="section" id="equipe">
+  <div class="section-header" style="text-align: center; display: block;">
+    <p class="section-eyebrow">Quem Faz Acontecer</p>
+    <h2 class="section-title">Conheça nossos <em>especialistas</em></h2>
+    <p style="color: var(--text-light); max-width: 700px; margin: var(--space-5) auto 0;">
+      Profissionais apaixonados por encontrar o lar perfeito para cada cliente.
+    </p>
+  </div>
+  
+  <div class="team-grid">
+    <article class="team-card">
+      <div class="team-image" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80')"></div>
+      <div class="team-social">
+        <a href="#">in</a>
+        <a href="#">@</a>
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">Ricardo Mendes</h3>
+        <p class="team-role">Diretor & Founder</p>
+        <p class="team-bio">15 anos transformando sonhos em endereços. Especialista em imóveis de alto padrão.</p>
+        <div class="team-stats">
+          <div class="team-stat">
+            <span class="team-stat-value">200+</span>
+            <span class="team-stat-label">Vendas</span>
+          </div>
+          <div class="team-stat">
+            <span class="team-stat-value">R$500M</span>
+            <span class="team-stat-label">Em vendas</span>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    <article class="team-card">
+      <div class="team-image" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80')"></div>
+      <div class="team-social">
+        <a href="#">in</a>
+        <a href="#">@</a>
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">Ana Carolina Silva</h3>
+        <p class="team-role">Corretora Sênior</p>
+        <p class="team-bio">Especialista em bairros da Zona Sul. Conhecimento profundo de cada rua.</p>
+        <div class="team-stats">
+          <div class="team-stat">
+            <span class="team-stat-value">150+</span>
+            <span class="team-stat-label">Vendas</span>
+          </div>
+          <div class="team-stat">
+            <span class="team-stat-value">5★</span>
+            <span class="team-stat-label">Avaliação</span>
+          </div>
+        </div>
+      </div>
+    </article>
+    
+    <article class="team-card">
+      <div class="team-image" style="background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80')"></div>
+      <div class="team-social">
+        <a href="#">in</a>
+        <a href="#">@</a>
+      </div>
+      <div class="team-content">
+        <h3 class="team-name">Carlos Eduardo</h3>
+        <p class="team-role">Consultor de Investimentos</p>
+        <p class="team-bio">Expert em imóveis para investimento e locação. Maximiza seu ROI imobiliário.</p>
+        <div class="team-stats">
+          <div class="team-stat">
+            <span class="team-stat-value">R$200M</span>
+            <span class="team-stat-label">Em ativos</span>
+          </div>
+          <div class="team-stat">
+            <span class="team-stat-value">98%</span>
+            <span class="team-stat-label">Ocupação</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="testimonials-section" id="depoimentos">
+  <div class="testimonials-container">
+    <div class="section-header" style="text-align: center; display: block;">
+      <p class="section-eyebrow">Histórias Reais</p>
+      <h2 class="section-title">O que nossos <em>clientes</em> dizem</h2>
+    </div>
+  </div>
+
+  <!-- DUAL ROW INFINITE MARQUEE -->
+  <div class="marquee-wrapper">
+    <!-- ROW 1 (Forward) -->
+    <div class="marquee-track">
+      <div class="marquee-content">
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Mariana & Pedro</h4>
+              <p>@marianapedro</p>
+            </div>
+          </div>
+          <p class="marquee-text">“A Living Canvas encontrou o apartamento dos nossos sonhos em apenas 2 semanas. Atendimento impecável e curadoria de imóveis de alto padrão.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Roberto Almeida</h4>
+              <p>@ralmeida_invest</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Como investidor, precisava de quem entendesse de métricas e valorização. Excelente assessoria, já são 3 imóveis comprados com sucesso.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Fernanda Costa</h4>
+              <p>@fcosta_design</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Vendi meu imóvel em tempo recorde e pelo valor planejado. A equipe cuidou de cada detalhe com total transparência e profissionalismo.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Lucas & Juliana</h4>
+              <p>@lucas_juli</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Atendimento exclusivo de altíssimo nível. Transparência do início ao fim no processo de compra da nossa casa de praia.”</p>
+        </article>
+      </div>
+
+      <!-- DUPLICATE SET FOR INFINITE LOOP ROW 1 -->
+      <div class="marquee-content" aria-hidden="true">
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Mariana & Pedro</h4>
+              <p>@marianapedro</p>
+            </div>
+          </div>
+          <p class="marquee-text">“A Living Canvas encontrou o apartamento dos nossos sonhos em apenas 2 semanas. Atendimento impecável e curadoria de imóveis de alto padrão.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Roberto Almeida</h4>
+              <p>@ralmeida_invest</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Como investidor, precisava de quem entendesse de métricas e valorização. Excelente assessoria, já são 3 imóveis comprados com sucesso.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Fernanda Costa</h4>
+              <p>@fcosta_design</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Vendi meu imóvel em tempo recorde e pelo valor planejado. A equipe cuidou de cada detalhe com total transparência e profissionalismo.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Lucas & Juliana</h4>
+              <p>@lucas_juli</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Atendimento exclusivo de altíssimo nível. Transparência do início ao fim no processo de compra da nossa casa de praia.”</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- ROW 2 (Reverse) -->
+    <div class="marquee-track marquee-track-reverse">
+      <div class="marquee-content">
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Ken Masters</h4>
+              <p>@kmasters</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Our productivity has nearly doubled since onboarding. Automation features removed repetitive tasks, allowing our team to focus.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Kira Athrun</h4>
+              <p>@kathrun</p>
+            </div>
+          </div>
+          <p class="marquee-text">“What surprised us most was how quickly our team adapted. Minimal learning curve, excellent documentation, and powerful features.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Lirael Nassun</h4>
+              <p>@lnassun</p>
+            </div>
+          </div>
+          <p class="marquee-text">“This is easily one of the most reliable SaaS tools we’ve adopted. The UI is intuitive, integrations are seamless, and it saves us countless hours.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Jessica</h4>
+              <p>@jessica</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Switching to this platform streamlined our entire workflow. Setup was effortless, performance improved instantly, and our team ships faster.”</p>
+        </article>
+      </div>
+
+      <!-- DUPLICATE SET FOR INFINITE LOOP ROW 2 -->
+      <div class="marquee-content" aria-hidden="true">
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Ken Masters</h4>
+              <p>@kmasters</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Our productivity has nearly doubled since onboarding. Automation features removed repetitive tasks, allowing our team to focus.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Kira Athrun</h4>
+              <p>@kathrun</p>
+            </div>
+          </div>
+          <p class="marquee-text">“What surprised us most was how quickly our team adapted. Minimal learning curve, excellent documentation, and powerful features.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Lirael Nassun</h4>
+              <p>@lnassun</p>
+            </div>
+          </div>
+          <p class="marquee-text">“This is easily one of the most reliable SaaS tools we’ve adopted. The UI is intuitive, integrations are seamless, and it saves us countless hours.”</p>
+        </article>
+
+        <article class="marquee-card">
+          <div class="marquee-author">
+            <div class="marquee-avatar" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80')"></div>
+            <div class="marquee-info">
+              <h4>Jessica</h4>
+              <p>@jessica</p>
+            </div>
+          </div>
+          <p class="marquee-text">“Switching to this platform streamlined our entire workflow. Setup was effortless, performance improved instantly, and our team ships faster.”</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href="imoveis.html">Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="sobre.html">Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="#">(11) 99999-9999</a></li>
+        <li><a href="contato.html">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale conosco agora!</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  function handleHomeVibeSearch(e) {
+    if (e) e.preventDefault();
+    const input = document.getElementById('homeVibeInput');
+    const val = input ? input.value.trim() : '';
+    if (val) {
+      window.location.href = `busca-ia.html?q=${encodeURIComponent(val)}`;
+    } else {
+      window.location.href = 'busca-ia.html';
+    }
+  }
+
+  function selectVibeTag(el) {
+    const tagText = el.textContent.trim();
+    const input = document.getElementById('homeVibeInput');
+    if (input) {
+      if (input.value) {
+        if (!input.value.includes(tagText)) {
+          input.value += ' ' + tagText;
+        }
+      } else {
+        input.value = 'Quero um imóvel ' + tagText;
+      }
+      input.focus();
+    }
+  }
+
+  // SEARCH TABS
+  function switchSearch(type, btn) {
+    document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const vibeSearch = document.getElementById('vibeSearch');
+    const filterContainer = document.getElementById('filterContainer');
+    
+    if (type === 'vibe') {
+      vibeSearch.classList.add('active');
+      filterContainer.classList.remove('active');
+    } else {
+      vibeSearch.classList.remove('active');
+      filterContainer.classList.add('active');
+    }
+  }
+  
+  function applyFilters() {
+    alert('Filtros aplicados! Em breve você verá os resultados.');
+  }
+  
+  function scrollToFilter() {
+    document.getElementById('imoveis').scrollIntoView({ behavior: 'smooth' });
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/scroll-animations.js" defer></script>
+<script>
+(function () {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero background image remains 100% static and un-transformed
+
+  // Contador animado nas estatísticas
+  const nums = document.querySelectorAll('.stat-number[data-count-to]');
+  if (nums.length) {
+    const animate = (el) => {
+      const target = parseFloat(el.dataset.countTo) || 0;
+      const suffix = el.dataset.countSuffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      if (reduced) { el.textContent = target + suffix; return; }
+      const tick = (now) => {
+        const p = Math.min(1, (now - start) / duration);
+        // easeOutCubic
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = Math.round(target * eased);
+        el.textContent = val + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.stat-number[data-count-to]').forEach(animate);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    const bar = document.getElementById('statsBar');
+    if (bar) io.observe(bar);
+  }
+})();
+</script>
+<script src="/enhance.js" defer></script>
+</body>
+</html>

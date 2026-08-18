@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Financiamento — Living Canvas</title>
+<meta name="description" content="Simule seu financiamento imobiliário com taxas atualizadas e cenários personalizados.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/financiamento.html">
+<meta property="og:title" content="Simulador de Financiamento — Living Canvas">
+<meta property="og:description" content="Simule seu financiamento imobiliário com taxas atualizadas e cenários personalizados.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/financiamento.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Simulador de Financiamento — Living Canvas">
+<meta name="twitter:description" content="Simule seu financiamento imobiliário com taxas atualizadas e cenários personalizados.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .sim-hero {
+    padding: 2rem 3rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .sim-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  
+  .sim-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .sim-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  /* MAIN SIMULATOR */
+  .simulator-main {
+    max-width: 1400px;
+    margin: 2rem auto 0;
+    padding: 0 3rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2.5rem;
+  }
+  
+  .simulator-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+  }
+  
+  .simulator-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .simulator-card h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .simulator-card > p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* INPUTS */
+  .sim-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+  
+  .sim-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .sim-field-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .sim-field label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .sim-field-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .sim-field input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(245, 241, 232, 0.1);
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .sim-field input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(212, 175, 122, 0.2);
+    transition: all 0.2s;
+  }
+  
+  .sim-field input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(212, 175, 122, 0.3);
+  }
+  
+  .sim-field input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 0 4px rgba(212, 175, 122, 0.2);
+  }
+  
+  .sim-field-range {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    opacity: 0.6;
+    margin-top: 0.3rem;
+  }
+  
+  .sim-field select {
+    padding: 0.9rem 1.2rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .sim-field select:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+  }
+  
+  .sim-field select option {
+    background: var(--emerald-deep);
+    color: var(--cream);
+  }
+  
+  /* AMORTIZATION TOGGLE */
+  .amort-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+  
+  .amort-option {
+    padding: 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  
+  .amort-option:hover {
+    border-color: var(--gold);
+  }
+  
+  .amort-option.active {
+    background: rgba(212, 175, 122, 0.1);
+    border-color: var(--gold);
+  }
+  
+  .amort-option-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--cream);
+  }
+  
+  .amort-option.active .amort-option-title {
+    color: var(--gold);
+  }
+  
+  .amort-option-desc {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+  
+  /* RESULTS */
+  .results-card {
+    background: linear-gradient(135deg, var(--emerald-mid) 0%, var(--emerald-light) 100%);
+    border: 1px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .results-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -30%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  .results-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .results-main-value {
+    text-align: center;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: 2rem;
+  }
+  
+  .results-main-label {
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.8rem;
+  }
+  
+  .results-main-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s;
+  }
+  
+  .results-main-sub {
+    font-size: 0.9rem;
+    color: var(--text-light);
+  }
+  
+  .results-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .result-detail {
+    padding: 1.2rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+  }
+  
+  .result-detail-label {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .result-detail-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cream);
+  }
+  
+  .result-detail-sub {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 0.3rem;
+  }
+  
+  .results-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .results-btn {
+    width: 100%;
+    padding: 1.1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .results-btn-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .results-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .results-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--cream);
+    color: var(--cream);
+  }
+  
+  .results-btn-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* COMPARISON SECTION */
+  .comparison-section {
+    padding: 4rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .comparison-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .comparison-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .comparison-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .comparison-header p {
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .comparison-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  .comparison-card.recommended {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, rgba(212, 175, 122, 0.08) 0%, rgba(245, 241, 232, 0.03) 100%);
+  }
+  
+  .comparison-card.recommended::before {
+    content: 'MAIS UTILIZADO';
+    position: absolute;
+    top: -12px;
+    left: 2rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  
+  .comparison-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+  }
+  
+  .comparison-card > p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .comparison-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .comparison-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border-radius: 10px;
+  }
+  
+  .comparison-stat-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .comparison-stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--cream);
+  }
+  
+  .comparison-card.recommended .comparison-stat-value {
+    color: var(--gold);
+  }
+  
+  .comparison-chart {
+    margin-top: 1.5rem;
+  }
+  
+  .chart-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .chart-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    min-width: 80px;
+  }
+  
+  .chart-bar-visual {
+    flex: 1;
+    height: 24px;
+    background: rgba(245, 241, 232, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .chart-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%);
+    border-radius: 12px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--emerald-deep);
+  }
+  
+  /* EVOLUTION TABLE */
+  .evolution-section {
+    padding: 4rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .evolution-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .evolution-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .evolution-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .evolution-table-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .evolution-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .evolution-table thead {
+    background: rgba(212, 175, 122, 0.1);
+  }
+  
+  .evolution-table th {
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    font-size: 0.8rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .evolution-table td {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .evolution-table tbody tr {
+    transition: background 0.3s;
+  }
+  
+  .evolution-table tbody tr:hover {
+    background: rgba(245, 241, 232, 0.03);
+  }
+  
+  .evolution-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .evolution-table .month {
+    font-weight: 600;
+    color: var(--gold);
+  }
+  
+  .evolution-table .value {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+  }
+  
+  .evolution-table .highlight {
+    color: var(--gold);
+  }
+  
+  .evolution-footer {
+    padding: 1.5rem 2rem;
+    background: rgba(245, 241, 232, 0.03);
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  /* BANKS */
+  .banks-section {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald-mid) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .banks-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .banks-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .banks-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .banks-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .banks-header p {
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .banks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .bank-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  
+  .bank-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    background: rgba(212, 175, 122, 0.05);
+  }
+  
+  .bank-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+  }
+  
+  .bank-rate {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+  
+  .bank-rate strong {
+    color: var(--cream);
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .bank-features {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .bank-feature {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .bank-feature::before {
+    content: '✓';
+    color: var(--gold);
+    font-weight: 700;
+  }
+  
+  /* FAQ */
+  .faq-section {
+    padding: 6rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .faq-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .faq-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .faq-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .faq-item:hover {
+    border-color: var(--gold);
+  }
+  
+  .faq-question {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .faq-question h4 {
+    font-size: 1.05rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  
+  .faq-toggle {
+    width: 30px;
+    height: 30px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  
+  .faq-item.active .faq-toggle {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: rotate(45deg);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+  
+  .faq-answer-content {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  
+  /* FINAL CTA */
+  .final-cta {
+    padding: 6rem 3rem;
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .final-cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .final-cta h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .final-cta h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .final-cta p {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .final-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .final-cta-buttons a {
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .final-cta-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .final-cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .final-cta-secondary {
+    background: transparent;
+    border: 1px solid var(--cream) !important;
+    color: var(--cream);
+  }
+  
+  .final-cta-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* DISCLAIMER */
+  .disclaimer {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    opacity: 0.7;
+    text-align: center;
+    line-height: 1.6;
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .simulator-main { grid-template-columns: 1fr; }
+    .comparison-grid { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .sim-hero, .simulator-main, .comparison-section, .evolution-section, .banks-section, .faq-section, .final-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .simulator-card { padding: 2rem 1.5rem; }
+    .results-details { grid-template-columns: 1fr; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .evolution-table-container { overflow-x: auto; }
+    .evolution-table { min-width: 600px; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Simulador de Financiamento</strong>
+</div>
+
+<!-- HERO -->
+<section class="sim-hero">
+  <p class="section-eyebrow">Simulador Inteligente </p>
+  <h1 class="sim-title">Descubra em <em>minutos</em> o que cabe no seu bolso</h1>
+  <p class="sim-subtitle">Simule seu financiamento imobiliário com transparência total. Compare sistemas, bancos e visualize a evolução das parcelas em tempo real.</p>
+</section>
+
+<!-- MAIN SIMULATOR -->
+<div class="simulator-main">
+  
+  <!-- INPUTS -->
+  <div class="simulator-card">
+    <h2>Configure sua <em>simulação</em></h2>
+    <p>Ajuste os valores e veja o resultado em tempo real.</p>
+    
+    <div class="sim-inputs">
+      
+      <div class="sim-field">
+        <div class="sim-field-header">
+          <label>Valor do Imóvel</label>
+          <span class="sim-field-value" id="valorDisplay">R$ 2.000.000</span>
+        </div>
+        <input type="range" id="valor" min="500000" max="10000000" step="50000" value="2000000">
+        <div class="sim-field-range">
+          <span>R$ 500 mil</span>
+          <span>R$ 10 milhões</span>
+        </div>
+      </div>
+      
+      <div class="sim-field">
+        <div class="sim-field-header">
+          <label>Valor de Entrada</label>
+          <span class="sim-field-value" id="entradaDisplay">R$ 600.000 (30%)</span>
+        </div>
+        <input type="range" id="entrada" min="0" max="80" step="5" value="30">
+        <div class="sim-field-range">
+          <span>0%</span>
+          <span>80%</span>
+        </div>
+      </div>
+      
+      <div class="sim-field">
+        <div class="sim-field-header">
+          <label>Prazo</label>
+          <span class="sim-field-value" id="prazoDisplay">30 anos</span>
+        </div>
+        <input type="range" id="prazo" min="5" max="35" step="5" value="30">
+        <div class="sim-field-range">
+          <span>5 anos</span>
+          <span>35 anos</span>
+        </div>
+      </div>
+      
+      <div class="sim-field">
+        <div class="sim-field-header">
+          <label>Taxa de Juros Anual</label>
+          <span class="sim-field-value" id="taxaDisplay">9,5% a.a.</span>
+        </div>
+        <input type="range" id="taxa" min="7" max="13" step="0.25" value="9.5">
+        <div class="sim-field-range">
+          <span>7%</span>
+          <span>13%</span>
+        </div>
+      </div>
+      
+      <div class="sim-field">
+        <label>Sistema de Amortização</label>
+        <div class="amort-toggle">
+          <div class="amort-option active" onclick="setAmort('sac', this)">
+            <div class="amort-option-title">SAC</div>
+            <div class="amort-option-desc">Parcelas decrescentes</div>
+          </div>
+          <div class="amort-option" onclick="setAmort('price', this)">
+            <div class="amort-option-title">PRICE</div>
+            <div class="amort-option-desc">Parcelas fixas</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sim-field">
+        <label>Instituição Financeira</label>
+        <select id="banco">
+          <option value="caixa">Caixa Econômica — 9,5% a.a.</option>
+          <option value="itau">Itaú — 10,2% a.a.</option>
+          <option value="bradesco">Bradesco — 10,5% a.a.</option>
+          <option value="santander">Santander — 10,8% a.a.</option>
+          <option value="btg">BTG Pactual — 9,9% a.a.</option>
+        </select>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- RESULTS -->
+  <div class="simulator-card results-card">
+    <div class="results-content">
+      <div class="results-main-value">
+        <div class="results-main-label">Primeira Parcela</div>
+        <div class="results-main-number" id="parcelaValue">R$ 12.450</div>
+        <div class="results-main-sub" id="parcelaSub">SAC • 1ª de 360 parcelas</div>
+      </div>
+      
+      <div class="results-details">
+        <div class="result-detail">
+          <div class="result-detail-label">Valor Financiado</div>
+          <div class="result-detail-value" id="financiadoValue">R$ 1.400.000</div>
+          <div class="result-detail-sub">70% do imóvel</div>
+        </div>
+        
+        <div class="result-detail">
+          <div class="result-detail-label">Total Pago</div>
+          <div class="result-detail-value" id="totalValue">R$ 3.820.000</div>
+          <div class="result-detail-sub" id="totalSub">Em 30 anos</div>
+        </div>
+        
+        <div class="result-detail">
+          <div class="result-detail-label">Total de Juros</div>
+          <div class="result-detail-value" id="jurosValue">R$ 2.420.000</div>
+          <div class="result-detail-sub" id="jurosSub">172% do financiado</div>
+        </div>
+        
+        <div class="result-detail">
+          <div class="result-detail-label">Última Parcela</div>
+          <div class="result-detail-value" id="ultimaValue">R$ 3.890</div>
+          <div class="result-detail-sub" id="ultimaSub">Parcela final</div>
+        </div>
+      </div>
+      
+      <div class="results-cta">
+        <a href="https://wa.me/5511999999999" class="results-btn results-btn-primary">💬 Falar com Consultor Financeiro</a>
+        <a href='imoveis.html' class="results-btn results-btn-secondary">🏠 Ver Imóveis Compatíveis</a>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  * Simulação meramente ilustrativa. Valores sujeitos a análise de crédito e condições vigentes no momento da contratação. Consulte um de nossos especialistas para uma simulação personalizada.
+</div>
+
+<!-- COMPARISON SAC VS PRICE -->
+<section class="comparison-section">
+  <div class="comparison-header">
+    <p class="section-eyebrow">Comparativo</p>
+    <h2>SAC vs. PRICE: qual <em>escolher</em>?</h2>
+    <p>Cada sistema tem vantagens diferentes. Entenda qual faz mais sentido para o seu perfil.</p>
+  </div>
+  
+  <div class="comparison-grid">
+    <div class="comparison-card recommended">
+      <h3>SAC</h3>
+      <p>Sistema de Amortização Constante. As parcelas começam mais altas e diminuem ao longo do tempo. Ideal para quem quer pagar menos juros no total.</p>
+      
+      <div class="comparison-stats">
+        <div class="comparison-stat">
+          <span class="comparison-stat-label">1ª parcela</span>
+          <span class="comparison-stat-value" id="sacPrimeira">R$ 12.450</span>
+        </div>
+        <div class="comparison-stat">
+          <span class="comparison-stat-label">Última parcela</span>
+          <span class="comparison-stat-value" id="sacUltima">R$ 3.890</span>
+        </div>
+        <div class="comparison-stat">
+          <span class="comparison-stat-label">Total de juros</span>
+          <span class="comparison-stat-value" id="sacJuros">R$ 2.420.000</span>
+        </div>
+      </div>
+      
+      <div class="comparison-chart">
+        <div class="chart-bar">
+          <span class="chart-label">Juros totais</span>
+          <div class="chart-bar-visual">
+            <div class="chart-bar-fill" id="sacBarJuros" style="width: 65%;">65%</div>
+          </div>
+        </div>
+        <div class="chart-bar">
+          <span class="chart-label">Amortização</span>
+          <div class="chart-bar-visual">
+            <div class="chart-bar-fill" id="sacBarAmort" style="width: 100%;">100%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="comparison-card">
+      <h3>PRICE</h3>
+      <p>Sistema Francês de Amortização. As parcelas são fixas do início ao fim. Ideal para quem precisa de previsibilidade no orçamento mensal.</p>
+      
+      <div class="comparison-stats">
+        <div class="comparison-stat">
+          <span class="comparison-stat-label">Parcela fixa</span>
+          <span class="comparison-stat-value" id="priceParcela">R$ 8.950</span>
+        </div>
+        <div class="comparison-stat">
+          <span class="comparison-stat-label">Total de parcelas</span>
+          <span class="comparison-stat-value">360</span>
+        </div>
+        <div class="comparison-stat">
+          <span class="comparison-stat-label">Total de juros</span>
+          <span class="comparison-stat-value" id="priceJuros">R$ 3.220.000</span>
+        </div>
+      </div>
+      
+      <div class="comparison-chart">
+        <div class="chart-bar">
+          <span class="chart-label">Juros totais</span>
+          <div class="chart-bar-visual">
+            <div class="chart-bar-fill" id="priceBarJuros" style="width: 85%;">85%</div>
+          </div>
+        </div>
+        <div class="chart-bar">
+          <span class="chart-label">Amortização</span>
+          <div class="chart-bar-visual">
+            <div class="chart-bar-fill" id="priceBarAmort" style="width: 100%;">100%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVOLUTION TABLE -->
+<section class="evolution-section">
+  <div class="evolution-header">
+    <p class="section-eyebrow">Evolução</p>
+    <h2>Primeiros <em>12 meses</em> da sua simulação</h2>
+  </div>
+  
+  <div class="evolution-table-container">
+    <table class="evolution-table">
+      <thead>
+        <tr>
+          <th>Mês</th>
+          <th>Parcela</th>
+          <th>Amortização</th>
+          <th>Juros</th>
+          <th>Saldo Devedor</th>
+        </tr>
+      </thead>
+      <tbody id="evolutionBody">
+        <!-- Preenchido via JavaScript -->
+      </tbody>
+    </table>
+    <div class="evolution-footer">
+      Mostrando os primeiros 12 meses. A tabela completa está disponível no relatório detalhado.
+    </div>
+  </div>
+</section>
+
+<!-- BANKS -->
+<section class="banks-section">
+  <div class="banks-container">
+    <div class="banks-header">
+      <p class="section-eyebrow">Nossos Parceiros</p>
+      <h2>Bancos com condições <em>especiais</em></h2>
+      <p>Trabalhamos com os principais bancos do país para oferecer as melhores taxas do mercado.</p>
+    </div>
+    
+    <div class="banks-grid">
+      <div class="bank-card">
+        <div class="bank-logo">CAIXA</div>
+        <div class="bank-rate">A partir de <strong>9,5% a.a.</strong></div>
+        <div class="bank-features">
+          <div class="bank-feature">Maior volume do mercado</div>
+          <div class="bank-feature">Até 35 anos de prazo</div>
+          <div class="bank-feature">Uso do FGTS</div>
+        </div>
+      </div>
+      
+      <div class="bank-card">
+        <div class="bank-logo">ITAU</div>
+        <div class="bank-rate">A partir de <strong>10,2% a.a.</strong></div>
+        <div class="bank-features">
+          <div class="bank-feature">Aprovação ágil</div>
+          <div class="bank-feature">Até 30 anos de prazo</div>
+          <div class="bank-feature">Portabilidade facilitada</div>
+        </div>
+      </div>
+      
+      <div class="bank-card">
+        <div class="bank-logo">BRADESCO</div>
+        <div class="bank-rate">A partir de <strong>10,5% a.a.</strong></div>
+        <div class="bank-features">
+          <div class="bank-feature">Condições para alto padrão</div>
+          <div class="bank-feature">Até 30 anos de prazo</div>
+          <div class="bank-feature">Atendimento premium</div>
+        </div>
+      </div>
+      
+      <div class="bank-card">
+        <div class="bank-logo">SANTANDER</div>
+        <div class="bank-rate">A partir de <strong>10,8% a.a.</strong></div>
+        <div class="bank-features">
+          <div class="bank-feature">Linhas exclusivas</div>
+          <div class="bank-feature">Até 35 anos de prazo</div>
+          <div class="bank-feature">Desconto Select</div>
+        </div>
+      </div>
+      
+      <div class="bank-card">
+        <div class="bank-logo">BTG</div>
+        <div class="bank-rate">A partir de <strong>9,9% a.a.</strong></div>
+        <div class="bank-features">
+          <div class="bank-feature">Foco em alto padrão</div>
+          <div class="bank-feature">Até 20 anos de prazo</div>
+          <div class="bank-feature">Atendimento personalizado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-header">
+    <p class="section-eyebrow">Dúvidas Frequentes</p>
+    <h2>Tudo sobre <em>financiamento</em></h2>
+  </div>
+  
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Qual o valor mínimo de entrada para financiar um imóvel?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          A maioria dos bancos exige no mínimo 20% do valor do imóvel como entrada. No entanto, para imóveis de alto padrão (acima de R$ 1,5M), alguns bancos podem exigir até 30% ou 40%. Recomendamos sempre uma entrada maior para reduzir o total de juros pagos ao longo do financiamento.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Qual a diferença entre SAC e PRICE?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          No SAC (Sistema de Amortização Constante), as parcelas começam mais altas e diminuem ao longo do tempo — você paga menos juros no total. No PRICE (Sistema Francês), as parcelas são fixas do início ao fim, oferecendo previsibilidade, mas com total de juros maior. A escolha depende do seu perfil financeiro.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Posso usar o FGTS para dar entrada?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Sim! O FGTS pode ser usado para dar entrada, amortizar ou quitar o financiamento, desde que você atenda aos requisitos: ter pelo menos 3 anos de trabalho sob regime do FGTS, não possuir outro financiamento imobiliário ativo no mesmo município, e o imóvel deve estar dentro dos limites de valor estabelecidos pelo SFH.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Quais documentos preciso para solicitar o financiamento?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Os documentos básicos são: RG e CPF, comprovante de residência atualizado, comprovante de renda (holerites, declaração de IR), extratos bancários dos últimos 3 meses e dados do imóvel. Para autônomos e empresários, documentação complementar como contrato social e pró-labore. Nossa equipe orienta você em cada etapa.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Quanto do meu comprometimento de renda é aceito?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Por lei, as parcelas do financiamento não podem comprometer mais de 30% da sua renda bruta mensal. Alguns bancos são mais flexíveis para clientes de alta renda ou com garantias adicionais. É importante considerar também outros compromissos financeiros que podem afetar sua capacidade de pagamento.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Posso antecipar parcelas ou quitar antecipadamente?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Sim! Por lei, você tem direito à quitação antecipada total ou parcial do financiamento, com redução proporcional dos juros. A antecipação de parcelas é uma excelente estratégia para reduzir o custo total do financiamento. Nossa equipe pode ajudar a planejar a melhor estratégia de amortização para o seu caso.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-content">
+    <h2>Pronto para transformar essa simulação em <em>realidade</em>?</h2>
+    <p>Nosso consultor financeiro pode analisar seu perfil e encontrar as melhores condições do mercado para você.</p>
+    <div class="final-cta-buttons">
+      <a href="https://wa.me/5511999999999" class="final-cta-primary">💬 Falar com Consultor</a>
+      <a href='imoveis.html' class="final-cta-secondary">Ver Imóveis</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com um consultor</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // TAXAS DOS BANCOS
+  const bancos = {
+    caixa: 9.5,
+    itau: 10.2,
+    bradesco: 10.5,
+    santander: 10.8,
+    btg: 9.9
+  };
+  
+  let amortType = 'sac';
+  
+  // FORMATAÇÃO DE MOEDA
+  function formatCurrency(value) {
+    return 'R$ ' + Math.round(value).toLocaleString('pt-BR');
+  }
+  
+  // CÁLCULO SAC
+  function calcularSAC(valorFinanciado, taxaAnual, meses) {
+    const taxaMensal = taxaAnual / 100 / 12;
+    const amortConstante = valorFinanciado / meses;
+    
+    const primeiraParcela = amortConstante + (valorFinanciado * taxaMensal);
+    const ultimaParcela = amortConstante + (amortConstante * taxaMensal);
+    
+    // Total de juros SAC = soma de (saldo * taxa) mês a mês
+    let totalJuros = 0;
+    let saldo = valorFinanciado;
+    for (let i = 0; i < meses; i++) {
+      totalJuros += saldo * taxaMensal;
+      saldo -= amortConstante;
+    }
+    
+    const totalPago = valorFinanciado + totalJuros;
+    
+    return {
+      primeiraParcela,
+      ultimaParcela,
+      totalJuros,
+      totalPago,
+      amortConstante
+    };
+  }
+  
+  // CÁLCULO PRICE
+  function calcularPRICE(valorFinanciado, taxaAnual, meses) {
+    const taxaMensal = taxaAnual / 100 / 12;
+    const parcela = valorFinanciado * (taxaMensal * Math.pow(1 + taxaMensal, meses)) / 
+                    (Math.pow(1 + taxaMensal, meses) - 1);
+    
+    const totalPago = parcela * meses;
+    const totalJuros = totalPago - valorFinanciado;
+    
+    return {
+      parcela,
+      totalJuros,
+      totalPago
+    };
+  }
+  
+  // TABELA DE EVOLUÇÃO
+  function gerarEvolucao(valorFinanciado, taxaAnual, meses) {
+    const taxaMensal = taxaAnual / 100 / 12;
+    const tbody = document.getElementById('evolutionBody');
+    tbody.innerHTML = '';
+    
+    let saldo = valorFinanciado;
+    
+    if (amortType === 'sac') {
+      const amortConstante = valorFinanciado / meses;
+      
+      for (let i = 1; i <= 12; i++) {
+        const juros = saldo * taxaMensal;
+        const parcela = amortConstante + juros;
+        saldo -= amortConstante;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="month">${i}º mês</td>
+          <td class="value">${formatCurrency(parcela)}</td>
+          <td class="value">${formatCurrency(amortConstante)}</td>
+          <td class="value">${formatCurrency(juros)}</td>
+          <td class="value highlight">${formatCurrency(saldo)}</td>
+        `;
+        tbody.appendChild(row);
+      }
+    } else {
+      const parcela = valorFinanciado * (taxaMensal * Math.pow(1 + taxaMensal, meses)) / 
+                      (Math.pow(1 + taxaMensal, meses) - 1);
+      
+      for (let i = 1; i <= 12; i++) {
+        const juros = saldo * taxaMensal;
+        const amort = parcela - juros;
+        saldo -= amort;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="month">${i}º mês</td>
+          <td class="value">${formatCurrency(parcela)}</td>
+          <td class="value">${formatCurrency(amort)}</td>
+          <td class="value">${formatCurrency(juros)}</td>
+          <td class="value highlight">${formatCurrency(saldo)}</td>
+        `;
+        tbody.appendChild(row);
+      }
+    }
+  }
+  
+  // ATUALIZAÇÃO PRINCIPAL
+  function atualizarSimulacao() {
+    const valor = parseFloat(document.getElementById('valor').value);
+    const entradaPct = parseFloat(document.getElementById('entrada').value);
+    const prazo = parseFloat(document.getElementById('prazo').value);
+    const taxa = parseFloat(document.getElementById('taxa').value);
+    
+    const entradaValor = valor * (entradaPct / 100);
+    const valorFinanciado = valor - entradaValor;
+    const meses = prazo * 12;
+    
+    // Atualizar displays
+    document.getElementById('valorDisplay').textContent = formatCurrency(valor);
+    document.getElementById('entradaDisplay').textContent = `${formatCurrency(entradaValor)} (${entradaPct}%)`;
+    document.getElementById('prazoDisplay').textContent = `${prazo} anos`;
+    document.getElementById('taxaDisplay').textContent = `${taxa.toFixed(2).replace('.', ',')}% a.a.`;
+    
+    // Calcular SAC
+    const sac = calcularSAC(valorFinanciado, taxa, meses);
+    
+    // Calcular PRICE
+    const price = calcularPRICE(valorFinanciado, taxa, meses);
+    
+    // Atualizar resultados principais
+    if (amortType === 'sac') {
+      document.getElementById('parcelaValue').textContent = formatCurrency(sac.primeiraParcela);
+      document.getElementById('parcelaSub').textContent = `SAC • 1ª de ${meses} parcelas`;
+      document.getElementById('totalValue').textContent = formatCurrency(sac.totalPago);
+      document.getElementById('totalSub').textContent = `Em ${prazo} anos`;
+      document.getElementById('jurosValue').textContent = formatCurrency(sac.totalJuros);
+      document.getElementById('jurosSub').textContent = `${Math.round((sac.totalJuros / valorFinanciado) * 100)}% do financiado`;
+      document.getElementById('ultimaValue').textContent = formatCurrency(sac.ultimaParcela);
+      document.getElementById('ultimaSub').textContent = 'Parcela final';
+    } else {
+      document.getElementById('parcelaValue').textContent = formatCurrency(price.parcela);
+      document.getElementById('parcelaSub').textContent = `PRICE • ${meses} parcelas fixas`;
+      document.getElementById('totalValue').textContent = formatCurrency(price.totalPago);
+      document.getElementById('totalSub').textContent = `Em ${prazo} anos`;
+      document.getElementById('jurosValue').textContent = formatCurrency(price.totalJuros);
+      document.getElementById('jurosSub').textContent = `${Math.round((price.totalJuros / valorFinanciado) * 100)}% do financiado`;
+      document.getElementById('ultimaValue').textContent = formatCurrency(price.parcela);
+      document.getElementById('ultimaSub').textContent = 'Parcela fixa';
+    }
+    
+    // Atualizar financiado
+    document.getElementById('financiadoValue').textContent = formatCurrency(valorFinanciado);
+    
+    // Atualizar comparação SAC vs PRICE
+    document.getElementById('sacPrimeira').textContent = formatCurrency(sac.primeiraParcela);
+    document.getElementById('sacUltima').textContent = formatCurrency(sac.ultimaParcela);
+    document.getElementById('sacJuros').textContent = formatCurrency(sac.totalJuros);
+    document.getElementById('priceParcela').textContent = formatCurrency(price.parcela);
+    document.getElementById('priceJuros').textContent = formatCurrency(price.totalJuros);
+    
+    // Atualizar barras
+    const maxJuros = Math.max(sac.totalJuros, price.totalJuros);
+    const sacPct = (sac.totalJuros / maxJuros) * 100;
+    const pricePct = (price.totalJuros / maxJuros) * 100;
+    document.getElementById('sacBarJuros').style.width = sacPct + '%';
+    document.getElementById('sacBarJuros').textContent = Math.round(sacPct) + '%';
+    document.getElementById('priceBarJuros').style.width = pricePct + '%';
+    document.getElementById('priceBarJuros').textContent = Math.round(pricePct) + '%';
+    
+    // Atualizar tabela de evolução
+    gerarEvolucao(valorFinanciado, taxa, meses);
+  }
+  
+  // SET AMORTIZATION TYPE
+  function setAmort(type, element) {
+    amortType = type;
+    document.querySelectorAll('.amort-option').forEach(o => o.classList.remove('active'));
+    element.classList.add('active');
+    atualizarSimulacao();
+  }
+  
+  // BANCO SELECT
+  document.getElementById('banco').addEventListener('change', function() {
+    document.getElementById('taxa').value = bancos[this.value];
+    atualizarSimulacao();
+  });
+  
+  // EVENT LISTENERS DOS SLIDERS
+  ['valor', 'entrada', 'prazo', 'taxa'].forEach(id => {
+    document.getElementById(id).addEventListener('input', atualizarSimulacao);
+  });
+  
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // FAQ TOGGLE
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    item.classList.toggle('active');
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  // INICIALIZAÇÃO
+  atualizarSimulacao();
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

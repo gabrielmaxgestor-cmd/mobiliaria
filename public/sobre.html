@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+  <script src="/jsonld.js" defer></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre — Living Canvas</title>
+<meta name="description" content="Nossa filosofia de curadoria imobiliária e o time por trás da Living Canvas.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/sobre.html">
+<meta property="og:title" content="Sobre — Living Canvas">
+<meta property="og:description" content="Nossa filosofia de curadoria imobiliária e o time por trás da Living Canvas.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/sobre.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sobre — Living Canvas">
+<meta name="twitter:description" content="Nossa filosofia de curadoria imobiliária e o time por trás da Living Canvas.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO MANIFESTO */
+  .about-hero {
+    min-height: 80vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 4rem 3rem;
+    overflow: hidden;
+  }
+  
+  .about-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(135deg, rgba(10,46,42,0.9) 0%, rgba(10,46,42,0.6) 100%),
+      url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80') center/cover;
+  }
+  
+  .about-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .about-hero-left .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .about-hero-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+  
+  .about-hero-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .about-manifesto {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    padding-left: 2rem;
+    border-left: 2px solid var(--gold);
+  }
+  
+  .about-hero-right {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+  }
+  
+  .founding-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .founding-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .founding-stat:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .founding-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+    min-width: 120px;
+  }
+  
+  .founding-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .founding-info p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+  }
+  
+  /* CONTENT SECTIONS */
+  .section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+  
+  .section-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .section-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+  
+  /* STORY SECTION */
+  .story-section {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald-mid) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .story-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  
+  .story-image {
+    height: 600px;
+    background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80') center/cover;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .story-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10,46,42,0.3) 0%, transparent 100%);
+  }
+  
+  .story-year {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    z-index: 2;
+  }
+  
+  .story-content p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+  
+  .story-content p:first-of-type::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    float: left;
+    line-height: 1;
+    margin-right: 0.5rem;
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  /* MISSION/VISION/VALUES */
+  .mvv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .mvv-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .mvv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+  }
+  
+  .mvv-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  
+  .mvv-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mvv-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+  
+  .mvv-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+  
+  /* TIMELINE */
+  .timeline-section {
+    background: var(--emerald-mid);
+    padding: 6rem 3rem;
+  }
+  
+  .timeline-container {
+    max-width: 1000px;
+    margin: 3rem auto 0;
+    position: relative;
+  }
+  
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    transform: translateX(-50%);
+  }
+  
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: center;
+  }
+  
+  .timeline-content {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+  }
+  
+  .timeline-content:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  
+  .timeline-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  
+  .timeline-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .timeline-description {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  
+  .timeline-dot {
+    width: 20px;
+    height: 20px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 0 8px rgba(212, 175, 122, 0.2);
+  }
+  
+  .timeline-item:nth-child(even) .timeline-content {
+    grid-column: 3;
+  }
+  
+  .timeline-item:nth-child(even) .timeline-spacer {
+    grid-column: 1;
+  }
+  
+  /* DIFFERENTIALS */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 200px;
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .bento-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: border-color 0.35s var(--ease-premium, ease), transform 0.35s var(--ease-premium, ease), background 0.35s ease;
+  }
+
+  .bento-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+
+  .bento-card .bento-number {
+    position: absolute;
+    top: 1.1rem;
+    right: 1.25rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--gold);
+    opacity: 0.35;
+  }
+
+  .bento-card .bento-icon {
+    font-size: 1.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .bento-card .bento-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+  }
+
+  .bento-card .bento-text {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-light);
+  }
+
+  .bento-card.bento-feature {
+    grid-column: span 2;
+    grid-row: span 2;
+    padding: 2rem;
+    background: #0a2e2a;
+  }
+
+  .bento-card.bento-feature .bento-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.05);
+    transition: transform 1.2s var(--ease-premium, ease);
+    z-index: 0;
+  }
+
+  .bento-card.bento-feature::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,46,42,0.15) 0%, rgba(10,46,42,0.55) 55%, rgba(10,46,42,0.92) 100%);
+    z-index: 1;
+  }
+
+  .bento-card.bento-feature:hover .bento-bg { transform: scale(1.12); }
+
+  .bento-card.bento-feature > *:not(.bento-bg) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .bento-card.bento-feature .bento-title {
+    font-size: 1.75rem;
+    color: var(--cream);
+  }
+
+  .bento-card.bento-feature .bento-text {
+    color: rgba(245, 241, 232, 0.85);
+    font-size: 0.95rem;
+    max-width: 34ch;
+  }
+
+  .bento-card.bento-feature .bento-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    padding: 0.35rem 0.75rem;
+    margin-bottom: 0.9rem;
+    background: rgba(212, 175, 122, 0.15);
+    border: 1px solid rgba(212, 175, 122, 0.4);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .bento-card.bento-accent {
+    background: linear-gradient(140deg, rgba(212,175,122,0.12), rgba(212,175,122,0.02));
+    border-color: rgba(212, 175, 122, 0.35);
+  }
+
+  @media (max-width: 900px) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+    .bento-card.bento-feature { grid-column: span 2; grid-row: span 2; }
+  }
+
+  @media (max-width: 560px) {
+    .bento-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+    .bento-card { min-height: 200px; }
+    .bento-card.bento-feature { grid-column: span 1; grid-row: span 1; min-height: 320px; }
+  }
+  
+  /* TEAM PREVIEW */
+  .team-preview {
+    background: linear-gradient(180deg, var(--emerald-mid) 0%, var(--emerald-deep) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .team-preview-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .team-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+  
+  .team-preview-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .team-preview-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  
+  .team-preview-image {
+    height: 320px;
+    background-size: cover;
+    background-position: center top;
+    position: relative;
+  }
+  
+  .team-preview-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(10,46,42,0.9) 100%);
+  }
+  
+  .team-preview-content {
+    padding: 2rem;
+  }
+  
+  .team-preview-name {
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .team-preview-role {
+    color: var(--gold);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+  
+  .team-preview-bio {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .team-preview-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 3px;
+    transition: all 0.3s;
+  }
+  
+  .team-preview-link:hover {
+    color: var(--cream);
+    border-color: var(--cream);
+  }
+  
+  .team-cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+  
+  /* TESTIMONIAL FEATURED */
+  .testimonial-featured {
+    padding: 6rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .testimonial-big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    line-height: 1.5;
+    color: var(--cream);
+    font-style: italic;
+    margin: 3rem 0;
+    position: relative;
+    padding: 0 2rem;
+  }
+  
+  .testimonial-big-quote::before {
+    content: '"';
+    position: absolute;
+    top: -2rem;
+    left: 0;
+    font-size: 8rem;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .testimonial-author-big {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  
+  .testimonial-avatar-big {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid var(--gold);
+  }
+  
+  .testimonial-info-big {
+    text-align: left;
+  }
+  
+  .testimonial-info-big h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .testimonial-info-big p {
+    font-size: 0.9rem;
+    color: var(--gold-soft);
+  }
+  
+  /* COMMITMENTS */
+  .commitments-section {
+    background: var(--emerald-mid);
+    padding: 6rem 3rem;
+  }
+  
+  .commitments-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .commitments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .commitment-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    transition: all 0.3s;
+  }
+  
+  .commitment-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  
+  .commitment-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .commitment-content h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+  }
+  
+  .commitment-content p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  
+  /* FINAL CTA */
+  .final-cta {
+    padding: 6rem 3rem;
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .final-cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .final-cta h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .final-cta h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .final-cta p {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .final-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .final-cta-buttons button,
+  .final-cta-buttons a {
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .final-cta-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .final-cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .final-cta-secondary {
+    background: transparent;
+    border: 1px solid var(--cream) !important;
+    color: var(--cream);
+  }
+  
+  .final-cta-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .about-hero-content { grid-template-columns: 1fr; }
+    .story-container { grid-template-columns: 1fr; }
+    .mvv-grid { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; gap: 1rem; }
+    .timeline-line { display: none; }
+    .timeline-dot { display: none; }
+    .timeline-item:nth-child(even) .timeline-content { grid-column: auto; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .section, .story-section, .timeline-section, .team-preview, .testimonial-featured, .commitments-section, .final-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .about-hero { padding: 4rem 1.5rem; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .story-image { height: 400px; }
+    .founding-stat { flex-direction: column; align-items: flex-start; }
+    .founding-number { min-width: auto; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='contato.html' class="nav-cta">Fale Conosco</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Sobre Nós</strong>
+</div>
+
+<!-- HERO MANIFESTO -->
+<section class="about-hero">
+  <div class="about-hero-bg"></div>
+  <div class="about-hero-content">
+    <div class="about-hero-left">
+      <p class="section-eyebrow">Nossa Essência </p>
+      <h1 class="about-hero-title">Mais que imóveis.<br>Curadoria de <em>cenários</em> para a vida.</h1>
+      <p class="about-manifesto">
+        Acreditamos que um lar não se mede em metros quadrados, mas em momentos vividos. Cada espaço que representamos carrega uma história — e nossa missão é conectar pessoas a lugares que transformam suas narrativas.
+      </p>
+    </div>
+    <div class="about-hero-right">
+      <div class="founding-stats">
+        <div class="founding-stat">
+          <div class="founding-number">15</div>
+          <div class="founding-info">
+            <h4>Anos de história</h4>
+            <p>Construindo confiança desde 2011</p>
+          </div>
+        </div>
+        <div class="founding-stat">
+          <div class="founding-number">500+</div>
+          <div class="founding-info">
+            <h4>Famílias atendidas</h4>
+            <p>Que encontraram seu cenário ideal</p>
+          </div>
+        </div>
+        <div class="founding-stat">
+          <div class="founding-number">R$1.2B</div>
+          <div class="founding-info">
+            <h4>Em transações</h4>
+            <p>Volume total negociado</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section">
+  <div class="story-container">
+    <div class="story-image">
+      <div class="story-year">Desde 2011</div>
+    </div>
+    <div class="story-content">
+      <p class="section-eyebrow">Nossa História</p>
+      <h2 class="section-title">Como tudo <em>começou</em></h2>
+      <p>
+        A Living Canvas nasceu da insatisfação de seu fundador, Ricardo Mendes, com o mercado imobiliário tradicional. Após anos trabalhando em grandes imobiliárias, percebeu que faltava algo essencial: a capacidade de entender não apenas o que o cliente buscava, mas como ele queria viver.
+      </p>
+      <p>
+        Em 2011, com uma equipe de três pessoas e um escritório pequeno em Pinheiros, começamos a oferecer um serviço diferente. Em vez de mostrar imóveis, mostrávamos estilos de vida. Em vez de vender metros quadrados, curadoríamos cenários.
+      </p>
+      <p>
+        Hoje, 15 anos depois, somos referência em imóveis de alto padrão em São Paulo, com uma equipe de 25 especialistas e um portfólio que inclui alguns dos endereços mais cobiçados da cidade. Mas nossa essência permanece a mesma: ouvir, entender e conectar pessoas a lugares que fazem sentido para suas histórias.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION/VISION/VALUES -->
+<section class="section">
+  <div style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
+    <p class="section-eyebrow">O Que Nos Move</p>
+    <h2 class="section-title">Nossos <em>princípios</em></h2>
+  </div>
+  
+  <div class="mvv-grid">
+    <div class="mvv-card">
+      <div class="mvv-icon">🎯</div>
+      <h3 class="mvv-title">Missão</h3>
+      <p class="mvv-text">
+        Conectar pessoas a espaços que transformam suas vidas, oferecendo uma experiência de curadoria imobiliária única, humana e personalizada.
+      </p>
+    </div>
+    
+    <div class="mvv-card">
+      <div class="mvv-icon">🔭</div>
+      <h3 class="mvv-title">Visão</h3>
+      <p class="mvv-text">
+        Ser a imobiliária mais admirada do Brasil, reconhecida por transformar o mercado através de tecnologia, design e atendimento excepcional.
+      </p>
+    </div>
+    
+    <div class="mvv-card">
+      <div class="mvv-icon">💎</div>
+      <h3 class="mvv-title">Valores</h3>
+      <p class="mvv-text">
+        Transparência radical, excelência em cada detalhe, empatia genuína, inovação constante e compromisso com a felicidade dos nossos clientes.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+    <p class="section-eyebrow">Nossa Trajetória</p>
+    <h2 class="section-title">Marcos da nossa <em>história</em></h2>
+  </div>
+  
+  <div class="timeline-container">
+    <div class="timeline-line"></div>
+    
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <div class="timeline-year">2011</div>
+        <h3 class="timeline-title">O início</h3>
+        <p class="timeline-description">Fundação da Living Canvas em Pinheiros, com 3 corretores e uma proposta inovadora de curadoria imobiliária.</p>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-spacer"></div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-spacer"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2014</div>
+        <h3 class="timeline-title">Primeiro marco</h3>
+        <p class="timeline-description">Atingimos R$ 100 milhões em vendas e expandimos a equipe para 10 corretores especializados.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <div class="timeline-year">2017</div>
+        <h3 class="timeline-title">Revolução digital</h3>
+        <p class="timeline-description">Lançamos nossa plataforma com tour virtual 360° e busca por estilo de vida — uma das primeiras do Brasil.</p>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-spacer"></div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-spacer"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2020</div>
+        <h3 class="timeline-title">Reconhecimento</h3>
+        <p class="timeline-description">Premiados como "Imobiliária Inovadora do Ano" pela Associação Brasileira do Mercado Imobiliário.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <div class="timeline-year">2023</div>
+        <h3 class="timeline-title">IA e curadoria</h3>
+        <p class="timeline-description">Introduzimos busca por "vibe" com inteligência artificial, revolucionando a forma de encontrar imóveis.</p>
+      </div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-spacer"></div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-spacer"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">2026</div>
+        <h3 class="timeline-title">Hoje</h3>
+        <p class="timeline-description">25 especialistas, R$ 1.2B em transações e mais de 500 famílias que encontraram seu cenário ideal conosco.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIALS -->
+<section class="section">
+  <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+    <p class="section-eyebrow">Por Que Somos Diferentes</p>
+    <h2 class="section-title">O que nos <em>destaca</em> no mercado</h2>
+  </div>
+  
+  <div class="bento-grid">
+    <!-- Featured 1: Curadoria (2x2) -->
+    <article class="bento-card bento-feature">
+      <div class="bento-bg" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80');"></div>
+      <span class="bento-number">01</span>
+      <span class="bento-tag">Curadoria</span>
+      <h3 class="bento-title">Curadoria, não catálogo</h3>
+      <p class="bento-text">Não listamos milhares de imóveis. Selecionamos criteriosamente cada propriedade que representamos, garantindo qualidade em cada detalhe.</p>
+    </article>
+
+    <!-- Small: Busca por Vibe -->
+    <article class="bento-card bento-accent">
+      <span class="bento-number">02</span>
+      <div class="bento-icon">🧠</div>
+      <h3 class="bento-title">Busca por Vibe com IA</h3>
+      <p class="bento-text">Nossa IA entende seu estilo de vida e encontra imóveis que combinam com quem você é.</p>
+    </article>
+
+    <!-- Small: Mapa de Pulso -->
+    <article class="bento-card">
+      <span class="bento-number">03</span>
+      <div class="bento-icon">🗺️</div>
+      <h3 class="bento-title">Mapa de Pulso</h3>
+      <p class="bento-text">Revelamos o que mapas tradicionais não mostram: silêncio, luz natural, vida local e segurança.</p>
+    </article>
+
+    <!-- Small: Atendimento humano -->
+    <article class="bento-card">
+      <span class="bento-number">04</span>
+      <div class="bento-icon">👥</div>
+      <h3 class="bento-title">Atendimento humano</h3>
+      <p class="bento-text">Por trás da tecnologia, pessoas. Corretores que entendem sonhos, não transações.</p>
+    </article>
+
+    <!-- Small: Transparência -->
+    <article class="bento-card bento-accent">
+      <span class="bento-number">05</span>
+      <div class="bento-icon">🔒</div>
+      <h3 class="bento-title">Transparência total</h3>
+      <p class="bento-text">Sem letras miúdas. Cada etapa é clara, documentada e acompanhada por você em tempo real.</p>
+    </article>
+
+    <!-- Featured 2: Cinematográfica (2x2) -->
+    <article class="bento-card bento-feature">
+      <div class="bento-bg" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80');"></div>
+      <span class="bento-number">06</span>
+      <span class="bento-tag">Experiência</span>
+      <h3 class="bento-title">Experiência cinematográfica</h3>
+      <p class="bento-text">Cada imóvel apresentado com fotos profissionais, tour virtual 360° e a chance de ver o espaço em diferentes momentos do dia.</p>
+    </article>
+  </div>
+</section>
+
+<!-- TEAM PREVIEW -->
+<section class="team-preview">
+  <div class="team-preview-container">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p class="section-eyebrow">Quem Faz Acontecer</p>
+      <h2 class="section-title">Conheça alguns dos nossos <em>especialistas</em></h2>
+      <p class="section-subtitle" style="margin: 1.5rem auto 0;">
+        Uma equipe de 25 profissionais apaixonados por conectar pessoas a lugares extraordinários.
+      </p>
+    </div>
+    
+    <div class="team-preview-grid">
+      <article class="team-preview-card">
+        <div class="team-preview-image" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80')"></div>
+        <div class="team-preview-content">
+          <h3 class="team-preview-name">Ricardo Mendes</h3>
+          <p class="team-preview-role">Diretor & Founder</p>
+          <p class="team-preview-bio">15 anos transformando sonhos em endereços. Especialista em imóveis de alto padrão e negociações complexas.</p>
+          <a href="corretor.html" class="team-preview-link">Ver perfil completo →</a>
+        </div>
+      </article>
+      
+      <article class="team-preview-card">
+        <div class="team-preview-image" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80')"></div>
+        <div class="team-preview-content">
+          <h3 class="team-preview-name">Ana Carolina Silva</h3>
+          <p class="team-preview-role">Corretora Sênior</p>
+          <p class="team-preview-bio">Especialista em bairros da Zona Sul. Conhecimento profundo de cada rua e história dos imóveis.</p>
+          <a href="corretor.html" class="team-preview-link">Ver perfil completo →</a>
+        </div>
+      </article>
+      
+      <article class="team-preview-card">
+        <div class="team-preview-image" style="background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&q=80')"></div>
+        <div class="team-preview-content">
+          <h3 class="team-preview-name">Carlos Eduardo</h3>
+          <p class="team-preview-role">Consultor de Investimentos</p>
+          <p class="team-preview-bio">Expert em imóveis para investimento e locação. Ajuda você a maximizar seu ROI imobiliário.</p>
+          <a href="corretor.html" class="team-preview-link">Ver perfil completo →</a>
+        </div>
+      </article>
+    </div>
+    
+    <div class="team-cta">
+      <a href='corretor.html' class="inline-cta-btn">Conhecer toda a equipe →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL FEATURED -->
+<section class="testimonial-featured">
+  <p class="section-eyebrow">O Que Dizem Sobre Nós</p>
+  <h2 class="section-title">Uma história que nos <em>inspira</em></h2>
+  
+  <blockquote class="testimonial-big-quote">
+    A Living Canvas não vendeu um apartamento para nós — eles nos ajudaram a encontrar o capítulo perfeito da nossa história. Em duas semanas, entendendo exatamente o que buscávamos, nos apresentaram o lugar onde hoje criamos nossas melhores memórias. Isso não tem preço.
+  </blockquote>
+  
+  <div class="testimonial-author-big">
+    <div class="testimonial-avatar-big" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80')"></div>
+    <div class="testimonial-info-big">
+      <h4>Mariana & Pedro</h4>
+      <p>Compraram em Jardim Europa • 2025</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITMENTS -->
+<section class="commitments-section">
+  <div class="commitments-container">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p class="section-eyebrow">Nossos Compromissos</p>
+      <h2 class="section-title">O que você pode <em>esperar</em> de nós</h2>
+    </div>
+    
+    <div class="commitments-grid">
+      <div class="commitment-item">
+        <div class="commitment-icon">🤝</div>
+        <div class="commitment-content">
+          <h4>Atendimento personalizado</h4>
+          <p>Cada cliente tem um corretor dedicado que acompanha toda a jornada, do primeiro contato às chaves na mão.</p>
+        </div>
+      </div>
+      
+      <div class="commitment-item">
+        <div class="commitment-icon">⚡</div>
+        <div class="commitment-content">
+          <h4>Resposta em 24h</h4>
+          <p>Toda mensagem é respondida em até 24 horas. Seu tempo é valioso e nós respeitamos isso.</p>
+        </div>
+      </div>
+      
+      <div class="commitment-item">
+        <div class="commitment-icon">📊</div>
+        <div class="commitment-content">
+          <h4>Transparência total</h4>
+          <p>Todas as informações sobre o imóvel, documentação e processo são compartilhadas de forma clara.</p>
+        </div>
+      </div>
+      
+      <div class="commitment-item">
+        <div class="commitment-icon">🎯</div>
+        <div class="commitment-content">
+          <h4>Curadoria rigorosa</h4>
+          <p>Só representamos imóveis que passam por nossa avaliação criteriosa de qualidade e potencial.</p>
+        </div>
+      </div>
+      
+      <div class="commitment-item">
+        <div class="commitment-icon">💼</div>
+        <div class="commitment-content">
+          <h4>Suporte jurídico</h4>
+          <p>Equipe jurídica própria para garantir segurança em todas as etapas da transação.</p>
+        </div>
+      </div>
+      
+      <div class="commitment-item">
+        <div class="commitment-icon">🌟</div>
+        <div class="commitment-content">
+          <h4>Pós-venda ativo</h4>
+          <p>Nosso relacionamento não termina na venda. Continuamos disponíveis para o que você precisar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-content">
+    <h2>Pronto para escrever seu próximo <em>capítulo</em>?</h2>
+    <p>Venha tomar um café conosco e contar sua história. Juntos, encontraremos o cenário perfeito para ela.</p>
+    <div class="final-cta-buttons">
+      <a href='contato.html' class="final-cta-primary">Agendar Conversa</a>
+      <a href='imoveis.html' class="final-cta-secondary">Ver Imóveis</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href="imoveis.html">Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href='corretor.html'>Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="#">(11) 99999-9999</a></li>
+        <li><a href="contato.html">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale conosco agora!</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/scroll-animations.js" defer></script>
+<script src="/enhance.js" defer></script>
+</body>
+</html>

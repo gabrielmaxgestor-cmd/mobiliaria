@@ -1,0 +1,153 @@
+/*
+ * Microinterações globais consistentes.
+ * Curva única para todo o site.
+ */
+:root {
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- Botões primários ---------- */
+/* Cobre botões primários comuns do site sem afetar variantes ghost/outline específicas */
+.btn-primary,
+.hero-cta,
+.uni-cta,
+button.primary,
+.btn.primary,
+a.btn-primary,
+[data-variant="primary"] {
+  transition:
+    transform 200ms var(--ease-premium),
+    box-shadow 200ms var(--ease-premium),
+    background-color 200ms var(--ease-premium),
+    color 200ms var(--ease-premium) !important;
+  will-change: transform, box-shadow;
+}
+.btn-primary:hover,
+.hero-cta:hover,
+.uni-cta:hover,
+button.primary:hover,
+.btn.primary:hover,
+a.btn-primary:hover,
+[data-variant="primary"]:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 18px 45px -15px rgba(10, 46, 42, 0.45);
+}
+.btn-primary:active,
+.hero-cta:active,
+.uni-cta:active,
+button.primary:active,
+.btn.primary:active,
+a.btn-primary:active,
+[data-variant="primary"]:active {
+  transform: translateY(0) scale(0.995);
+  transition-duration: 90ms;
+}
+
+/* ---------- Cards de imóvel ---------- */
+.property-card {
+  overflow: hidden;
+  transition:
+    transform 400ms var(--ease-premium),
+    box-shadow 400ms var(--ease-premium),
+    border-color 400ms var(--ease-premium);
+}
+.property-card .card-image,
+.property-card .property-image,
+.property-card .card-media,
+.property-card figure {
+  overflow: hidden;
+}
+.property-card .card-image img,
+.property-card .property-image img,
+.property-card .card-media img,
+.property-card figure img,
+.property-card img.card-photo,
+.property-card > img {
+  transition: transform 700ms var(--ease-premium);
+  will-change: transform;
+}
+.property-card:hover .card-image img,
+.property-card:hover .property-image img,
+.property-card:hover .card-media img,
+.property-card:hover figure img,
+.property-card:hover img.card-photo,
+.property-card:hover > img {
+  transform: scale(1.05);
+}
+.property-card:hover {
+  box-shadow: 0 30px 70px -25px rgba(10, 46, 42, 0.45);
+}
+
+/* Também aplica em cards de bairro / lançamentos / destaque, mantendo a mesma linguagem */
+.neighborhood-card,
+.launch-card,
+.highlight-card,
+.feature-card {
+  overflow: hidden;
+  transition:
+    transform 400ms var(--ease-premium),
+    box-shadow 400ms var(--ease-premium);
+}
+.neighborhood-card img,
+.launch-card img,
+.highlight-card img,
+.feature-card img {
+  transition: transform 700ms var(--ease-premium);
+  will-change: transform;
+}
+.neighborhood-card:hover img,
+.launch-card:hover img,
+.highlight-card:hover img,
+.feature-card:hover img {
+  transform: scale(1.05);
+}
+.neighborhood-card:hover,
+.launch-card:hover,
+.highlight-card:hover,
+.feature-card:hover {
+  box-shadow: 0 30px 70px -25px rgba(10, 46, 42, 0.35);
+}
+
+/* ---------- Links de navegação ---------- */
+.nav-links a,
+.navbar a,
+nav a.nav-link,
+.footer-links a,
+.footer a.foot-link {
+  position: relative;
+  display: inline-block;
+}
+.nav-links a::after,
+.navbar a::after,
+nav a.nav-link::after,
+.footer-links a::after,
+.footer a.foot-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1.5px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 300ms var(--ease-premium);
+}
+.nav-links a:hover::after,
+.navbar a:hover::after,
+nav a.nav-link:hover::after,
+.footer-links a:hover::after,
+.footer a.foot-link:hover::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary, .hero-cta, .uni-cta, button.primary, .btn.primary, a.btn-primary, [data-variant="primary"],
+  .property-card, .property-card img,
+  .neighborhood-card, .launch-card, .highlight-card, .feature-card,
+  .neighborhood-card img, .launch-card img, .highlight-card img, .feature-card img,
+  .nav-links a::after, .navbar a::after, nav a.nav-link::after, .footer-links a::after, .footer a.foot-link::after {
+    transition: none !important;
+    transform: none !important;
+  }
+}

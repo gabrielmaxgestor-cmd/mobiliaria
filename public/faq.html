@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+  <script src="/jsonld.js" defer></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perguntas Frequentes e Glossário — Living Canvas</title>
+<meta name="description" content="Tire dúvidas sobre compra, venda, financiamento e termos do mercado imobiliário.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/faq.html">
+<meta property="og:title" content="Perguntas Frequentes e Glossário — Living Canvas">
+<meta property="og:description" content="Tire dúvidas sobre compra, venda, financiamento e termos do mercado imobiliário.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/faq.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Perguntas Frequentes e Glossário — Living Canvas">
+<meta name="twitter:description" content="Tire dúvidas sobre compra, venda, financiamento e termos do mercado imobiliário.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .help-hero {
+    padding: 2rem 3rem 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .help-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .help-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .help-subtitle {
+    color: var(--text-light);
+    font-size: 1.15rem;
+    margin-bottom: 3rem;
+  }
+  
+  .help-search {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .help-search input {
+    width: 100%;
+    padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+  
+  .help-search input:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+    box-shadow: 0 0 0 4px rgba(212, 175, 122, 0.1);
+  }
+  
+  .help-search input::placeholder {
+    color: rgba(245, 241, 232, 0.5);
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+  
+  /* TABS */
+  .content-tabs {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .tab-btn {
+    padding: 1rem 2.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+  
+  .tab-btn:hover {
+    border-color: var(--gold);
+  }
+  
+  .tab-btn.active {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+  
+  /* MAIN CONTENT AREA */
+  .tab-content {
+    display: none;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 3rem 6rem;
+    animation: fadeIn 0.4s ease-out;
+  }
+  
+  .tab-content.active {
+    display: block;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* FAQ STYLES */
+  .faq-category {
+    margin-bottom: 3rem;
+  }
+  
+  .faq-category-title {
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .faq-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .faq-item:hover {
+    border-color: rgba(212, 175, 122, 0.5);
+  }
+  
+  .faq-item.open {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.05);
+  }
+  
+  .faq-question {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+  
+  .faq-toggle {
+    width: 32px;
+    height: 32px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  
+  .faq-item.open .faq-toggle {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: rotate(45deg);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s;
+  }
+  
+  .faq-item.open .faq-answer {
+    max-height: 500px;
+    padding: 0 2rem 1.5rem;
+  }
+  
+  .faq-answer-content {
+    color: var(--text-light);
+    line-height: 1.8;
+    font-size: 0.95rem;
+  }
+  
+  /* GLOSSARY STYLES */
+  .alphabet-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    padding: 1rem;
+    background: var(--glass-bg);
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+  }
+  
+  .alpha-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .alpha-btn:hover, .alpha-btn.active {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .glossary-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+  }
+  
+  .glossary-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  
+  .glossary-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .glossary-term {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+  }
+  
+  .glossary-definition {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-light);
+    display: none;
+  }
+  
+  /* CTA SECTION */
+  .help-cta {
+    padding: 6rem 3rem;
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .help-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .help-cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .help-cta h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .help-cta h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .help-cta p {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .help-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .help-btn {
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .help-btn-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .help-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .help-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--cream) !important;
+    color: var(--cream);
+  }
+  
+  .help-btn-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .help-hero, .content-tabs, .tab-content, .help-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .glossary-grid { grid-template-columns: 1fr; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .alphabet-nav { gap: 0.3rem; }
+    .alpha-btn { width: 30px; height: 30px; font-size: 0.8rem; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Central de Ajuda</strong>
+</div>
+
+<!-- HERO -->
+<section class="help-hero">
+  <p class="section-eyebrow">Central de Ajuda </p>
+  <h1 class="help-title">Clareza em cada <em>etapa</em></h1>
+  <p class="help-subtitle">Encontre respostas para suas dúvidas e o significado de termos do mercado imobiliário, tudo em linguagem simples e transparente.</p>
+  
+  <div class="help-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="globalSearch" placeholder="Busque por um termo ou dúvida (ex: ITBI, escritura, financiamento...)">
+  </div>
+</section>
+
+<!-- TABS -->
+<div class="content-tabs">
+  <button class="tab-btn active" onclick="switchTab('faq', this)">❓ Perguntas Frequentes</button>
+  <button class="tab-btn" onclick="switchTab('glossary', this)">📖 Glossário Imobiliário</button>
+</div>
+
+<!-- FAQ CONTENT -->
+<div class="tab-content active" id="faq-content">
+  
+  <div class="faq-category">
+    <h3 class="faq-category-title">🏠 Compra e Venda</h3>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Quanto tempo leva para comprar um imóvel?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            O prazo varia conforme a forma de pagamento. À vista, o processo pode ser concluído em 15 a 30 dias (análise documental e escritura). Com financiamento, o prazo médio é de 45 a 60 dias, dependendo da agilidade na aprovação do crédito pelo banco.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Quais documentos são necessários para a compra?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Para pessoas físicas: RG, CPF, Certidão de Estado Civil, Comprovante de Residência, Declaração de Imposto de Renda e comprovante de renda. Nosso time jurídico analisa toda a documentação do imóvel (matrícula atualizada, certidões negativas) para garantir sua segurança.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Como funciona a avaliação do imóvel?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Utilizamos uma análise comparativa de mercado (benchmarking), avaliando localização, estado de conservação, metragem, diferenciais e histórico de vendas recentes na mesma região. O resultado é um laudo preciso que justifica o valor de mercado.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-category">
+    <h3 class="faq-category-title">💰 Financiamento e Custos</h3>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Posso usar meu FGTS para dar entrada?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Sim! O FGTS pode ser utilizado para dar entrada, amortizar o saldo devedor ou quitar o financiamento, desde que você tenha pelo menos 3 anos de trabalho sob o regime do FGTS (somando todos os períodos trabalhados) e o imóvel se enquadre nas regras do SFH (Sistema Financeiro de Habitação).
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Quais são os custos extras além do valor do imóvel?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Além do valor do imóvel, reserve cerca de 4% a 5% do valor total para custos de transação. Isso inclui ITBI (Imposto de Transmissão, varia por cidade, em SP é 2%), taxas de cartório (escritura e registro) e, se houver, taxa de avaliação do banco.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-category">
+    <h3 class="faq-category-title">📜 Documentação e Jurídico</h3>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>Qual a diferença entre Escritura e Registro?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            A <strong>Escritura Pública</strong> é o documento que formaliza a vontade das partes (comprador e vendedor) perante um tabelião. O <strong>Registro</strong> é feito no Cartório de Registro de Imóveis e é o ato que efetivamente transfere a propriedade para o seu nome. Sem o registro, a compra não é considerada concluída legalmente.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span>O que é a Matrícula do Imóvel?</span>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            É a "certidão de nascimento" do imóvel. É um documento emitido pelo Cartório de Registro de Imóveis que contém todo o histórico da propriedade: dimensões, localização, e todas as transações, ônus (como hipotecas) ou averbações realizadas desde sua criação.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- GLOSSARY CONTENT -->
+<div class="tab-content" id="glossary-content">
+  
+  <div class="alphabet-nav" id="alphabetNav">
+    <!-- Gerado via JS -->
+  </div>
+
+  <div class="glossary-grid" id="glossaryGrid">
+    
+    <div class="glossary-card" data-letter="A">
+      <div class="glossary-letter">A</div>
+      <div class="glossary-term">Área Privativa</div>
+      <div class="glossary-definition">Espaço de uso exclusivo do proprietário dentro de um condomínio (ex: o interior do apartamento). Não inclui áreas comuns como hall, piscina ou academia.</div>
+    </div>
+
+    <div class="glossary-card" data-letter="A">
+      <div class="glossary-letter">A</div>
+      <div class="glossary-term">Amortização</div>
+      <div class="glossary-definition">Pagamento feito além do valor da parcela mensal do financiamento, que reduz diretamente o saldo devedor total, diminuindo os juros futuros.</div>
+    </div>
+
+    <div class="glossary-card" data-letter="C">
+      <div class="glossary-letter">C</div>
+      <div class="glossary-term">Custo CUB/m²</div>
+      <div class="glossary-definition">Custo Unitário Básico da Construção Civil. Índice calculado pelos sindicatos da indústria da construção que serve como referência para o valor mínimo de um imóvel novo.</div>
+    </div>
+
+    <div class="glossary-card" data-letter="H">
+      <div class="glossary-letter">H</div>
+      <div class="glossary-term">Habite-se</div>
+      <div class="glossary-definition">Certificado emitido pela prefeitura atestando que a construção foi concluída de acordo com o projeto aprovado e está em condições de ser habitada.</div>
+    </div>
+
+    <div class="glossary-card" data-letter="I">
+      <div class="glossary-letter">I</div>
+      <div class="glossary-term">ITBI</div>
+      <div class="glossary-definition">Imposto de Transmissão de Bens Imóveis. Tributo municipal pago pelo comprador na transferência de propriedade. Em São Paulo, a alíquota é de 2% sobre o valor do imóvel ou venal (o que for maior).</div>
+    </div>
+
+    <div class="glossary-card" data-letter="L">
+      <div class="glossary-letter">L</div>
+      <div class="glossary-term">LTV (Loan to Value)</div>
+      <div class="glossary-definition">Relação entre o valor do empréstimo solicitado e o valor de avaliação do imóvel. Bancos geralmente financiam até 80% do valor do imóvel (LTV de 80%), exigindo 20% de entrada.</div>
+    </div>
+
+    <div class="glossary-card" data-letter="M">
+      <div class="glossary-letter">M</div>
+      <div class="glossary-term">Matrícula do Imóvel</div>
+      <div class="glossary-definition">Documento oficial do Cartório de Registro de Imóveis que comprova a propriedade e detalha todo o histórico jurídico e físico do bem.</div>
+    </div>
+
+    <div class="glossary-card" data-letter="P">
+      <div class="glossary-letter">P</div>
+      <div class="glossary-term">Pé-direito</div>
+      <div class="glossary-definition">Distância vertical entre o piso acabado e o teto (ou laje) de um ambiente. Pé-direito duplo refere-se a ambientes com altura equivalente a dois andares.</div>
+    </div>
+
+    <div class="glossary-card" data-letter="S">
+      <div class="glossary-letter">S</div>
+      <div class="glossary-term">Sistema SAC</div>
+      <div class="glossary-definition">Sistema de Amortização Constante. As parcelas começam mais altas e vão diminuindo ao longo do tempo, pois a amortização da dívida é fixa e os juros são calculados sobre o saldo devedor restante.</div>
+    </div>
+
+    <div class="glossary-card" data-letter="S">
+      <div class="glossary-letter">S</div>
+      <div class="glossary-term">Sistema PRICE</div>
+      <div class="glossary-definition">Sistema Francês de Amortização. As parcelas são fixas do início ao fim do contrato. No começo, a maior parte da parcela paga juros, e uma menor parte amortiza a dívida.</div>
+    </div>
+
+  </div>
+  
+  <div class="no-results" id="noResults">
+    <p>Nenhum termo encontrado para esta busca. Tente outra palavra ou entre em contato conosco.</p>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<section class="help-cta">
+  <div class="help-cta-content">
+    <h2>Ainda tem <em>dúvidas</em>?</h2>
+    <p>Nossa equipe de especialistas está pronta para esclarecer qualquer questão e guiar você em cada etapa da sua jornada imobiliária.</p>
+    <div class="help-cta-buttons">
+      <a href="https://wa.me/5511999999999" class="help-btn help-btn-primary">💬 Falar no WhatsApp</a>
+      <a href='contato.html' class="help-btn help-btn-secondary">Enviar E-mail</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com um especialista</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // TAB SWITCHING
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById(tab + '-content').classList.add('active');
+    
+    // Clear search when switching
+    document.getElementById('globalSearch').value = '';
+    filterGlossary('');
+  }
+  
+  // FAQ TOGGLE
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    const isOpen = item.classList.contains('open');
+    
+    // Close all others (optional, remove this block if you want multiple open)
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    
+    if (!isOpen) {
+      item.classList.add('open');
+    }
+  }
+  
+  // GENERATE ALPHABET NAV
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const navContainer = document.getElementById('alphabetNav');
+  
+  alphabet.forEach(letter => {
+    const btn = document.createElement('button');
+    btn.className = 'alpha-btn';
+    btn.textContent = letter;
+    btn.onclick = () => filterByLetter(letter, btn);
+    navContainer.appendChild(btn);
+  });
+  
+  // Add "Todos" button at the beginning
+  const allBtn = document.createElement('button');
+  allBtn.className = 'alpha-btn active';
+  allBtn.textContent = 'Todos';
+  allBtn.onclick = () => filterByLetter('all', allBtn);
+  navContainer.insertBefore(allBtn, navContainer.firstChild);
+  
+  // FILTER GLOSSARY BY LETTER
+  function filterByLetter(letter, btn) {
+    document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const cards = document.querySelectorAll('.glossary-card');
+    let visibleCount = 0;
+    
+    cards.forEach(card => {
+      if (letter === 'all' || card.getAttribute('data-letter') === letter) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+  
+  // GLOBAL SEARCH (Works on active tab)
+  document.getElementById('globalSearch').addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase().trim();
+    
+    if (document.getElementById('faq-content').classList.contains('active')) {
+      // Search FAQ
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    } else {
+      // Search Glossary
+      filterGlossary(query);
+    }
+  });
+  
+  function filterGlossary(query) {
+    const cards = document.querySelectorAll('.glossary-card');
+    let visibleCount = 0;
+    
+    cards.forEach(card => {
+      const term = card.querySelector('.glossary-term').textContent.toLowerCase();
+      const def = card.querySelector('.glossary-definition').textContent.toLowerCase();
+      
+      if (term.includes(query) || def.includes(query)) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+    
+    // Reset alphabet buttons if searching
+    if (query.length > 0) {
+      document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+    }
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Área do Cliente — Living Canvas</title>
+<meta name="description" content="Acompanhe seus favoritos, agendamentos e documentos em um só lugar.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/dashboard.html">
+<meta property="og:title" content="Área do Cliente — Living Canvas">
+<meta property="og:description" content="Acompanhe seus favoritos, agendamentos e documentos em um só lugar.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/dashboard.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Área do Cliente — Living Canvas">
+<meta name="twitter:description" content="Acompanhe seus favoritos, agendamentos e documentos em um só lugar.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* DASHBOARD LAYOUT */
+  .dashboard-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+  
+  /* SIDEBAR */
+  .sidebar {
+    background: rgba(10, 46, 42, 0.95);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .sidebar-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 3rem;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .sidebar-logo span { font-style: italic; color: var(--cream); }
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    color: var(--text-light);
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  .nav-item:hover {
+    background: var(--glass-bg);
+    color: var(--cream);
+  }
+  
+  .nav-item.active {
+    background: rgba(212, 175, 122, 0.1);
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
+  }
+  
+  .nav-icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+  }
+  
+  .nav-badge {
+    margin-left: auto;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+  }
+  
+  .sidebar-footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    color: #FF6B6B;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+    font-weight: 500;
+    width: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .logout-btn:hover {
+    background: rgba(255, 107, 107, 0.1);
+  }
+  
+  /* MAIN CONTENT */
+  .main-content {
+    padding: 2rem 3rem;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  
+  /* TOP BAR */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  
+  .welcome-text h1 {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .welcome-text h1 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .welcome-text p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+  }
+  
+  .top-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .notification-btn {
+    width: 45px;
+    height: 45px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    font-size: 1.2rem;
+  }
+  
+  .notification-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  
+  .notification-dot {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 8px;
+    height: 8px;
+    background: #FF6B6B;
+    border-radius: 50%;
+    border: 2px solid var(--emerald-deep);
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .user-profile:hover {
+    border-color: var(--gold);
+  }
+  
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80') center/cover;
+    border: 2px solid var(--gold);
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+  
+  .user-role {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+  }
+  
+  /* STATS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .stat-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+  }
+  
+  .stat-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  
+  .stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  
+  .stat-trend {
+    font-size: 0.75rem;
+    color: #25D366;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+  
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  /* DASHBOARD GRID */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .dashboard-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-title {
+    font-size: 1.3rem;
+    color: var(--gold);
+  }
+  
+  .card-link {
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .card-link:hover { color: var(--gold); }
+  
+  /* VISIT CARDS */
+  .visit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .visit-item {
+    display: flex;
+    gap: 1.2rem;
+    padding: 1.2rem;
+    background: rgba(245, 241, 232, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    transition: all 0.3s;
+  }
+  
+  .visit-item:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.05);
+  }
+  
+  .visit-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    padding: 0.8rem;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 122, 0.3);
+  }
+  
+  .visit-day {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  
+  .visit-month {
+    font-size: 0.7rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.2rem;
+  }
+  
+  .visit-details {
+    flex: 1;
+  }
+  
+  .visit-property {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  
+  .visit-meta {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .visit-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .status-confirmed {
+    background: rgba(37, 211, 102, 0.15);
+    color: #25D366;
+    border: 1px solid rgba(37, 211, 102, 0.3);
+  }
+  
+  .status-pending {
+    background: rgba(255, 217, 61, 0.15);
+    color: #FFD93D;
+    border: 1px solid rgba(255, 217, 61, 0.3);
+  }
+  
+  .visit-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .btn-small {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .btn-primary-small {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .btn-primary-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 122, 0.3);
+  }
+  
+  .btn-ghost-small {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+  }
+  
+  .btn-ghost-small:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--glass-border);
+  }
+  
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+  }
+  
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+  
+  .timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--emerald-deep);
+    border: 3px solid var(--gold);
+    z-index: 2;
+  }
+  
+  .timeline-dot.completed {
+    background: var(--gold);
+  }
+  
+  .timeline-dot.current {
+    background: var(--gold);
+    box-shadow: 0 0 0 4px rgba(212, 175, 122, 0.2);
+  }
+  
+  .timeline-content h4 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--cream);
+  }
+  
+  .timeline-content p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  
+  .timeline-date {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+    margin-top: 0.5rem;
+    display: block;
+  }
+  
+  /* FAVORITES GRID */
+  .favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .fav-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+  }
+  
+  .fav-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .fav-image {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .fav-remove {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 32px;
+    height: 32px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--cream);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  
+  .fav-remove:hover {
+    background: #FF6B6B;
+    border-color: #FF6B6B;
+  }
+  
+  .fav-content {
+    padding: 1.2rem;
+  }
+  
+  .fav-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .fav-location {
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+    margin-bottom: 1rem;
+  }
+  
+  .fav-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* DOCUMENTS LIST */
+  .doc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .doc-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(245, 241, 232, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .doc-item:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.05);
+  }
+  
+  .doc-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  
+  .doc-info {
+    flex: 1;
+  }
+  
+  .doc-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+  
+  .doc-meta {
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+  
+  .doc-action {
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+  }
+  
+  .doc-item:hover .doc-action {
+    transform: translateY(2px);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1200px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .dashboard-grid { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-layout { grid-template-columns: 1fr; }
+    .sidebar { 
+      position: fixed; 
+      left: -100%; 
+      z-index: 1001; 
+      width: 280px;
+      transition: left 0.3s;
+    }
+    .sidebar.open { left: 0; }
+    .main-content { padding: 1.5rem; }
+    .top-bar { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .favorites-grid { grid-template-columns: 1fr; }
+    .visit-item { flex-direction: column; }
+    .visit-date { flex-direction: row; gap: 0.5rem; min-width: auto; justify-content: flex-start; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<div class="dashboard-layout">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <a href='home.html' class="sidebar-logo">LIVING<span>canvas</span></a>
+    
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item active">
+        <span class="nav-icon">📊</span>
+        Visão Geral
+      </a>
+      <a href="dashboard.html#favoritos" class="nav-item">
+        <span class="nav-icon">❤️</span>
+        Favoritos
+        <span class="nav-badge">3</span>
+      </a>
+      <a href="agendar.html" class="nav-item">
+        <span class="nav-icon">📅</span>
+        Agendamentos
+        <span class="nav-badge">2</span>
+      </a>
+      <a href="dashboard.html#documentos" class="nav-item">
+        <span class="nav-icon">📁</span>
+        Documentos
+      </a>
+      <a href="contato.html" class="nav-item">
+        <span class="nav-icon">💬</span>
+        Mensagens
+        <span class="nav-badge">1</span>
+      </a>
+      <a href="dashboard.html#configuracoes" class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        Configurações
+      </a>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="window.location.href='home.html'">
+        <span class="nav-icon">🚪</span>
+        Sair da Conta
+      </button>
+    </div>
+  </aside>
+  
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <div class="welcome-text">
+        <h1>Bom dia, <em>Mariana</em> 👋</h1>
+        <p>Pronta para dar o próximo passo na busca pelo seu cenário ideal?</p>
+      </div>
+      
+      <div class="top-bar-actions">
+        <button class="notification-btn">
+          🔔
+          <span class="notification-dot"></span>
+        </button>
+        <div class="user-profile">
+          <div class="user-avatar"></div>
+          <div class="user-info">
+            <span class="user-name">Mariana Costa</span>
+            <span class="user-role">Cliente VIP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <div class="stat-icon">❤️</div>
+          <div class="stat-trend">+2 esta semana</div>
+        </div>
+        <div class="stat-value">3</div>
+        <div class="stat-label">Imóveis Favoritos</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-header">
+          <div class="stat-icon">📅</div>
+          <div class="stat-trend">Próxima: Amanhã</div>
+        </div>
+        <div class="stat-value">2</div>
+        <div class="stat-label">Visitas Agendadas</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-header">
+          <div class="stat-icon">📝</div>
+          <div class="stat-trend">Em análise</div>
+        </div>
+        <div class="stat-value">1</div>
+        <div class="stat-label">Proposta Ativa</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-header">
+          <div class="stat-icon">📁</div>
+          <div class="stat-trend">2 novos</div>
+        </div>
+        <div class="stat-value">5</div>
+        <div class="stat-label">Documentos</div>
+      </div>
+    </div>
+    
+    <!-- DASHBOARD GRID -->
+    <div class="dashboard-grid">
+      
+      <!-- UPCOMING VISITS -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h3 class="card-title">📅 Próximos Capítulos</h3>
+          <a href="imoveis.html" class="card-link">Ver todos →</a>
+        </div>
+        
+        <div class="visit-list">
+          <div class="visit-item">
+            <div class="visit-date">
+              <span class="visit-day">18</span>
+              <span class="visit-month">Jul</span>
+            </div>
+            <div class="visit-details">
+              <div class="visit-property">Casa do Bosque</div>
+              <div class="visit-meta">
+                <span>🕐 14:00</span>
+                <span>📍 Jardim Europa</span>
+                <span>👤 Ana Carolina</span>
+              </div>
+              <span class="visit-status status-confirmed">✓ Confirmada</span>
+            </div>
+            <div class="visit-actions">
+              <a href="imovel.html" class="btn-small btn-primary-small">Ver Detalhes</a>
+              <button class="btn-small btn-ghost-small">Remarcar</button>
+            </div>
+          </div>
+          
+          <div class="visit-item">
+            <div class="visit-date">
+              <span class="visit-day">22</span>
+              <span class="visit-month">Jul</span>
+            </div>
+            <div class="visit-details">
+              <div class="visit-property">Loft Horizonte</div>
+              <div class="visit-meta">
+                <span>🕐 10:00</span>
+                <span>💻 Visita Virtual</span>
+                <span>👤 Ricardo Mendes</span>
+              </div>
+              <span class="visit-status status-pending">⏳ Aguardando Confirmação</span>
+            </div>
+            <div class="visit-actions">
+              <a href="agendar.html" class="btn-small btn-primary-small">Confirmar</a>
+              <button class="btn-small btn-ghost-small">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PROCESS TIMELINE -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h3 class="card-title">🚀 Sua Jornada</h3>
+          <a href="dashboard.html#historico" class="card-link">Histórico →</a>
+        </div>
+        
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot completed"></div>
+            <div class="timeline-content">
+              <h4>Cadastro Realizado</h4>
+              <p>Sua conta foi criada com sucesso e seu perfil foi configurado.</p>
+              <span class="timeline-date">10 de Julho, 2026</span>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot completed"></div>
+            <div class="timeline-content">
+              <h4>Visita Presencial</h4>
+              <p>Visitou a Casa do Bosque com a corretora Ana Carolina.</p>
+              <span class="timeline-date">15 de Julho, 2026</span>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot current"></div>
+            <div class="timeline-content">
+              <h4>Proposta em Análise</h4>
+              <p>Proposta de R$ 2.75M enviada ao proprietário. Prazo de resposta: 48h.</p>
+              <span class="timeline-date">17 de Julho, 2026</span>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h4>Aprovação e Escritura</h4>
+              <p>Assinatura do contrato e registro em cartório.</p>
+              <span class="timeline-date">Em breve</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- FAVORITES & DOCUMENTS GRID -->
+    <div class="dashboard-grid">
+      
+      <!-- FAVORITES -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h3 class="card-title">❤️ Seus Cenários Salvos</h3>
+          <a href="imoveis.html" class="card-link">Ver todos →</a>
+        </div>
+        
+        <div class="favorites-grid">
+          <div class="fav-card">
+            <div class="fav-image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80')">
+              <button class="fav-remove">×</button>
+            </div>
+            <div class="fav-content">
+              <h4 class="fav-title">Casa do Bosque</h4>
+              <p class="fav-location">Jardim Europa • 420m²</p>
+              <div class="fav-price">
+                <span>R$ 2.8M</span>
+                <a href='imovel.html' class="btn-small btn-primary-small" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Ver</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="fav-card">
+            <div class="fav-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80')">
+              <button class="fav-remove">×</button>
+            </div>
+            <div class="fav-content">
+              <h4 class="fav-title">Penthouse Urbano</h4>
+              <p class="fav-location">Itaim Bibi • 320m²</p>
+              <div class="fav-price">
+                <span>R$ 3.1M</span>
+                <a href='imovel.html' class="btn-small btn-primary-small" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Ver</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="fav-card">
+            <div class="fav-image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80')">
+              <button class="fav-remove">×</button>
+            </div>
+            <div class="fav-content">
+              <h4 class="fav-title">Studio Artístico</h4>
+              <p class="fav-location">Pinheiros • 95m²</p>
+              <div class="fav-price">
+                <span>R$ 1.9M</span>
+                <a href='imovel.html' class="btn-small btn-primary-small" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Ver</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- DOCUMENTS -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h3 class="card-title">📁 Documentos Seguros</h3>
+          <a href="dashboard.html#documentos" class="card-link">Gerenciar →</a>
+        </div>
+        
+        <div class="doc-list">
+          <div class="doc-item">
+            <div class="doc-icon">📄</div>
+            <div class="doc-info">
+              <div class="doc-name">Proposta Formal - Casa do Bosque.pdf</div>
+              <div class="doc-meta">Enviado em 17/07/2026 • 2.4 MB</div>
+            </div>
+            <div class="doc-action">⬇️</div>
+          </div>
+          
+          <div class="doc-item">
+            <div class="doc-icon">📊</div>
+            <div class="doc-info">
+              <div class="doc-name">Simulação Financiamento - Caixa.pdf</div>
+              <div class="doc-meta">Gerado em 16/07/2026 • 1.1 MB</div>
+            </div>
+            <div class="doc-action">⬇️</div>
+          </div>
+          
+          <div class="doc-item">
+            <div class="doc-icon">📝</div>
+            <div class="doc-info">
+              <div class="doc-name">Contrato de Corretagem Assinado.pdf</div>
+              <div class="doc-meta">Assinado em 12/07/2026 • 3.8 MB</div>
+            </div>
+            <div class="doc-action">⬇️</div>
+          </div>
+          
+          <div class="doc-item">
+            <div class="doc-icon">🪪</div>
+            <div class="doc-info">
+              <div class="doc-name">RG e CPF - Mariana Costa.pdf</div>
+              <div class="doc-meta">Enviado em 10/07/2026 • 0.8 MB</div>
+            </div>
+            <div class="doc-action">⬇️</div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </main>
+</div>
+
+<script>
+  // Simple interaction for sidebar on mobile (if needed)
+  // In a real app, this would be tied to a hamburger menu button
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

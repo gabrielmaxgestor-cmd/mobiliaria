@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar ou Cadastrar — Living Canvas</title>
+<meta name="description" content="Acesse sua conta para salvar imóveis favoritos e acompanhar agendamentos.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/login.html">
+<meta property="og:title" content="Entrar ou Cadastrar — Living Canvas">
+<meta property="og:description" content="Acesse sua conta para salvar imóveis favoritos e acompanhar agendamentos.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/login.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Entrar ou Cadastrar — Living Canvas">
+<meta name="twitter:description" content="Acesse sua conta para salvar imóveis favoritos e acompanhar agendamentos.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  
+  .nav-back:hover { color: var(--gold); }
+  
+  /* AUTH LAYOUT */
+  .auth-layout {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  
+  /* LEFT SIDE - VISUAL */
+  .auth-visual {
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80') center/cover;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+  }
+  
+  .auth-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10,46,42,0.85) 0%, rgba(10,46,42,0.6) 100%);
+  }
+  
+  .auth-visual-content {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+    color: var(--cream);
+  }
+  
+  .auth-visual-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .auth-visual-title {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .auth-visual-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .auth-visual-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-light);
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+  
+  /* BENEFITS LIST */
+  .benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .benefit-item {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+  
+  .benefit-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(212, 175, 122, 0.15);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  
+  .benefit-content h4 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--cream);
+  }
+  
+  .benefit-content p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  
+  /* TRUST BADGE */
+  .trust-badge {
+    position: absolute;
+    bottom: 3rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: var(--cream);
+    z-index: 3;
+  }
+  
+  .trust-icon {
+    color: var(--gold);
+    font-size: 1rem;
+  }
+  
+  /* RIGHT SIDE - FORM */
+  .auth-form-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    background: var(--emerald-deep);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .auth-form-side::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  .auth-form-container {
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* TABS */
+  .auth-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 0.4rem;
+  }
+  
+  .auth-tab {
+    flex: 1;
+    padding: 0.9rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+  
+  .auth-tab.active {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    font-weight: 600;
+  }
+  
+  /* FORM */
+  .auth-form {
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .auth-form.active {
+    display: block;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .form-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  
+  .form-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .form-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+  
+  /* SOCIAL LOGIN */
+  .social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+  
+  .social-btn {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--cream);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+  
+  .social-btn:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.08);
+    transform: translateY(-2px);
+  }
+  
+  .social-icon {
+    font-size: 1.1rem;
+  }
+  
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--glass-border);
+  }
+  
+  /* FORM FIELDS */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .forgot-link {
+    font-size: 0.75rem;
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: 0;
+    transition: color 0.3s;
+  }
+  
+  .forgot-link:hover {
+    color: var(--cream);
+  }
+  
+  .form-input-wrapper {
+    position: relative;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+  
+  .form-input:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+    box-shadow: 0 0 0 3px rgba(212, 175, 122, 0.1);
+  }
+  
+  .form-input::placeholder {
+    color: rgba(245, 241, 232, 0.4);
+  }
+  
+  .input-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold-soft);
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .input-icon:hover {
+    color: var(--gold);
+  }
+  
+  /* PASSWORD STRENGTH */
+  .password-strength {
+    margin-top: 0.5rem;
+    display: none;
+  }
+  
+  .password-strength.active {
+    display: block;
+  }
+  
+  .strength-bar {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.4rem;
+  }
+  
+  .strength-segment {
+    flex: 1;
+    height: 4px;
+    background: rgba(245, 241, 232, 0.1);
+    border-radius: 10px;
+    transition: background 0.3s;
+  }
+  
+  .strength-segment.weak { background: #FF6B6B; }
+  .strength-segment.medium { background: #FFD93D; }
+  .strength-segment.strong { background: #25D366; }
+  
+  .strength-text {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+  
+  /* CHECKBOX */
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .checkbox-wrapper input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+  
+  /* SUBMIT */
+  .form-submit {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--gold);
+    border: none;
+    border-radius: 50px;
+    color: var(--emerald-deep);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+  
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* TERMS */
+  .terms-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  
+  .terms-text a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    transition: color 0.3s;
+  }
+  
+  .terms-text a:hover {
+    color: var(--cream);
+  }
+  
+  /* FOOTER */
+  .auth-footer {
+    position: absolute;
+    bottom: 2rem;
+    left: 4rem;
+    right: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+  
+  .auth-footer a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .auth-footer a:hover { color: var(--gold); }
+  
+  .auth-footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .auth-layout { grid-template-columns: 1fr; }
+    .auth-visual {
+      min-height: 300px;
+      padding: 3rem 2rem;
+    }
+    .auth-visual-content { max-width: 100%; }
+    .auth-visual-subtitle { margin-bottom: 2rem; }
+    .benefits-list { gap: 1rem; }
+    .trust-badge { left: 2rem; bottom: 2rem; }
+    .auth-form-side { padding: 3rem 2rem; }
+    .auth-footer { left: 2rem; right: 2rem; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .auth-visual { padding: 2.5rem 1.5rem; min-height: auto; }
+    .auth-visual-title { font-size: 2rem; }
+    .benefits-list { display: none; }
+    .trust-badge { left: 1.5rem; bottom: 1.5rem; font-size: 0.7rem; padding: 0.6rem 1rem; }
+    .auth-form-side { padding: 2.5rem 1.5rem; }
+    .form-title { font-size: 1.6rem; }
+    .auth-footer { 
+      left: 1.5rem; right: 1.5rem; 
+      flex-direction: column; 
+      gap: 1rem; 
+      text-align: center;
+    }
+    .auth-footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .floating-cta { bottom: 1rem; right: 1rem; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='home.html' class="nav-back">← Voltar ao site</a>
+</nav>
+
+<!-- AUTH LAYOUT -->
+<div class="auth-layout">
+  
+  <!-- LEFT SIDE - VISUAL -->
+  <div class="auth-visual">
+    <div class="auth-visual-content">
+      <p class="auth-visual-eyebrow">Área Exclusiva </p>
+      <h1 class="auth-visual-title">Seu próximo <em>cenário</em> começa aqui</h1>
+      <p class="auth-visual-subtitle">Crie sua conta e tenha acesso a ferramentas exclusivas que tornam sua jornada imobiliária mais simples, personalizada e prazerosa.</p>
+      
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <div class="benefit-icon">❤️</div>
+          <div class="benefit-content">
+            <h4>Salve seus favoritos</h4>
+            <p>Marque imóveis que te interessam e compare quando quiser, em qualquer dispositivo.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-item">
+          <div class="benefit-icon">📅</div>
+          <div class="benefit-content">
+            <h4>Agende visitas online</h4>
+            <p>Escolha data e horário diretamente pelo calendário, com confirmação instantânea.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-item">
+          <div class="benefit-icon">📊</div>
+          <div class="benefit-content">
+            <h4>Acompanhe seu processo</h4>
+            <p>Veja em tempo real o status das suas negociações, documentos e propostas.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-item">
+          <div class="benefit-icon">🔔</div>
+          <div class="benefit-content">
+            <h4>Alertas personalizados</h4>
+            <p>Receba notificações de novos imóveis que combinam com seu perfil de busca.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="trust-badge">
+      <span class="trust-icon">🔒</span>
+      <span>Seus dados estão protegidos com criptografia de ponta</span>
+    </div>
+  </div>
+  
+  <!-- RIGHT SIDE - FORM -->
+  <div class="auth-form-side">
+    <div class="auth-form-container">
+      
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login', this)">Entrar</button>
+        <button class="auth-tab" onclick="switchTab('register', this)">Criar conta</button>
+      </div>
+      
+      <!-- LOGIN FORM -->
+      <div class="auth-form active" id="loginForm">
+        <h2 class="form-title">Bem-vindo <em>de volta</em></h2>
+        <p class="form-subtitle">Entre com suas credenciais para acessar sua conta.</p>
+        
+        <!-- SOCIAL LOGIN -->
+        <div class="social-login">
+          <button class="social-btn">
+            <span class="social-icon">G</span>
+            Continuar com Google
+          </button>
+          <button class="social-btn">
+            <span class="social-icon"></span>
+            Continuar com Apple
+          </button>
+        </div>
+        
+        <div class="divider">ou entre com e-mail</div>
+        
+        <form>
+          <div class="form-group">
+            <label for="loginEmail">E-mail</label>
+            <input type="email" id="loginEmail" class="form-input" placeholder="seu@email.com" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="loginPassword">
+              Senha
+              <a href="#" class="forgot-link" onclick="showForgotPassword(event)">Esqueceu?</a>
+            </label>
+            <div class="form-input-wrapper">
+              <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+              <span class="input-icon" onclick="togglePassword('loginPassword', this)">👁</span>
+            </div>
+          </div>
+          
+          <div class="form-options">
+            <label class="checkbox-wrapper">
+              <input type="checkbox" checked>
+              <span>Lembrar de mim</span>
+            </label>
+          </div>
+          
+          <button type="submit" class="form-submit">Entrar</button>
+        </form>
+        
+        <p class="terms-text">
+          Ao entrar, você concorda com nossos <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>.
+        </p>
+      </div>
+      
+      <!-- REGISTER FORM -->
+      <div class="auth-form" id="registerForm">
+        <h2 class="form-title">Crie sua <em>conta</em></h2>
+        <p class="form-subtitle">Junte-se a mais de 500 famílias que encontraram seu cenário ideal.</p>
+        
+        <!-- SOCIAL LOGIN -->
+        <div class="social-login">
+          <button class="social-btn">
+            <span class="social-icon">G</span>
+            Criar conta com Google
+          </button>
+          <button class="social-btn">
+            <span class="social-icon"></span>
+            Criar conta com Apple
+          </button>
+        </div>
+        
+        <div class="divider">ou cadastre-se com e-mail</div>
+        
+        <form>
+          <div class="form-group">
+            <label for="registerName">Nome completo</label>
+            <input type="text" id="registerName" class="form-input" placeholder="Seu nome" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="registerEmail">E-mail</label>
+            <input type="email" id="registerEmail" class="form-input" placeholder="seu@email.com" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="registerPhone">WhatsApp</label>
+            <input type="tel" id="registerPhone" class="form-input" placeholder="(11) 99999-9999" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="registerPassword">Senha</label>
+            <div class="form-input-wrapper">
+              <input type="password" id="registerPassword" class="form-input" placeholder="Mínimo 8 caracteres" required oninput="checkPasswordStrength(this.value)">
+              <span class="input-icon" onclick="togglePassword('registerPassword', this)">👁</span>
+            </div>
+            <div class="password-strength" id="passwordStrength">
+              <div class="strength-bar">
+                <div class="strength-segment" id="segment1"></div>
+                <div class="strength-segment" id="segment2"></div>
+                <div class="strength-segment" id="segment3"></div>
+                <div class="strength-segment" id="segment4"></div>
+              </div>
+              <div class="strength-text" id="strengthText">Digite uma senha</div>
+            </div>
+          </div>
+          
+          <div class="form-options">
+            <label class="checkbox-wrapper">
+              <input type="checkbox" required>
+              <span>Concordo com os <a href="#" style="color: var(--gold); text-decoration: none;">Termos</a> e <a href="#" style="color: var(--gold); text-decoration: none;">Privacidade</a></span>
+            </label>
+          </div>
+          
+          <button type="submit" class="form-submit">Criar Conta</button>
+        </form>
+        
+        <p class="terms-text">
+          🔒 Seus dados estão seguros. Não enviamos spam.
+        </p>
+      </div>
+      
+    </div>
+    
+    <!-- FOOTER -->
+    <div class="auth-footer">
+      <span>© 2026 Living Canvas • CRECI-SP 00000-J</span>
+      <div class="auth-footer-links">
+        <a href="#">Ajuda</a>
+        <a href="#">Privacidade</a>
+        <a href="#">Termos</a>
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Precisa de ajuda?</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // SWITCH TABS
+  function switchTab(tab, btn) {
+    // Update active tab
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // Show/hide forms
+    document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+    document.getElementById(tab + 'Form').classList.add('active');
+  }
+  
+  // TOGGLE PASSWORD VISIBILITY
+  function togglePassword(inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      icon.textContent = '👁';
+    }
+  }
+  
+  // PASSWORD STRENGTH CHECKER
+  function checkPasswordStrength(password) {
+    const strengthContainer = document.getElementById('passwordStrength');
+    const segments = [
+      document.getElementById('segment1'),
+      document.getElementById('segment2'),
+      document.getElementById('segment3'),
+      document.getElementById('segment4')
+    ];
+    const strengthText = document.getElementById('strengthText');
+    
+    if (password.length === 0) {
+      strengthContainer.classList.remove('active');
+      return;
+    }
+    
+    strengthContainer.classList.add('active');
+    
+    // Reset segments
+    segments.forEach(s => s.className = 'strength-segment');
+    
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^A-Za-z0-9]/.test(password)) strength++;
+    
+    const levels = [
+      { class: 'weak', text: 'Senha fraca', color: '#FF6B6B' },
+      { class: 'weak', text: 'Senha fraca', color: '#FF6B6B' },
+      { class: 'medium', text: 'Senha média', color: '#FFD93D' },
+      { class: 'strong', text: 'Senha forte', color: '#25D366' },
+      { class: 'strong', text: 'Senha muito forte', color: '#25D366' }
+    ];
+    
+    for (let i = 0; i < strength; i++) {
+      segments[i].classList.add(levels[strength].class);
+    }
+    
+    strengthText.textContent = levels[strength].text;
+    strengthText.style.color = levels[strength].color;
+  }
+  
+  // FORGOT PASSWORD
+  function showForgotPassword(event) {
+    event.preventDefault();
+    alert('Em breve: recuperação de senha por e-mail.');
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

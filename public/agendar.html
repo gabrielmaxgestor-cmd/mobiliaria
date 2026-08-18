@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agendar Visita — Living Canvas</title>
+<meta name="description" content="Agende uma visita presencial ou virtual ao imóvel de sua escolha.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/agendar.html">
+<meta property="og:title" content="Agendar Visita — Living Canvas">
+<meta property="og:description" content="Agende uma visita presencial ou virtual ao imóvel de sua escolha.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/agendar.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agendar Visita — Living Canvas">
+<meta name="twitter:description" content="Agende uma visita presencial ou virtual ao imóvel de sua escolha.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .schedule-hero {
+    padding: 2rem 3rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .schedule-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  
+  .schedule-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .schedule-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  /* STEPS INDICATOR */
+  .steps-indicator {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  
+  .steps-indicator::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: var(--glass-border);
+    z-index: 0;
+  }
+  
+  .step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .step-number {
+    width: 40px;
+    height: 40px;
+    background: var(--emerald-mid);
+    border: 2px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+  
+  .step.active .step-number {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+    box-shadow: 0 0 0 6px rgba(212, 175, 122, 0.15);
+  }
+  
+  .step.completed .step-number {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+  }
+  
+  .step-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .step.active .step-label {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  /* MAIN GRID */
+  .schedule-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 2.5rem;
+  }
+  
+  .schedule-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+  }
+  
+  .schedule-card h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .schedule-card h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .schedule-card > p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* CALENDAR */
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .calendar-month {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+  }
+  
+  .calendar-nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .calendar-nav button {
+    width: 35px;
+    height: 35px;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+  }
+  
+  .calendar-nav button:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+  }
+  
+  .calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .weekday {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.5rem 0;
+  }
+  
+  .calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.3rem;
+  }
+  
+  .calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(245, 241, 232, 0.03);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    position: relative;
+  }
+  
+  .calendar-day:hover:not(.disabled):not(.empty) {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.1);
+  }
+  
+  .calendar-day.selected {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    font-weight: 700;
+    border-color: var(--gold);
+  }
+  
+  .calendar-day.today {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  
+  .calendar-day.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  
+  .calendar-day.empty {
+    background: transparent;
+    cursor: default;
+  }
+  
+  .calendar-day.has-slots::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  
+  /* TIME SLOTS */
+  .time-slots {
+    margin-top: 2rem;
+  }
+  
+  .time-slots-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .time-slots-title {
+    font-size: 0.9rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.6rem;
+  }
+  
+  .time-slot {
+    padding: 0.8rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+  
+  .time-slot:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.1);
+  }
+  
+  .time-slot.selected {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+  
+  .time-slot.unavailable {
+    opacity: 0.3;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+  
+  /* VISIT TYPE */
+  .visit-type {
+    margin-top: 2rem;
+  }
+  
+  .visit-type-title {
+    font-size: 0.9rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+  
+  .visit-type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .visit-type-option {
+    padding: 1.2rem 0.8rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  
+  .visit-type-option:hover {
+    border-color: var(--gold);
+  }
+  
+  .visit-type-option.selected {
+    background: rgba(212, 175, 122, 0.1);
+    border-color: var(--gold);
+  }
+  
+  .visit-type-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .visit-type-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  
+  .visit-type-option.selected .visit-type-name {
+    color: var(--gold);
+  }
+  
+  .visit-type-desc {
+    font-size: 0.7rem;
+    color: var(--text-light);
+  }
+  
+  /* SIDEBAR */
+  .schedule-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  /* PROPERTY SUMMARY */
+  .property-summary {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .property-summary-image {
+    height: 180px;
+    background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80') center/cover;
+    position: relative;
+  }
+  
+  .property-summary-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .property-summary-content {
+    padding: 1.5rem;
+  }
+  
+  .property-summary-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .property-summary-location {
+    color: var(--gold-soft);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  
+  .property-summary-stats {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .property-summary-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin-top: 1rem;
+  }
+  
+  /* BOOKING SUMMARY */
+  .booking-summary {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  
+  .booking-summary h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+  }
+  
+  .booking-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .booking-detail {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 0.8rem;
+    background: rgba(245, 241, 232, 0.03);
+    border-radius: 10px;
+  }
+  
+  .booking-detail-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  
+  .booking-detail-content {
+    flex: 1;
+  }
+  
+  .booking-detail-label {
+    font-size: 0.7rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.2rem;
+  }
+  
+  .booking-detail-value {
+    font-size: 0.9rem;
+    color: var(--cream);
+  }
+  
+  .booking-detail-value.empty {
+    color: var(--text-light);
+    opacity: 0.5;
+    font-style: italic;
+  }
+  
+  .booking-note {
+    padding: 1rem;
+    background: rgba(212, 175, 122, 0.08);
+    border: 1px solid rgba(212, 175, 122, 0.2);
+    border-radius: 10px;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+  
+  .booking-note strong {
+    color: var(--gold);
+  }
+  
+  .booking-submit {
+    width: 100%;
+    padding: 1.1rem;
+    background: var(--gold);
+    border: none;
+    border-radius: 50px;
+    color: var(--emerald-deep);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+  
+  .booking-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .booking-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+  .booking-alt {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .booking-alt a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  /* VISIT TYPES SECTION */
+  .visit-types-section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .visit-types-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .visit-types-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .visit-types-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .visit-types-header p {
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .visit-types-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .visit-type-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .visit-type-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  
+  .visit-type-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .visit-type-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .visit-type-card-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .visit-type-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    color: var(--gold);
+  }
+  
+  .visit-type-card p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  
+  .visit-type-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  
+  .visit-type-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .visit-type-feature::before {
+    content: '✓';
+    color: var(--gold);
+    font-weight: 700;
+  }
+  
+  /* BROKERS SECTION */
+  .brokers-section {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald-mid) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .brokers-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .brokers-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .brokers-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .brokers-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .brokers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .broker-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .broker-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .broker-card.selected {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.08);
+  }
+  
+  .broker-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid var(--gold);
+    margin: 0 auto 1.5rem;
+  }
+  
+  .broker-name {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .broker-role {
+    color: var(--gold-soft);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+  
+  .broker-specialty {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+  
+  .broker-rating {
+    color: var(--gold);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .broker-select-btn {
+    padding: 0.7rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+  
+  .broker-card.selected .broker-select-btn {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .broker-select-btn:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  /* EXPECT SECTION */
+  .expect-section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .expect-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .expect-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .expect-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .expect-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .expect-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.3s;
+  }
+  
+  .expect-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  
+  .expect-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .expect-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+  }
+  
+  .expect-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  
+  /* FAQ */
+  .faq-section {
+    background: var(--emerald-mid);
+    padding: 6rem 3rem;
+  }
+  
+  .faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .faq-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .faq-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .faq-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .faq-item:hover {
+    border-color: var(--gold);
+  }
+  
+  .faq-question {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .faq-question h4 {
+    font-size: 1.05rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  
+  .faq-toggle {
+    width: 30px;
+    height: 30px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  
+  .faq-item.active .faq-toggle {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: rotate(45deg);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+  
+  .faq-answer-content {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .schedule-main { grid-template-columns: 1fr; }
+    .visit-types-grid { grid-template-columns: 1fr; }
+    .visit-type-grid { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .schedule-hero, .schedule-main, .visit-types-section, .brokers-section, .expect-section, .faq-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .schedule-card { padding: 2rem 1.5rem; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .steps-indicator { padding: 0 1.5rem; }
+    .step-label { display: none; }
+    .calendar-days { gap: 0.2rem; }
+    .calendar-day { font-size: 0.8rem; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <a href='imovel.html'>Casa do Bosque</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Agendar Visita</strong>
+</div>
+
+<!-- HERO -->
+<section class="schedule-hero">
+  <p class="section-eyebrow">Agendamento Inteligente </p>
+  <h1 class="schedule-title">Escolha o <em>momento perfeito</em> para viver este espaço</h1>
+  <p class="schedule-subtitle">Agende sua visita em poucos cliques. Presencial, virtual ou tour 360° — você decide como quer conhecer seu próximo lar.</p>
+</section>
+
+<!-- STEPS INDICATOR -->
+<div class="steps-indicator">
+  <div class="step active">
+    <div class="step-number">1</div>
+    <div class="step-label">Data & Hora</div>
+  </div>
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-label">Tipo de Visita</div>
+  </div>
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-label">Seus Dados</div>
+  </div>
+  <div class="step">
+    <div class="step-number">4</div>
+    <div class="step-label">Confirmação</div>
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="schedule-main">
+  
+  <!-- CALENDAR & FORM -->
+  <div class="schedule-card">
+    <h2>Escolha <em>data e horário</em></h2>
+    <p>Selecione o dia e horário que melhor se encaixa na sua agenda.</p>
+    
+    <!-- CALENDAR -->
+    <div class="calendar-header">
+      <div class="calendar-month" id="calendarMonth">Julho 2026</div>
+      <div class="calendar-nav">
+        <button onclick="changeMonth(-1)">‹</button>
+        <button onclick="changeMonth(1)">›</button>
+      </div>
+    </div>
+    
+    <div class="calendar-weekdays">
+      <div class="weekday">Dom</div>
+      <div class="weekday">Seg</div>
+      <div class="weekday">Ter</div>
+      <div class="weekday">Qua</div>
+      <div class="weekday">Qui</div>
+      <div class="weekday">Sex</div>
+      <div class="weekday">Sáb</div>
+    </div>
+    
+    <div class="calendar-days" id="calendarDays">
+      <!-- Preenchido via JavaScript -->
+    </div>
+    
+    <!-- TIME SLOTS -->
+    <div class="time-slots" id="timeSlotsSection" style="display: none;">
+      <div class="time-slots-header">
+        <div class="time-slots-title" id="timeSlotsTitle">Horários disponíveis</div>
+      </div>
+      <div class="time-slots-grid" id="timeSlotsGrid">
+        <!-- Preenchido via JavaScript -->
+      </div>
+    </div>
+    
+    <!-- VISIT TYPE -->
+    <div class="visit-type">
+      <div class="visit-type-title">Tipo de Visita</div>
+      <div class="visit-type-grid">
+        <div class="visit-type-option selected" onclick="selectVisitType('presencial', this)">
+          <div class="visit-type-icon">🏠</div>
+          <div class="visit-type-name">Presencial</div>
+          <div class="visit-type-desc">Visita ao imóvel</div>
+        </div>
+        <div class="visit-type-option" onclick="selectVisitType('virtual', this)">
+          <div class="visit-type-icon">💻</div>
+          <div class="visit-type-name">Virtual</div>
+          <div class="visit-type-desc">Videochamada ao vivo</div>
+        </div>
+        <div class="visit-type-option" onclick="selectVisitType('tour360', this)">
+          <div class="visit-type-icon">🎥</div>
+          <div class="visit-type-name">Tour 360°</div>
+          <div class="visit-type-desc">Tour guiado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- SIDEBAR -->
+  <aside class="schedule-sidebar">
+    
+    <!-- PROPERTY SUMMARY -->
+    <div class="property-summary">
+      <div class="property-summary-image">
+        <span class="property-summary-badge">Exclusivo</span>
+      </div>
+      <div class="property-summary-content">
+        <h3 class="property-summary-title">Casa do Bosque</h3>
+        <p class="property-summary-location">📍 Jardim Europa • 420m²</p>
+        <div class="property-summary-stats">
+          <span>🛏 4 suítes</span>
+          <span>🌳 Jardim</span>
+          <span>🚗 4 vagas</span>
+        </div>
+        <div class="property-summary-price">R$ 2.800.000</div>
+      </div>
+    </div>
+    
+    <!-- BOOKING SUMMARY -->
+    <div class="booking-summary">
+      <h3>Resumo do Agendamento</h3>
+      
+      <div class="booking-details">
+        <div class="booking-detail">
+          <div class="booking-detail-icon">📅</div>
+          <div class="booking-detail-content">
+            <div class="booking-detail-label">Data</div>
+            <div class="booking-detail-value" id="summaryDate"><span class="empty">Selecione uma data</span></div>
+          </div>
+        </div>
+        <div class="booking-detail">
+          <div class="booking-detail-icon">🕐</div>
+          <div class="booking-detail-content">
+            <div class="booking-detail-label">Horário</div>
+            <div class="booking-detail-value" id="summaryTime"><span class="empty">Selecione um horário</span></div>
+          </div>
+        </div>
+        <div class="booking-detail">
+          <div class="booking-detail-icon">🏠</div>
+          <div class="booking-detail-content">
+            <div class="booking-detail-label">Tipo de Visita</div>
+            <div class="booking-detail-value" id="summaryType">Presencial</div>
+          </div>
+        </div>
+        <div class="booking-detail">
+          <div class="booking-detail-icon">👤</div>
+          <div class="booking-detail-content">
+            <div class="booking-detail-label">Corretor</div>
+            <div class="booking-detail-value">Ana Carolina Silva</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="booking-note">
+        <strong>💡 Importante:</strong> Após confirmar, você receberá um e-mail com todos os detalhes e um lembrete 24h antes da visita.
+      </div>
+      
+      <button class="booking-submit" id="bookingSubmit" disabled>Confirmar Agendamento</button>
+      
+      <div class="booking-alt">
+        Prefere agendar por WhatsApp? <a href="https://wa.me/5511999999999">Clique aqui</a>
+      </div>
+    </div>
+    
+  </aside>
+</div>
+
+<!-- VISIT TYPES SECTION -->
+<section class="visit-types-section">
+  <div class="visit-types-header">
+    <p class="section-eyebrow">Modalidades</p>
+    <h2>Escolha como quer <em>conhecer</em> o imóvel</h2>
+    <p>Cada modalidade foi pensada para oferecer a melhor experiência, de acordo com seu momento e preferências.</p>
+  </div>
+  
+  <div class="visit-types-grid">
+    <div class="visit-type-card">
+      <div class="visit-type-card-icon">🏠</div>
+      <h3>Visita Presencial</h3>
+      <p>A experiência completa. Caminhe pelos ambientes, sinta a energia do espaço e imagine sua vida ali.</p>
+      <div class="visit-type-features">
+        <div class="visit-type-feature">Acompanhamento do corretor</div>
+        <div class="visit-type-feature">Sem limite de tempo</div>
+        <div class="visit-type-feature">Visita ao bairro</div>
+        <div class="visit-type-feature">Café cortesia no escritório</div>
+      </div>
+    </div>
+    
+    <div class="visit-type-card">
+      <div class="visit-type-card-icon">💻</div>
+      <h3>Visita Virtual</h3>
+      <p>Ideal para quem está em outra cidade ou quer uma primeira impressão antes da visita presencial.</p>
+      <div class="visit-type-features">
+        <div class="visit-type-feature">Videochamada ao vivo</div>
+        <div class="visit-type-feature">Corretor no imóvel</div>
+        <div class="visit-type-feature">Perguntas em tempo real</div>
+        <div class="visit-type-feature">Duração: 30-45 minutos</div>
+      </div>
+    </div>
+    
+    <div class="visit-type-card">
+      <div class="visit-type-card-icon">🎥</div>
+      <h3>Tour 360°</h3>
+      <p>Explore cada ambiente no seu próprio ritmo, a qualquer hora do dia ou da noite.</p>
+      <div class="visit-type-features">
+        <div class="visit-type-feature">Acesso 24/7</div>
+        <div class="visit-type-feature">Navegação livre</div>
+        <div class="visit-type-feature">Detalhes de cada ambiente</div>
+        <div class="visit-type-feature">Compatível com VR</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BROKERS SECTION -->
+<section class="brokers-section">
+  <div class="brokers-container">
+    <div class="brokers-header">
+      <p class="section-eyebrow">Seu Especialista</p>
+      <h2>Escolha seu <em>corretor</em></h2>
+    </div>
+    
+    <div class="brokers-grid">
+      <div class="broker-card selected" onclick="selectBroker(this)">
+        <div class="broker-avatar" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80')"></div>
+        <h3 class="broker-name">Ana Carolina Silva</h3>
+        <p class="broker-role">Corretora Sênior</p>
+        <p class="broker-specialty">Especialista em Jardim Europa e Zona Sul</p>
+        <div class="broker-rating">★★★★★ 5.0 • 150+ vendas</div>
+        <button class="broker-select-btn">Selecionada</button>
+      </div>
+      
+      <div class="broker-card" onclick="selectBroker(this)">
+        <div class="broker-avatar" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80')"></div>
+        <h3 class="broker-name">Ricardo Mendes</h3>
+        <p class="broker-role">Diretor & Founder</p>
+        <p class="broker-specialty">Imóveis de alto padrão e negociações complexas</p>
+        <div class="broker-rating">★★★★★ 5.0 • 200+ vendas</div>
+        <button class="broker-select-btn">Selecionar</button>
+      </div>
+      
+      <div class="broker-card" onclick="selectBroker(this)">
+        <div class="broker-avatar" style="background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80')"></div>
+        <h3 class="broker-name">Carlos Eduardo</h3>
+        <p class="broker-role">Consultor de Investimentos</p>
+        <p class="broker-specialty">Investimentos e locação premium</p>
+        <div class="broker-rating">★★★★★ 5.0 • R$200M em ativos</div>
+        <button class="broker-select-btn">Selecionar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPECT SECTION -->
+<section class="expect-section">
+  <div class="expect-header">
+    <p class="section-eyebrow">O Que Esperar</p>
+    <h2>Sua experiência <em>começa aqui</em></h2>
+  </div>
+  
+  <div class="expect-grid">
+    <div class="expect-item">
+      <div class="expect-icon">📧</div>
+      <h3 class="expect-title">Confirmação imediata</h3>
+      <p class="expect-text">Após agendar, você recebe um e-mail com todos os detalhes, endereço e instruções.</p>
+    </div>
+    
+    <div class="expect-item">
+      <div class="expect-icon">🔔</div>
+      <h3 class="expect-title">Lembrete 24h antes</h3>
+      <p class="expect-text">Enviamos um lembrete por e-mail e WhatsApp um dia antes da sua visita.</p>
+    </div>
+    
+    <div class="expect-item">
+      <div class="expect-icon">☕</div>
+      <h3 class="expect-title">Recepção premium</h3>
+      <p class="expect-text">Café, água e um ambiente acolhedor. Você é nosso convidado, não um cliente.</p>
+    </div>
+    
+    <div class="expect-item">
+      <div class="expect-icon">📋</div>
+      <h3 class="expect-title">Dossiê do imóvel</h3>
+      <p class="expect-text">Você recebe um material completo com fotos, planta, documentos e informações do bairro.</p>
+    </div>
+    
+    <div class="expect-item">
+      <div class="expect-icon">🚗</div>
+      <h3 class="expect-title">Estacionamento</h3>
+      <p class="expect-text">Estacionamento gratuito e privativo no local. Indicação de rotas e transporte público.</p>
+    </div>
+    
+    <div class="expect-item">
+      <div class="expect-icon">🤝</div>
+      <h3 class="expect-title">Sem pressão</h3>
+      <p class="expect-text">Visite no seu ritmo, faça todas as perguntas. Estamos aqui para ajudar, não para vender.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-container">
+    <div class="faq-header">
+      <p class="section-eyebrow">Dúvidas Frequentes</p>
+      <h2>Sobre o <em>agendamento</em></h2>
+    </div>
+    
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Preciso pagar algo para agendar uma visita?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Não! Todas as visitas são completamente gratuitas, incluindo visitas presenciais, virtuais e tours 360°. Nosso objetivo é oferecer a melhor experiência para você conhecer o imóvel sem nenhum compromisso.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Posso cancelar ou remarcar minha visita?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Sim! Você pode cancelar ou remarcar sua visita a qualquer momento, sem custos. Basta entrar em contato conosco por WhatsApp, e-mail ou através da sua área do cliente. Recomendamos avisar com pelo menos 24 horas de antecedência.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Quanto tempo dura uma visita presencial?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Não há limite de tempo. Uma visita típica dura entre 45 minutos e 1h30, mas você pode permanecer o tempo que precisar para conhecer todos os ambientes, tirar dúvidas e sentir o espaço. Agendamos visitas em blocos de 1h para garantir exclusividade.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Posso levar familiares ou amigos na visita?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Claro! Inclusive recomendamos. A decisão de comprar um imóvel envolve toda a família, e é importante que todos possam conhecer o espaço. Basta informar o número de pessoas no momento do agendamento para organizarmos melhor a visita.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Como funciona a visita virtual?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Na visita virtual, nosso corretor vai até o imóvel e faz uma videochamada ao vivo com você (via WhatsApp, Zoom ou Google Meet). Você pode pedir para ver ambientes específicos, fazer perguntas em tempo real e ter uma experiência muito próxima da visita presencial. Duração média: 30-45 minutos.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Vocês buscam eu no hotel ou aeroporto?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Para clientes de fora da cidade ou para imóveis de altíssimo padrão, oferecemos serviço de transfer exclusivo. Basta solicitar no momento do agendamento e nossa equipe organizará o traslado de ida e volta.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale conosco agora!</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // CALENDAR STATE
+  let currentDate = new Date(2026, 6, 1); // Julho 2026
+  let selectedDate = null;
+  let selectedTime = null;
+  let selectedVisitType = 'presencial';
+  
+  const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+                      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+  
+  // RENDER CALENDAR
+  function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
+    
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const calendarDays = document.getElementById('calendarDays');
+    calendarDays.innerHTML = '';
+    
+    // Empty cells before first day
+    for (let i = 0; i < firstDay; i++) {
+      const empty = document.createElement('div');
+      empty.className = 'calendar-day empty';
+      calendarDays.appendChild(empty);
+    }
+    
+    // Days
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      const dayEl = document.createElement('div');
+      dayEl.className = 'calendar-day';
+      dayEl.textContent = day;
+      
+      // Today
+      if (date.getTime() === today.getTime()) {
+        dayEl.classList.add('today');
+      }
+      
+      // Past or Sunday (no visits)
+      if (date < today || date.getDay() === 0) {
+        dayEl.classList.add('disabled');
+      } else {
+        dayEl.classList.add('has-slots');
+        dayEl.onclick = () => selectDate(date, dayEl);
+      }
+      
+      // Selected
+      if (selectedDate && date.getTime() === selectedDate.getTime()) {
+        dayEl.classList.add('selected');
+      }
+      
+      calendarDays.appendChild(dayEl);
+    }
+  }
+  
+  // CHANGE MONTH
+  function changeMonth(delta) {
+    currentDate.setMonth(currentDate.getMonth() + delta);
+    renderCalendar();
+  }
+  
+  // SELECT DATE
+  function selectDate(date, element) {
+    selectedDate = date;
+    selectedTime = null;
+    
+    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+    element.classList.add('selected');
+    
+    renderTimeSlots();
+    updateSummary();
+  }
+  
+  // RENDER TIME SLOTS
+  function renderTimeSlots() {
+    if (!selectedDate) return;
+    
+    const section = document.getElementById('timeSlotsSection');
+    section.style.display = 'block';
+    
+    const dayName = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][selectedDate.getDay()];
+    const dayNum = selectedDate.getDate();
+    const monthName = monthNames[selectedDate.getMonth()];
+    
+    document.getElementById('timeSlotsTitle').textContent = `Horários para ${dayName}, ${dayNum} de ${monthName}`;
+    
+    const slots = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+    const unavailable = ['11:00', '16:00']; // Simulação
+    
+    const grid = document.getElementById('timeSlotsGrid');
+    grid.innerHTML = '';
+    
+    slots.forEach(slot => {
+      const slotEl = document.createElement('div');
+      slotEl.className = 'time-slot';
+      slotEl.textContent = slot;
+      
+      if (unavailable.includes(slot)) {
+        slotEl.classList.add('unavailable');
+      } else {
+        slotEl.onclick = () => selectTime(slot, slotEl);
+      }
+      
+      if (selectedTime === slot) {
+        slotEl.classList.add('selected');
+      }
+      
+      grid.appendChild(slotEl);
+    });
+  }
+  
+  // SELECT TIME
+  function selectTime(time, element) {
+    selectedTime = time;
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+    element.classList.add('selected');
+    updateSummary();
+  }
+  
+  // SELECT VISIT TYPE
+  function selectVisitType(type, element) {
+    selectedVisitType = type;
+    document.querySelectorAll('.visit-type-option').forEach(o => o.classList.remove('selected'));
+    element.classList.add('selected');
+    
+    const names = {
+      'presencial': 'Presencial',
+      'virtual': 'Virtual (Videochamada)',
+      'tour360': 'Tour 360°'
+    };
+    document.getElementById('summaryType').textContent = names[type];
+    updateSummary();
+  }
+  
+  // SELECT BROKER
+  function selectBroker(element) {
+    document.querySelectorAll('.broker-card').forEach(b => {
+      b.classList.remove('selected');
+      b.querySelector('.broker-select-btn').textContent = 'Selecionar';
+    });
+    element.classList.add('selected');
+    element.querySelector('.broker-select-btn').textContent = 'Selecionada';
+  }
+  
+  // UPDATE SUMMARY
+  function updateSummary() {
+    const dateEl = document.getElementById('summaryDate');
+    const timeEl = document.getElementById('summaryTime');
+    const submitBtn = document.getElementById('bookingSubmit');
+    
+    if (selectedDate) {
+      const dayName = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][selectedDate.getDay()];
+      const dayNum = selectedDate.getDate();
+      const monthName = monthNames[selectedDate.getMonth()];
+      dateEl.innerHTML = `${dayName}, ${dayNum} de ${monthName}`;
+      dateEl.classList.remove('empty');
+    } else {
+      dateEl.innerHTML = '<span class="empty">Selecione uma data</span>';
+    }
+    
+    if (selectedTime) {
+      timeEl.innerHTML = selectedTime;
+      timeEl.classList.remove('empty');
+    } else {
+      timeEl.innerHTML = '<span class="empty">Selecione um horário</span>';
+    }
+    
+    // Enable submit if date and time selected
+    submitBtn.disabled = !(selectedDate && selectedTime);
+  }
+  
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // FAQ TOGGLE
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    item.classList.toggle('active');
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  // INIT
+  renderCalendar();
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

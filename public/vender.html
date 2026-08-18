@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quero Vender — Living Canvas</title>
+<meta name="description" content="Anuncie seu imóvel com quem entende de alto padrão. Avaliação profissional e marketing dedicado.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/vender.html">
+<meta property="og:title" content="Quero Vender — Living Canvas">
+<meta property="og:description" content="Anuncie seu imóvel com quem entende de alto padrão. Avaliação profissional e marketing dedicado.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/vender.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quero Vender — Living Canvas">
+<meta name="twitter:description" content="Anuncie seu imóvel com quem entende de alto padrão. Avaliação profissional e marketing dedicado.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .sell-hero {
+    padding: 2rem 3rem 5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .sell-hero-left .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .sell-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .sell-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .sell-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+  
+  .sell-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .sell-benefit {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 1rem;
+  }
+  
+  .sell-benefit-icon {
+    width: 35px;
+    height: 35px;
+    background: rgba(212, 175, 122, 0.15);
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  
+  /* EVALUATION FORM */
+  .evaluation-form {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+    position: relative;
+  }
+  
+  .evaluation-form::before {
+    content: 'GRATUITO';
+    position: absolute;
+    top: -12px;
+    right: 2rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  
+  .form-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .form-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 0.9rem 1.2rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+    box-shadow: 0 0 0 3px rgba(212, 175, 122, 0.1);
+  }
+  
+  .form-group input::placeholder {
+    color: rgba(245, 241, 232, 0.4);
+  }
+  
+  .form-group select option {
+    background: var(--emerald-deep);
+    color: var(--cream);
+  }
+  
+  .form-submit {
+    width: 100%;
+    padding: 1.2rem;
+    background: var(--gold);
+    border: none;
+    border-radius: 50px;
+    color: var(--emerald-deep);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
+  
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .form-note {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+  
+  .form-note strong {
+    color: var(--gold);
+  }
+  
+  /* SECTIONS */
+  .section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  
+  .section-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .section-subtitle {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+  
+  /* PROCESS STEPS */
+  .process-section {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald-mid) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .process-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    position: relative;
+  }
+  
+  .process-grid::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    z-index: 0;
+  }
+  
+  .process-step {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .process-number {
+    width: 80px;
+    height: 80px;
+    background: var(--emerald-deep);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-style: italic;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  
+  .process-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .process-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+  }
+  
+  .process-description {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  
+  .process-time {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid rgba(212, 175, 122, 0.3);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+  }
+  
+  /* RESULTS */
+  .results-section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .result-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  
+  .result-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  
+  .result-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .result-label {
+    font-size: 0.95rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .result-description {
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+  
+  /* DIFFERENTIALS */
+  .diff-section {
+    background: var(--emerald-mid);
+    padding: 6rem 3rem;
+  }
+  
+  .diff-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .diff-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    transition: all 0.3s;
+    position: relative;
+  }
+  
+  .diff-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    background: rgba(212, 175, 122, 0.05);
+  }
+  
+  .diff-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .diff-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+  
+  .diff-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+  
+  /* COMPARISON */
+  .comparison-section {
+    padding: 6rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .comparison-table {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+  
+  .comparison-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    background: rgba(212, 175, 122, 0.1);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .comparison-header-cell {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .comparison-header-cell.highlight {
+    color: var(--gold);
+    text-align: center;
+  }
+  
+  .comparison-header-cell.other {
+    color: var(--text-light);
+    text-align: center;
+    opacity: 0.7;
+  }
+  
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    align-items: center;
+    transition: background 0.3s;
+  }
+  
+  .comparison-row:last-child {
+    border-bottom: none;
+  }
+  
+  .comparison-row:hover {
+    background: rgba(245, 241, 232, 0.03);
+  }
+  
+  .comparison-feature {
+    font-size: 0.95rem;
+  }
+  
+  .comparison-value {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  .comparison-value.yes {
+    color: var(--gold);
+  }
+  
+  .comparison-value.no {
+    color: var(--text-light);
+    opacity: 0.4;
+  }
+  
+  /* TESTIMONIALS */
+  .testimonials-section {
+    background: linear-gradient(180deg, var(--emerald-mid) 0%, var(--emerald-deep) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .testimonials-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .testimonial-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  .testimonial-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .testimonial-quote {
+    font-size: 3rem;
+    color: var(--gold);
+    opacity: 0.5;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  
+  .testimonial-result {
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid rgba(212, 175, 122, 0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .testimonial-result-label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .testimonial-result-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .testimonial-avatar {
+    width: 55px; height: 55px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid var(--gold);
+  }
+  
+  .testimonial-info h4 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .testimonial-info p {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+  }
+  
+  /* FAQ */
+  .faq-section {
+    padding: 6rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .faq-list {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .faq-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .faq-item:hover {
+    border-color: var(--gold);
+  }
+  
+  .faq-question {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .faq-question h4 {
+    font-size: 1.05rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  
+  .faq-toggle {
+    width: 30px;
+    height: 30px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  
+  .faq-item.active .faq-toggle {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: rotate(45deg);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+  
+  .faq-answer-content {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  
+  /* FINAL CTA */
+  .final-cta {
+    padding: 6rem 3rem;
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .final-cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .final-cta h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .final-cta h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .final-cta p {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .final-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .final-cta-buttons a {
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .final-cta-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .final-cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .final-cta-secondary {
+    background: transparent;
+    border: 1px solid var(--cream) !important;
+    color: var(--cream);
+  }
+  
+  .final-cta-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .sell-hero { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-grid::before { display: none; }
+    .results-grid { grid-template-columns: repeat(2, 1fr); }
+    .comparison-header, .comparison-row { grid-template-columns: 1.5fr 1fr 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .sell-hero, .section, .process-section, .diff-section, .comparison-section, .testimonials-section, .faq-section, .final-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .process-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr 1fr 1fr; font-size: 0.85rem; }
+    .comparison-header { padding: 1rem; }
+    .comparison-row { padding: 1rem; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href="#avaliacao" class="nav-cta">Avaliar Meu Imóvel</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Quero Vender Meu Imóvel</strong>
+</div>
+
+<!-- HERO -->
+<section class="sell-hero">
+  <div class="sell-hero-left">
+    <p class="section-eyebrow">Venda Seu Imóvel </p>
+    <h1 class="sell-title">Seu imóvel merece ser <em>vendido</em>, não apenas listado.</h1>
+    <p class="sell-subtitle">
+      Na Living Canvas, transformamos a venda do seu imóvel em uma experiência premium. Com curadoria estratégica, marketing de alto impacto e uma rede qualificada de compradores, garantimos o melhor resultado no menor tempo possível.
+    </p>
+    <div class="sell-benefits">
+      <div class="sell-benefit">
+        <div class="sell-benefit-icon">✓</div>
+        <span>Avaliação gratuita em até 48 horas</span>
+      </div>
+      <div class="sell-benefit">
+        <div class="sell-benefit-icon">✓</div>
+        <span>Fotos profissionais e tour virtual 360°</span>
+      </div>
+      <div class="sell-benefit">
+        <div class="sell-benefit-icon">✓</div>
+        <span>Divulgação em canais premium e rede exclusiva</span>
+      </div>
+      <div class="sell-benefit">
+        <div class="sell-benefit-icon">✓</div>
+        <span>Suporte jurídico completo do início ao fim</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- EVALUATION FORM -->
+  <div class="evaluation-form" id="avaliacao">
+    <h2 class="form-title">Solicite sua <em>avaliação</em></h2>
+    <p class="form-subtitle">Descubra o valor real do seu imóvel com nossa análise gratuita.</p>
+    
+    <form>
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" placeholder="Seu nome" required>
+      </div>
+      
+      <div class="form-group">
+        <label>WhatsApp</label>
+        <input type="tel" placeholder="(11) 99999-9999" required>
+      </div>
+      
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" placeholder="seu@email.com" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Tipo de imóvel</label>
+        <select required>
+          <option value="">Selecione</option>
+          <option value="casa">Casa</option>
+          <option value="apartamento">Apartamento</option>
+          <option value="cobertura">Cobertura</option>
+          <option value="studio">Studio</option>
+          <option value="comercial">Comercial</option>
+          <option value="terreno">Terreno</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Bairro</label>
+        <input type="text" placeholder="Ex: Jardim Europa" required>
+      </div>
+      
+      <button type="submit" class="form-submit">Solicitar Avaliação Gratuita</button>
+      
+      <p class="form-note">
+        <strong>🔒 100% seguro.</strong> Seus dados estão protegidos.
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-container">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p class="section-eyebrow">Como Funciona</p>
+      <h2 class="section-title">Da avaliação às <em>chaves na mão</em></h2>
+      <p class="section-subtitle" style="margin: 1rem auto 0;">
+        Um processo transparente, ágil e pensado para oferecer o melhor resultado para você.
+      </p>
+    </div>
+    
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-number">01</div>
+        <div class="process-icon">📊</div>
+        <h3 class="process-title">Avaliação</h3>
+        <p class="process-description">Análise completa do seu imóvel com base em dados de mercado, localização e diferenciais.</p>
+        <span class="process-time">48 horas</span>
+      </div>
+      
+      <div class="process-step">
+        <div class="process-number">02</div>
+        <div class="process-icon">📸</div>
+        <h3 class="process-title">Produção</h3>
+        <p class="process-description">Fotos profissionais, tour virtual 360°, textos curatoriais e material de divulgação premium.</p>
+        <span class="process-time">5-7 dias</span>
+      </div>
+      
+      <div class="process-step">
+        <div class="process-number">03</div>
+        <div class="process-icon">🎯</div>
+        <h3 class="process-title">Divulgação</h3>
+        <p class="process-description">Estratégia multicanal com alcance em portais premium, redes sociais e nossa rede exclusiva.</p>
+        <span class="process-time">Contínuo</span>
+      </div>
+      
+      <div class="process-step">
+        <div class="process-number">04</div>
+        <div class="process-icon">🔑</div>
+        <h3 class="process-title">Negociação</h3>
+        <p class="process-description">Condução especializada das propostas, suporte jurídico e acompanhamento até a assinatura.</p>
+        <span class="process-time">30-90 dias</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section">
+  <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+    <p class="section-eyebrow">Resultados Comprovados</p>
+    <h2 class="section-title">Números que <em>falam</em> por nós</h2>
+    <p class="section-subtitle" style="margin: 1rem auto 0;">
+      Mais de uma década entregando resultados excepcionais para proprietários como você.
+    </p>
+  </div>
+  
+  <div class="results-grid">
+    <div class="result-card">
+      <div class="result-number">500+</div>
+      <div class="result-label">Imóveis vendidos</div>
+      <div class="result-description">Nos últimos 15 anos</div>
+    </div>
+    
+    <div class="result-card">
+      <div class="result-number">45</div>
+      <div class="result-label">Dias em média</div>
+      <div class="result-description">Tempo médio de venda</div>
+    </div>
+    
+    <div class="result-card">
+      <div class="result-number">97%</div>
+      <div class="result-label">Do preço pedido</div>
+      <div class="result-description">Valorização obtida</div>
+    </div>
+    
+    <div class="result-card">
+      <div class="result-number">R$1.2B</div>
+      <div class="result-label">Em vendas</div>
+      <div class="result-description">Volume total negociado</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIALS -->
+<section class="diff-section">
+  <div class="diff-container">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p class="section-eyebrow">Por Que a Living Canvas</p>
+      <h2 class="section-title">O que fazemos <em>diferente</em></h2>
+    </div>
+    
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-icon">📸</div>
+        <h3 class="diff-title">Produção visual premium</h3>
+        <p class="diff-text">Fotos profissionais, drone, tour virtual 360° e home staging. Seu imóvel apresentado como uma obra de arte.</p>
+      </div>
+      
+      <div class="diff-card">
+        <div class="diff-icon">🎯</div>
+        <h3 class="diff-title">Marketing estratégico</h3>
+        <p class="diff-text">Campanhas segmentadas em portais premium, redes sociais e nossa base exclusiva de investidores qualificados.</p>
+      </div>
+      
+      <div class="diff-card">
+        <div class="diff-icon">🤝</div>
+        <h3 class="diff-title">Negociação especializada</h3>
+        <p class="diff-text">Corretores experientes conduzem cada proposta com técnica, preservando o valor do seu imóvel em cada etapa.</p>
+      </div>
+      
+      <div class="diff-card">
+        <div class="diff-icon">⚖️</div>
+        <h3 class="diff-title">Suporte jurídico completo</h3>
+        <p class="diff-text">Equipe jurídica própria analisa contratos, documentação e garante segurança total em toda a transação.</p>
+      </div>
+      
+      <div class="diff-card">
+        <div class="diff-icon">📊</div>
+        <h3 class="diff-title">Relatórios transparentes</h3>
+        <p class="diff-text">Acompanhe em tempo real visitas, interesse, feedback de compradores e evolução do processo.</p>
+      </div>
+      
+      <div class="diff-card">
+        <div class="diff-icon">🌐</div>
+        <h3 class="diff-title">Rede internacional</h3>
+        <p class="diff-text">Parcerias com imobiliárias globais para alcançar compradores estrangeiros interessados no mercado brasileiro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="comparison-section">
+  <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+    <p class="section-eyebrow">Comparativo</p>
+    <h2 class="section-title">Living Canvas vs. <em>mercado tradicional</em></h2>
+    <p class="section-subtitle" style="margin: 1rem auto 0;">
+      Entenda o que diferencia nosso serviço das imobiliárias convencionais.
+    </p>
+  </div>
+  
+  <div class="comparison-table">
+    <div class="comparison-header">
+      <div class="comparison-header-cell">Recurso</div>
+      <div class="comparison-header-cell highlight">Living Canvas</div>
+      <div class="comparison-header-cell other">Outras imobiliárias</div>
+    </div>
+    
+    <div class="comparison-row">
+      <div class="comparison-feature">Fotos profissionais</div>
+      <div class="comparison-value yes">✓</div>
+      <div class="comparison-value no">✗</div>
+    </div>
+    
+    <div class="comparison-row">
+      <div class="comparison-feature">Tour virtual 360°</div>
+      <div class="comparison-value yes">✓</div>
+      <div class="comparison-value no">✗</div>
+    </div>
+    
+    <div class="comparison-row">
+      <div class="comparison-feature">Home staging</div>
+      <div class="comparison-value yes">✓</div>
+      <div class="comparison-value no">✗</div>
+    </div>
+    
+    <div class="comparison-row">
+      <div class="comparison-feature">Suporte jurídico próprio</div>
+      <div class="comparison-value yes">✓</div>
+      <div class="comparison-value no">✗</div>
+    </div>
+    
+    <div class="comparison-row">
+      <div class="comparison-feature">Relatórios em tempo real</div>
+      <div class="comparison-value yes">✓</div>
+      <div class="comparison-value no">✗</div>
+    </div>
+    
+    <div class="comparison-row">
+      <div class="comparison-feature">Rede internacional</div>
+      <div class="comparison-value yes">✓</div>
+      <div class="comparison-value no">✗</div>
+    </div>
+    
+    <div class="comparison-row">
+      <div class="comparison-feature">Corretor dedicado</div>
+      <div class="comparison-value yes">✓</div>
+      <div class="comparison-value yes">~</div>
+    </div>
+    
+    <div class="comparison-row">
+      <div class="comparison-feature">Avaliação em 48h</div>
+      <div class="comparison-value yes">✓</div>
+      <div class="comparison-value no">✗</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p class="section-eyebrow">Histórias de Sucesso</p>
+      <h2 class="section-title">Proprietários que <em>confiaram</em> em nós</h2>
+    </div>
+    
+    <div class="testimonials-grid">
+      <article class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">
+          Vendemos nosso apartamento em Jardim Europa em apenas 32 dias, pelo valor que queríamos. A produção visual foi impecável e atraiu compradores qualificados desde o primeiro dia.
+        </p>
+        <div class="testimonial-result">
+          <span class="testimonial-result-label">Vendido em</span>
+          <span class="testimonial-result-value">32 dias</span>
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80')"></div>
+          <div class="testimonial-info">
+            <h4>Mariana & Pedro</h4>
+            <p>Apto 180m² • Jardim Europa</p>
+          </div>
+        </div>
+      </article>
+      
+      <article class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">
+          Como investidor, precisava de uma imobiliária que entendesse de números e mercado. A Living Canvas superou todas as expectativas — venderam 3 imóveis meus com agilidade e excelência.
+        </p>
+        <div class="testimonial-result">
+          <span class="testimonial-result-label">Valor obtido</span>
+          <span class="testimonial-result-value">98% do pedido</span>
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80')"></div>
+          <div class="testimonial-info">
+            <h4>Roberto Almeida</h4>
+            <p>3 imóveis vendidos • Investidor</p>
+          </div>
+        </div>
+      </article>
+      
+      <article class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">
+          O suporte jurídico foi fundamental. Tivemos uma situação complexa de documentação e a equipe resolveu tudo com tranquilidade. Profissionalismo do início ao fim.
+        </p>
+        <div class="testimonial-result">
+          <span class="testimonial-result-label">Vendido em</span>
+          <span class="testimonial-result-value">58 dias</span>
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80')"></div>
+          <div class="testimonial-info">
+            <h4>Fernanda Costa</h4>
+            <p>Casa 420m² • Vila Madalena</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div style="text-align: center;">
+    <p class="section-eyebrow">Dúvidas Frequentes</p>
+    <h2 class="section-title">Perguntas de quem quer <em>vender</em></h2>
+  </div>
+  
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Qual o valor da comissão da Living Canvas?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Nossa comissão segue os padrões do mercado, variando de 4% a 6% sobre o valor de venda, dependendo do tipo e valor do imóvel. Oferecemos condições especiais para proprietários com múltiplos imóveis ou contratos de exclusividade.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Preciso assinar contrato de exclusividade?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Não é obrigatório, mas recomendamos. A exclusividade nos permite investir mais em marketing e produção visual do seu imóvel, resultando em melhor preço e agilidade na venda. Contratos de exclusividade costumam ter condições comerciais mais vantajosas.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Quanto tempo leva para vender meu imóvel?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Nosso tempo médio de venda é de 45 dias, mas varia conforme localização, preço e características do imóvel. Imóveis bem precificados e com produção visual premium costumam vender em até 30 dias. Fazemos uma análise realista do prazo durante a avaliação.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Como é feita a avaliação do meu imóvel?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Nossa avaliação combina análise técnica (visita ao imóvel, verificação de documentação) com estudo de mercado (comparativos de vendas recentes na região, tendências, demanda). Em até 48 horas, você recebe um relatório completo com o valor estimado e a estratégia recomendada.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Vocês cuidam de toda a documentação?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Sim. Nossa equipe jurídica própria cuida de toda a documentação necessária: análise de matrículas, certidões, contrato de compra e venda, escritura e registro. Você não precisa se preocupar com burocracia — nós conduzimos tudo com segurança e transparência.
+        </div>
+      </div>
+    </div>
+    
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Posso acompanhar o processo de venda?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Absolutamente. Você tem acesso a um painel exclusivo com relatórios em tempo real: número de visitas, interesse de compradores, feedback, propostas recebidas e evolução do processo. Além disso, seu corretor dedicado mantém contato regular para atualizações.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-content">
+    <h2>Pronto para vender seu imóvel com <em>excelência</em>?</h2>
+    <p>Solicite agora sua avaliação gratuita e descubra o verdadeiro potencial do seu imóvel no mercado.</p>
+    <div class="final-cta-buttons">
+      <a href="#avaliacao" class="final-cta-primary">Avaliar Meu Imóvel</a>
+      <a href="https://wa.me/5511999999999" class="final-cta-secondary">💬 Falar Agora</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com um especialista</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // FAQ TOGGLE
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    item.classList.toggle('active');
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corretor Especialista — Living Canvas</title>
+<meta name="description" content="Conheça o perfil, especialidades e portfólio do nosso corretor.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/corretor.html">
+<meta property="og:title" content="Corretor Especialista — Living Canvas">
+<meta property="og:description" content="Conheça o perfil, especialidades e portfólio do nosso corretor.">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/corretor.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Corretor Especialista — Living Canvas">
+<meta name="twitter:description" content="Conheça o perfil, especialidades e portfólio do nosso corretor.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO PROFILE */
+  .profile-hero {
+    padding: 2rem 3rem 5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .profile-photo-container {
+    position: relative;
+  }
+  
+  .profile-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80') center/cover;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.4);
+  }
+  
+  .profile-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(10,46,42,0.6) 100%);
+  }
+  
+  .profile-photo-badge {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  
+  .profile-photo-social {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    display: flex;
+    gap: 0.8rem;
+    z-index: 2;
+  }
+  
+  .profile-photo-social a {
+    width: 40px;
+    height: 40px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+  
+  .profile-photo-social a:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: translateY(-3px);
+  }
+  
+  .profile-info .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .profile-name {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile-name em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .profile-role {
+    color: var(--gold-soft);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  
+  .profile-tagline {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--gold);
+  }
+  
+  .profile-quick-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-quick-stat {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+  
+  .profile-quick-stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  
+  .profile-quick-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .profile-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .profile-cta {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .profile-cta-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .profile-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .profile-cta-whatsapp {
+    background: #25D366;
+    color: white;
+  }
+  
+  .profile-cta-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(37, 211, 102, 0.3);
+  }
+  
+  .profile-cta-secondary {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+  }
+  
+  .profile-cta-secondary:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  /* SECTIONS */
+  .section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  
+  .section-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .section-subtitle {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+  
+  /* BIO SECTION */
+  .bio-section {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald-mid) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .bio-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  
+  .bio-content p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+  
+  .bio-content p:first-of-type::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    float: left;
+    line-height: 1;
+    margin-right: 0.5rem;
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .bio-quote {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+    position: relative;
+  }
+  
+  .bio-quote::before {
+    content: '"';
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+  }
+  
+  .bio-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    font-style: italic;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .bio-quote-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  
+  .bio-quote-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80') center/cover;
+    border: 2px solid var(--gold);
+  }
+  
+  .bio-quote-info h4 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .bio-quote-info p {
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+  }
+  
+  /* SPECIALTIES */
+  .specialties-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .specialty-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    transition: all 0.3s;
+  }
+  
+  .specialty-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .specialty-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .specialty-icon {
+    font-size: 1.5rem;
+  }
+  
+  .specialty-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .specialty-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border-radius: 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .specialty-item:hover {
+    background: rgba(212, 175, 122, 0.1);
+    transform: translateX(5px);
+  }
+  
+  .specialty-item-name {
+    font-size: 0.95rem;
+  }
+  
+  .specialty-item-count {
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  /* CERTIFICATIONS */
+  .certifications-section {
+    background: var(--emerald-mid);
+    padding: 6rem 3rem;
+  }
+  
+  .certifications-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  
+  .certification-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  
+  .certification-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  
+  .certification-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .certification-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+  }
+  
+  .certification-org {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+  }
+  
+  .certification-year {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+    letter-spacing: 1px;
+  }
+  
+  /* PROPERTIES */
+  .properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .property-card {
+    position: relative;
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .property-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .card-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
+  }
+  
+  .card-image-exterior { opacity: 1; }
+  .card-image-interior { opacity: 0; }
+  
+  .property-card:hover .card-image-exterior {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  
+  .property-card:hover .card-image-interior {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,46,42,0.95) 0%, rgba(10,46,42,0.3) 50%, transparent 100%);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 2;
+  }
+  
+  .card-badge {
+    position: absolute;
+    top: 1.5rem; left: 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  
+  .card-title {
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .card-location {
+    color: var(--gold-soft);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+  }
+  
+  .card-story {
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s 0.2s;
+  }
+  
+  .property-card:hover .card-story {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .card-meta {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .card-price {
+    position: relative;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+  }
+  
+  /* TESTIMONIALS */
+  .testimonials-section {
+    background: linear-gradient(180deg, var(--emerald-mid) 0%, var(--emerald-deep) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .testimonials-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .testimonial-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  .testimonial-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .testimonial-quote {
+    font-size: 3rem;
+    color: var(--gold);
+    opacity: 0.5;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  
+  .testimonial-rating {
+    color: var(--gold);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  
+  .testimonial-avatar {
+    width: 55px; height: 55px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid var(--gold);
+  }
+  
+  .testimonial-info h4 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .testimonial-info p {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+  }
+  
+  /* CONTACT FORM */
+  .contact-section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    margin-top: 3rem;
+  }
+  
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .contact-info-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  
+  .contact-info-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+  }
+  
+  .contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .contact-info-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .contact-info-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  
+  .contact-info-content h4 {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.2rem;
+    font-weight: 500;
+  }
+  
+  .contact-info-content p {
+    font-size: 0.95rem;
+  }
+  
+  .contact-info-content a {
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .contact-info-content a:hover {
+    color: var(--gold);
+  }
+  
+  .availability-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  
+  .availability-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+  }
+  
+  .availability-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .availability-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .availability-day {
+    color: var(--text-light);
+  }
+  
+  .availability-time {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  .availability-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(37, 211, 102, 0.1);
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: #25D366;
+    margin-top: 1rem;
+  }
+  
+  .availability-status::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #25D366;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  /* FORM */
+  .contact-form {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+  }
+  
+  .contact-form h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact-form h3 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .contact-form > p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.9rem 1.2rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s;
+    resize: vertical;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+    box-shadow: 0 0 0 3px rgba(212, 175, 122, 0.1);
+  }
+  
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(245, 241, 232, 0.4);
+  }
+  
+  .form-group select option {
+    background: var(--emerald-deep);
+    color: var(--cream);
+  }
+  
+  .form-submit {
+    width: 100%;
+    padding: 1.2rem;
+    background: var(--gold);
+    border: none;
+    border-radius: 50px;
+    color: var(--emerald-deep);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
+  
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .form-note {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+  
+  .form-note strong {
+    color: var(--gold);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .profile-hero { grid-template-columns: 1fr; }
+    .bio-container { grid-template-columns: 1fr; }
+    .specialties-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .profile-hero, .section, .bio-section, .certifications-section, .testimonials-section, .contact-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .profile-quick-stats { grid-template-columns: 1fr; }
+    .profile-ctas { flex-direction: column; }
+    .profile-cta { width: 100%; justify-content: center; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .properties-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .certifications-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <a href='sobre.html'>Equipe</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Ana Carolina Silva</strong>
+</div>
+
+<!-- HERO PROFILE -->
+<section class="profile-hero">
+  <div class="profile-photo-container">
+    <div class="profile-photo">
+      <span class="profile-photo-badge">★ Top Corretora 2025</span>
+      <div class="profile-photo-social">
+        <a href="#" title="LinkedIn">in</a>
+        <a href="#" title="Instagram">@</a>
+        <a href="mailto:ana.silva@livingcanvas.com" title="E-mail">✉</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="profile-info">
+    <p class="section-eyebrow">Corretora Sênior </p>
+    <h1 class="profile-name">Ana Carolina <em>Silva</em></h1>
+    <p class="profile-role">CRECI-SP 12345 • Especialista em Zona Sul</p>
+    <p class="profile-tagline">
+      "Acredito que cada cliente tem uma história única — e meu trabalho é encontrar o cenário perfeito para ela continuar sendo escrita."
+    </p>
+    
+    <div class="profile-quick-stats">
+      <div class="profile-quick-stat">
+        <div class="profile-quick-stat-value">150+</div>
+        <div class="profile-quick-stat-label">Vendas</div>
+      </div>
+      <div class="profile-quick-stat">
+        <div class="profile-quick-stat-value">R$380M</div>
+        <div class="profile-quick-stat-label">Em vendas</div>
+      </div>
+      <div class="profile-quick-stat">
+        <div class="profile-quick-stat-value">5.0</div>
+        <div class="profile-quick-stat-label">Avaliação</div>
+      </div>
+    </div>
+    
+    <div class="profile-ctas">
+      <a href="#contato" class="profile-cta profile-cta-primary">📅 Agendar Conversa</a>
+      <a href="https://wa.me/5511999999999" class="profile-cta profile-cta-whatsapp">💬 WhatsApp</a>
+      <a href="#imoveis" class="profile-cta profile-cta-secondary">🏠 Ver Imóveis</a>
+    </div>
+  </div>
+</section>
+
+<!-- BIO -->
+<section class="bio-section">
+  <div class="bio-container">
+    <div class="bio-content">
+      <p class="section-eyebrow">Minha História</p>
+      <h2 class="section-title">Uma jornada movida por <em>pessoas</em></h2>
+      <p>
+        Ana Carolina entrou no mercado imobiliário em 2012, após se formar em Arquitetura pela USP. O que começou como uma forma de unir paixão por espaços e contato com pessoas, rapidamente se tornou uma vocação. Em 2015, foi convidada a integrar a Living Canvas — e desde então, construiu uma trajetória marcada por resultados excepcionais e relacionamentos duradouros.
+      </p>
+      <p>
+        Especialista nos bairros mais nobres da Zona Sul de São Paulo — Jardim Europa, Jardim Paulista, Vila Nova Conceição e Itaim Bibi — Ana Carolina combina conhecimento técnico profundo com uma sensibilidade rara para entender o que cada cliente realmente busca. Seu diferencial está na escuta ativa: antes de mostrar imóveis, ela entende histórias, rotinas, sonhos.
+      </p>
+      <p>
+        Com mais de 150 transações concluídas e R$ 380 milhões em vendas, Ana Carolina é reconhecida não apenas pelos números, mas pela forma como conduz cada relação — com transparência, empatia e um compromisso genuíno com a felicidade dos seus clientes.
+      </p>
+    </div>
+    
+    <div class="bio-quote">
+      <blockquote>
+        Vender ou comprar um imóvel é muito mais que uma transação financeira. É um momento de transformação na vida das pessoas. Meu papel é tornar essa jornada leve, segura e, acima de tudo, significativa.
+      </blockquote>
+      <div class="bio-quote-author">
+        <div class="bio-quote-avatar"></div>
+        <div class="bio-quote-info">
+          <h4>Ana Carolina Silva</h4>
+          <p>Corretora Sênior • Living Canvas</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section class="section">
+  <p class="section-eyebrow">Áreas de Atuação</p>
+  <h2 class="section-title">Onde Ana Carolina pode te <em>ajudar</em></h2>
+  <p class="section-subtitle">Conhecimento profundo de bairros, tipos de imóvel e perfis de clientes.</p>
+  
+  <div class="specialties-grid">
+    <div class="specialty-card">
+      <h3><span class="specialty-icon">🗺️</span> Bairros Especialistas</h3>
+      <div class="specialty-list">
+        <div class="specialty-item">
+          <span class="specialty-item-name">Jardim Europa</span>
+          <span class="specialty-item-count">12 imóveis</span>
+        </div>
+        <div class="specialty-item">
+          <span class="specialty-item-name">Jardim Paulista</span>
+          <span class="specialty-item-count">8 imóveis</span>
+        </div>
+        <div class="specialty-item">
+          <span class="specialty-item-name">Vila Nova Conceição</span>
+          <span class="specialty-item-count">6 imóveis</span>
+        </div>
+        <div class="specialty-item">
+          <span class="specialty-item-name">Itaim Bibi</span>
+          <span class="specialty-item-count">15 imóveis</span>
+        </div>
+        <div class="specialty-item">
+          <span class="specialty-item-name">Moema</span>
+          <span class="specialty-item-count">10 imóveis</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="specialty-card">
+      <h3><span class="specialty-icon">🏠</span> Tipos de Imóvel</h3>
+      <div class="specialty-list">
+        <div class="specialty-item">
+          <span class="specialty-item-name">Apartamentos alto padrão</span>
+          <span class="specialty-item-count">45 vendas</span>
+        </div>
+        <div class="specialty-item">
+          <span class="specialty-item-name">Coberturas duplex</span>
+          <span class="specialty-item-count">28 vendas</span>
+        </div>
+        <div class="specialty-item">
+          <span class="specialty-item-name">Casas em condomínios</span>
+          <span class="specialty-item-count">35 vendas</span>
+        </div>
+        <div class="specialty-item">
+          <span class="specialty-item-name">Studios e lofts</span>
+          <span class="specialty-item-count">22 vendas</span>
+        </div>
+        <div class="specialty-item">
+          <span class="specialty-item-name">Imóveis para investimento</span>
+          <span class="specialty-item-count">20 vendas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certifications-section">
+  <div class="certifications-container">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p class="section-eyebrow">Reconhecimentos</p>
+      <h2 class="section-title">Certificações e <em>prêmios</em></h2>
+      <p class="section-subtitle" style="margin: 1rem auto 0;">
+        Uma trajetória construída com excelência, reconhecida pelo mercado e pelos clientes.
+      </p>
+    </div>
+    
+    <div class="certifications-grid">
+      <div class="certification-card">
+        <div class="certification-icon">🏆</div>
+        <div class="certification-title">Top Corretora 2025</div>
+        <div class="certification-org">Living Canvas</div>
+        <div class="certification-year">2025</div>
+      </div>
+      
+      <div class="certification-card">
+        <div class="certification-icon">🎓</div>
+        <div class="certification-title">Especialista em Alto Padrão</div>
+        <div class="certification-org">ABMI</div>
+        <div class="certification-year">2023</div>
+      </div>
+      
+      <div class="certification-card">
+        <div class="certification-icon">📊</div>
+        <div class="certification-title">Negociação Avançada</div>
+        <div class="certification-org">FGV</div>
+        <div class="certification-year">2022</div>
+      </div>
+      
+      <div class="certification-card">
+        <div class="certification-icon">🌟</div>
+        <div class="certification-title">5 Estrelas Google</div>
+        <div class="certification-org">150+ avaliações</div>
+        <div class="certification-year">Contínuo</div>
+      </div>
+      
+      <div class="certification-card">
+        <div class="certification-icon">🏅</div>
+        <div class="certification-title">Prêmio Excelência</div>
+        <div class="certification-org">CRECI-SP</div>
+        <div class="certification-year">2024</div>
+      </div>
+      
+      <div class="certification-card">
+        <div class="certification-icon">💎</div>
+        <div class="certification-title">Luxury Property Specialist</div>
+        <div class="certification-org">Christie's International</div>
+        <div class="certification-year">2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTIES -->
+<section class="section" id="imoveis">
+  <p class="section-eyebrow">Portfólio Atual</p>
+  <h2 class="section-title">Imóveis sob <em>curadoria</em> de Ana Carolina</h2>
+  <p class="section-subtitle">Uma seleção exclusiva de imóveis que ela representa com exclusividade.</p>
+  
+  <div class="properties-grid">
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Exclusivo</span>
+        <span class="card-price">R$ 2.8M</span>
+        <h3 class="card-title">Casa do Bosque</h3>
+        <p class="card-location">Jardim Europa • 420m²</p>
+        <p class="card-story">"Onde o silêncio da floresta encontra o design contemporâneo."</p>
+        <div class="card-meta">
+          <span>🛏 4 suítes</span>
+          <span>🌳 Jardim</span>
+          <span>🚗 4 vagas</span>
+        </div>
+      </div>
+    </article>
+    
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Destaque</span>
+        <span class="card-price">R$ 3.1M</span>
+        <h3 class="card-title">Penthouse Urbano</h3>
+        <p class="card-location">Itaim Bibi • 320m²</p>
+        <p class="card-story">"No coração da cidade, um oásis de tranquilidade."</p>
+        <div class="card-meta">
+          <span>🛏 3 suítes</span>
+          <span>🏙 Vista 360°</span>
+          <span>🍳 Chef</span>
+        </div>
+      </div>
+    </article>
+    
+    <article class="property-card" onclick="window.location.href='imovel.html'">
+      <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
+      <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80')"></div>
+      <div class="card-overlay">
+        <span class="card-badge">Novo</span>
+        <span class="card-price">R$ 1.9M</span>
+        <h3 class="card-title">Studio Artístico</h3>
+        <p class="card-location">Pinheiros • 95m²</p>
+        <p class="card-story">"Criatividade e funcionalidade em cada metro quadrado."</p>
+        <div class="card-meta">
+          <span>🛏 1 suíte</span>
+          <span>🎨 Studio</span>
+          <span>☕ Varanda</span>
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href='imoveis.html' class="profile-cta profile-cta-secondary">Ver todos os imóveis →</a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      <p class="section-eyebrow">O Que Dizem Sobre Ana Carolina</p>
+      <h2 class="section-title">Clientes que <em>confiaram</em> nela</h2>
+    </div>
+    
+    <div class="testimonials-grid">
+      <article class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-rating">★★★★★</div>
+        <p class="testimonial-text">
+          A Ana entendeu exatamente o que buscávamos em nossa primeira conversa. Em duas semanas, nos apresentou o apartamento perfeito em Jardim Europa. Profissionalismo e sensibilidade em cada etapa.
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80')"></div>
+          <div class="testimonial-info">
+            <h4>Mariana & Pedro</h4>
+            <p>Compraram em Jardim Europa • 2025</p>
+          </div>
+        </div>
+      </article>
+      
+      <article class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-rating">★★★★★</div>
+        <p class="testimonial-text">
+          Como investidor, precisava de alguém que entendesse de números e mercado. A Ana foi excepcional — me ajudou a montar uma carteira imobiliária que já rendeu 23% em 2 anos.
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80')"></div>
+          <div class="testimonial-info">
+            <h4>Roberto Almeida</h4>
+            <p>Investidor • 4 imóveis adquiridos</p>
+          </div>
+        </div>
+      </article>
+      
+      <article class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-rating">★★★★★</div>
+        <p class="testimonial-text">
+          Vendemos nosso apartamento em tempo recorde e pelo valor que queríamos. A Ana conduziu toda a negociação com maestria e nos manteve informados em cada etapa. Recomendo sem hesitar.
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80')"></div>
+          <div class="testimonial-info">
+            <h4>Fernanda Costa</h4>
+            <p>Vendeu em Vila Madalena • 2025</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contato">
+  <p class="section-eyebrow">Fale com Ana Carolina</p>
+  <h2 class="section-title">Vamos <em>conversar</em>?</h2>
+  <p class="section-subtitle">Entre em contato diretamente. Respondo em até 2 horas durante o horário comercial.</p>
+  
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-info-card">
+        <h3>Contato Direto</h3>
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📞</div>
+            <div class="contact-info-content">
+              <h4>Telefone</h4>
+              <p><a href="tel:+5511988888888">(11) 98888-8888</a></p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">💬</div>
+            <div class="contact-info-content">
+              <h4>WhatsApp</h4>
+              <p><a href="https://wa.me/5511988888888">(11) 98888-8888</a></p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">✉️</div>
+            <div class="contact-info-content">
+              <h4>E-mail</h4>
+              <p><a href="mailto:ana.silva@livingcanvas.com">ana.silva@livingcanvas.com</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="availability-card">
+        <h3>Disponibilidade</h3>
+        <div class="availability-list">
+          <div class="availability-item">
+            <span class="availability-day">Segunda a Sexta</span>
+            <span class="availability-time">9h — 19h</span>
+          </div>
+          <div class="availability-item">
+            <span class="availability-day">Sábado</span>
+            <span class="availability-time">10h — 16h</span>
+          </div>
+          <div class="availability-item">
+            <span class="availability-day">Domingo</span>
+            <span class="availability-time">Somente agendado</span>
+          </div>
+        </div>
+        <div class="availability-status">Disponível agora</div>
+      </div>
+    </div>
+    
+    <div class="contact-form">
+      <h3>Envie sua <em>mensagem</em></h3>
+      <p>Preencha o formulário e Ana Carolina retornará pessoalmente.</p>
+      
+      <form>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome completo</label>
+            <input type="text" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label>Telefone</label>
+            <input type="tel" placeholder="(11) 99999-9999" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group full">
+            <label>E-mail</label>
+            <input type="email" placeholder="seu@email.com" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group full">
+            <label>Assunto</label>
+            <select required>
+              <option value="">Selecione</option>
+              <option value="comprar">Quero comprar um imóvel</option>
+              <option value="vender">Quero vender meu imóvel</option>
+              <option value="visita">Agendar visita</option>
+              <option value="consultoria">Consultoria personalizada</option>
+              <option value="outro">Outro assunto</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group full">
+            <label>Sua mensagem</label>
+            <textarea rows="5" placeholder="Conte-nos o que você busca..." required></textarea>
+          </div>
+        </div>
+        
+        <button type="submit" class="form-submit">Enviar Mensagem</button>
+        
+        <p class="form-note">
+          <strong>⚡ Resposta rápida:</strong> Ana Carolina retorna em até 2 horas úteis.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com Ana Carolina</div>
+  <a href="https://wa.me/5511988888888" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

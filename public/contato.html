@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+  <script src="/jsonld.js" defer></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato — Living Canvas</title>
+<meta name="description" content="Fale com nossos especialistas para encontrar o imóvel certo para você.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/contato.html">
+<meta property="og:title" content="Contato — Living Canvas">
+<meta property="og:description" content="Fale com nossos especialistas para encontrar o imóvel certo para você.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/contato.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contato — Living Canvas">
+<meta name="twitter:description" content="Fale com nossos especialistas para encontrar o imóvel certo para você.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .contact-hero {
+    padding: 2rem 3rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .contact-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contact-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .contact-subtitle {
+    color: var(--text-light);
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  /* MAIN GRID */
+  .contact-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 3rem 6rem;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+  }
+  
+  /* FORM */
+  .contact-form-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+  }
+  
+  .form-header {
+    margin-bottom: 2.5rem;
+  }
+  
+  .form-header h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .form-header p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.9rem 1.2rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s;
+    resize: vertical;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+    box-shadow: 0 0 0 3px rgba(212, 175, 122, 0.1);
+  }
+  
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(245, 241, 232, 0.4);
+  }
+  
+  .form-group select option {
+    background: var(--emerald-deep);
+    color: var(--cream);
+  }
+  
+  .form-checkbox {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    margin: 1.5rem 0 2rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  
+  .form-checkbox input {
+    margin-top: 0.2rem;
+    accent-color: var(--gold);
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+  
+  .form-checkbox a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+  }
+  
+  .form-submit {
+    width: 100%;
+    padding: 1.2rem;
+    background: var(--gold);
+    border: none;
+    border-radius: 50px;
+    color: var(--emerald-deep);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+  
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .form-note {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .form-note strong {
+    color: var(--gold);
+  }
+  
+  /* SIDEBAR INFO */
+  .contact-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .info-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  
+  .info-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+  }
+  
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .info-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .info-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  
+  .info-content h4 {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+  
+  .info-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  .info-content a {
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .info-content a:hover {
+    color: var(--gold);
+  }
+  
+  /* HOURS */
+  .hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .hours-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .hours-day {
+    color: var(--text-light);
+  }
+  
+  .hours-time {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  .hours-item.closed .hours-time {
+    color: var(--text-light);
+    opacity: 0.5;
+  }
+  
+  /* SOCIAL */
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .social-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--cream);
+    transition: all 0.3s;
+  }
+  
+  .social-item:hover {
+    background: rgba(212, 175, 122, 0.1);
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  
+  .social-icon {
+    font-size: 1.5rem;
+  }
+  
+  .social-info {
+    flex: 1;
+  }
+  
+  .social-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+  }
+  
+  .social-handle {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+  }
+  
+  /* QUICK CONTACTS */
+  .quick-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .quick-contact-btn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .quick-whatsapp {
+    background: #25D366;
+    color: white;
+  }
+  
+  .quick-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+  }
+  
+  .quick-phone {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+  }
+  
+  .quick-phone:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  /* OFFICE SECTION */
+  .office-section {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald-mid) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .office-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .office-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 1rem;
+  }
+  
+  .office-image {
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    transition: transform 0.6s;
+    cursor: pointer;
+  }
+  
+  .office-image:hover {
+    transform: scale(0.98);
+  }
+  
+  .office-image:first-child {
+    grid-row: span 2;
+  }
+  
+  .office-content h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+  
+  .office-content h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .office-content p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+  
+  .office-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .office-feature {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+  }
+  
+  .office-feature-icon {
+    font-size: 1.5rem;
+  }
+  
+  .office-feature-text {
+    font-size: 0.95rem;
+  }
+  
+  /* MAP SECTION */
+  .map-section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .map-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+  
+  .map-visual {
+    height: 450px;
+    background: 
+      radial-gradient(circle at 50% 50%, rgba(212, 175, 122, 0.3) 0%, transparent 40%),
+      url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1600&q=80') center/cover;
+    position: relative;
+  }
+  
+  .map-pin-office {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--emerald-deep);
+    font-size: 1.8rem;
+    box-shadow: 0 0 0 0 rgba(212, 175, 122, 0.7);
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 122, 0.7); }
+    70% { box-shadow: 0 0 0 30px rgba(212, 175, 122, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 122, 0); }
+  }
+  
+  .map-info-bar {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+  
+  .map-info-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .map-info-icon {
+    font-size: 1.8rem;
+  }
+  
+  .map-info-content h4 {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+  
+  .map-info-content p {
+    font-size: 0.95rem;
+  }
+  
+  .map-directions {
+    padding: 0 2rem 2rem;
+    text-align: center;
+  }
+  
+  .map-directions-btn {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+  
+  .map-directions-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* FAQ */
+  .faq-section {
+    background: var(--emerald-mid);
+    padding: 6rem 3rem;
+  }
+  
+  .faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .faq-list {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .faq-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .faq-item:hover {
+    border-color: var(--gold);
+  }
+  
+  .faq-question {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .faq-question h4 {
+    font-size: 1.05rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  
+  .faq-toggle {
+    width: 30px;
+    height: 30px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  
+  .faq-item.active .faq-toggle {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: rotate(45deg);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+  
+  .faq-answer-content {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  
+  /* FINAL CTA */
+  .final-cta {
+    padding: 6rem 3rem;
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .final-cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .final-cta h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .final-cta h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .final-cta p {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .final-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .final-cta-buttons a {
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .final-cta-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .final-cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .final-cta-secondary {
+    background: transparent;
+    border: 1px solid var(--cream) !important;
+    color: var(--cream);
+  }
+  
+  .final-cta-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .contact-main { grid-template-columns: 1fr; }
+    .office-container { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .contact-hero, .contact-main, .office-section, .map-section, .faq-section, .final-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .contact-form-container { padding: 2rem 1.5rem; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .office-gallery { grid-template-columns: 1fr; grid-template-rows: auto; }
+    .office-image { height: 200px; }
+    .office-image:first-child { grid-row: auto; }
+    .social-grid { grid-template-columns: 1fr; }
+    .map-info-bar { grid-template-columns: 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Contato</strong>
+</div>
+
+<!-- HERO -->
+<section class="contact-hero">
+  <p class="section-eyebrow">Fale Conosco </p>
+  <h1 class="contact-title">Vamos começar uma <em>conversa</em>?</h1>
+  <p class="contact-subtitle">Estamos prontos para ouvir sua história e ajudar você a encontrar o cenário perfeito. Escolha a forma que preferir entrar em contato.</p>
+</section>
+
+<!-- MAIN GRID -->
+<div class="contact-main">
+  
+  <!-- FORM -->
+  <div class="contact-form-container">
+    <div class="form-header">
+      <h2>Envie sua <em>mensagem</em></h2>
+      <p>Preencha o formulário e retornaremos em até 24 horas.</p>
+    </div>
+    
+    <form>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nome completo</label>
+          <input type="text" placeholder="Seu nome" required>
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" placeholder="seu@email.com" required>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="tel" placeholder="(11) 99999-9999" required>
+        </div>
+        <div class="form-group">
+          <label>Assunto</label>
+          <select required>
+            <option value="">Selecione</option>
+            <option value="comprar">Quero comprar um imóvel</option>
+            <option value="vender">Quero vender meu imóvel</option>
+            <option value="alugar">Quero alugar um imóvel</option>
+            <option value="investimento">Consultoria de investimento</option>
+            <option value="visita">Agendar visita</option>
+            <option value="outro">Outro assunto</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-group full" style="margin-bottom: 1.5rem;">
+        <label>Sua mensagem</label>
+        <textarea rows="5" placeholder="Conte-nos o que você busca, suas preferências, dúvidas..." required></textarea>
+      </div>
+      
+      <div class="form-checkbox">
+        <input type="checkbox" id="privacy" required>
+        <label for="privacy">
+          Li e concordo com a <a href="#">Política de Privacidade</a> e autorizo o contato pela Living Canvas.
+        </label>
+      </div>
+      
+      <button type="submit" class="form-submit">Enviar Mensagem</button>
+      
+      <p class="form-note">
+        <strong>⚡ Resposta rápida:</strong> retornamos em até 24 horas úteis.
+      </p>
+    </form>
+  </div>
+  
+  <!-- SIDEBAR -->
+  <aside class="contact-sidebar">
+    
+    <!-- INFO -->
+    <div class="info-card">
+      <h3>Informações de Contato</h3>
+      <div class="info-list">
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-content">
+            <h4>Endereço</h4>
+            <p>Rua Oscar Freire, 2066 — Conjunto 1201<br>Jardins, São Paulo — SP<br>CEP 01412-002</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div class="info-content">
+            <h4>Telefone</h4>
+            <p><a href="tel:+551130000000">(11) 3000-0000</a></p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">💬</div>
+          <div class="info-content">
+            <h4>WhatsApp</h4>
+            <p><a href="https://wa.me/5511999999999">(11) 99999-9999</a></p>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">✉️</div>
+          <div class="info-content">
+            <h4>E-mail</h4>
+            <p><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- HOURS -->
+    <div class="info-card">
+      <h3>Horário de Atendimento</h3>
+      <div class="hours-list">
+        <div class="hours-item">
+          <span class="hours-day">Segunda a Sexta</span>
+          <span class="hours-time">9h — 19h</span>
+        </div>
+        <div class="hours-item">
+          <span class="hours-day">Sábado</span>
+          <span class="hours-time">10h — 16h</span>
+        </div>
+        <div class="hours-item closed">
+          <span class="hours-day">Domingo</span>
+          <span class="hours-time">Fechado</span>
+        </div>
+        <div class="hours-item">
+          <span class="hours-day">Visitas</span>
+          <span class="hours-time">Agendamento</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- QUICK CONTACTS -->
+    <div class="info-card">
+      <h3>Contato Rápido</h3>
+      <div class="quick-contacts">
+        <a href="https://wa.me/5511999999999" class="quick-contact-btn quick-whatsapp">💬 WhatsApp</a>
+        <a href="tel:+551130000000" class="quick-contact-btn quick-phone">📞 Ligar Agora</a>
+      </div>
+    </div>
+    
+    <!-- SOCIAL -->
+    <div class="info-card">
+      <h3>Redes Sociais</h3>
+      <div class="social-grid">
+        <a href="https://instagram.com" class="social-item" target="_blank" rel="noopener">
+          <div class="social-icon">📷</div>
+          <div class="social-info">
+            <div class="social-name">Instagram</div>
+            <div class="social-handle">@livingcanvas</div>
+          </div>
+        </a>
+        <a href="https://instagram.com" class="social-item" target="_blank" rel="noopener">
+          <div class="social-icon">📘</div>
+          <div class="social-info">
+            <div class="social-name">Facebook</div>
+            <div class="social-handle">/livingcanvas</div>
+          </div>
+        </a>
+        <a href="https://instagram.com" class="social-item" target="_blank" rel="noopener">
+          <div class="social-icon">💼</div>
+          <div class="social-info">
+            <div class="social-name">LinkedIn</div>
+            <div class="social-handle">/livingcanvas</div>
+          </div>
+        </a>
+        <a href="https://instagram.com" class="social-item" target="_blank" rel="noopener">
+          <div class="social-icon">🎥</div>
+          <div class="social-info">
+            <div class="social-name">YouTube</div>
+            <div class="social-handle">@livingcanvas</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    
+  </aside>
+</div>
+
+<!-- OFFICE SECTION -->
+<section class="office-section">
+  <div class="office-container">
+    <div class="office-gallery">
+      <div class="office-image" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80')"></div>
+      <div class="office-image" style="background-image: url('https://images.unsplash.com/photo-1604328698692-f76ea94d8e3c?w=800&q=80')"></div>
+      <div class="office-image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
+    </div>
+    <div class="office-content">
+      <p class="section-eyebrow">Nosso Espaço</p>
+      <h2>Um escritório pensado para <em>receber</em> você</h2>
+      <p>
+        Nosso espaço nos Jardins foi projetado para oferecer conforto e privacidade durante suas visitas. Aqui, você pode tomar um café conosco, explorar nosso acervo de imóveis em telas de alta resolução e conversar com nossos especialistas em um ambiente acolhedor.
+      </p>
+      <p>
+        Mais que um escritório, é um ponto de encontro entre sonhos e endereços.
+      </p>
+      <div class="office-features">
+        <div class="office-feature">
+          <div class="office-feature-icon">☕</div>
+          <div class="office-feature-text">Café e bebidas cortesia</div>
+        </div>
+        <div class="office-feature">
+          <div class="office-feature-icon">🖥️</div>
+          <div class="office-feature-text">Sala de apresentação com telas 4K</div>
+        </div>
+        <div class="office-feature">
+          <div class="office-feature-icon">🅿️</div>
+          <div class="office-feature-text">Estacionamento conveniado</div>
+        </div>
+        <div class="office-feature">
+          <div class="office-feature-icon">♿</div>
+          <div class="office-feature-text">Acessibilidade total</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <p class="section-eyebrow">Localização</p>
+  <h2 class="section-title">Venha nos <em>visitar</em></h2>
+  
+  <div class="map-container">
+    <div class="map-visual">
+      <div class="map-pin-office">📍</div>
+    </div>
+    <div class="map-info-bar">
+      <div class="map-info-item">
+        <div class="map-info-icon">🚇</div>
+        <div class="map-info-content">
+          <h4>Metrô</h4>
+          <p>Estação Clínicas — 500m</p>
+        </div>
+      </div>
+      <div class="map-info-item">
+        <div class="map-info-icon">🚌</div>
+        <div class="map-info-content">
+          <h4>Ônibus</h4>
+          <p>Parque Domo — 100m</p>
+        </div>
+      </div>
+      <div class="map-info-item">
+        <div class="map-info-icon">🅿️</div>
+        <div class="map-info-content">
+          <h4>Estacionamento</h4>
+          <p>Conveniado no edifício</p>
+        </div>
+      </div>
+    </div>
+    <div class="map-directions">
+      <a href="https://maps.google.com" target="_blank" class="map-directions-btn">🗺️ Ver no Google Maps</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-container">
+    <div style="text-align: center;">
+      <p class="section-eyebrow">Dúvidas Frequentes</p>
+      <h2 class="section-title">Perguntas <em>comuns</em></h2>
+    </div>
+    
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Qual o prazo de resposta após o contato?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Retornamos todas as mensagens em até 24 horas úteis. Para contatos via WhatsApp, a resposta costuma ser ainda mais rápida, em até 2 horas durante o horário comercial.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Preciso agendar para visitar o escritório?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Recomendamos o agendamento para garantirmos um atendimento exclusivo e dedicado a você. Mas também recebemos visitas espontâneas durante o horário de funcionamento.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Vocês atendem em outras cidades?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Nossa base é em São Paulo, mas atuamos em todo o estado e em cidades como Rio de Janeiro, Búzios, Riviera de São Lourenço e Campinas. Para outras localidades, consulte nossa equipe.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Como funciona o agendamento de visitas a imóveis?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Após identificar um imóvel de interesse, entre em contato conosco e um corretor especializado irá agendar a visita no melhor horário para você. As visitas podem ser presenciais ou virtuais (tour 360° ao vivo).
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Vocês trabalham com financiamento imobiliário?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Sim! Temos parcerias com os principais bancos e oferecemos simulação completa de financiamento. Nosso consultor financeiro pode orientar você sobre as melhores condições do mercado.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Quais documentos preciso para comprar um imóvel?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Os documentos básicos são: RG, CPF, comprovante de residência, comprovante de renda e declaração de IR. Nossa equipe jurídica orienta você sobre toda a documentação necessária durante o processo.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-content">
+    <h2>Pronto para dar o <em>primeiro passo</em>?</h2>
+    <p>Seja para tirar uma dúvida, agendar uma visita ou simplesmente conhecer nosso trabalho — estamos aqui para você.</p>
+    <div class="final-cta-buttons">
+      <a href="https://wa.me/5511999999999" class="final-cta-primary">💬 WhatsApp</a>
+      <a href='imoveis.html' class="final-cta-secondary">Ver Imóveis</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale conosco agora!</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // FAQ TOGGLE
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    item.classList.toggle('active');
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

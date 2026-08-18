@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lançamentos — Living Canvas</title>
+<meta name="description" content="Os empreendimentos mais aguardados do mercado, em pré-lançamento e obras.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/lancamentos.html">
+<meta property="og:title" content="Lançamentos — Living Canvas">
+<meta property="og:description" content="Os empreendimentos mais aguardados do mercado, em pré-lançamento e obras.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/lancamentos.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lançamentos — Living Canvas">
+<meta name="twitter:description" content="Os empreendimentos mais aguardados do mercado, em pré-lançamento e obras.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .launch-hero {
+    padding: 2rem 3rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .launch-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .launch-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .launch-subtitle {
+    color: var(--text-light);
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  /* FEATURED LAUNCH */
+  .featured-launch {
+    max-width: 1400px;
+    margin: 0 auto 5rem;
+    padding: 0 3rem;
+  }
+  
+  .featured-card {
+    background: linear-gradient(135deg, rgba(212, 175, 122, 0.08) 0%, rgba(245, 241, 232, 0.03) 100%);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--gold);
+    border-radius: 25px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    position: relative;
+  }
+  
+  .featured-badge {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 10;
+    box-shadow: 0 5px 20px rgba(212, 175, 122, 0.3);
+  }
+  
+  .featured-image {
+    height: 100%;
+    min-height: 500px;
+    background: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80') center/cover;
+    position: relative;
+  }
+  
+  .featured-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 60%, rgba(10,46,42,0.8) 100%);
+  }
+  
+  .featured-content {
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .featured-label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+  
+  .featured-name {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  
+  .featured-name em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .featured-location {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  /* COUNTDOWN */
+  .countdown-container {
+    margin-bottom: 2rem;
+  }
+  
+  .countdown-label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+  
+  .countdown-timer {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .countdown-item {
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    min-width: 70px;
+  }
+  
+  .countdown-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  
+  .countdown-unit {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.3rem;
+    display: block;
+  }
+  
+  /* PROGRESS BAR */
+  .progress-container {
+    margin-bottom: 2rem;
+  }
+  
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .progress-label {
+    color: var(--text-light);
+  }
+  
+  .progress-value {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  .progress-bar {
+    height: 8px;
+    background: rgba(245, 241, 232, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%);
+    border-radius: 10px;
+    width: 35%;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .featured-specs {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(245, 241, 232, 0.03);
+    border-radius: 15px;
+  }
+  
+  .spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .spec-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+  
+  .spec-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .featured-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  
+  .featured-price-note {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+  
+  .featured-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .btn-primary {
+    padding: 1rem 2rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border: none;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .btn-secondary {
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .btn-secondary:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  /* BENEFITS */
+  .benefits-section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .benefits-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .benefits-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .benefits-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .benefit-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+  }
+  
+  .benefit-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  
+  .benefit-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .benefit-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+  
+  .benefit-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+  
+  /* LAUNCHES GRID */
+  .launches-section {
+    padding: 4rem 3rem 6rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .launches-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .launches-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .launches-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .launches-filters {
+    display: flex;
+    gap: 0.8rem;
+  }
+  
+  .launch-filter {
+    padding: 0.7rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+  }
+  
+  .launch-filter:hover, .launch-filter.active {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+  
+  .launches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  .launch-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .launch-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  
+  .launch-card-image {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .launch-card-status {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .status-pre {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .status-construction {
+    background: #6BC5E8;
+    color: var(--emerald-deep);
+  }
+  
+  .status-last {
+    background: #FF6B6B;
+    color: white;
+  }
+  
+  .launch-card-favorite {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: var(--cream);
+  }
+  
+  .launch-card-favorite:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .launch-card-content {
+    padding: 2rem;
+  }
+  
+  .launch-card-name {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .launch-card-location {
+    font-size: 0.9rem;
+    color: var(--gold-soft);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .launch-card-specs {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .launch-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .launch-card-price {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .launch-card-price-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .launch-card-price-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  
+  .launch-card-btn {
+    padding: 0.7rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+  
+  .launch-card-btn:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  /* EARLY ACCESS FORM */
+  .early-access-section {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald-mid) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .early-access-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .early-access-content h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+  
+  .early-access-content h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .early-access-content p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  
+  .early-access-perks {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .perk-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+  }
+  
+  .perk-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  
+  .early-access-form {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+  }
+  
+  .form-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .form-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .form-group label {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 0.9rem 1.2rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+    box-shadow: 0 0 0 3px rgba(212, 175, 122, 0.1);
+  }
+  
+  .form-group input::placeholder {
+    color: rgba(245, 241, 232, 0.4);
+  }
+  
+  .form-submit {
+    width: 100%;
+    padding: 1.2rem;
+    background: var(--gold);
+    border: none;
+    border-radius: 50px;
+    color: var(--emerald-deep);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
+  
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .form-disclaimer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    opacity: 0.7;
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-image { min-height: 350px; }
+    .featured-image::after { background: linear-gradient(to top, rgba(10,46,42,0.9) 0%, transparent 100%); }
+    .early-access-container { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .launch-hero, .featured-launch, .benefits-section, .launches-section, .early-access-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .featured-content { padding: 2rem 1.5rem; }
+    .countdown-timer { gap: 0.5rem; }
+    .countdown-item { min-width: 60px; padding: 0.8rem 0.5rem; }
+    .countdown-value { font-size: 1.5rem; }
+    .featured-specs { flex-wrap: wrap; gap: 1rem; }
+    .launches-header { flex-direction: column; align-items: flex-start; }
+    .launches-filters { flex-wrap: wrap; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Lançamentos</strong>
+</div>
+
+<!-- HERO -->
+<section class="launch-hero">
+  <p class="section-eyebrow">O Futuro do Seu Endereço </p>
+  <h1 class="launch-title">Construindo os <em>cenários</em> de amanhã</h1>
+  <p class="launch-subtitle">Acesse com exclusividade aos empreendimentos mais aguardados de São Paulo. Condições especiais de pré-lançamento e a oportunidade de personalizar seu espaço desde o início.</p>
+</section>
+
+<!-- FEATURED LAUNCH -->
+<section class="featured-launch">
+  <div class="featured-card">
+    <span class="featured-badge">🔥 Lançamento em Destaque</span>
+    <div class="featured-image"></div>
+    <div class="featured-content">
+      <div class="featured-label">Pré-lançamento Exclusivo</div>
+      <h2 class="featured-name">Residencial <em>Aura</em></h2>
+      <p class="featured-location">📍 Vila Nova Conceição • Entrega: 2º Semestre 2027</p>
+      
+      <div class="countdown-container">
+        <div class="countdown-label">Início das vendas em:</div>
+        <div class="countdown-timer" id="countdown">
+          <div class="countdown-item">
+            <span class="countdown-value" id="days">14</span>
+            <span class="countdown-unit">Dias</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-value" id="hours">08</span>
+            <span class="countdown-unit">Horas</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-value" id="minutes">42</span>
+            <span class="countdown-unit">Min</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-value" id="seconds">15</span>
+            <span class="countdown-unit">Seg</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="progress-container">
+        <div class="progress-header">
+          <span class="progress-label">Progresso da obra</span>
+          <span class="progress-value">35% concluído</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 35%;"></div>
+        </div>
+      </div>
+      
+      <div class="featured-specs">
+        <div class="spec-item">
+          <span class="spec-value">2 a 4</span>
+          <span class="spec-label">Suítes</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-value">180 - 350m²</span>
+          <span class="spec-label">Área</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-value">4 a 6</span>
+          <span class="spec-label">Vagas</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-value">Lazer</span>
+          <span class="spec-label">Completo</span>
+        </div>
+      </div>
+      
+      <div class="featured-price">A partir de R$ 3.200.000</div>
+      <p class="featured-price-note">Condições especiais de pagamento para cadastro na lista de espera.</p>
+      
+      <div class="featured-actions">
+        <a href="#early-access" class="btn-primary">Entrar na Lista de Espera</a>
+        <a href="#" class="btn-secondary">Baixar Book</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits-section">
+  <div class="benefits-header">
+    <p class="section-eyebrow">Vantagens Exclusivas</p>
+    <h2>Por que investir em <em>lançamentos</em>?</h2>
+  </div>
+  
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon">📈</div>
+      <h3 class="benefit-title">Valorização na Planta</h3>
+      <p class="benefit-text">Imóveis na planta tendem a valorizar entre 15% e 30% até a entrega das chaves, oferecendo um dos melhores retornos do mercado imobiliário.</p>
+    </div>
+    
+    <div class="benefit-card">
+      <div class="benefit-icon">🎨</div>
+      <h3 class="benefit-title">Personalização Total</h3>
+      <p class="benefit-text">Escolha acabamentos, layout e detalhes que reflitam seu estilo. Seu imóvel será único, feito sob medida para sua rotina.</p>
+    </div>
+    
+    <div class="benefit-card">
+      <div class="benefit-icon">💳</div>
+      <h3 class="benefit-title">Condições de Pagamento</h3>
+      <p class="benefit-text">Entrada facilitada, parcelamento direto com a construtora durante a obra e as melhores taxas de financiamento do mercado.</p>
+    </div>
+    
+    <div class="benefit-card">
+      <div class="benefit-icon">🔑</div>
+      <h3 class="benefit-title">Acesso Antecipado</h3>
+      <p class="benefit-text">Clientes da nossa lista VIP têm prioridade na escolha das melhores unidades, andares e posições de sol antes do lançamento público.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCHES GRID -->
+<section class="launches-section">
+  <div class="launches-header">
+    <div>
+      <p class="section-eyebrow">Portfólio de Lançamentos</p>
+      <h2>Empreendimentos <em>disponíveis</em></h2>
+    </div>
+    <div class="launches-filters">
+      <button class="launch-filter active">Todos</button>
+      <button class="launch-filter">Pré-lançamento</button>
+      <button class="launch-filter">Em Obras</button>
+      <button class="launch-filter">Pronto para Morar</button>
+    </div>
+  </div>
+  
+  <div class="launches-grid">
+    
+    <article class="launch-card">
+      <div class="launch-card-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')">
+        <span class="launch-card-status status-pre">Pré-lançamento</span>
+        <div class="launch-card-favorite">♡</div>
+      </div>
+      <div class="launch-card-content">
+        <h3 class="launch-card-name">Edifício Horizon</h3>
+        <p class="launch-card-location">📍 Itaim Bibi • Entrega: 2028</p>
+        <div class="launch-card-specs">
+          <span>🛏 2 a 3 suítes</span>
+          <span>📐 120 - 180m²</span>
+          <span>🚗 2 a 3 vagas</span>
+        </div>
+        <div class="launch-card-footer">
+          <div class="launch-card-price">
+            <span class="launch-card-price-label">A partir de</span>
+            <span class="launch-card-price-value">R$ 1.8M</span>
+          </div>
+          <button class="launch-card-btn">Saiba Mais</button>
+        </div>
+      </div>
+    </article>
+    
+    <article class="launch-card">
+      <div class="launch-card-image" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80')">
+        <span class="launch-card-status status-construction">Em Obras (45%)</span>
+        <div class="launch-card-favorite">♡</div>
+      </div>
+      <div class="launch-card-content">
+        <h3 class="launch-card-name">Jardins Reserve</h3>
+        <p class="launch-card-location">📍 Jardim Paulista • Entrega: 2026</p>
+        <div class="launch-card-specs">
+          <span>🛏 3 a 4 suítes</span>
+          <span>📐 250 - 400m²</span>
+          <span>🚗 3 a 4 vagas</span>
+        </div>
+        <div class="launch-card-footer">
+          <div class="launch-card-price">
+            <span class="launch-card-price-label">A partir de</span>
+            <span class="launch-card-price-value">R$ 4.5M</span>
+          </div>
+          <button class="launch-card-btn">Saiba Mais</button>
+        </div>
+      </div>
+    </article>
+    
+    <article class="launch-card">
+      <div class="launch-card-image" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80')">
+        <span class="launch-card-status status-last">Últimas Unidades</span>
+        <div class="launch-card-favorite">♡</div>
+      </div>
+      <div class="launch-card-content">
+        <h3 class="launch-card-name">Villa Verde</h3>
+        <p class="launch-card-location">📍 Moema • Entrega: 1º Sem. 2025</p>
+        <div class="launch-card-specs">
+          <span>🛏 3 suítes</span>
+          <span>📐 160 - 220m²</span>
+          <span>🚗 2 vagas</span>
+        </div>
+        <div class="launch-card-footer">
+          <div class="launch-card-price">
+            <span class="launch-card-price-label">A partir de</span>
+            <span class="launch-card-price-value">R$ 2.1M</span>
+          </div>
+          <button class="launch-card-btn">Saiba Mais</button>
+        </div>
+      </div>
+    </article>
+    
+  </div>
+</section>
+
+<!-- EARLY ACCESS FORM -->
+<section class="early-access-section" id="early-access">
+  <div class="early-access-container">
+    <div class="early-access-content">
+      <p class="section-eyebrow">Lista VIP</p>
+      <h2>Seja o primeiro a <em>saber</em></h2>
+      <p>Cadastre-se para receber com prioridade as plantas, tabelas de preços e condições exclusivas dos nossos próximos lançamentos, antes do mercado.</p>
+      
+      <div class="early-access-perks">
+        <div class="perk-item">
+          <div class="perk-icon">✓</div>
+          <span>Acesso 48h antes do lançamento público</span>
+        </div>
+        <div class="perk-item">
+          <div class="perk-icon">✓</div>
+          <span>Condições de pagamento diferenciadas</span>
+        </div>
+        <div class="perk-item">
+          <div class="perk-icon">✓</div>
+          <span>Escolha prioritária de andar e posição</span>
+        </div>
+        <div class="perk-item">
+          <div class="perk-icon">✓</div>
+          <span>Consultoria gratuita de investimento</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="early-access-form">
+      <h3 class="form-title">Garanta seu <em>acesso</em></h3>
+      <p class="form-subtitle">Preencha seus dados e nossa equipe entrará em contato.</p>
+      
+      <form>
+        <div class="form-group">
+          <label>Nome completo</label>
+          <input type="text" placeholder="Seu nome" required>
+        </div>
+        
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" placeholder="seu@email.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label>WhatsApp</label>
+          <input type="tel" placeholder="(11) 99999-9999" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Interesse principal</label>
+          <select required>
+            <option value="">Selecione</option>
+            <option value="investimento">Investimento / Valorização</option>
+            <option value="moradia">Moradia própria</option>
+            <option value="ambos">Ambos</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="form-submit">Entrar na Lista VIP</button>
+        
+        <p class="form-disclaimer">
+          🔒 Seus dados estão seguros. Não enviamos spam.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com um especialista</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // COUNTDOWN TIMER
+  function updateCountdown() {
+    // Set date to 14 days from now for demo purposes
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 14);
+    targetDate.setHours(targetDate.getHours() + 8);
+    
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+  }
+  
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  // FILTER BUTTONS
+  document.querySelectorAll('.launch-filter').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.launch-filter').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

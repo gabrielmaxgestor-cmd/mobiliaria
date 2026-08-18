@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparador de Imóveis — Living Canvas</title>
+<meta name="description" content="Compare até três imóveis lado a lado antes de decidir.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/comparador.html">
+<meta property="og:title" content="Comparador de Imóveis — Living Canvas">
+<meta property="og:description" content="Compare até três imóveis lado a lado antes de decidir.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/comparador.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Comparador de Imóveis — Living Canvas">
+<meta name="twitter:description" content="Compare até três imóveis lado a lado antes de decidir.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .compare-hero {
+    padding: 2rem 3rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .compare-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  
+  .compare-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .compare-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  /* PROPERTIES BAR */
+  .properties-bar {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 3rem;
+  }
+  
+  .properties-bar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .property-slot {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+  }
+  
+  .property-slot:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .property-slot-image {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .property-slot-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .property-slot-remove {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  
+  .property-slot-remove:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .property-slot-content {
+    padding: 1.2rem;
+  }
+  
+  .property-slot-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .property-slot-location {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    margin-bottom: 0.8rem;
+  }
+  
+  .property-slot-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  
+  /* CATEGORY FILTERS */
+  .category-filters {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 2rem;
+  }
+  
+  .category-tabs {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 0.5rem;
+  }
+  
+  .category-tab {
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--cream);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .category-tab:hover {
+    background: rgba(245, 241, 232, 0.05);
+  }
+  
+  .category-tab.active {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    font-weight: 600;
+  }
+  
+  /* COMPARISON TABLE */
+  .comparison-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+  }
+  
+  .comparison-table {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 250px repeat(4, 1fr);
+    border-bottom: 1px solid var(--glass-border);
+    transition: background 0.3s;
+  }
+  
+  .comparison-row:last-child {
+    border-bottom: none;
+  }
+  
+  .comparison-row:hover {
+    background: rgba(245, 241, 232, 0.03);
+  }
+  
+  .comparison-row.header {
+    background: rgba(212, 175, 122, 0.08);
+  }
+  
+  .comparison-row.category {
+    background: rgba(212, 175, 122, 0.05);
+  }
+  
+  .comparison-cell {
+    padding: 1.2rem 1.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--glass-border);
+  }
+  
+  .comparison-cell:last-child {
+    border-right: none;
+  }
+  
+  .comparison-cell.label {
+    font-weight: 500;
+    color: var(--cream);
+    background: rgba(245, 241, 232, 0.03);
+  }
+  
+  .comparison-cell.category-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-style: italic;
+    grid-column: 1 / -1;
+    padding: 1.2rem 1.5rem;
+    border-right: none;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .comparison-cell.header-cell {
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .comparison-cell.value {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .comparison-cell.winner {
+    background: rgba(212, 175, 122, 0.1);
+    position: relative;
+  }
+  
+  .comparison-cell.winner::before {
+    content: '★';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: var(--gold);
+    font-size: 0.8rem;
+  }
+  
+  .comparison-cell.winner .value-text {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  .value-text {
+    color: var(--cream);
+  }
+  
+  .value-sub {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 0.2rem;
+  }
+  
+  .value-icon {
+    font-size: 1.2rem;
+    margin-right: 0.3rem;
+  }
+  
+  /* COMPARISON CHARTS */
+  .charts-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+  }
+  
+  .charts-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .charts-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .charts-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .chart-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  
+  .chart-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+  }
+  
+  .chart-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .chart-bar-item {
+    display: grid;
+    grid-template-columns: 120px 1fr 60px;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .chart-bar-label {
+    font-size: 0.85rem;
+    color: var(--cream);
+  }
+  
+  .chart-bar-track {
+    height: 30px;
+    background: rgba(245, 241, 232, 0.05);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .chart-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%);
+    border-radius: 15px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--emerald-deep);
+  }
+  
+  .chart-bar-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-align: right;
+  }
+  
+  /* RADAR CHART PLACEHOLDER */
+  .radar-chart {
+    height: 300px;
+    background: 
+      radial-gradient(circle at center, rgba(212, 175, 122, 0.1) 0%, transparent 70%),
+      repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(245, 241, 232, 0.05) 50px),
+      repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(245, 241, 232, 0.05) 50px);
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .radar-legend {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .radar-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .radar-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+  
+  /* VERDICT SECTION */
+  .verdict-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+  }
+  
+  .verdict-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .verdict-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .verdict-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .verdict-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .verdict-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  
+  .verdict-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .verdict-card.winner-card {
+    background: linear-gradient(135deg, rgba(212, 175, 122, 0.1) 0%, rgba(245, 241, 232, 0.03) 100%);
+    border-color: var(--gold);
+  }
+  
+  .verdict-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .verdict-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .verdict-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+  }
+  
+  .verdict-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+  
+  .verdict-property {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+  
+  .verdict-property-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+  }
+  
+  .verdict-property-info h4 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .verdict-property-info p {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+  }
+  
+  .verdict-reason {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-light);
+    font-style: italic;
+  }
+  
+  /* ACTIONS */
+  .actions-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+  }
+  
+  .actions-card {
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .actions-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .actions-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .actions-card h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+  }
+  
+  .actions-card h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .actions-card p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.05rem;
+  }
+  
+  .actions-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .actions-btn {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .actions-btn-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .actions-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .actions-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--cream);
+    color: var(--cream);
+  }
+  
+  .actions-btn-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* FAQ */
+  .faq-section {
+    background: var(--emerald-mid);
+    padding: 6rem 3rem;
+  }
+  
+  .faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .faq-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .faq-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .faq-item {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .faq-item:hover {
+    border-color: var(--gold);
+  }
+  
+  .faq-question {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .faq-question h4 {
+    font-size: 1.05rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  
+  .faq-toggle {
+    width: 30px;
+    height: 30px;
+    background: rgba(212, 175, 122, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  
+  .faq-item.active .faq-toggle {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    transform: rotate(45deg);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+  
+  .faq-answer-content {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .properties-bar-grid { grid-template-columns: repeat(2, 1fr); }
+    .comparison-row { grid-template-columns: 200px repeat(4, 1fr); font-size: 0.8rem; }
+    .comparison-cell { padding: 1rem; }
+    .charts-grid { grid-template-columns: 1fr; }
+    .chart-bar-item { grid-template-columns: 100px 1fr 50px; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .compare-hero, .properties-bar, .category-filters, .comparison-section, .charts-section, .verdict-section, .actions-section, .faq-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .properties-bar-grid { grid-template-columns: 1fr; }
+    .comparison-table { overflow-x: auto; }
+    .comparison-row { min-width: 800px; }
+    .verdict-grid { grid-template-columns: 1fr; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .category-tabs { flex-direction: column; border-radius: 20px; }
+    .category-tab { width: 100%; justify-content: center; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <a href='imoveis.html'>Imóveis</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Comparador</strong>
+</div>
+
+<!-- HERO -->
+<section class="compare-hero">
+  <p class="section-eyebrow">Comparador Inteligente </p>
+  <h1 class="compare-title">Compare lado a lado, <em>decida</em> com confiança</h1>
+  <p class="compare-subtitle">Análise detalhada de até 4 imóveis com destaque automático dos melhores em cada critério. Tome sua decisão com dados, não com dúvidas.</p>
+</section>
+
+<!-- PROPERTIES BAR -->
+<section class="properties-bar">
+  <div class="properties-bar-grid">
+    
+    <div class="property-slot">
+      <div class="property-slot-image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80')">
+        <span class="property-slot-badge">Imóvel A</span>
+        <button class="property-slot-remove">×</button>
+      </div>
+      <div class="property-slot-content">
+        <h3 class="property-slot-title">Casa do Bosque</h3>
+        <p class="property-slot-location">📍 Jardim Europa • 420m²</p>
+        <div class="property-slot-price">R$ 2.8M</div>
+      </div>
+    </div>
+    
+    <div class="property-slot">
+      <div class="property-slot-image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80')">
+        <span class="property-slot-badge">Imóvel B</span>
+        <button class="property-slot-remove">×</button>
+      </div>
+      <div class="property-slot-content">
+        <h3 class="property-slot-title">Loft Horizonte</h3>
+        <p class="property-slot-location">📍 Vila Madalena • 180m²</p>
+        <div class="property-slot-price">R$ 1.5M</div>
+      </div>
+    </div>
+    
+    <div class="property-slot">
+      <div class="property-slot-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80')">
+        <span class="property-slot-badge">Imóvel C</span>
+        <button class="property-slot-remove">×</button>
+      </div>
+      <div class="property-slot-content">
+        <h3 class="property-slot-title">Penthouse Urbano</h3>
+        <p class="property-slot-location">📍 Itaim Bibi • 320m²</p>
+        <div class="property-slot-price">R$ 3.1M</div>
+      </div>
+    </div>
+    
+    <div class="property-slot">
+      <div class="property-slot-image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80')">
+        <span class="property-slot-badge">Imóvel D</span>
+        <button class="property-slot-remove">×</button>
+      </div>
+      <div class="property-slot-content">
+        <h3 class="property-slot-title">Studio Artístico</h3>
+        <p class="property-slot-location">📍 Pinheiros • 95m²</p>
+        <div class="property-slot-price">R$ 1.9M</div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- CATEGORY FILTERS -->
+<section class="category-filters">
+  <div class="category-tabs">
+    <button class="category-tab active" onclick="filterCategory('all', this)">📋 Todos</button>
+    <button class="category-tab" onclick="filterCategory('basic', this)">🏠 Básico</button>
+    <button class="category-tab" onclick="filterCategory('features', this)">✨ Características</button>
+    <button class="category-tab" onclick="filterCategory('location', this)">📍 Localização</button>
+    <button class="category-tab" onclick="filterCategory('financial', this)">💰 Financeiro</button>
+    <button class="category-tab" onclick="filterCategory('lifestyle', this)">🌿 Estilo de Vida</button>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison-section">
+  <div class="comparison-table">
+    
+    <!-- HEADER -->
+    <div class="comparison-row header">
+      <div class="comparison-cell label" style="background: rgba(212, 175, 122, 0.08);">Critério</div>
+      <div class="comparison-cell header-cell">Casa do Bosque</div>
+      <div class="comparison-cell header-cell">Loft Horizonte</div>
+      <div class="comparison-cell header-cell">Penthouse Urbano</div>
+      <div class="comparison-cell header-cell">Studio Artístico</div>
+    </div>
+    
+    <!-- CATEGORY: BÁSICO -->
+    <div class="comparison-row category" data-category="basic">
+      <div class="comparison-cell category-label">🏠 Informações Básicas</div>
+    </div>
+    
+    <div class="comparison-row" data-category="basic">
+      <div class="comparison-cell label">Tipo</div>
+      <div class="comparison-cell value"><span class="value-text">Casa</span></div>
+      <div class="comparison-cell value"><span class="value-text">Loft</span></div>
+      <div class="comparison-cell value"><span class="value-text">Cobertura</span></div>
+      <div class="comparison-cell value"><span class="value-text">Studio</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="basic">
+      <div class="comparison-cell label">Área total</div>
+      <div class="comparison-cell value winner"><span class="value-text">420m²</span></div>
+      <div class="comparison-cell value"><span class="value-text">180m²</span></div>
+      <div class="comparison-cell value"><span class="value-text">320m²</span></div>
+      <div class="comparison-cell value"><span class="value-text">95m²</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="basic">
+      <div class="comparison-cell label">Quartos</div>
+      <div class="comparison-cell value winner"><span class="value-text">4 suítes</span></div>
+      <div class="comparison-cell value"><span class="value-text">2 suítes</span></div>
+      <div class="comparison-cell value"><span class="value-text">3 suítes</span></div>
+      <div class="comparison-cell value"><span class="value-text">1 suíte</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="basic">
+      <div class="comparison-cell label">Vagas</div>
+      <div class="comparison-cell value winner"><span class="value-text">4</span></div>
+      <div class="comparison-cell value"><span class="value-text">2</span></div>
+      <div class="comparison-cell value"><span class="value-text">3</span></div>
+      <div class="comparison-cell value"><span class="value-text">1</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="basic">
+      <div class="comparison-cell label">Ano de construção</div>
+      <div class="comparison-cell value"><span class="value-text">2019</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">2023</span></div>
+      <div class="comparison-cell value"><span class="value-text">2021</span></div>
+      <div class="comparison-cell value"><span class="value-text">2022</span></div>
+    </div>
+    
+    <!-- CATEGORY: CARACTERÍSTICAS -->
+    <div class="comparison-row category" data-category="features">
+      <div class="comparison-cell category-label">✨ Características</div>
+    </div>
+    
+    <div class="comparison-row" data-category="features">
+      <div class="comparison-cell label">Pé-direito</div>
+      <div class="comparison-cell value"><span class="value-text">3.2m</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">6m (duplo)</span></div>
+      <div class="comparison-cell value"><span class="value-text">3m</span></div>
+      <div class="comparison-cell value"><span class="value-text">3.5m</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="features">
+      <div class="comparison-cell label">Varanda / Terraço</div>
+      <div class="comparison-cell value"><span class="value-text">✓ Sim</span></div>
+      <div class="comparison-cell value"><span class="value-text">✓ Sim</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">✓ 120m²</span></div>
+      <div class="comparison-cell value"><span class="value-text">✓ Gourmet</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="features">
+      <div class="comparison-cell label">Piscina</div>
+      <div class="comparison-cell value winner"><span class="value-text">✓ Privativa</span></div>
+      <div class="comparison-cell value"><span class="value-text">✗ Não</span></div>
+      <div class="comparison-cell value"><span class="value-text">✓ Coletiva</span></div>
+      <div class="comparison-cell value"><span class="value-text">✗ Não</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="features">
+      <div class="comparison-cell label">Área verde privativa</div>
+      <div class="comparison-cell value winner"><span class="value-text">800m²</span></div>
+      <div class="comparison-cell value"><span class="value-text">—</span></div>
+      <div class="comparison-cell value"><span class="value-text">—</span></div>
+      <div class="comparison-cell value"><span class="value-text">15m²</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="features">
+      <div class="comparison-cell label">Home office</div>
+      <div class="comparison-cell value"><span class="value-text">✓ Dedicado</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">✓ Ateliê</span></div>
+      <div class="comparison-cell value"><span class="value-text">✓ Sim</span></div>
+      <div class="comparison-cell value"><span class="value-text">✓ Integrado</span></div>
+    </div>
+    
+    <!-- CATEGORY: LOCALIZAÇÃO -->
+    <div class="comparison-row category" data-category="location">
+      <div class="comparison-cell category-label">📍 Localização</div>
+    </div>
+    
+    <div class="comparison-row" data-category="location">
+      <div class="comparison-cell label">Bairro</div>
+      <div class="comparison-cell value"><span class="value-text">Jd. Europa</span></div>
+      <div class="comparison-cell value"><span class="value-text">Vila Madalena</span></div>
+      <div class="comparison-cell value"><span class="value-text">Itaim Bibi</span></div>
+      <div class="comparison-cell value"><span class="value-text">Pinheiros</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="location">
+      <div class="comparison-cell label">Metrô mais próximo</div>
+      <div class="comparison-cell value"><span class="value-text">1.2km</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">400m</span></div>
+      <div class="comparison-cell value"><span class="value-text">600m</span></div>
+      <div class="comparison-cell value"><span class="value-text">500m</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="location">
+      <div class="comparison-cell label">Walkability score</div>
+      <div class="comparison-cell value"><span class="value-text">72</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">95</span></div>
+      <div class="comparison-cell value"><span class="value-text">88</span></div>
+      <div class="comparison-cell value"><span class="value-text">92</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="location">
+      <div class="comparison-cell label">Nível de ruído</div>
+      <div class="comparison-cell value winner"><span class="value-text">🔇 Silencioso</span></div>
+      <div class="comparison-cell value"><span class="value-text">🔊 Moderado</span></div>
+      <div class="comparison-cell value"><span class="value-text">🔊 Moderado</span></div>
+      <div class="comparison-cell value"><span class="value-text">🔇 Silencioso</span></div>
+    </div>
+    
+    <!-- CATEGORY: FINANCEIRO -->
+    <div class="comparison-row category" data-category="financial">
+      <div class="comparison-cell category-label">💰 Aspectos Financeiros</div>
+    </div>
+    
+    <div class="comparison-row" data-category="financial">
+      <div class="comparison-cell label">Preço</div>
+      <div class="comparison-cell value"><span class="value-text">R$ 2.8M</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">R$ 1.5M</span></div>
+      <div class="comparison-cell value"><span class="value-text">R$ 3.1M</span></div>
+      <div class="comparison-cell value"><span class="value-text">R$ 1.9M</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="financial">
+      <div class="comparison-cell label">Preço/m²</div>
+      <div class="comparison-cell value"><span class="value-text">R$ 6.666</span></div>
+      <div class="comparison-cell value"><span class="value-text">R$ 8.333</span></div>
+      <div class="comparison-cell value"><span class="value-text">R$ 9.687</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">R$ 20.000</span><div class="value-sub">valorização</div></div>
+    </div>
+    
+    <div class="comparison-row" data-category="financial">
+      <div class="comparison-cell label">Condomínio</div>
+      <div class="comparison-cell value"><span class="value-text">R$ 1.200</span></div>
+      <div class="comparison-cell value"><span class="value-text">R$ 900</span></div>
+      <div class="comparison-cell value"><span class="value-text">R$ 2.800</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">R$ 650</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="financial">
+      <div class="comparison-cell label">IPTU</div>
+      <div class="comparison-cell value"><span class="value-text">R$ 1.800</span></div>
+      <div class="comparison-cell value"><span class="value-text">R$ 950</span></div>
+      <div class="comparison-cell value"><span class="value-text">R$ 2.200</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">R$ 580</span></div>
+    </div>
+    
+    <!-- CATEGORY: ESTILO DE VIDA -->
+    <div class="comparison-row category" data-category="lifestyle">
+      <div class="comparison-cell category-label">🌿 Estilo de Vida</div>
+    </div>
+    
+    <div class="comparison-row" data-category="lifestyle">
+      <div class="comparison-cell label">Luz natural</div>
+      <div class="comparison-cell value winner"><span class="value-text">★★★★★</span></div>
+      <div class="comparison-cell value"><span class="value-text">★★★★☆</span></div>
+      <div class="comparison-cell value"><span class="value-text">★★★★★</span></div>
+      <div class="comparison-cell value"><span class="value-text">★★★★☆</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="lifestyle">
+      <div class="comparison-cell label">Pet-friendly</div>
+      <div class="comparison-cell value winner"><span class="value-text">✓ Ideal</span></div>
+      <div class="comparison-cell value"><span class="value-text">✓ Aceita</span></div>
+      <div class="comparison-cell value"><span class="value-text">✓ Aceita</span></div>
+      <div class="comparison-cell value"><span class="value-text">✓ Aceita</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="lifestyle">
+      <div class="comparison-cell label">Cafés próximos</div>
+      <div class="comparison-cell value"><span class="value-text">3 em 500m</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">12 em 500m</span></div>
+      <div class="comparison-cell value"><span class="value-text">8 em 500m</span></div>
+      <div class="comparison-cell value"><span class="value-text">6 em 500m</span></div>
+    </div>
+    
+    <div class="comparison-row" data-category="lifestyle">
+      <div class="comparison-cell label">Vista</div>
+      <div class="comparison-cell value"><span class="value-text">🌳 Jardim</span></div>
+      <div class="comparison-cell value"><span class="value-text">🌇 Cidade</span></div>
+      <div class="comparison-cell value winner"><span class="value-text">🏙 360°</span></div>
+      <div class="comparison-cell value"><span class="value-text">🌇 Cidade</span></div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- CHARTS -->
+<section class="charts-section">
+  <div class="charts-header">
+    <p class="section-eyebrow">Análise Visual</p>
+    <h2>Comparação em <em>números</em></h2>
+  </div>
+  
+  <div class="charts-grid">
+    
+    <div class="chart-card">
+      <h3>💰 Custo-benefício (preço/m²)</h3>
+      <div class="chart-bars">
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Casa do Bosque</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 33%;">R$ 6.6k</div>
+          </div>
+          <div class="chart-bar-value">33%</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Loft Horizonte</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 42%;">R$ 8.3k</div>
+          </div>
+          <div class="chart-bar-value">42%</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Penthouse</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 48%;">R$ 9.7k</div>
+          </div>
+          <div class="chart-bar-value">48%</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Studio</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 100%;">R$ 20k</div>
+          </div>
+          <div class="chart-bar-value">100%</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h3>🌿 Índice de qualidade de vida</h3>
+      <div class="chart-bars">
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Casa do Bosque</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 94%;">94</div>
+          </div>
+          <div class="chart-bar-value">94</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Loft Horizonte</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 88%;">88</div>
+          </div>
+          <div class="chart-bar-value">88</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Penthouse</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 82%;">82</div>
+          </div>
+          <div class="chart-bar-value">82</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Studio</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 86%;">86</div>
+          </div>
+          <div class="chart-bar-value">86</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h3>🚶 Walkability score</h3>
+      <div class="chart-bars">
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Casa do Bosque</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 72%;">72</div>
+          </div>
+          <div class="chart-bar-value">72</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Loft Horizonte</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 95%;">95</div>
+          </div>
+          <div class="chart-bar-value">95</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Penthouse</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 88%;">88</div>
+          </div>
+          <div class="chart-bar-value">88</div>
+        </div>
+        <div class="chart-bar-item">
+          <div class="chart-bar-label">Studio</div>
+          <div class="chart-bar-track">
+            <div class="chart-bar-fill" style="width: 92%;">92</div>
+          </div>
+          <div class="chart-bar-value">92</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h3>📊 Perfil multidimensional</h3>
+      <div class="radar-chart">
+        <div class="radar-legend">
+          <div class="radar-legend-item">
+            <div class="radar-legend-color" style="background: #d4af7a;"></div>
+            <span>Casa do Bosque</span>
+          </div>
+          <div class="radar-legend-item">
+            <div class="radar-legend-color" style="background: #e8c9a0;"></div>
+            <span>Loft Horizonte</span>
+          </div>
+          <div class="radar-legend-item">
+            <div class="radar-legend-color" style="background: #1a5f5a;"></div>
+            <span>Penthouse</span>
+          </div>
+          <div class="radar-legend-item">
+            <div class="radar-legend-color" style="background: #134e4a;"></div>
+            <span>Studio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- VERDICT -->
+<section class="verdict-section">
+  <div class="verdict-header">
+    <p class="section-eyebrow">Veredito da IA</p>
+    <h2>O melhor para cada <em>perfil</em></h2>
+  </div>
+  
+  <div class="verdict-grid">
+    
+    <div class="verdict-card winner-card">
+      <span class="verdict-badge">🏆 Melhor geral</span>
+      <div class="verdict-icon">🌳</div>
+      <h3 class="verdict-title">Para famílias</h3>
+      <p class="verdict-subtitle">Espaço, privacidade e qualidade de vida</p>
+      <div class="verdict-property">
+        <div class="verdict-property-image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=200&q=80')"></div>
+        <div class="verdict-property-info">
+          <h4>Casa do Bosque</h4>
+          <p>Jardim Europa • 420m²</p>
+        </div>
+      </div>
+      <p class="verdict-reason">Maior área, jardim privativo, 4 suítes, silêncio absoluto e proximidade com parques. Ideal para quem tem filhos e pets.</p>
+    </div>
+    
+    <div class="verdict-card">
+      <div class="verdict-icon">💻</div>
+      <h3 class="verdict-title">Para home office</h3>
+      <p class="verdict-subtitle">Criatividade, vibração urbana e cafés</p>
+      <div class="verdict-property">
+        <div class="verdict-property-image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=200&q=80')"></div>
+        <div class="verdict-property-info">
+          <h4>Loft Horizonte</h4>
+          <p>Vila Madalena • 180m²</p>
+        </div>
+      </div>
+      <p class="verdict-reason">Pé-direito duplo inspirador, ateliê dedicado, 12 cafés em 500m e walkability score 95. Perfeito para criativos.</p>
+    </div>
+    
+    <div class="verdict-card">
+      <div class="verdict-icon">🏙</div>
+      <h3 class="verdict-title">Para investidores</h3>
+      <p class="verdict-subtitle">Valorização, liquidez e prestígio</p>
+      <div class="verdict-property">
+        <div class="verdict-property-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=200&q=80')"></div>
+        <div class="verdict-property-info">
+          <h4>Penthouse Urbano</h4>
+          <p>Itaim Bibi • 320m²</p>
+        </div>
+      </div>
+      <p class="verdict-reason">Localização premium, vista 360°, alta liquidez no mercado de luxo e valorização histórica de 12% ao ano no bairro.</p>
+    </div>
+    
+    <div class="verdict-card">
+      <div class="verdict-icon">💰</div>
+      <h3 class="verdict-title">Melhor custo-benefício</h3>
+      <p class="verdict-subtitle">Preço acessível com boa qualidade</p>
+      <div class="verdict-property">
+        <div class="verdict-property-image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=200&q=80')"></div>
+        <div class="verdict-property-info">
+          <h4>Studio Artístico</h4>
+          <p>Pinheiros • 95m²</p>
+        </div>
+      </div>
+      <p class="verdict-reason">Menor condomínio e IPTU, bairro vibrante, ótima infraestrutura. Perfeito para primeiro imóvel ou investimento de locação.</p>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ACTIONS -->
+<section class="actions-section">
+  <div class="actions-card">
+    <div class="actions-content">
+      <h2>Pronto para <em>escolher</em>?</h2>
+      <p>Agende visitas para os imóveis que mais te interessaram. Nosso especialista pode te ajudar a tomar a decisão final com confiança.</p>
+      <div class="actions-buttons">
+        <a href='agendar.html' class="actions-btn actions-btn-primary">📅 Agendar Visitas</a>
+        <a href="https://wa.me/5511999999999" class="actions-btn actions-btn-secondary">💬 Falar com Especialista</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-container">
+    <div class="faq-header">
+      <p class="section-eyebrow">Dúvidas Frequentes</p>
+      <h2>Sobre o <em>comparador</em></h2>
+    </div>
+    
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Como funciona o destaque de "vencedor" em cada critério?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Nossa IA analisa cada critério e destaca automaticamente o imóvel que se sai melhor naquele aspecto específico. A estrela (★) ao lado do valor indica que aquele imóvel é o vencedor naquele critério. Por exemplo, em "Área total", o imóvel com mais metros quadrados recebe o destaque.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Posso comparar mais de 4 imóveis?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Recomendamos comparar até 4 imóveis para manter a análise clara e objetiva. Se você tem mais opções, sugerimos fazer uma primeira triagem e depois comparar os finalistas. Nosso especialista pode ajudar nesse processo de seleção.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Como o "veredito da IA" é calculado?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            O veredito considera múltiplos fatores: características do imóvel, perfil do bairro, indicadores de qualidade de vida, potencial de valorização e adequação a diferentes perfis de comprador (famílias, investidores, home office, etc.). A análise é atualizada conforme novos dados de mercado são incorporados.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Posso salvar esta comparação para consultar depois?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Sim! Você pode salvar a comparação na sua área do cliente e acessá-la quando quiser. Também pode compartilhar o link da comparação com familiares ou amigos para decidirem juntos. As comparações salvas ficam disponíveis por 90 dias.
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <h4>Os dados da comparação são atualizados em tempo real?</h4>
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Sim. Preços, disponibilidade e informações dos imóveis são atualizados em tempo real. Os indicadores de bairro (walkability, cafés próximos, etc.) são atualizados semanalmente. Se algum imóvel sair do catálogo durante sua comparação, você será notificado.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com um especialista</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // FILTER CATEGORY
+  function filterCategory(category, btn) {
+    document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const rows = document.querySelectorAll('.comparison-row');
+    rows.forEach(row => {
+      if (category === 'all') {
+        row.style.display = '';
+      } else {
+        const rowCategory = row.getAttribute('data-category');
+        if (rowCategory === category || !rowCategory) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      }
+    });
+  }
+  
+  // FAQ TOGGLE
+  function toggleFaq(element) {
+    const item = element.parentElement;
+    item.classList.toggle('active');
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa Interativo — Living Canvas</title>
+<meta name="description" content="Explore imóveis geograficamente com o mapa interativo por região.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/mapa.html">
+<meta property="og:title" content="Mapa Interativo — Living Canvas">
+<meta property="og:description" content="Explore imóveis geograficamente com o mapa interativo por região.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/mapa.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mapa Interativo — Living Canvas">
+<meta name="twitter:description" content="Explore imóveis geograficamente com o mapa interativo por região.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* MAP LAYOUT */
+  .map-layout {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    height: 100vh;
+    padding-top: 80px;
+  }
+  
+  /* SIDEBAR */
+  .map-sidebar {
+    background: var(--emerald-deep);
+    border-right: 1px solid var(--glass-border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar-header {
+    padding: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .sidebar-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .sidebar-title {
+    font-size: 1.8rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  
+  .sidebar-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .sidebar-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+  }
+  
+  /* FILTERS */
+  .filters-panel {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .filters-title {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .filters-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  
+  .filter-group.full {
+    grid-column: 1 / -1;
+  }
+  
+  .filter-group label {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .filter-group select,
+  .filter-group input {
+    padding: 0.7rem 0.9rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+  
+  .filter-group select:focus,
+  .filter-group input:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+  }
+  
+  .filter-group select option {
+    background: var(--emerald-deep);
+    color: var(--cream);
+  }
+  
+  /* LAYER TOGGLES */
+  .layer-toggles {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .layer-toggles-title {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+  
+  .layer-toggles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  
+  .layer-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.85rem;
+  }
+  
+  .layer-toggle:hover {
+    border-color: var(--gold);
+  }
+  
+  .layer-toggle.active {
+    background: rgba(212, 175, 122, 0.1);
+    border-color: var(--gold);
+  }
+  
+  .layer-toggle-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .layer-toggle-dot.sale { background: var(--gold); }
+  .layer-toggle-dot.rent { background: #25D366; }
+  .layer-toggle-dot.launch { background: #FF6B6B; }
+  .layer-toggle-dot.pulse { background: #6BC5E8; }
+  
+  /* STATS BAR */
+  .stats-bar {
+    padding: 1.2rem 2rem;
+    background: rgba(212, 175, 122, 0.05);
+    border-bottom: 1px solid var(--glass-border);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  
+  .stat-item {
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* PROPERTIES LIST */
+  .properties-list-header {
+    padding: 1.5rem 2rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .properties-list-title {
+    font-size: 0.9rem;
+    color: var(--cream);
+    font-weight: 500;
+  }
+  
+  .properties-list-title strong {
+    color: var(--gold);
+  }
+  
+  .sort-select {
+    padding: 0.4rem 0.8rem;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--cream);
+    font-size: 0.75rem;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .properties-list {
+    flex: 1;
+    padding: 0 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+  }
+  
+  .property-list-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .property-list-item:hover,
+  .property-list-item.active {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.08);
+    transform: translateX(5px);
+  }
+  
+  .property-list-image {
+    width: 100px;
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .property-list-badge {
+    position: absolute;
+    top: 0.4rem;
+    left: 0.4rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .property-list-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .property-list-title {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    font-weight: 500;
+  }
+  
+  .property-list-location {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+    margin-bottom: 0.5rem;
+  }
+  
+  .property-list-meta {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+  
+  .property-list-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  
+  /* MAP AREA */
+  .map-area {
+    position: relative;
+    overflow: hidden;
+    background: var(--emerald-mid);
+  }
+  
+  .map-visual {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 25% 35%, rgba(107, 197, 232, 0.15) 0%, transparent 30%),
+      radial-gradient(circle at 65% 55%, rgba(37, 211, 102, 0.1) 0%, transparent 35%),
+      radial-gradient(circle at 80% 25%, rgba(212, 175, 122, 0.15) 0%, transparent 25%),
+      linear-gradient(135deg, #0d3833 0%, #134e4a 50%, #0a2e2a 100%);
+    background-size: cover;
+    transition: transform 0.5s;
+  }
+  
+  /* MAP GRID OVERLAY */
+  .map-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(245, 241, 232, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 241, 232, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  
+  /* ROADS */
+  .map-roads {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  
+  .road {
+    position: absolute;
+    background: rgba(245, 241, 232, 0.08);
+  }
+  
+  .road-h1 { top: 30%; left: 0; right: 0; height: 3px; }
+  .road-h2 { top: 60%; left: 0; right: 0; height: 4px; background: rgba(245, 241, 232, 0.12); }
+  .road-v1 { left: 35%; top: 0; bottom: 0; width: 3px; }
+  .road-v2 { left: 70%; top: 0; bottom: 0; width: 4px; background: rgba(245, 241, 232, 0.12); }
+  .road-d1 { 
+    top: 20%; left: 10%; 
+    width: 60%; height: 2px; 
+    transform: rotate(25deg);
+    background: rgba(245, 241, 232, 0.06);
+  }
+  
+  /* NEIGHBORHOOD LABELS */
+  .neighborhood-label {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: rgba(245, 241, 232, 0.25);
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    pointer-events: none;
+    text-transform: uppercase;
+  }
+  
+  .label-jardim-europa { top: 20%; left: 15%; }
+  .label-vila-madalena { top: 45%; left: 55%; }
+  .label-itaim-bibi { top: 70%; left: 25%; }
+  .label-pinheiros { top: 35%; left: 75%; }
+  .label-moema { top: 80%; left: 65%; }
+  
+  /* PINS */
+  .map-pin {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s;
+  }
+  
+  .map-pin:hover {
+    z-index: 20;
+    transform: translate(-50%, -100%) scale(1.15);
+  }
+  
+  .map-pin.active {
+    z-index: 30;
+    transform: translate(-50%, -100%) scale(1.2);
+  }
+  
+  .pin-bubble {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.5rem 0.9rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3), 0 0 0 0 rgba(212, 175, 122, 0.5);
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  .map-pin:hover .pin-bubble {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 8px rgba(212, 175, 122, 0.2);
+  }
+  
+  .map-pin.active .pin-bubble {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 10px rgba(212, 175, 122, 0.3);
+    background: var(--cream);
+  }
+  
+  .pin-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid var(--gold);
+  }
+  
+  .map-pin.active .pin-bubble::after {
+    border-top-color: var(--cream);
+  }
+  
+  .pin-bubble.rent {
+    background: #25D366;
+    color: white;
+  }
+  
+  .pin-bubble.rent::after {
+    border-top-color: #25D366;
+  }
+  
+  .pin-bubble.launch {
+    background: #FF6B6B;
+    color: white;
+  }
+  
+  .pin-bubble.launch::after {
+    border-top-color: #FF6B6B;
+  }
+  
+  /* CLUSTER */
+  .map-cluster {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0 0 0 rgba(212, 175, 122, 0.5);
+    animation: clusterPulse 2s infinite;
+    z-index: 5;
+  }
+  
+  @keyframes clusterPulse {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 122, 0.5); }
+    70% { box-shadow: 0 0 0 20px rgba(212, 175, 122, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 122, 0); }
+  }
+  
+  /* POPUP */
+  .map-popup {
+    position: absolute;
+    width: 320px;
+    background: var(--emerald-deep);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    z-index: 100;
+    transform: translate(-50%, -110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+  }
+  
+  .map-popup.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .popup-image {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .popup-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .popup-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--cream);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+  
+  .popup-close:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .popup-content {
+    padding: 1.2rem;
+  }
+  
+  .popup-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .popup-location {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    margin-bottom: 1rem;
+  }
+  
+  .popup-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  
+  .popup-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  
+  .popup-actions {
+    display: flex;
+    gap: 0.6rem;
+  }
+  
+  .popup-btn {
+    flex: 1;
+    padding: 0.7rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+  }
+  
+  .popup-btn-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .popup-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 122, 0.3);
+  }
+  
+  .popup-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+  }
+  
+  .popup-btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  
+  /* MAP CONTROLS */
+  .map-controls {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 50;
+  }
+  
+  .map-control-btn {
+    width: 45px;
+    height: 45px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  
+  .map-control-btn:hover {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+  }
+  
+  /* LEGEND */
+  .map-legend {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 1.2rem 1.5rem;
+    z-index: 50;
+    min-width: 200px;
+  }
+  
+  .legend-title {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+  }
+  
+  .legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.85rem;
+  }
+  
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .legend-dot.sale { background: var(--gold); }
+  .legend-dot.rent { background: #25D366; }
+  .legend-dot.launch { background: #FF6B6B; }
+  .legend-dot.cluster { 
+    background: var(--gold);
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--emerald-deep);
+  }
+  
+  /* RADIUS TOOL */
+  .radius-tool {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 0.6rem 1.2rem;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .radius-tool-label {
+    font-size: 0.8rem;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .radius-tool-slider {
+    width: 150px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: rgba(245, 241, 232, 0.2);
+    border-radius: 10px;
+    outline: none;
+  }
+  
+  .radius-tool-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .radius-tool-value {
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-weight: 600;
+    min-width: 50px;
+    text-align: right;
+  }
+  
+  /* HEATMAP OVERLAY */
+  .heatmap-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  
+  .heatmap-overlay.active {
+    opacity: 1;
+  }
+  
+  .heat-spot {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.4;
+  }
+  
+  .heat-spot-1 {
+    top: 20%; left: 15%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.8) 0%, transparent 70%);
+  }
+  
+  .heat-spot-2 {
+    top: 45%; left: 55%;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(37, 211, 102, 0.6) 0%, transparent 70%);
+  }
+  
+  .heat-spot-3 {
+    top: 70%; left: 25%;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(255, 107, 107, 0.7) 0%, transparent 70%);
+  }
+  
+  .heat-spot-4 {
+    top: 35%; left: 75%;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(107, 197, 232, 0.6) 0%, transparent 70%);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* SCROLLBAR */
+  .map-sidebar::-webkit-scrollbar,
+  .properties-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .map-sidebar::-webkit-scrollbar-track,
+  .properties-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .map-sidebar::-webkit-scrollbar-thumb,
+  .properties-list::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 122, 0.3);
+    border-radius: 10px;
+  }
+  
+  .map-sidebar::-webkit-scrollbar-thumb:hover,
+  .properties-list::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .map-layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 60vh;
+    }
+    
+    .map-sidebar {
+      max-height: 40vh;
+    }
+    
+    .properties-list {
+      max-height: 200px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .map-layout { padding-top: 70px; }
+    .sidebar-header, .filters-panel, .layer-toggles, .stats-bar, .properties-list-header, .properties-list { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .filters-grid { grid-template-columns: 1fr; }
+    .map-legend { bottom: 1rem; left: 1rem; right: 1rem; min-width: auto; }
+    .radius-tool { top: 1rem; left: 1rem; right: 1rem; transform: none; flex-wrap: wrap; }
+    .radius-tool-slider { flex: 1; }
+    .map-controls { top: auto; bottom: 8rem; right: 1rem; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  /* Leaflet integration — align with site palette */
+  #leafletMap { position: absolute; inset: 0; width: 100%; height: 100%; background: var(--emerald-deep); border-radius: inherit; z-index: 1; }
+  .leaflet-container { font-family: 'Inter', sans-serif; background: var(--emerald-deep); }
+  .leaflet-control-attribution { background: rgba(10,46,42,0.75) !important; color: var(--text-light) !important; font-size: 10px; }
+  .leaflet-control-attribution a { color: var(--gold) !important; }
+  .leaflet-control-zoom a {
+    background: rgba(10,46,42,0.92) !important; color: var(--gold) !important;
+    border: 1px solid var(--glass-border) !important; font-family: 'Playfair Display', serif;
+  }
+  .leaflet-control-zoom a:hover { background: var(--emerald-mid) !important; color: var(--cream) !important; }
+
+  .lc-price-pin {
+    background: var(--emerald-deep);
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    transform: translate(-50%, -100%);
+    transition: transform .2s ease, background .2s ease, color .2s ease;
+  }
+  .lc-price-pin::after {
+    content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%);
+    width: 10px; height: 10px; background: var(--emerald-deep);
+    border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold);
+    transform-origin: center; transform: translateX(-50%) rotate(45deg);
+  }
+  .lc-price-pin:hover, .lc-price-pin.is-active {
+    background: var(--gold); color: var(--emerald-deep);
+  }
+  .lc-price-pin:hover::after, .lc-price-pin.is-active::after {
+    background: var(--gold); border-color: var(--gold);
+  }
+
+  .leaflet-popup-content-wrapper {
+    background: var(--cream); color: var(--text-dark);
+    border-radius: 14px; padding: 0; overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    border: 1px solid var(--gold-soft);
+  }
+  .leaflet-popup-content { margin: 0; width: 260px !important; font-family: 'Inter', sans-serif; }
+  .leaflet-popup-tip { background: var(--cream); }
+  .leaflet-popup-close-button { color: var(--emerald-deep) !important; font-size: 22px !important; padding: 8px 10px !important; }
+
+  .lc-pop-img { width: 100%; height: 140px; background-size: cover; background-position: center; }
+  .lc-pop-body { padding: 14px 16px 16px; }
+  .lc-pop-title {
+    font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 400;
+    color: var(--emerald-deep); margin-bottom: 4px; line-height: 1.2;
+  }
+  .lc-pop-loc { font-size: 12px; color: #6b6b6b; margin-bottom: 8px; letter-spacing: 0.3px; }
+  .lc-pop-price {
+    font-family: 'Playfair Display', serif; font-size: 20px; color: var(--emerald-mid);
+    font-style: italic; margin-bottom: 12px;
+  }
+  .lc-pop-actions { display: flex; gap: 8px; }
+  .lc-pop-btn {
+    flex: 1; text-align: center; padding: 8px 10px; border-radius: 999px;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+    text-decoration: none; font-weight: 500; transition: all .2s;
+  }
+  .lc-pop-btn.primary { background: var(--emerald-deep); color: var(--gold); }
+  .lc-pop-btn.primary:hover { background: var(--emerald-mid); }
+  .lc-pop-btn.secondary { background: transparent; color: var(--emerald-deep); border: 1px solid var(--emerald-deep); }
+  .lc-pop-btn.secondary:hover { background: var(--emerald-deep); color: var(--cream); }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Lista</a>
+</nav>
+
+<!-- MAP LAYOUT -->
+<div class="map-layout">
+  
+  <!-- SIDEBAR -->
+  <aside class="map-sidebar">
+    
+    <div class="sidebar-header">
+      <p class="sidebar-eyebrow">Mapa Interativo</p>
+      <h1 class="sidebar-title">Explore São Paulo no <em>mapa</em></h1>
+      <p class="sidebar-subtitle">Todos os imóveis geolocalizados em tempo real</p>
+    </div>
+    
+    <!-- FILTERS -->
+    <div class="filters-panel">
+      <div class="filters-title">🔍 Filtros do mapa</div>
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label>Tipo</label>
+          <select>
+            <option>Todos</option>
+            <option>Casa</option>
+            <option>Apartamento</option>
+            <option>Cobertura</option>
+            <option>Studio</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Bairro</label>
+          <select>
+            <option>Todos</option>
+            <option>Jardim Europa</option>
+            <option>Vila Madalena</option>
+            <option>Itaim Bibi</option>
+            <option>Pinheiros</option>
+            <option>Moema</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Preço até</label>
+          <select>
+            <option>Sem limite</option>
+            <option>R$ 1M</option>
+            <option>R$ 2M</option>
+            <option>R$ 3M</option>
+            <option>R$ 5M</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Quartos</label>
+          <select>
+            <option>Qualquer</option>
+            <option>1+</option>
+            <option>2+</option>
+            <option>3+</option>
+            <option>4+</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <!-- LAYERS -->
+    <div class="layer-toggles">
+      <div class="layer-toggles-title">🗺️ Camadas</div>
+      <div class="layer-toggles-grid">
+        <div class="layer-toggle active" onclick="toggleLayer('sale', this)">
+          <div class="layer-toggle-dot sale"></div>
+          <span>Venda</span>
+        </div>
+        <div class="layer-toggle active" onclick="toggleLayer('rent', this)">
+          <div class="layer-toggle-dot rent"></div>
+          <span>Aluguel</span>
+        </div>
+        <div class="layer-toggle" onclick="toggleLayer('launch', this)">
+          <div class="layer-toggle-dot launch"></div>
+          <span>Lançamentos</span>
+        </div>
+        <div class="layer-toggle" onclick="toggleLayer('pulse', this)">
+          <div class="layer-toggle-dot pulse"></div>
+          <span>Pulso</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value" id="statTotal">42</div>
+        <div class="stat-label">Imóveis</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">R$ 3.2M</div>
+        <div class="stat-label">Preço médio</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">380m²</div>
+        <div class="stat-label">Área média</div>
+      </div>
+    </div>
+    
+    <!-- LIST HEADER -->
+    <div class="properties-list-header">
+      <div class="properties-list-title"><strong>42</strong> imóveis na área</div>
+      <select class="sort-select">
+        <option>Maior compatibilidade</option>
+        <option>Menor preço</option>
+        <option>Maior preço</option>
+        <option>Maior área</option>
+      </select>
+    </div>
+    
+    <!-- LIST -->
+    <div class="properties-list">
+      
+      <div class="property-list-item active" onclick="focusPin(1, this)">
+        <div class="property-list-image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=300&q=80')">
+          <span class="property-list-badge">Exclusivo</span>
+        </div>
+        <div class="property-list-content">
+          <h3 class="property-list-title">Casa do Bosque</h3>
+          <p class="property-list-location">📍 Jardim Europa • 420m²</p>
+          <div class="property-list-meta">
+            <span>🛏 4</span>
+            <span>🌳 Jardim</span>
+            <span>🚗 4</span>
+          </div>
+          <div class="property-list-price">R$ 2.8M</div>
+        </div>
+      </div>
+      
+      <div class="property-list-item" onclick="focusPin(2, this)">
+        <div class="property-list-image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&q=80')">
+          <span class="property-list-badge">Novo</span>
+        </div>
+        <div class="property-list-content">
+          <h3 class="property-list-title">Loft Horizonte</h3>
+          <p class="property-list-location">📍 Vila Madalena • 180m²</p>
+          <div class="property-list-meta">
+            <span>🛏 2</span>
+            <span>🎨 Ateliê</span>
+            <span>🌇 Vista</span>
+          </div>
+          <div class="property-list-price">R$ 1.5M</div>
+        </div>
+      </div>
+      
+      <div class="property-list-item" onclick="focusPin(3, this)">
+        <div class="property-list-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&q=80')">
+          <span class="property-list-badge">Destaque</span>
+        </div>
+        <div class="property-list-content">
+          <h3 class="property-list-title">Penthouse Urbano</h3>
+          <p class="property-list-location">📍 Itaim Bibi • 320m²</p>
+          <div class="property-list-meta">
+            <span>🛏 3</span>
+            <span>🏙 360°</span>
+            <span>🍳 Chef</span>
+          </div>
+          <div class="property-list-price">R$ 3.1M</div>
+        </div>
+      </div>
+      
+      <div class="property-list-item" onclick="focusPin(4, this)">
+        <div class="property-list-image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=300&q=80')">
+          <span class="property-list-badge">Exclusivo</span>
+        </div>
+        <div class="property-list-content">
+          <h3 class="property-list-title">Studio Artístico</h3>
+          <p class="property-list-location">📍 Pinheiros • 95m²</p>
+          <div class="property-list-meta">
+            <span>🛏 1</span>
+            <span>🎨 Studio</span>
+            <span>☕ Varanda</span>
+          </div>
+          <div class="property-list-price">R$ 1.9M</div>
+        </div>
+      </div>
+      
+      <div class="property-list-item" onclick="focusPin(5, this)">
+        <div class="property-list-image" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=300&q=80')">
+          <span class="property-list-badge">Assinatura</span>
+        </div>
+        <div class="property-list-content">
+          <h3 class="property-list-title">Refúgio Oceano</h3>
+          <p class="property-list-location">📍 Riviera • 560m²</p>
+          <div class="property-list-meta">
+            <span>🛏 5</span>
+            <span>🏊 Piscina</span>
+            <span>🌊 Mar</span>
+          </div>
+          <div class="property-list-price">R$ 4.2M</div>
+        </div>
+      </div>
+      
+      <div class="property-list-item" onclick="focusPin(6, this)">
+        <div class="property-list-image" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=300&q=80')">
+          <span class="property-list-badge">Premium</span>
+        </div>
+        <div class="property-list-content">
+          <h3 class="property-list-title">Villa Tropical</h3>
+          <p class="property-list-location">📍 Alphaville • 680m²</p>
+          <div class="property-list-meta">
+            <span>🛏 6</span>
+            <span>🌴 Jardim</span>
+            <span>🎬 Cinema</span>
+          </div>
+          <div class="property-list-price">R$ 5.5M</div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </aside>
+  
+  <!-- MAP AREA -->
+  <div class="map-area">
+    
+    <!-- MAP VISUAL -->
+    <div class="map-visual" id="mapVisual">
+      <div id="leafletMap"></div>
+    </div>
+    
+    <!-- RADIUS TOOL -->
+    <div class="radius-tool">
+      <div class="radius-tool-label">📏 Raio</div>
+      <input type="range" class="radius-tool-slider" min="1" max="20" value="5" oninput="updateRadius(this.value)">
+      <div class="radius-tool-value" id="radiusValue">5 km</div>
+    </div>
+    
+    <!-- CONTROLS -->
+    <div class="map-controls">
+      <button class="map-control-btn" onclick="zoomMap(1)" title="Zoom in">+</button>
+      <button class="map-control-btn" onclick="zoomMap(-1)" title="Zoom out">−</button>
+      <button class="map-control-btn" onclick="resetMap()" title="Resetar">⌂</button>
+      <button class="map-control-btn" onclick="toggleFullscreen()" title="Tela cheia">⛶</button>
+    </div>
+    
+    <!-- LEGEND -->
+    <div class="map-legend">
+      <div class="legend-title">Legenda</div>
+      <div class="legend-items">
+        <div class="legend-item">
+          <div class="legend-dot sale"></div>
+          <span>Venda</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot rent"></div>
+          <span>Aluguel</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot launch"></div>
+          <span>Lançamento</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot cluster"></div>
+          <span>Agrupamento</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com um especialista</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // PROPERTY DATA — Valença-RJ e arredores
+  const properties = [
+    { id: 1, lat: -22.2447, lng: -43.7014, title: 'Casa do Bosque',    location: '📍 Centro • 420m²',        price: 'R$ 2.800.000', priceShort: 'R$ 2.8M', badge: 'Exclusivo',  thumbnailUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80', meta: '<span>🛏 4 suítes</span><span>🌳 Jardim</span><span>🚗 4 vagas</span>' },
+    { id: 2, lat: -22.2390, lng: -43.6890, title: 'Loft Horizonte',    location: '📍 Chacrinha • 180m²',     price: 'R$ 1.500.000', priceShort: 'R$ 1.5M', badge: 'Novo',       thumbnailUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80', meta: '<span>🛏 2 suítes</span><span>🎨 Ateliê</span><span>🌇 Vista</span>' },
+    { id: 3, lat: -22.2520, lng: -43.7140, title: 'Penthouse Urbano',  location: '📍 Belo Horizonte • 320m²',price: 'R$ 3.100.000', priceShort: 'R$ 3.1M', badge: 'Destaque',   thumbnailUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80', meta: '<span>🛏 3 suítes</span><span>🏙 360°</span><span>🍳 Chef</span>' },
+    { id: 4, lat: -22.2360, lng: -43.7150, title: 'Studio Artístico',  location: '📍 Vila Esperança • 95m²', price: 'R$ 1.900.000', priceShort: 'R$ 1.9M', badge: 'Exclusivo',  thumbnailUrl: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80', meta: '<span>🛏 1 suíte</span><span>🎨 Studio</span><span>☕ Varanda</span>' },
+    { id: 5, lat: -22.2560, lng: -43.6910, title: 'Refúgio Oceano',    location: '📍 Parque Pentagna • 560m²',price:'R$ 4.200.000', priceShort: 'R$ 4.2M', badge: 'Assinatura', thumbnailUrl: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80', meta: '<span>🛏 5 suítes</span><span>🏊 Piscina</span><span>🌊 Vista</span>' },
+    { id: 6, lat: -22.2300, lng: -43.7050, title: 'Villa Tropical',    location: '📍 Bom Retiro • 680m²',    price: 'R$ 5.500.000', priceShort: 'R$ 5.5M', badge: 'Premium',    thumbnailUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80', meta: '<span>🛏 6 suítes</span><span>🌴 Jardim</span><span>🎬 Cinema</span>' }
+  ];
+
+  const VALENCA_CENTER = [-22.2447, -43.7014];
+  const VALENCA_ZOOM = 14;
+
+  // INIT LEAFLET
+  const map = L.map('leafletMap', {
+    center: VALENCA_CENTER,
+    zoom: VALENCA_ZOOM,
+    zoomControl: true,
+    scrollWheelZoom: true
+  });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  const markers = {};
+
+  properties.forEach(p => {
+    const icon = L.divIcon({
+      className: 'lc-price-pin-wrap',
+      html: `<div class="lc-price-pin" data-id="${p.id}">${p.priceShort}</div>`,
+      iconSize: [0, 0],
+      iconAnchor: [0, 0]
+    });
+
+    const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
+
+    const popupHtml = `
+      <div class="lc-pop-img" style="background-image:url('${p.thumbnailUrl}')"></div>
+      <div class="lc-pop-body">
+        <div class="lc-pop-title">${p.title}</div>
+        <div class="lc-pop-loc">${p.location}</div>
+        <div class="lc-pop-price">${p.price}</div>
+        <div class="lc-pop-actions">
+          <a href="imovel.html" class="lc-pop-btn primary">Ver detalhes</a>
+          <a href="agendar.html" class="lc-pop-btn secondary">Agendar</a>
+        </div>
+      </div>`;
+
+    marker.bindPopup(popupHtml, { maxWidth: 260, minWidth: 260, closeButton: true, offset: [0, -14] });
+
+    marker.on('popupopen', () => {
+      document.querySelectorAll('.lc-price-pin').forEach(el => el.classList.remove('is-active'));
+      const el = marker.getElement()?.querySelector('.lc-price-pin');
+      if (el) el.classList.add('is-active');
+    });
+    marker.on('popupclose', () => {
+      const el = marker.getElement()?.querySelector('.lc-price-pin');
+      if (el) el.classList.remove('is-active');
+    });
+
+    markers[p.id] = marker;
+  });
+
+  // FOCUS FROM SIDEBAR LIST
+  function focusPin(id, listItem) {
+    const marker = markers[id];
+    if (!marker) return;
+    document.querySelectorAll('.property-list-item').forEach(i => i.classList.remove('active'));
+    if (listItem) listItem.classList.add('active');
+    map.flyTo(marker.getLatLng(), 16, { duration: 0.8 });
+    marker.openPopup();
+  }
+  function openPopup(id) { const m = markers[id]; if (m) { map.panTo(m.getLatLng()); m.openPopup(); } }
+  function closePopup() { map.closePopup(); }
+
+  // LAYER TOGGLE (visual only — filtering could be wired to markers)
+  function toggleLayer(layer, element) { element.classList.toggle('active'); }
+
+  // RADIUS
+  let radiusCircle = null;
+  function updateRadius(value) {
+    document.getElementById('radiusValue').textContent = value + ' km';
+    if (radiusCircle) map.removeLayer(radiusCircle);
+    radiusCircle = L.circle(VALENCA_CENTER, {
+      radius: value * 1000,
+      color: '#d4af7a', weight: 1.5, fillColor: '#d4af7a', fillOpacity: 0.08
+    }).addTo(map);
+  }
+  updateRadius(5);
+
+  // CONTROLS
+  function zoomMap(direction) { direction > 0 ? map.zoomIn() : map.zoomOut(); }
+  function resetMap() { map.setView(VALENCA_CENTER, VALENCA_ZOOM, { animate: true }); closePopup(); }
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+    setTimeout(() => map.invalidateSize(), 300);
+  }
+
+  
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

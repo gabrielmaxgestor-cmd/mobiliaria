@@ -1,0 +1,83 @@
+/* ============================================================
+   Living Canvas — Design Tokens
+   Sistema coeso de radius, spacing, tipografia, sombras e easing.
+   Baseado na paleta esmeralda / dourado / off-white já em uso.
+   ============================================================ */
+
+:root {
+  /* ---------- PALETA (referência semântica) ---------- */
+  --color-emerald-900: #0a2e2a;
+  --color-emerald-800: #134e4a;
+  --color-emerald-700: #1a5f5a;
+  --color-gold-500:    #d4af7a;
+  --color-gold-300:    #e8c9a0;
+  --color-cream-50:    #f8f5ef;
+  --color-cream-100:   #f5f1e8;
+  --color-cream-200:   #e8e2d4;
+  --color-ink-900:     #1a1a1a;
+  --color-ink-700:     #3a3a3a;
+
+  /* ---------- RADIUS (5 níveis, sem redundância) ---------- */
+  --radius-sm:   8px;   /* badges, chips, inputs pequenos */
+  --radius-md:   12px;  /* botões, cards pequenos */
+  --radius-lg:   20px;  /* cards de imóvel, blocos de conteúdo */
+  --radius-xl:   28px;  /* seções grandes, hero cards */
+  --radius-pill: 999px; /* tags, avatar, botão-ícone circular */
+
+  /* ---------- SPACING (base 4px, múltiplos de 4/8) ---------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ---------- TIPOGRAFIA (escala modular 1.25) ---------- */
+  --text-xs:   0.75rem;   /* legendas, microtexto — uso raro */
+  --text-sm:   0.875rem;  /* labels, badges, corpo secundário */
+  --text-base: 1rem;      /* corpo padrão — peso 400 */
+  --text-md:   1.25rem;   /* subtítulos, lead text */
+  --text-lg:   1.75rem;   /* H3 — degrau que faltava */
+  --text-xl:   2.25rem;   /* H2 */
+  --text-2xl:  3rem;      /* H1 hero */
+
+  --weight-body:    400;
+  --weight-medium:  500;
+  --weight-display: 700;
+
+  /* Famílias tipográficas (referência):
+     - Títulos: 'Playfair Display', serif — peso 700 (nunca 600)
+     - Corpo:   'Inter', sans-serif — peso 400 (nunca 600)
+     - 600 permitido apenas em labels/CTAs pequenos, com moderação */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+
+  /* ---------- LETTER-SPACING (apenas 2 valores) ---------- */
+  --tracking-tight: -0.01em; /* títulos grandes, Playfair */
+  --tracking-wide:   0.05em; /* SOMENTE eyebrows/kickers uppercase — máx 1 por seção */
+
+  /* ---------- SOMBRAS (ambiente + direcional, tintadas de esmeralda) ---------- */
+  --shadow-sm: 0 1px 2px rgba(10, 46, 42, 0.06),
+               0 1px 1px rgba(10, 46, 42, 0.04);
+
+  --shadow-md: 0 4px 12px rgba(10, 46, 42, 0.08),
+               0 2px 4px  rgba(10, 46, 42, 0.06);
+
+  --shadow-lg: 0 12px 24px rgba(10, 46, 42, 0.12),
+               0 4px 8px   rgba(10, 46, 42, 0.08);
+
+  /* CTAs dourados de destaque — máx 1–2 por tela */
+  --shadow-gold: 0 8px 20px rgba(212, 175, 122, 0.25),
+                 0 2px 6px  rgba(212, 175, 122, 0.15);
+
+  /* Cards sobre fundo esmeralda escuro */
+  --shadow-inset-dark: inset 0  1px 0 rgba(255, 255, 255, 0.06),
+                       inset 0 -1px 0 rgba(0, 0, 0, 0.20);
+
+  /* ---------- EASING (consistente com o restante do site) ---------- */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+}

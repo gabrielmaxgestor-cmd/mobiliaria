@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Depoimentos — Living Canvas</title>
+<meta name="description" content="O que nossos clientes dizem sobre a experiência Living Canvas.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/depoimentos.html">
+<meta property="og:title" content="Depoimentos — Living Canvas">
+<meta property="og:description" content="O que nossos clientes dizem sobre a experiência Living Canvas.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/depoimentos.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Depoimentos — Living Canvas">
+<meta name="twitter:description" content="O que nossos clientes dizem sobre a experiência Living Canvas.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .testimonials-hero {
+    padding: 2rem 3rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonials-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .testimonials-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .testimonials-subtitle {
+    color: var(--text-light);
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+  }
+  
+  /* STATS HERO */
+  .stats-hero {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .stat-hero-item {
+    text-align: center;
+  }
+  
+  .stat-hero-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-hero-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* FILTERS */
+  .filters-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 3rem;
+  }
+  
+  .filters-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .filter-btn {
+    padding: 0.8rem 1.8rem;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+  
+  .filter-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  
+  .filter-btn.active {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+  
+  /* FEATURED TESTIMONIALS */
+  .featured-section {
+    padding: 4rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .featured-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .featured-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .featured-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+  
+  .featured-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  .featured-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  
+  .featured-badge {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .featured-quote {
+    font-size: 4rem;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .featured-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--cream);
+    margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+  }
+  
+  .featured-result {
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid rgba(212, 175, 122, 0.3);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  
+  .featured-result-item {
+    text-align: center;
+  }
+  
+  .featured-result-label {
+    font-size: 0.7rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+  
+  .featured-result-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  
+  .featured-author {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  
+  .featured-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid var(--gold);
+  }
+  
+  .featured-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .featured-info p {
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+    margin-bottom: 0.3rem;
+  }
+  
+  .featured-rating {
+    color: var(--gold);
+    font-size: 0.9rem;
+  }
+  
+  /* VIDEOS SECTION */
+  .videos-section {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald-mid) 100%);
+    padding: 6rem 3rem;
+  }
+  
+  .videos-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .videos-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .videos-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .videos-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .videos-header p {
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .video-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  
+  .video-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .video-thumbnail {
+    height: 250px;
+    background: linear-gradient(135deg, var(--emerald-mid) 0%, var(--emerald-light) 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .video-play {
+    width: 80px;
+    height: 80px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--emerald-deep);
+    font-size: 2rem;
+    transition: all 0.3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  
+  .video-card:hover .video-play {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.4);
+  }
+  
+  .video-duration {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(0,0,0,0.7);
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+  }
+  
+  .video-content {
+    padding: 1.5rem;
+  }
+  
+  .video-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .video-author {
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+  }
+  
+  /* REGULAR TESTIMONIALS */
+  .regular-section {
+    padding: 6rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .regular-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .regular-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .regular-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .regular-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  .regular-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  .regular-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+  }
+  
+  .regular-quote {
+    font-size: 3rem;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .regular-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  
+  .regular-result {
+    background: rgba(212, 175, 122, 0.08);
+    border: 1px solid rgba(212, 175, 122, 0.2);
+    border-radius: 10px;
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .regular-result-label {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .regular-result-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  
+  .regular-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  
+  .regular-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid var(--gold);
+  }
+  
+  .regular-info h4 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  
+  .regular-info p {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+  }
+  
+  .regular-rating {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: var(--gold);
+    font-size: 0.9rem;
+  }
+  
+  /* IMPACT NUMBERS */
+  .impact-section {
+    background: var(--emerald-mid);
+    padding: 6rem 3rem;
+  }
+  
+  .impact-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .impact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .impact-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .impact-header h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .impact-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .impact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  
+  .impact-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  
+  .impact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .impact-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  
+  .impact-label {
+    font-size: 1rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .impact-description {
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  /* CTA SECTION */
+  .cta-section {
+    padding: 6rem 3rem;
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .cta-content h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .cta-content h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .cta-content p {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .cta-btn {
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .cta-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .cta-secondary {
+    background: transparent;
+    border: 1px solid var(--cream) !important;
+    color: var(--cream);
+  }
+  
+  .cta-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .stats-hero { grid-template-columns: repeat(2, 1fr); }
+    .featured-grid { grid-template-columns: 1fr; }
+    .videos-grid { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .testimonials-hero, .filters-section, .featured-section, .videos-section, .regular-section, .impact-section, .cta-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .stats-hero { grid-template-columns: 1fr 1fr; }
+    .featured-result { grid-template-columns: 1fr; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .regular-grid { grid-template-columns: 1fr; }
+    .impact-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Depoimentos</strong>
+</div>
+
+<!-- HERO -->
+<section class="testimonials-hero">
+  <p class="section-eyebrow">Histórias Reais </p>
+  <h1 class="testimonials-title">Vidas transformadas, <em>cenários</em> encontrados</h1>
+  <p class="testimonials-subtitle">Mais de 500 famílias confiaram em nós para encontrar o lugar perfeito. Conheça algumas dessas histórias.</p>
+  
+  <div class="stats-hero">
+    <div class="stat-hero-item">
+      <div class="stat-hero-number">500+</div>
+      <div class="stat-hero-label">Clientes atendidos</div>
+    </div>
+    <div class="stat-hero-item">
+      <div class="stat-hero-number">98%</div>
+      <div class="stat-hero-label">Satisfação</div>
+    </div>
+    <div class="stat-hero-item">
+      <div class="stat-hero-number">4.9</div>
+      <div class="stat-hero-label">Avaliação média</div>
+    </div>
+    <div class="stat-hero-item">
+      <div class="stat-hero-number">15</div>
+      <div class="stat-hero-label">Anos de mercado</div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-section">
+  <div class="filters-container">
+    <button class="filter-btn active" onclick="filterTestimonials('all', this)">Todos</button>
+    <button class="filter-btn" onclick="filterTestimonials('buyers', this)">Compradores</button>
+    <button class="filter-btn" onclick="filterTestimonials('sellers', this)">Vendedores</button>
+    <button class="filter-btn" onclick="filterTestimonials('investors', this)">Investidores</button>
+    <button class="filter-btn" onclick="filterTestimonials('renters', this)">Locatários</button>
+  </div>
+</div>
+
+<!-- FEATURED TESTIMONIALS -->
+<section class="featured-section">
+  <div class="featured-header">
+    <p class="section-eyebrow">Destaques</p>
+    <h2>Histórias que nos <em>inspiram</em></h2>
+  </div>
+  
+  <div class="featured-grid">
+    <article class="featured-card">
+      <span class="featured-badge">Destaque</span>
+      <div class="featured-quote">"</div>
+      <p class="featured-text">
+        A Living Canvas não vendeu um apartamento para nós — eles nos ajudaram a encontrar o capítulo perfeito da nossa história. Em duas semanas, entendendo exatamente o que buscávamos, nos apresentaram o lugar onde hoje criamos nossas melhores memórias.
+      </p>
+      <div class="featured-result">
+        <div class="featured-result-item">
+          <div class="featured-result-label">Tempo</div>
+          <div class="featured-result-value">14 dias</div>
+        </div>
+        <div class="featured-result-item">
+          <div class="featured-result-label">Valor</div>
+          <div class="featured-result-value">R$ 2.8M</div>
+        </div>
+        <div class="featured-result-item">
+          <div class="featured-result-label">Bairro</div>
+          <div class="featured-result-value">Jd. Europa</div>
+        </div>
+      </div>
+      <div class="featured-author">
+        <div class="featured-avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80')"></div>
+        <div class="featured-info">
+          <h4>Mariana & Pedro</h4>
+          <p>Compradores • Jardim Europa</p>
+          <div class="featured-rating">★★★★★</div>
+        </div>
+      </div>
+    </article>
+    
+    <article class="featured-card">
+      <span class="featured-badge">Destaque</span>
+      <div class="featured-quote">"</div>
+      <p class="featured-text">
+        Como investidor, precisava de alguém que entendesse de números e potencial de valorização. A Ana foi excepcional — me ajudou a montar uma carteira imobiliária que já rendeu 23% em 2 anos. Profissionalismo e visão de mercado incomparáveis.
+      </p>
+      <div class="featured-result">
+        <div class="featured-result-item">
+          <div class="featured-result-label">ROI</div>
+          <div class="featured-result-value">23%</div>
+        </div>
+        <div class="featured-result-item">
+          <div class="featured-result-label">Imóveis</div>
+          <div class="featured-result-value">4 unidades</div>
+        </div>
+        <div class="featured-result-item">
+          <div class="featured-result-label">Período</div>
+          <div class="featured-result-value">2 anos</div>
+        </div>
+      </div>
+      <div class="featured-author">
+        <div class="featured-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80')"></div>
+        <div class="featured-info">
+          <h4>Roberto Almeida</h4>
+          <p>Investidor • 4 imóveis adquiridos</p>
+          <div class="featured-rating">★★★★★</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="videos-section">
+  <div class="videos-container">
+    <div class="videos-header">
+      <p class="section-eyebrow">Em Vídeo</p>
+      <h2>Ouça diretamente de quem <em>viveu</em> a experiência</h2>
+      <p>Depoimentos em vídeo de clientes que confiaram em nós para encontrar seus cenários ideais.</p>
+    </div>
+    
+    <div class="videos-grid">
+      <div class="video-card">
+        <div class="video-thumbnail">
+          <div class="video-play">▶</div>
+          <div class="video-duration">3:24</div>
+        </div>
+        <div class="video-content">
+          <h3 class="video-title">"Encontramos nosso lar em 3 semanas"</h3>
+          <p class="video-author">Mariana & Pedro • Jardim Europa</p>
+        </div>
+      </div>
+      
+      <div class="video-card">
+        <div class="video-thumbnail">
+          <div class="video-play">▶</div>
+          <div class="video-duration">4:12</div>
+        </div>
+        <div class="video-content">
+          <h3 class="video-title">"Investimento que rendeu 23% em 2 anos"</h3>
+          <p class="video-author">Roberto Almeida • Investidor</p>
+        </div>
+      </div>
+      
+      <div class="video-card">
+        <div class="video-thumbnail">
+          <div class="video-play">▶</div>
+          <div class="video-duration">2:58</div>
+        </div>
+        <div class="video-content">
+          <h3 class="video-title">"Vendemos em tempo recorde"</h3>
+          <p class="video-author">Fernanda Costa • Vila Madalena</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGULAR TESTIMONIALS -->
+<section class="regular-section">
+  <div class="regular-header">
+    <p class="section-eyebrow">Mais Histórias</p>
+    <h2>Clientes que <em>confiaram</em> em nós</h2>
+  </div>
+  
+  <div class="regular-grid">
+    <article class="regular-card">
+      <div class="regular-quote">"</div>
+      <div class="regular-rating">★★★★★</div>
+      <p class="regular-text">
+        Vendemos nosso apartamento em tempo recorde e pelo valor que queríamos. A equipe fez toda a diferença na divulgação e nas negociações. Profissionalismo do início ao fim.
+      </p>
+      <div class="regular-result">
+        <span class="regular-result-label">Vendido em</span>
+        <span class="regular-result-value">32 dias</span>
+      </div>
+      <div class="regular-author">
+        <div class="regular-avatar" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80')"></div>
+        <div class="regular-info">
+          <h4>Fernanda Costa</h4>
+          <p>Vendedora • Vila Madalena</p>
+        </div>
+      </div>
+    </article>
+    
+    <article class="regular-card">
+      <div class="regular-quote">"</div>
+      <div class="regular-rating">★★★★★</div>
+      <p class="regular-text">
+        O Ricardo entendeu exatamente o que buscávamos. Em menos de um mês, encontramos o apartamento perfeito. Atendimento personalizado e humano em cada etapa.
+      </p>
+      <div class="regular-result">
+        <span class="regular-result-label">Encontrado em</span>
+        <span class="regular-result-value">28 dias</span>
+      </div>
+      <div class="regular-author">
+        <div class="regular-avatar" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80')"></div>
+        <div class="regular-info">
+          <h4>Lucas & Juliana</h4>
+          <p>Compradores • Itaim Bibi</p>
+        </div>
+      </div>
+    </article>
+    
+    <article class="regular-card">
+      <div class="regular-quote">"</div>
+      <div class="regular-rating">★★★★★</div>
+      <p class="regular-text">
+        Como investidora internacional, precisava de uma equipe confiável e transparente. A Living Canvas superou todas as expectativas. Já são 3 imóveis na carteira.
+      </p>
+      <div class="regular-result">
+        <span class="regular-result-label">Portfolio</span>
+        <span class="regular-result-value">3 imóveis</span>
+      </div>
+      <div class="regular-author">
+        <div class="regular-avatar" style="background-image: url('https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80')"></div>
+        <div class="regular-info">
+          <h4>Isabela Martins</h4>
+          <p>Investidora • EUA</p>
+        </div>
+      </div>
+    </article>
+    
+    <article class="regular-card">
+      <div class="regular-quote">"</div>
+      <div class="regular-rating">★★★★★</div>
+      <p class="regular-text">
+        O suporte jurídico foi fundamental. Tivemos uma situação complexa de documentação e a equipe resolveu tudo com tranquilidade. Recomendo sem hesitar.
+      </p>
+      <div class="regular-result">
+        <span class="regular-result-label">Vendido em</span>
+        <span class="regular-result-value">58 dias</span>
+      </div>
+      <div class="regular-author">
+        <div class="regular-avatar" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80')"></div>
+        <div class="regular-info">
+          <h4>Carla Mendes</h4>
+          <p>Vendedora • Pinheiros</p>
+        </div>
+      </div>
+    </article>
+    
+    <article class="regular-card">
+      <div class="regular-quote">"</div>
+      <div class="regular-rating">★★★★★</div>
+      <p class="regular-text">
+        Alugar com a Living Canvas foi uma experiência completamente diferente. Processo ágil, transparente e sem burocracia. Encontramos o studio perfeito em uma semana.
+      </p>
+      <div class="regular-result">
+        <span class="regular-result-label">Alugado em</span>
+        <span class="regular-result-value">7 dias</span>
+      </div>
+      <div class="regular-author">
+        <div class="regular-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80')"></div>
+        <div class="regular-info">
+          <h4>André Silva</h4>
+          <p>Locatário • Pinheiros</p>
+        </div>
+      </div>
+    </article>
+    
+    <article class="regular-card">
+      <div class="regular-quote">"</div>
+      <div class="regular-rating">★★★★★</div>
+      <p class="regular-text">
+        A Ana Carolina foi excepcional. Conhece cada rua do bairro, cada prédio, cada detalhe. Nos mostrou opções que nem sabíamos que existiam. Experiência premium.
+      </p>
+      <div class="regular-result">
+        <span class="regular-result-label">Comprado</span>
+        <span class="regular-result-value">R$ 3.2M</span>
+      </div>
+      <div class="regular-author">
+        <div class="regular-avatar" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80')"></div>
+        <div class="regular-info">
+          <h4>Ricardo & Sofia</h4>
+          <p>Compradores • Jd. Paulista</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- IMPACT NUMBERS -->
+<section class="impact-section">
+  <div class="impact-container">
+    <div class="impact-header">
+      <p class="section-eyebrow">Nossos Números</p>
+      <h2>Resultados que <em>falam</em> por nós</h2>
+    </div>
+    
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="impact-icon">🏠</div>
+        <div class="impact-number">500+</div>
+        <div class="impact-label">Imóveis negociados</div>
+        <div class="impact-description">Nos últimos 15 anos</div>
+      </div>
+      
+      <div class="impact-card">
+        <div class="impact-icon">⚡</div>
+        <div class="impact-number">45</div>
+        <div class="impact-label">Dias em média</div>
+        <div class="impact-description">Tempo médio de venda</div>
+      </div>
+      
+      <div class="impact-card">
+        <div class="impact-icon">💰</div>
+        <div class="impact-number">97%</div>
+        <div class="impact-label">Do preço pedido</div>
+        <div class="impact-description">Valorização obtida</div>
+      </div>
+      
+      <div class="impact-card">
+        <div class="impact-icon">📊</div>
+        <div class="impact-number">R$1.2B</div>
+        <div class="impact-label">Em vendas</div>
+        <div class="impact-description">Volume total negociado</div>
+      </div>
+      
+      <div class="impact-card">
+        <div class="impact-icon">⭐</div>
+        <div class="impact-number">4.9</div>
+        <div class="impact-label">Avaliação Google</div>
+        <div class="impact-description">Mais de 300 avaliações</div>
+      </div>
+      
+      <div class="impact-card">
+        <div class="impact-icon">🤝</div>
+        <div class="impact-number">98%</div>
+        <div class="impact-label">Clientes satisfeitos</div>
+        <div class="impact-description">Recomendariam nossos serviços</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-content">
+    <h2>Pronto para escrever sua própria <em>história</em>?</h2>
+    <p>Junte-se a mais de 500 famílias que encontraram seu cenário ideal conosco. Vamos conversar sobre o que você busca.</p>
+    <div class="cta-buttons">
+      <a href='contato.html' class="cta-btn cta-primary">Falar com Especialista</a>
+      <a href='imoveis.html' class="cta-btn cta-secondary">Ver Imóveis</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale conosco agora!</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // FILTER TESTIMONIALS
+  function filterTestimonials(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // Em uma implementação real, filtraria os cards por categoria
+    console.log('Filtrando por:', category);
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

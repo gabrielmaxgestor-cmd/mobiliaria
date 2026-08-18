@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Busca por Vibe (IA) — Living Canvas</title>
+<meta name="description" content="Descreva o estilo de vida ideal e nossa IA sugere imóveis compatíveis.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/busca-ia.html">
+<meta property="og:title" content="Busca por Vibe (IA) — Living Canvas">
+<meta property="og:description" content="Descreva o estilo de vida ideal e nossa IA sugere imóveis compatíveis.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/busca-ia.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Busca por Vibe (IA) — Living Canvas">
+<meta name="twitter:description" content="Descreva o estilo de vida ideal e nossa IA sugere imóveis compatíveis.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* SEARCH DISPLAY */
+  .search-display {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 3rem 3rem;
+  }
+  
+  .search-card {
+    background: linear-gradient(135deg, rgba(212, 175, 122, 0.08) 0%, rgba(245, 241, 232, 0.03) 100%);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .search-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  .search-card-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .search-label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  
+  .search-label-icon {
+    width: 30px;
+    height: 30px;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  
+  .search-query {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  
+  .search-query::before {
+    content: '"';
+    color: var(--gold);
+    font-size: 2rem;
+    margin-right: 0.3rem;
+  }
+  
+  .search-query::after {
+    content: '"';
+    color: var(--gold);
+    font-size: 2rem;
+    margin-left: 0.3rem;
+  }
+  
+  .search-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .search-action-btn {
+    padding: 0.7rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .search-action-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  
+  /* AI INTERPRETATION */
+  .ai-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 3rem;
+  }
+  
+  .ai-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ai-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-soft), var(--gold));
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+  
+  .ai-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  
+  .ai-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .ai-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--emerald-deep);
+    position: relative;
+  }
+  
+  .ai-icon::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--gold), transparent, var(--gold));
+    z-index: -1;
+    opacity: 0.5;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+  
+  .ai-title h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .ai-title p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .ai-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(37, 211, 102, 0.1);
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: #25D366;
+  }
+  
+  .ai-status::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #25D366;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  .ai-insights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .ai-insight-block h4 {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .ai-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  
+  .ai-tag {
+    padding: 0.5rem 1rem;
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid rgba(212, 175, 122, 0.3);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .ai-tag-confidence {
+    font-size: 0.7rem;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  .ai-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .ai-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .ai-filter-label {
+    color: var(--text-light);
+  }
+  
+  .ai-filter-value {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  .ai-summary {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(212, 175, 122, 0.05);
+    border-left: 3px solid var(--gold);
+    border-radius: 10px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--cream);
+  }
+  
+  /* MAIN LAYOUT */
+  .results-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 3rem;
+  }
+  
+  /* RESULTS HEADER */
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .results-count {
+    font-size: 1.1rem;
+    color: var(--text-light);
+  }
+  
+  .results-count strong {
+    color: var(--gold);
+    font-size: 1.3rem;
+  }
+  
+  .results-sort {
+    padding: 0.7rem 1.2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--cream);
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  /* PROPERTY CARDS WITH MATCH */
+  .properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .property-card {
+    position: relative;
+    min-height: 620px;
+    height: auto;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: #072320;
+    border: 1px solid rgba(212, 175, 122, 0.2);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+  }
+  
+  .property-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 122, 0.2);
+  }
+  
+  .card-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s;
+  }
+  
+  .card-image-exterior { opacity: 1; }
+  .card-image-interior { opacity: 0; }
+  
+  .property-card:hover .card-image-exterior {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  
+  .property-card:hover .card-image-interior {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  
+  .card-overlay {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(7,35,32,0.1) 0%, rgba(7,35,32,0.85) 25%, rgba(7,35,32,0.98) 100%);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.3rem;
+  }
+  
+  .card-badges {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    right: 1.2rem;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+  }
+  
+  .card-badge {
+    background: rgba(7, 35, 32, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 122, 0.4);
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  
+  .match-badge {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
+    color: var(--emerald-deep);
+    padding: 0.4rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    box-shadow: 0 5px 20px rgba(212, 175, 122, 0.3);
+  }
+  
+  .match-badge::before {
+    content: '✨';
+    font-size: 0.85rem;
+  }
+  
+  .card-price {
+    align-self: flex-start;
+    display: inline-block;
+    background: rgba(7, 35, 32, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 122, 0.4);
+    color: #D4AF7A;
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .card-title {
+    font-size: 1.35rem;
+    line-height: 1.3;
+    margin: 0 0 0.15rem 0;
+    color: #F5EFE6;
+    font-weight: 700;
+  }
+  
+  .card-location {
+    color: var(--gold-soft);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .card-match-reason {
+    background: rgba(212, 175, 122, 0.08);
+    border: 1px solid rgba(212, 175, 122, 0.2);
+    border-radius: 10px;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: #F5EFE6;
+    font-style: italic;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .card-match-reason::before {
+    content: '💡 ';
+    font-style: normal;
+  }
+  
+  .card-match-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-match-tag {
+    padding: 0.25rem 0.6rem;
+    background: rgba(212, 175, 122, 0.15);
+    border-radius: 50px;
+    font-size: 0.68rem;
+    color: var(--gold-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .card-match-tag.matched::before {
+    content: '✓';
+    color: var(--gold);
+    font-weight: 700;
+  }
+  
+  .card-meta {
+    display: flex;
+    gap: 1rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(245, 239, 230, 0.12);
+    font-size: 0.8rem;
+    color: rgba(245, 239, 230, 0.8);
+  }
+  
+  /* SIDEBAR */
+  .results-sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .sidebar-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+  
+  .sidebar-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  /* REFINEMENT */
+  .refinement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .refinement-item {
+    padding: 0.9rem 1rem;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  
+  .refinement-item:hover {
+    background: rgba(212, 175, 122, 0.1);
+    border-color: var(--gold);
+    transform: translateX(5px);
+  }
+  
+  .refinement-icon {
+    color: var(--gold);
+  }
+  
+  /* AI SUGGESTIONS */
+  .suggestions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .suggestion-item {
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(212, 175, 122, 0.08) 0%, rgba(245, 241, 232, 0.03) 100%);
+    border: 1px solid rgba(212, 175, 122, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .suggestion-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  
+  .suggestion-label {
+    font-size: 0.7rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  .suggestion-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--cream);
+    font-style: italic;
+  }
+  
+  /* EXPERT CTA */
+  .expert-card {
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    border: 1px solid var(--gold);
+    text-align: center;
+  }
+  
+  .expert-card h3 {
+    justify-content: center;
+  }
+  
+  .expert-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80') center/cover;
+    border: 3px solid var(--gold);
+    margin: 0 auto 1rem;
+  }
+  
+  .expert-name {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .expert-role {
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+    margin-bottom: 1rem;
+  }
+  
+  .expert-cta {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--gold);
+    border: none;
+    border-radius: 50px;
+    color: var(--emerald-deep);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  
+  .expert-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* INLINE CTA */
+  .inline-cta {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 4rem;
+  }
+  
+  .inline-cta-content {
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .inline-cta-content::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .inline-cta-inner {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .inline-cta h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .inline-cta h3 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .inline-cta p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .inline-cta-btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+  
+  .inline-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .results-layout { grid-template-columns: 1fr; }
+    .results-sidebar { position: relative; top: 0; }
+    .ai-insights { grid-template-columns: 1fr; }
+  }
+  
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .search-display, .ai-section, .results-layout, .inline-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .search-card, .ai-card, .sidebar-card { padding: 1.5rem; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+    .properties-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='home.html' class="nav-cta">Nova Busca</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Resultados da Busca por Vibe</strong>
+</div>
+
+<!-- SEARCH DISPLAY & AI CHAT INTEGRADO -->
+<section class="search-display">
+  <div class="search-card">
+    <div class="search-card-content">
+      <div class="search-label">
+        <div class="search-label-icon">✨</div>
+        Busca por Vibe & Converse com a IA
+      </div>
+      <p class="search-subtitle" style="font-size: 0.95rem; color: var(--gold-soft); margin-bottom: 1rem;">
+        Descreva como deseja seu imóvel ideal (estilo de vida, bairro, localização ou ambiente) e converse diretamente com nossa IA para encontrar as melhores opções do catálogo.
+      </p>
+
+      <!-- INTEGRATED AI CHAT CONSOLE -->
+      <div class="vibe-chat-box">
+        <div class="vibe-chat-messages" id="vibe-chat-messages">
+          <div class="vibe-msg bot">
+            ✨ <strong>Concierge IA Living Canvas:</strong> Olá! Conte-me como você deseja seu imóvel perfeito ou qual atmosfera procura. Posso analisar nosso portfólio completo em tempo real e tirar qualquer dúvida!
+          </div>
+        </div>
+        <form class="vibe-chat-form" id="vibe-chat-form">
+          <input type="text" id="vibe-input" class="vibe-input" placeholder="Ex: Quero uma casa silenciosa com jardim no Jardim Europa ou loft iluminado..." value="Quero um lugar tranquilo com muita luz natural, onde eu possa trabalhar home office em paz, perto de um parque para caminhar com meu cachorro e com cafés artesanal na esquina.">
+          <button type="submit" class="vibe-submit-btn">
+            <span>🔍 Buscar por Vibe</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="search-actions">
+        <button class="search-action-btn" id="btn-sample-1">🏡 Exemplo: Casa com jardim & silêncio</button>
+        <button class="search-action-btn" id="btn-sample-2">🏙 Exemplo: Loft moderno na Vila Madalena</button>
+        <button class="search-action-btn" id="btn-sample-3">💎 Exemplo: Cobertura de luxo no Itaim</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI INTERPRETATION -->
+<section class="ai-section">
+  <div class="ai-card">
+    <div class="ai-header">
+      <div class="ai-title">
+        <div class="ai-icon">🧠</div>
+        <div>
+          <h3>Como a IA interpretou sua busca</h3>
+          <p>Analisamos critérios de estilo de vida para encontrar os imóveis mais alinhados</p>
+        </div>
+      </div>
+      <div class="ai-status">Análise concluída</div>
+    </div>
+    
+    <div class="ai-insights">
+      <div class="ai-insight-block">
+        <h4>🎯 Prioridades identificadas</h4>
+        <div class="ai-tags">
+          <span class="ai-tag">🔇 Silêncio <span class="ai-tag-confidence">95%</span></span>
+          <span class="ai-tag">☀️ Luz natural <span class="ai-tag-confidence">92%</span></span>
+          <span class="ai-tag">💻 Home office <span class="ai-tag-confidence">88%</span></span>
+          <span class="ai-tag">🐕 Pet-friendly <span class="ai-tag-confidence">90%</span></span>
+          <span class="ai-tag">🌳 Áreas verdes <span class="ai-tag-confidence">94%</span></span>
+          <span class="ai-tag">☕ Cafés próximos <span class="ai-tag-confidence">85%</span></span>
+        </div>
+      </div>
+      
+      <div class="ai-insight-block">
+        <h4>⚙️ Filtros aplicados automaticamente</h4>
+        <div class="ai-filters">
+          <div class="ai-filter">
+            <span class="ai-filter-label">Nível de ruído</span>
+            <span class="ai-filter-value">Silencioso</span>
+          </div>
+          <div class="ai-filter">
+            <span class="ai-filter-label">Orientação solar</span>
+            <span class="ai-filter-value">Norte / Leste</span>
+          </div>
+          <div class="ai-filter">
+            <span class="ai-filter-label">Distância de parques</span>
+            <span class="ai-filter-value">Até 800m</span>
+          </div>
+          <div class="ai-filter">
+            <span class="ai-filter-label">Walkability score</span>
+            <span class="ai-filter-value">Alto (85+)</span>
+          </div>
+          <div class="ai-filter">
+            <span class="ai-filter-label">Espaço para escritório</span>
+            <span class="ai-filter-value">Sim</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ai-summary">
+      ✨ Identificamos que você busca um refúgio urbano que combine tranquilidade com conveniência. Priorizamos bairros arborizados com baixa poluição sonora, imóveis com boa orientação solar e proximidade com áreas verdes. Ajustamos também para garantir walkability e presença de cafés no entorno.
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS LAYOUT -->
+<div class="results-layout">
+  
+  <!-- RESULTS -->
+  <div class="results-main">
+    <div class="results-header">
+      <div class="results-count">
+        <strong>6 imóveis</strong> com alta compatibilidade
+      </div>
+      <select class="results-sort">
+        <option>Maior compatibilidade</option>
+        <option>Menor preço</option>
+        <option>Maior preço</option>
+        <option>Maior área</option>
+        <option>Mais recentes</option>
+      </select>
+    </div>
+    
+    <div class="properties-grid">
+      
+      <article class="property-card" onclick="window.location.href='imovel.html?id=casa-do-bosque'">
+        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80')"></div>
+        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80')"></div>
+        <div class="card-badges">
+          <span class="card-badge">Exclusivo</span>
+          <span class="match-badge">98% match</span>
+        </div>
+        <div class="card-overlay">
+          <span class="card-price">R$ 4.800.000</span>
+          <h3 class="card-title">Casa do Bosque</h3>
+          <p class="card-location">Jardim Europa • 420m²</p>
+          <div class="card-match-reason">
+            Perfeita para home office com jardim privativo a 200m do Parque Ibirapuera. Silêncio absoluto e luz natural o dia todo.
+          </div>
+          <div class="card-match-tags">
+            <span class="card-match-tag matched">Silêncio</span>
+            <span class="card-match-tag matched">Luz natural</span>
+            <span class="card-match-tag matched">Pet-friendly</span>
+            <span class="card-match-tag matched">Home office</span>
+          </div>
+          <div class="card-meta">
+            <span>🛏 4 suítes</span>
+            <span>🌳 Jardim</span>
+            <span>🚗 4 vagas</span>
+          </div>
+          <div class="card-action-btns" onclick="event.stopPropagation();">
+            <a href="imovel.html?id=casa-do-bosque" class="card-btn-details">
+              🔍 Ver Detalhes
+            </a>
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Encontrei%20a%20Casa%20do%20Bosque%20pela%20Busca%20por%20Vibe%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="card-btn-whatsapp">
+              <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block; vertical-align:middle; flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414zM12.004 2.003c-5.518 0-9.998 4.48-9.998 9.998 0 2.158.685 4.156 1.85 5.8l-1.218 4.45 4.562-1.196a9.948 9.948 0 004.804 1.242c5.518 0 9.998-4.48 9.998-9.998 0-5.518-4.48-9.998-9.998-9.998zm0 18.188c-1.605 0-3.13-.435-4.453-1.192l-.319-.184-2.712.711.724-2.643-.202-.321a8.167 8.167 0 01-1.258-4.372c0-4.522 3.68-8.201 8.22-8.201 4.54 0 8.22 3.679 8.22 8.201 0 4.523-3.68 8.201-8.22 8.201z"/></svg> Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="property-card" onclick="window.location.href='imovel.html?id=loft-horizonte'">
+        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80')"></div>
+        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
+        <div class="card-badges">
+          <span class="card-badge">Novo</span>
+          <span class="match-badge">94% match</span>
+        </div>
+        <div class="card-overlay">
+          <span class="card-price">R$ 2.150.000</span>
+          <h3 class="card-title">Loft Horizonte</h3>
+          <p class="card-location">Vila Madalena • 180m²</p>
+          <div class="card-match-reason">
+            Pé-direito duplo com janelas amplas. Bairro boêmio com 12 cafés artesanais em 500m e praça arborizada ao lado.
+          </div>
+          <div class="card-match-tags">
+            <span class="card-match-tag matched">Luz natural</span>
+            <span class="card-match-tag matched">Cafés próximos</span>
+            <span class="card-match-tag matched">Home office</span>
+          </div>
+          <div class="card-meta">
+            <span>🛏 2 suítes</span>
+            <span>🎨 Ateliê</span>
+            <span>🚗 2 vagas</span>
+          </div>
+          <div class="card-action-btns" onclick="event.stopPropagation();">
+            <a href="imovel.html?id=loft-horizonte" class="card-btn-details">
+              🔍 Ver Detalhes
+            </a>
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Encontrei%20o%20Loft%20Horizonte%20pela%20Busca%20por%20Vibe%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="card-btn-whatsapp">
+              <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block; vertical-align:middle; flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414zM12.004 2.003c-5.518 0-9.998 4.48-9.998 9.998 0 2.158.685 4.156 1.85 5.8l-1.218 4.45 4.562-1.196a9.948 9.948 0 004.804 1.242c5.518 0 9.998-4.48 9.998-9.998 0-5.518-4.48-9.998-9.998-9.998zm0 18.188c-1.605 0-3.13-.435-4.453-1.192l-.319-.184-2.712.711.724-2.643-.202-.321a8.167 8.167 0 01-1.258-4.372c0-4.522 3.68-8.201 8.22-8.201 4.54 0 8.22 3.679 8.22 8.201 0 4.523-3.68 8.201-8.22 8.201z"/></svg> Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="property-card" onclick="window.location.href='imovel.html?id=studio-artistico'">
+        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
+        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80')"></div>
+        <div class="card-badges">
+          <span class="card-badge">Exclusivo</span>
+          <span class="match-badge">91% match</span>
+        </div>
+        <div class="card-overlay">
+          <span class="card-price">R$ 980.000</span>
+          <h3 class="card-title">Studio Artístico</h3>
+          <p class="card-location">Pinheiros • 95m²</p>
+          <div class="card-match-reason">
+            Layout inteligente com espaço dedicado para home office. Rua silenciosa com cafés especiais a 100m.
+          </div>
+          <div class="card-match-tags">
+            <span class="card-match-tag matched">Home office</span>
+            <span class="card-match-tag matched">Cafés próximos</span>
+            <span class="card-match-tag matched">Silêncio</span>
+          </div>
+          <div class="card-meta">
+            <span>🛏 1 suíte</span>
+            <span>🎨 Studio</span>
+            <span>🚗 1 vaga</span>
+          </div>
+          <div class="card-action-btns" onclick="event.stopPropagation();">
+            <a href="imovel.html?id=studio-artistico" class="card-btn-details">
+              🔍 Ver Detalhes
+            </a>
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Encontrei%20o%20Studio%20Art%C3%ADstico%20pela%20Busca%20por%20Vibe%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="card-btn-whatsapp">
+              <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block; vertical-align:middle; flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414zM12.004 2.003c-5.518 0-9.998 4.48-9.998 9.998 0 2.158.685 4.156 1.85 5.8l-1.218 4.45 4.562-1.196a9.948 9.948 0 004.804 1.242c5.518 0 9.998-4.48 9.998-9.998 0-5.518-4.48-9.998-9.998-9.998zm0 18.188c-1.605 0-3.13-.435-4.453-1.192l-.319-.184-2.712.711.724-2.643-.202-.321a8.167 8.167 0 01-1.258-4.372c0-4.522 3.68-8.201 8.22-8.201 4.54 0 8.22 3.679 8.22 8.201 0 4.523-3.68 8.201-8.22 8.201z"/></svg> Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="property-card" onclick="window.location.href='imovel.html?id=refugio-dos-passaros'">
+        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80')"></div>
+        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80')"></div>
+        <div class="card-badges">
+          <span class="card-badge">Vila Fechada</span>
+          <span class="match-badge">89% match</span>
+        </div>
+        <div class="card-overlay">
+          <span class="card-price">R$ 3.600.000</span>
+          <h3 class="card-title">Refúgio dos Pássaros</h3>
+          <p class="card-location">Alto de Pinheiros • 280m²</p>
+          <div class="card-match-reason">
+            Charmosa casa de vila fechada com arborização intensa e praça interna. Som de pássaros e total silêncio.
+          </div>
+          <div class="card-match-tags">
+            <span class="card-match-tag matched">Silêncio</span>
+            <span class="card-match-tag matched">Vila Fechada</span>
+            <span class="card-match-tag matched">Áreas Verdes</span>
+          </div>
+          <div class="card-meta">
+            <span>🛏 3 suítes</span>
+            <span>🌳 Praça Vila</span>
+            <span>🚗 2 vagas</span>
+          </div>
+          <div class="card-action-btns" onclick="event.stopPropagation();">
+            <a href="imovel.html?id=refugio-dos-passaros" class="card-btn-details">
+              🔍 Ver Detalhes
+            </a>
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Encontrei%20o%20Ref%C3%BAgio%20dos%20P%C3%A1ssaros%20pela%20Busca%20por%20Vibe%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="card-btn-whatsapp">
+              <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block; vertical-align:middle; flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414zM12.004 2.003c-5.518 0-9.998 4.48-9.998 9.998 0 2.158.685 4.156 1.85 5.8l-1.218 4.45 4.562-1.196a9.948 9.948 0 004.804 1.242c5.518 0 9.998-4.48 9.998-9.998 0-5.518-4.48-9.998-9.998-9.998zm0 18.188c-1.605 0-3.13-.435-4.453-1.192l-.319-.184-2.712.711.724-2.643-.202-.321a8.167 8.167 0 01-1.258-4.372c0-4.522 3.68-8.201 8.22-8.201 4.54 0 8.22 3.679 8.22 8.201 0 4.523-3.68 8.201-8.22 8.201z"/></svg> Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="property-card" onclick="window.location.href='imovel.html?id=penthouse-urbano'">
+        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80')"></div>
+        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')"></div>
+        <div class="card-badges">
+          <span class="card-badge">Destaque</span>
+          <span class="match-badge">87% match</span>
+        </div>
+        <div class="card-overlay">
+          <span class="card-price">R$ 6.900.000</span>
+          <h3 class="card-title">Penthouse Urbano</h3>
+          <p class="card-location">Itaim Bibi • 320m²</p>
+          <div class="card-match-reason">
+            Vista panorâmica 360° com luz natural abundante. Terraço com jacuzzi privativa perfeito para home office ao ar livre.
+          </div>
+          <div class="card-match-tags">
+            <span class="card-match-tag matched">Luz natural</span>
+            <span class="card-match-tag matched">Home office</span>
+            <span class="card-match-tag matched">Vista 360°</span>
+          </div>
+          <div class="card-meta">
+            <span>🛏 3 suítes</span>
+            <span>🏙 Jacuzzi</span>
+            <span>🚗 3 vagas</span>
+          </div>
+          <div class="card-action-btns" onclick="event.stopPropagation();">
+            <a href="imovel.html?id=penthouse-urbano" class="card-btn-details">
+              🔍 Ver Detalhes
+            </a>
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Encontrei%20o%20Penthouse%20Urbano%20pela%20Busca%20por%20Vibe%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="card-btn-whatsapp">
+              <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block; vertical-align:middle; flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414zM12.004 2.003c-5.518 0-9.998 4.48-9.998 9.998 0 2.158.685 4.156 1.85 5.8l-1.218 4.45 4.562-1.196a9.948 9.948 0 004.804 1.242c5.518 0 9.998-4.48 9.998-9.998 0-5.518-4.48-9.998-9.998-9.998zm0 18.188c-1.605 0-3.13-.435-4.453-1.192l-.319-.184-2.712.711.724-2.643-.202-.321a8.167 8.167 0 01-1.258-4.372c0-4.522 3.68-8.201 8.22-8.201 4.54 0 8.22 3.679 8.22 8.201 0 4.523-3.68 8.201-8.22 8.201z"/></svg> Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="property-card" onclick="window.location.href='imovel.html?id=residencia-jardins'">
+        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&q=80')"></div>
+        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')"></div>
+        <div class="card-badges">
+          <span class="card-badge">1 por Andar</span>
+          <span class="match-badge">85% match</span>
+        </div>
+        <div class="card-overlay">
+          <span class="card-price">R$ 5.200.000</span>
+          <h3 class="card-title">Residência Jardins</h3>
+          <p class="card-location">Jardins • 260m²</p>
+          <div class="card-match-reason">
+            Janelas antirruído duplas, piso de madeira nobre e localização nobre próximo aos melhores restaurantes e galerias.
+          </div>
+          <div class="card-match-tags">
+            <span class="card-match-tag matched">Silêncio (Antirruído)</span>
+            <span class="card-match-tag matched">Gastronomia</span>
+            <span class="card-match-tag matched">Sofisticação</span>
+          </div>
+          <div class="card-meta">
+            <span>🛏 4 suítes</span>
+            <span>🍖 Churrasqueira</span>
+            <span>🚗 3 vagas</span>
+          </div>
+          <div class="card-action-btns" onclick="event.stopPropagation();">
+            <a href="imovel.html?id=residencia-jardins" class="card-btn-details">
+              🔍 Ver Detalhes
+            </a>
+            <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Encontrei%20a%20Resid%C3%AAncia%20Jardins%20pela%20Busca%20por%20Vibe%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es." target="_blank" class="card-btn-whatsapp">
+              <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block; vertical-align:middle; flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414zM12.004 2.003c-5.518 0-9.998 4.48-9.998 9.998 0 2.158.685 4.156 1.85 5.8l-1.218 4.45 4.562-1.196a9.948 9.948 0 004.804 1.242c5.518 0 9.998-4.48 9.998-9.998 0-5.518-4.48-9.998-9.998-9.998zm0 18.188c-1.605 0-3.13-.435-4.453-1.192l-.319-.184-2.712.711.724-2.643-.202-.321a8.167 8.167 0 01-1.258-4.372c0-4.522 3.68-8.201 8.22-8.201 4.54 0 8.22 3.679 8.22 8.201 0 4.523-3.68 8.201-8.22 8.201z"/></svg> Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </article>
+      
+    </div>
+    
+    <!-- INLINE CTA -->
+    <div class="inline-cta" style="margin-top: 3rem;">
+      <div class="inline-cta-content">
+        <div class="inline-cta-inner">
+          <h3>Nenhum desses é <em>perfeito</em>?</h3>
+          <p>Refine sua busca ou conte-nos mais detalhes. Nossa IA pode ajustar os resultados com base em novas preferências.</p>
+          <a href="#" class="inline-cta-btn">Refinar Busca com IA</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- SIDEBAR -->
+  <aside class="results-sidebar">
+    
+    <!-- REFINEMENT -->
+    <div class="sidebar-card">
+      <h3>🎯 Refinar resultados</h3>
+      <div class="refinement-list">
+        <div class="refinement-item">
+          <span>Adicionar "perto de metrô"</span>
+          <span class="refinement-icon">→</span>
+        </div>
+        <div class="refinement-item">
+          <span>Limitar a R$ 3 milhões</span>
+          <span class="refinement-icon">→</span>
+        </div>
+        <div class="refinement-item">
+          <span>Incluir varanda gourmet</span>
+          <span class="refinement-icon">→</span>
+        </div>
+        <div class="refinement-item">
+          <span>Priorizar casa (não apto)</span>
+          <span class="refinement-icon">→</span>
+        </div>
+        <div class="refinement-item">
+          <span>Buscar em outro bairro</span>
+          <span class="refinement-icon">→</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- AI SUGGESTIONS -->
+    <div class="sidebar-card">
+      <h3>✨ Sugestões da IA</h3>
+      <div class="suggestions-list">
+        <div class="suggestion-item">
+          <div class="suggestion-label">💡 Você pode gostar</div>
+          <div class="suggestion-text">Experimente buscar por "bairros arborizados com vida noturna calma" — combina com seu perfil.</div>
+        </div>
+        <div class="suggestion-item">
+          <div class="suggestion-label">🎯 Novo bairro</div>
+          <div class="suggestion-text">Considerou Vila Nova Conceição? Tem 8 imóveis com perfil similar ao que você busca.</div>
+        </div>
+        <div class="suggestion-item">
+          <div class="suggestion-label">⭐ Dica especialista</div>
+          <div class="suggestion-text">Imóveis com orientação norte em Jardim Europa têm 30% mais luz natural pela manhã.</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- EXPERT CTA -->
+    <div class="sidebar-card expert-card">
+      <h3>👤 Fale com especialista</h3>
+      <div class="expert-avatar"></div>
+      <div class="expert-name">Ana Carolina Silva</div>
+      <div class="expert-role">Especialista em Zona Sul</div>
+      <a href="https://wa.me/5511988888888" class="expert-cta"><svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block; vertical-align:middle; flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414zM12.004 2.003c-5.518 0-9.998 4.48-9.998 9.998 0 2.158.685 4.156 1.85 5.8l-1.218 4.45 4.562-1.196a9.948 9.948 0 004.804 1.242c5.518 0 9.998-4.48 9.998-9.998 0-5.518-4.48-9.998-9.998-9.998zm0 18.188c-1.605 0-3.13-.435-4.453-1.192l-.319-.184-2.712.711.724-2.643-.202-.321a8.167 8.167 0 01-1.258-4.372c0-4.522 3.68-8.201 8.22-8.201 4.54 0 8.22 3.679 8.22 8.201 0 4.523-3.68 8.201-8.22 8.201z"/></svg> Conversar Agora</a>
+    </div>
+    
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com um especialista</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>

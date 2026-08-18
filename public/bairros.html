@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bairros — Living Canvas</title>
+<meta name="description" content="Conheça os bairros mais desejados com perfil, infraestrutura e imóveis disponíveis.">
+<link rel="canonical" href="https://faithful-property-showcase.lovable.app/bairros.html">
+<meta property="og:title" content="Bairros — Living Canvas">
+<meta property="og:description" content="Conheça os bairros mais desejados com perfil, infraestrutura e imóveis disponíveis.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faithful-property-showcase.lovable.app/bairros.html">
+<meta property="og:site_name" content="Living Canvas">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bairros — Living Canvas">
+<meta name="twitter:description" content="Conheça os bairros mais desejados com perfil, infraestrutura e imóveis disponíveis.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --emerald-deep: #0a2e2a;
+    --emerald-mid: #134e4a;
+    --emerald-light: #1a5f5a;
+    --gold: #d4af7a;
+    --gold-soft: #e8c9a0;
+    --cream: #f5f1e8;
+    --cream-dark: #e8e2d4;
+    --text-dark: #1a1a1a;
+    --text-light: rgba(245, 241, 232, 0.9);
+    --glass-bg: rgba(245, 241, 232, 0.08);
+    --glass-border: rgba(245, 241, 232, 0.15);
+  }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--emerald-deep);
+    color: var(--cream);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(10, 46, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  
+  nav.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(10, 46, 42, 0.98);
+  }
+  
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  
+  .logo span { font-style: italic; color: var(--cream); }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-cta {
+    padding: 0.7rem 1.5rem;
+    background: var(--gold);
+    border: none;
+    color: var(--emerald-deep);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 175, 122, 0.3);
+  }
+  
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 7rem 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  
+  .breadcrumb a {
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .breadcrumb a:hover { color: var(--gold); }
+  
+  .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
+  
+  /* HERO */
+  .neighborhoods-hero {
+    padding: 2rem 3rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-eyebrow {
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .hero-subtitle {
+    color: var(--text-light);
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+  }
+  
+  /* SEARCH BAR */
+  .neighborhoods-search {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+  }
+  
+  .search-input:focus {
+    border-color: var(--gold);
+    background: rgba(245, 241, 232, 0.1);
+    box-shadow: 0 0 0 4px rgba(212, 175, 122, 0.1);
+  }
+  
+  .search-input::placeholder {
+    color: rgba(245, 241, 232, 0.5);
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+  
+  /* FILTERS */
+  .region-filters {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  
+  .region-btn {
+    padding: 0.7rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--cream);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+  
+  .region-btn:hover, .region-btn.active {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+  
+  /* NEIGHBORHOODS GRID */
+  .neighborhoods-section {
+    padding: 0 3rem 6rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .neighborhoods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  .neighborhood-card {
+    position: relative;
+    height: 480px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--glass-border);
+  }
+  
+  .neighborhood-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  
+  .neighborhood-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .neighborhood-card:hover .neighborhood-image {
+    transform: scale(1.1);
+  }
+  
+  .neighborhood-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,46,42,0.98) 0%, rgba(10,46,42,0.6) 40%, rgba(10,46,42,0.2) 100%);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 2;
+  }
+  
+  .neighborhood-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    z-index: 3;
+  }
+  
+  .neighborhood-region {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .neighborhood-name {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+  }
+  
+  .neighborhood-name em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .neighborhood-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(245, 241, 232, 0.2);
+    border-bottom: 1px solid rgba(245, 241, 232, 0.2);
+  }
+  
+  .neighborhood-stat {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .neighborhood-stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  
+  .neighborhood-stat-label {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .neighborhood-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .neighborhood-tag {
+    padding: 0.3rem 0.8rem;
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid rgba(212, 175, 122, 0.3);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  .neighborhood-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gold);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: gap 0.3s;
+  }
+  
+  .neighborhood-card:hover .neighborhood-cta {
+    gap: 1rem;
+  }
+  
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    display: none;
+  }
+  
+  .empty-state.active {
+    display: block;
+  }
+  
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+  }
+  
+  .empty-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+  
+  .empty-state p {
+    color: var(--text-light);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+  }
+  
+  /* CTA SECTION */
+  .cta-section {
+    padding: 6rem 3rem;
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .cta-content h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  
+  .cta-content h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  
+  .cta-content p {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .cta-btn {
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .cta-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  
+  .cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  
+  .cta-secondary {
+    background: transparent;
+    border: 1px solid var(--cream) !important;
+    color: var(--cream);
+  }
+  
+  .cta-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
+  
+  /* FOOTER */
+  footer {
+    background: var(--emerald-deep);
+    border-top: 1px solid var(--glass-border);
+    padding: 4rem 3rem 2rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer-brand p {
+    color: var(--text-light);
+    margin-top: 1rem;
+    max-width: 300px;
+    font-size: 0.9rem;
+  }
+  
+  .footer-col h4 {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-col a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+  
+  .footer-col a:hover { color: var(--gold); }
+  
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+  
+  /* FLOATING CTA */
+  .floating-cta {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+  
+  .whatsapp-btn {
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  
+  .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
+  
+  .cta-tooltip {
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  
+  .floating-cta:hover .cta-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .breadcrumb, .neighborhoods-hero, .region-filters, .neighborhoods-section, .cta-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .neighborhoods-grid { grid-template-columns: 1fr; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/textures.css">
+<script src="/textures.js" defer></script>
+<link rel="stylesheet" href="/enhance.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href='home.html' class="logo">LIVING<span>canvas</span></a>
+  <a href='imoveis.html' class="nav-cta">Ver Imóveis</a>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href='home.html'>Início</a>
+  <span>›</span>
+  <strong style="color: var(--gold);">Bairros</strong>
+</div>
+
+<!-- HERO -->
+<section class="neighborhoods-hero">
+  <p class="section-eyebrow">Explore por Região </p>
+  <h1 class="hero-title">Descubra o <em>bairro</em> perfeito para você</h1>
+  <p class="hero-subtitle">Cada região tem sua própria personalidade. Explore nossos bairros selecionados e encontre o cenário ideal para o seu estilo de vida.</p>
+  
+  <div class="neighborhoods-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="Digite o nome do bairro (ex: Pinheiros, Moema...)">
+  </div>
+</section>
+
+<!-- REGION FILTERS -->
+<div class="region-filters">
+  <button class="region-btn active" onclick="filterRegion('all', this)">Todos</button>
+  <button class="region-btn" onclick="filterRegion('zona-sul', this)">Zona Sul</button>
+  <button class="region-btn" onclick="filterRegion('zona-oeste', this)">Zona Oeste</button>
+  <button class="region-btn" onclick="filterRegion('centro', this)">Centro Expandido</button>
+  <button class="region-btn" onclick="filterRegion('litoral', this)">Litoral</button>
+  <button class="region-btn" onclick="filterRegion('interior', this)">Interior</button>
+</div>
+
+<!-- NEIGHBORHOODS GRID -->
+<section class="neighborhoods-section">
+  <div class="neighborhoods-grid" id="neighborhoodsGrid">
+    
+    <!-- Card 1 -->
+    <article class="neighborhood-card" data-region="zona-sul" data-name="jardim europa" onclick="window.location.href='bairro.html'">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80')"></div>
+      <span class="neighborhood-badge">12 imóveis</span>
+      <div class="neighborhood-overlay">
+        <div class="neighborhood-region">Zona Sul • São Paulo</div>
+        <h3 class="neighborhood-name">Jardim <em>Europa</em></h3>
+        <div class="neighborhood-stats">
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">R$ 3.2M</span>
+            <span class="neighborhood-stat-label">Preço médio</span>
+          </div>
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">420m²</span>
+            <span class="neighborhood-stat-label">Área média</span>
+          </div>
+        </div>
+        <div class="neighborhood-tags">
+          <span class="neighborhood-tag">🌳 Arborizado</span>
+          <span class="neighborhood-tag">🏛 Cultural</span>
+          <span class="neighborhood-tag">🍴 Gastronomia</span>
+        </div>
+        <span class="neighborhood-cta">Explorar bairro →</span>
+      </div>
+    </article>
+
+    <!-- Card 2 -->
+    <article class="neighborhood-card" data-region="zona-oeste" data-name="vila madalena" onclick="window.location.href='bairro.html'">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80')"></div>
+      <span class="neighborhood-badge">8 imóveis</span>
+      <div class="neighborhood-overlay">
+        <div class="neighborhood-region">Zona Oeste • São Paulo</div>
+        <h3 class="neighborhood-name">Vila <em>Madalena</em></h3>
+        <div class="neighborhood-stats">
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">R$ 1.8M</span>
+            <span class="neighborhood-stat-label">Preço médio</span>
+          </div>
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">150m²</span>
+            <span class="neighborhood-stat-label">Área média</span>
+          </div>
+        </div>
+        <div class="neighborhood-tags">
+          <span class="neighborhood-tag">🎨 Arte Urbana</span>
+          <span class="neighborhood-tag">🍺 Vida Noturna</span>
+          <span class="neighborhood-tag">🚶 Walkable</span>
+        </div>
+        <span class="neighborhood-cta">Explorar bairro →</span>
+      </div>
+    </article>
+
+    <!-- Card 3 -->
+    <article class="neighborhood-card" data-region="zona-sul" data-name="itaim bibi" onclick="window.location.href='bairro.html'">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')"></div>
+      <span class="neighborhood-badge">15 imóveis</span>
+      <div class="neighborhood-overlay">
+        <div class="neighborhood-region">Zona Sul • São Paulo</div>
+        <h3 class="neighborhood-name">Itaim <em>Bibi</em></h3>
+        <div class="neighborhood-stats">
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">R$ 3.5M</span>
+            <span class="neighborhood-stat-label">Preço médio</span>
+          </div>
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">280m²</span>
+            <span class="neighborhood-stat-label">Área média</span>
+          </div>
+        </div>
+        <div class="neighborhood-tags">
+          <span class="neighborhood-tag">💼 Business</span>
+          <span class="neighborhood-tag">🍷 Fine Dining</span>
+          <span class="neighborhood-tag">🚇 Transporte</span>
+        </div>
+        <span class="neighborhood-cta">Explorar bairro →</span>
+      </div>
+    </article>
+
+    <!-- Card 4 -->
+    <article class="neighborhood-card" data-region="zona-oeste" data-name="pinheiros" onclick="window.location.href='bairro.html'">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
+      <span class="neighborhood-badge">18 imóveis</span>
+      <div class="neighborhood-overlay">
+        <div class="neighborhood-region">Zona Oeste • São Paulo</div>
+        <h3 class="neighborhood-name"><em>Pinheiros</em></h3>
+        <div class="neighborhood-stats">
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">R$ 1.5M</span>
+            <span class="neighborhood-stat-label">Preço médio</span>
+          </div>
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">120m²</span>
+            <span class="neighborhood-stat-label">Área média</span>
+          </div>
+        </div>
+        <div class="neighborhood-tags">
+          <span class="neighborhood-tag">☕ Cafés</span>
+          <span class="neighborhood-tag">🌳 Parque</span>
+          <span class="neighborhood-tag">🚇 Metrô</span>
+        </div>
+        <span class="neighborhood-cta">Explorar bairro →</span>
+      </div>
+    </article>
+
+    <!-- Card 5 -->
+    <article class="neighborhood-card" data-region="zona-sul" data-name="moema" onclick="window.location.href='bairro.html'">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80')"></div>
+      <span class="neighborhood-badge">10 imóveis</span>
+      <div class="neighborhood-overlay">
+        <div class="neighborhood-region">Zona Sul • São Paulo</div>
+        <h3 class="neighborhood-name"><em>Moema</em></h3>
+        <div class="neighborhood-stats">
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">R$ 2.1M</span>
+            <span class="neighborhood-stat-label">Preço médio</span>
+          </div>
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">180m²</span>
+            <span class="neighborhood-stat-label">Área média</span>
+          </div>
+        </div>
+        <div class="neighborhood-tags">
+          <span class="neighborhood-tag">🌳 Parque</span>
+          <span class="neighborhood-tag">🛍 Shopping</span>
+          <span class="neighborhood-tag">👨‍👩‍👧 Familiar</span>
+        </div>
+        <span class="neighborhood-cta">Explorar bairro →</span>
+      </div>
+    </article>
+
+    <!-- Card 6 -->
+    <article class="neighborhood-card" data-region="litoral" data-name="riviera" onclick="window.location.href='bairro.html'">
+      <div class="neighborhood-image" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80')"></div>
+      <span class="neighborhood-badge">5 imóveis</span>
+      <div class="neighborhood-overlay">
+        <div class="neighborhood-region">Litoral • São Paulo</div>
+        <h3 class="neighborhood-name">Riviera de <em>São Lourenço</em></h3>
+        <div class="neighborhood-stats">
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">R$ 4.5M</span>
+            <span class="neighborhood-stat-label">Preço médio</span>
+          </div>
+          <div class="neighborhood-stat">
+            <span class="neighborhood-stat-value">350m²</span>
+            <span class="neighborhood-stat-label">Área média</span>
+          </div>
+        </div>
+        <div class="neighborhood-tags">
+          <span class="neighborhood-tag">🌊 Frente mar</span>
+          <span class="neighborhood-tag">🏊 Lazer</span>
+          <span class="neighborhood-tag">🔒 Seguro</span>
+        </div>
+        <span class="neighborhood-cta">Explorar bairro →</span>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">🔍</div>
+    <h3>Nenhum bairro encontrado</h3>
+    <p>Não encontramos resultados para sua busca. Tente outro termo ou entre em contato conosco para uma consultoria personalizada.</p>
+    <a href='contato.html' class="cta-btn cta-primary">Falar com Especialista</a>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="cta-content">
+    <h2>Não encontrou o <em>bairro</em> ideal?</h2>
+    <p>Nossos especialistas conhecem cada rua, cada esquina e cada oportunidade escondida da cidade. Conte-nos o que você busca e nós encontramos.</p>
+    <div class="cta-buttons">
+      <a href='contato.html' class="cta-btn cta-primary">Consultoria Gratuita</a>
+      <a href='imoveis.html' class="cta-btn cta-secondary">Ver Todos os Imóveis</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="logo">LIVING<span>canvas</span></div>
+      <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href='imoveis.html'>Imóveis</a></li>
+        <li><a href="bairros.html">Bairros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href='sobre.html'>Sobre nós</a></li>
+        <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#">Carreiras</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+        <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+        <li><a href="agendar.html">Agendar Visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+    <span>CRECI-SP 00000-J</span>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta">
+  <div class="cta-tooltip">Fale com um especialista</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+</div>
+
+<script>
+  // NAVBAR SCROLL
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+  
+  // SEARCH FUNCTIONALITY
+  const searchInput = document.getElementById('searchInput');
+  const cards = document.querySelectorAll('.neighborhood-card');
+  const emptyState = document.getElementById('emptyState');
+  
+  searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase().trim();
+    let visibleCount = 0;
+    
+    cards.forEach(card => {
+      const name = card.getAttribute('data-name');
+      if (name.includes(query)) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    if (visibleCount === 0) {
+      emptyState.classList.add('active');
+    } else {
+      emptyState.classList.remove('active');
+    }
+  });
+  
+  // REGION FILTER
+  function filterRegion(region, btn) {
+    // Update active button
+    document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // Clear search
+    searchInput.value = '';
+    emptyState.classList.remove('active');
+    
+    // Filter cards
+    let visibleCount = 0;
+    cards.forEach(card => {
+      if (region === 'all' || card.getAttribute('data-region') === region) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    if (visibleCount === 0) {
+      emptyState.classList.add('active');
+    }
+  }
+  
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<script src="/enhance.js" defer></script>
+</body>
+</html>
