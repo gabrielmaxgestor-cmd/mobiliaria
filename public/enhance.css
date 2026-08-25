@@ -64,17 +64,11 @@ body {
   transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease !important;
 }
 
-/* Hide Navbar and Text during Intro Animation */
-body.intro-active #navbar,
-body.intro-active nav#navbar,
-body.intro-active .navbar,
-body.intro-active .site-header,
-.video-intro:not(.ended) ~ #navbar,
-.video-intro:not(.ended) ~ nav#navbar {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-  transform: translateY(-100%) !important;
+/* Navbar is always visible immediately */
+#navbar, nav#navbar, .navbar, .site-header {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
 }
 
 .intro-logo,
@@ -1075,5 +1069,131 @@ body .property-card .card-meta {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================
+   Section Separation & Page Breaks (Distinct Background Colors)
+   ============================================================ */
+
+/* Ensure all sections span 100% full width */
+section,
+.section,
+.testimonials-section,
+.story-section,
+.faq-section {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  padding-top: clamp(3.5rem, 6vw, 6rem) !important;
+  padding-bottom: clamp(3.5rem, 6vw, 6rem) !important;
+}
+
+/* Constrain inner content within max-width for crisp readability */
+.section > *:not(.section-bg-layer),
+.testimonials-container,
+.story-container,
+.faq-container,
+.hero-content,
+.about-hero-content {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* 1. Primary Hero Section Background */
+.hero,
+.about-hero,
+.section-hero {
+  background-color: #071d1a !important;
+  border-bottom: 1px solid rgba(212, 175, 122, 0.15) !important;
+}
+
+/* 2. Alternating Section Tier A: Rich Forest Emerald */
+.section-forest,
+.section-alt,
+section:nth-of-type(odd):not(.hero):not(.testimonials-section):not(.about-hero):not(.section-light):not(.section-cream) {
+  background-color: #0c322d !important;
+  border-top: 1px solid rgba(212, 175, 122, 0.15) !important;
+  border-bottom: 1px solid rgba(212, 175, 122, 0.15) !important;
+}
+
+/* 3. Alternating Section Tier B: Deep Midnight Velvet */
+.section-deep,
+.section-midnight,
+.testimonials-section,
+section:nth-of-type(even):not(.hero):not(.testimonials-section):not(.about-hero):not(.section-light):not(.section-cream) {
+  background-color: #051917 !important;
+  border-top: 1px solid rgba(212, 175, 122, 0.12) !important;
+  border-bottom: 1px solid rgba(212, 175, 122, 0.12) !important;
+}
+
+/* 4. Alternating Section Tier C: Warm Cream / Ivory Break Band */
+.section-light,
+.section-cream,
+.section-bg-cream {
+  background-color: #f7f3eb !important;
+  color: #0a2e2a !important;
+  border-top: 1px solid #dfd6c6 !important;
+  border-bottom: 1px solid #dfd6c6 !important;
+}
+
+.section-light .section-title,
+.section-cream .section-title,
+.section-bg-cream .section-title,
+.section-light h1, .section-light h2, .section-light h3,
+.section-cream h1, .section-cream h2, .section-cream h3,
+.section-bg-cream h1, .section-bg-cream h2, .section-bg-cream h3 {
+  color: #072320 !important;
+}
+
+.section-light .section-title em,
+.section-cream .section-title em,
+.section-bg-cream .section-title em {
+  color: #0c423b !important;
+}
+
+.section-light .section-eyebrow,
+.section-cream .section-eyebrow,
+.section-bg-cream .section-eyebrow {
+  color: #8c6a33 !important;
+  font-weight: 700 !important;
+}
+
+.section-light p:not(.uni-badge),
+.section-cream p:not(.uni-badge),
+.section-bg-cream p:not(.uni-badge) {
+  color: #354743 !important;
+}
+
+/* 5. Golden Metallic Stats Bar Break */
+.stats-bar {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  background: linear-gradient(135deg, #d4af7a 0%, #c49a60 100%) !important;
+  color: #072320 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
+  padding: clamp(2rem, 4vw, 3.5rem) 1.5rem !important;
+}
+
+.stats-bar .stat-number {
+  color: #072320 !important;
+  text-shadow: none !important;
+}
+
+.stats-bar .stat-label {
+  color: rgba(7, 35, 32, 0.9) !important;
+  font-weight: 600 !important;
+}
+
+/* 6. Footer Obsidian Finish */
+footer,
+.site-footer {
+  background-color: #031412 !important;
+  border-top: 1px solid rgba(212, 175, 122, 0.22) !important;
+}
+
 
 

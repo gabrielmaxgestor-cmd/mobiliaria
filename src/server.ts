@@ -52,6 +52,13 @@ export default {
     try {
       const url = new URL(request.url);
 
+      if (url.pathname === "/" || url.pathname === "") {
+        return new Response(null, {
+          status: 302,
+          headers: { Location: "/home.html" },
+        });
+      }
+
       if (url.pathname === "/api/vibe-search") {
         return await handleVibeSearch(request);
       }
