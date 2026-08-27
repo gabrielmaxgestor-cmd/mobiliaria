@@ -734,10 +734,13 @@
         
         <div class="divider">ou entre com e-mail</div>
         
-        <form>
+        <!-- Feedback Message Area -->
+        <div id="loginFeedback" style="display: none; padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 1.2rem; font-size: 0.9rem; line-height: 1.4;"></div>
+        
+        <form id="actualLoginForm">
           <div class="form-group">
             <label for="loginEmail">E-mail</label>
-            <input type="email" id="loginEmail" class="form-input" placeholder="seu@email.com" required>
+            <input type="email" id="loginEmail" class="form-input" placeholder="seu@email.com" required autocomplete="email">
           </div>
           
           <div class="form-group">
@@ -746,19 +749,19 @@
               <a href="#" class="forgot-link" onclick="showForgotPassword(event)">Esqueceu?</a>
             </label>
             <div class="form-input-wrapper">
-              <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+              <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required autocomplete="current-password">
               <span class="input-icon" onclick="togglePassword('loginPassword', this)">👁</span>
             </div>
           </div>
           
           <div class="form-options">
             <label class="checkbox-wrapper">
-              <input type="checkbox" checked>
+              <input type="checkbox" id="rememberMe" checked>
               <span>Lembrar de mim</span>
             </label>
           </div>
           
-          <button type="submit" class="form-submit">Entrar</button>
+          <button type="submit" id="loginSubmitBtn" class="form-submit">Entrar</button>
         </form>
         
         <p class="terms-text">
@@ -773,38 +776,41 @@
         
         <!-- SOCIAL LOGIN -->
         <div class="social-login">
-          <button class="social-btn">
+          <button class="social-btn" type="button" onclick="alert('Login social em breve. Utilize cadastro por e-mail.')">
             <span class="social-icon">G</span>
             Criar conta com Google
           </button>
-          <button class="social-btn">
-            <span class="social-icon"></span>
+          <button class="social-btn" type="button" onclick="alert('Login social em breve. Utilize cadastro por e-mail.')">
+            <span class="social-icon"></span>
             Criar conta com Apple
           </button>
         </div>
         
         <div class="divider">ou cadastre-se com e-mail</div>
+
+        <!-- Feedback Message Area -->
+        <div id="registerFeedback" style="display: none; padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 1.2rem; font-size: 0.9rem; line-height: 1.4;"></div>
         
-        <form>
+        <form id="actualRegisterForm">
           <div class="form-group">
             <label for="registerName">Nome completo</label>
-            <input type="text" id="registerName" class="form-input" placeholder="Seu nome" required>
+            <input type="text" id="registerName" class="form-input" placeholder="Seu nome" required autocomplete="name">
           </div>
           
           <div class="form-group">
             <label for="registerEmail">E-mail</label>
-            <input type="email" id="registerEmail" class="form-input" placeholder="seu@email.com" required>
+            <input type="email" id="registerEmail" class="form-input" placeholder="seu@email.com" required autocomplete="email">
           </div>
           
           <div class="form-group">
             <label for="registerPhone">WhatsApp</label>
-            <input type="tel" id="registerPhone" class="form-input" placeholder="(11) 99999-9999" required>
+            <input type="tel" id="registerPhone" class="form-input" placeholder="(11) 99999-9999" autocomplete="tel">
           </div>
           
           <div class="form-group">
             <label for="registerPassword">Senha</label>
             <div class="form-input-wrapper">
-              <input type="password" id="registerPassword" class="form-input" placeholder="Mínimo 8 caracteres" required oninput="checkPasswordStrength(this.value)">
+              <input type="password" id="registerPassword" class="form-input" placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password" oninput="checkPasswordStrength(this.value)">
               <span class="input-icon" onclick="togglePassword('registerPassword', this)">👁</span>
             </div>
             <div class="password-strength" id="passwordStrength">
@@ -820,12 +826,12 @@
           
           <div class="form-options">
             <label class="checkbox-wrapper">
-              <input type="checkbox" required>
+              <input type="checkbox" required checked>
               <span>Concordo com os <a href="#" style="color: var(--gold); text-decoration: none;">Termos</a> e <a href="#" style="color: var(--gold); text-decoration: none;">Privacidade</a></span>
             </label>
           </div>
           
-          <button type="submit" class="form-submit">Criar Conta</button>
+          <button type="submit" id="registerSubmitBtn" class="form-submit">Criar Conta</button>
         </form>
         
         <p class="terms-text">
@@ -950,6 +956,104 @@
       }
     });
   });
+</script>
+
+<script type="module">
+  import LivingCanvasAuth from '/auth.js';
+
+  // Redireciona se o usuário já estiver logado
+  LivingCanvasAuth.redirectIfAuthenticated('dashboard.html');
+
+  // Helper para exibir feedback visual sem quebrar o layout
+  function showMessage(elId, msg, isError = true) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.style.display = 'block';
+    if (isError) {
+      el.style.background = 'rgba(255, 107, 107, 0.15)';
+      el.style.border = '1px solid #FF6B6B';
+      el.style.color = '#FF8E8E';
+    } else {
+      el.style.background = 'rgba(37, 211, 102, 0.15)';
+      el.style.border = '1px solid #25D366';
+      el.style.color = '#4EFA8A';
+    }
+    el.textContent = msg;
+  }
+
+  function clearMessage(elId) {
+    const el = document.getElementById(elId);
+    if (el) {
+      el.style.display = 'none';
+      el.textContent = '';
+    }
+  }
+
+  // Submit Login
+  const loginForm = document.getElementById('actualLoginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearMessage('loginFeedback');
+
+      const submitBtn = document.getElementById('loginSubmitBtn');
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Entrando...';
+
+      try {
+        await LivingCanvasAuth.login(email, password);
+        showMessage('loginFeedback', 'Login realizado com sucesso! Redirecionando...', false);
+        
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect') || 'dashboard.html';
+        setTimeout(() => {
+          window.location.href = redirect;
+        }, 600);
+      } catch (err) {
+        showMessage('loginFeedback', err.message || 'Erro ao entrar. Verifique os dados.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+      }
+    });
+  }
+
+  // Submit Cadastro de Cliente
+  const registerForm = document.getElementById('actualRegisterForm');
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearMessage('registerFeedback');
+
+      const submitBtn = document.getElementById('registerSubmitBtn');
+      const nome = document.getElementById('registerName').value;
+      const email = document.getElementById('registerEmail').value;
+      const telefone = document.getElementById('registerPhone').value;
+      const password = document.getElementById('registerPassword').value;
+
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Criando conta...';
+
+      try {
+        await LivingCanvasAuth.register({ nome, email, password, telefone });
+        showMessage('registerFeedback', 'Conta criada com sucesso! Bem-vindo ao Living Canvas.', false);
+        
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect') || 'dashboard.html';
+        setTimeout(() => {
+          window.location.href = redirect;
+        }, 800);
+      } catch (err) {
+        showMessage('registerFeedback', err.message || 'Erro ao criar conta.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+      }
+    });
+  }
 </script>
 
 <script src="/enhance.js" defer></script>

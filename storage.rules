@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Imóveis: fotos e plantas baixas
+    // Estrutura:
+    // - /imoveis/{imovelId}/fotos/{arquivo}
+    // - /imoveis/{imovelId}/planta/{arquivo}
+    match /imoveis/{imovelId}/{folder}/{fileName} {
+      // Leitura pública de fotos e plantas
+      allow read: if true;
+      
+      // Escrita restrita a usuários autenticados (corretores)
+      // Validação de tipo de arquivo (apenas imagens e pdfs) e tamanho máximo (até 15MB)
+      allow write: if request.auth != null
+                   && (folder == 'fotos' || folder == 'planta')
+                   && request.resource.size < 15 * 1024 * 1024
+                   && (request.resource.contentType.matches('image/.*') || request.resource.contentType == 'application/pdf');
+    }
+  }
+}

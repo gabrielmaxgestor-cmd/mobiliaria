@@ -1,0 +1,121 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Funções auxiliares de autenticação e papel
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
+    }
+
+    function isCorretor() {
+      return isAuthenticated() && getUserData().role == 'corretor';
+    }
+
+    // 1. Coleção de Usuários
+    match /usuarios/{userId} {
+      // Leitura do próprio perfil ou consulta de perfil de corretores
+      allow read: if isUser(userId) || (isAuthenticated() && resource.data.role == 'corretor');
+
+      // Cadastro de cliente novo
+      allow create: if isUser(userId)
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.role == 'cliente';
+
+      // Atualização do próprio perfil sem poder alterar o próprio cargo (role) ou UID
+      allow update: if isUser(userId)
+                    && request.resource.data.uid == resource.data.uid
+                    && request.resource.data.role == resource.data.role;
+
+      // Exclusão desabilitada
+      allow delete: if false;
+    }
+
+    // 2. Coleção de Imóveis
+    match /imoveis/{imovelId} {
+      // LEITURA PÚBLICA: Qualquer visitante (mesmo sem login) pode visualizar o catálogo de imóveis
+      allow read: if true;
+
+      // CRIAÇÃO: Apenas usuários autenticados com role 'corretor', vinculando a si mesmos como corretorId
+      allow create: if isCorretor()
+                    && request.resource.data.corretorId == request.auth.uid;
+
+      // ATUALIZAÇÃO: Apenas o corretor responsável/proprietário do cadastro do imóvel
+      allow update: if isCorretor()
+                    && resource.data.corretorId == request.auth.uid
+                    && request.resource.data.corretorId == resource.data.corretorId;
+
+      // EXCLUSÃO: Apenas o corretor responsável pelo imóvel
+      allow delete: if isCorretor()
+                    && resource.data.corretorId == request.auth.uid;
+    }
+
+    // 3. Coleção de Favoritos (Privada por Usuário)
+    match /favoritos/{favoritoId} {
+      // Leitura: apenas o próprio usuário pode ler ou listar seus favoritos
+      allow read: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+
+      // Criação: usuário autenticado gravando seu próprio UID
+      allow create: if isAuthenticated()
+                    && request.resource.data.usuarioId == request.auth.uid
+                    && request.resource.data.imovelId is string;
+
+      // Exclusão: apenas o próprio usuário pode remover seu favorito
+      allow delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+
+      // Atualização não permitida
+      allow update: if false;
+    }
+
+    // 4. Coleção de Buscas Desejadas (Privada por Usuário)
+    match /buscasDesejadas/{buscaId} {
+      // Leitura: apenas o próprio cliente pode ler ou listar suas buscas
+      allow read: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+
+      // Criação: usuário autenticado gravando seu próprio UID com campo obrigatório 'nome'
+      allow create: if isAuthenticated()
+                    && request.resource.data.usuarioId == request.auth.uid
+                    && request.resource.data.nome is string
+                    && request.resource.data.nome.size() > 0;
+
+      // Atualização: apenas o próprio usuário sobre seus próprios registros
+      allow update: if isAuthenticated()
+                    && resource.data.usuarioId == request.auth.uid
+                    && request.resource.data.usuarioId == request.auth.uid;
+
+      // Exclusão: apenas o próprio usuário pode remover sua busca
+      allow delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+    }
+
+    // 5. Coleção de Notificações (Privada por Usuário)
+    match /notificacoes/{notificacaoId} {
+      // Leitura: apenas o próprio cliente destinatário pode ler suas notificações
+      allow read: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+
+      // Criação pelo client: negada explicitamente (gerada exclusivamente pela Cloud Function / backend)
+      allow create: if false;
+
+      // Atualização: apenas o próprio usuário marcando como lida
+      allow update: if isAuthenticated()
+                    && resource.data.usuarioId == request.auth.uid
+                    && request.resource.data.usuarioId == resource.data.usuarioId
+                    && request.resource.data.imovelId == resource.data.imovelId
+                    && request.resource.data.buscaId == resource.data.buscaId;
+
+      // Exclusão: apenas o próprio usuário destinatário
+      allow delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+    }
+
+    // Bloqueio por padrão para qualquer outro documento
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

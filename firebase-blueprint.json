@@ -1,0 +1,258 @@
+{
+  "entities": {
+    "usuarios": {
+      "title": "Usuários",
+      "description": "Perfis de usuários cadastrados no Living Canvas",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "ID do usuário no Firebase Auth"
+        },
+        "nome": {
+          "type": "string",
+          "description": "Nome completo do usuário"
+        },
+        "email": {
+          "type": "string",
+          "description": "E-mail do usuário"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["cliente", "corretor", "admin"],
+          "description": "Papel do usuário no sistema (cliente por padrão)"
+        },
+        "telefone": {
+          "type": "string",
+          "description": "Telefone / WhatsApp de contato"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora de criação do perfil"
+        }
+      },
+      "required": ["uid", "nome", "email", "role", "criadoEm"]
+    },
+    "imoveis": {
+      "title": "Imóveis",
+      "description": "Imóveis residenciais e comerciais cadastrados para venda ou locação",
+      "type": "object",
+      "properties": {
+        "titulo": {
+          "type": "string",
+          "description": "Título de destaque do imóvel"
+        },
+        "descricao": {
+          "type": "string",
+          "description": "Descrição detalhada do imóvel"
+        },
+        "tipo": {
+          "type": "string",
+          "enum": ["apartamento", "casa", "terreno", "comercial"],
+          "description": "Tipo de imóvel"
+        },
+        "preco": {
+          "type": "number",
+          "description": "Valor do imóvel em reais"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["disponivel", "reservado", "vendido"],
+          "description": "Status de disponibilidade do imóvel"
+        },
+        "endereco": {
+          "type": "object",
+          "description": "Localização do imóvel",
+          "properties": {
+            "bairro": { "type": "string" },
+            "cidade": { "type": "string" },
+            "estado": { "type": "string" },
+            "cep": { "type": "string" },
+            "rua": { "type": "string" }
+          },
+          "required": ["bairro", "cidade", "estado", "cep"]
+        },
+        "caracteristicas": {
+          "type": "object",
+          "description": "Atributos físicos do imóvel",
+          "properties": {
+            "areaM2": { "type": "number" },
+            "quartos": { "type": "number" },
+            "banheiros": { "type": "number" },
+            "vagas": { "type": "number" },
+            "suites": { "type": "number" }
+          },
+          "required": ["areaM2", "quartos", "banheiros", "vagas"]
+        },
+        "imagens": {
+          "type": "array",
+          "description": "Lista de URLs das imagens do imóvel no Firebase Storage",
+          "items": {
+            "type": "string"
+          }
+        },
+        "plantaBaixaUrl": {
+          "type": "string",
+          "description": "URL da imagem ou PDF da planta baixa no Storage (ou null)"
+        },
+        "corretorId": {
+          "type": "string",
+          "description": "UID do corretor responsável pelo imóvel"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora de cadastro do imóvel"
+        },
+        "atualizadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora da última atualização do imóvel"
+        }
+      },
+      "required": [
+        "titulo",
+        "descricao",
+        "tipo",
+        "preco",
+        "status",
+        "endereco",
+        "caracteristicas",
+        "imagens",
+        "corretorId",
+        "criadoEm",
+        "atualizadoEm"
+      ]
+    },
+    "favoritos": {
+      "title": "Favoritos",
+      "description": "Lista privada de imóveis favoritados por cada usuário",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do usuário que favoritou o imóvel"
+        },
+        "imovelId": {
+          "type": "string",
+          "description": "ID do imóvel favoritado"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora em que o imóvel foi favoritado"
+        }
+      },
+      "required": ["usuarioId", "imovelId", "criadoEm"]
+    },
+    "buscasDesejadas": {
+      "title": "Buscas Desejadas",
+      "description": "Critérios de busca e perfil de imóvel desejado cadastrados pelo cliente",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do cliente que cadastrou a busca"
+        },
+        "nome": {
+          "type": "string",
+          "description": "Nome ou rótulo de identificação da busca desejada (ex: Apê pra minha mãe)"
+        },
+        "tipo": {
+          "type": "string",
+          "description": "Tipo de imóvel desejado (apartamento, casa, cobertura, studio, comercial ou vazio para qualquer)"
+        },
+        "bairros": {
+          "type": "array",
+          "description": "Lista de bairros de interesse",
+          "items": {
+            "type": "string"
+          }
+        },
+        "precoMin": {
+          "type": "number",
+          "description": "Preço mínimo desejado em reais (opcional)"
+        },
+        "precoMax": {
+          "type": "number",
+          "description": "Preço máximo desejado em reais (opcional)"
+        },
+        "quartosMin": {
+          "type": "number",
+          "description": "Número mínimo de quartos desejados (opcional)"
+        },
+        "observacoes": {
+          "type": "string",
+          "description": "Notas e preferências livres adicionais do cliente (opcional)"
+        },
+        "ativa": {
+          "type": "boolean",
+          "description": "Indica se a busca desejada está ativa para notificações e acompanhamento"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora de cadastro da busca"
+        },
+        "atualizadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora da última alteração"
+        }
+      },
+      "required": ["usuarioId", "nome", "ativa", "criadoEm", "atualizadoEm"]
+    },
+    "notificacoes": {
+      "title": "Notificações",
+      "description": "Notificações geradas automaticamente quando um imóvel disponível casa com buscas desejadas ativas",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do cliente destinatário da notificação"
+        },
+        "imovelId": {
+          "type": "string",
+          "description": "ID do imóvel correspondente"
+        },
+        "buscaId": {
+          "type": "string",
+          "description": "ID da busca desejada que gerou a notificação"
+        },
+        "lida": {
+          "type": "boolean",
+          "description": "Status de leitura da notificação pelo cliente (false por padrão)"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora de geração da notificação"
+        }
+      },
+      "required": ["usuarioId", "imovelId", "buscaId", "lida", "criadoEm"]
+    }
+  },
+  "firestore": {
+    "/usuarios/{userId}": {
+      "schema": "usuarios",
+      "description": "Documentos de perfil dos usuários"
+    },
+    "/imoveis/{imovelId}": {
+      "schema": "imoveis",
+      "description": "Coleção do catálogo de imóveis disponíveis no Living Canvas"
+    },
+    "/favoritos/{favoritoId}": {
+      "schema": "favoritos",
+      "description": "Coleção de favoritos privados dos usuários"
+    },
+    "/buscasDesejadas/{buscaId}": {
+      "schema": "buscasDesejadas",
+      "description": "Coleção de buscas desejadas cadastradas privativamente pelos clientes"
+    },
+    "/notificacoes/{notificacaoId}": {
+      "schema": "notificacoes",
+      "description": "Coleção de notificações de match de imóveis para clientes"
+    }
+  }
+}

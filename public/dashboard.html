@@ -695,6 +695,514 @@
   .doc-item:hover .doc-action {
     transform: translateY(2px);
   }
+
+  /* MEU IMÓVEL DOS SONHOS / SAVED SEARCHES */
+  .saved-searches-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .search-card {
+    background: rgba(245, 241, 232, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.4rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+
+  .search-card:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.04);
+  }
+
+  .search-card.paused {
+    opacity: 0.75;
+    border-style: dashed;
+    border-color: rgba(245, 241, 232, 0.15);
+  }
+
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .search-title-area {
+    flex: 1;
+  }
+
+  .search-title {
+    font-size: 1.15rem;
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    margin-bottom: 0.2rem;
+  }
+
+  .search-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .search-status-active {
+    background: rgba(37, 211, 102, 0.15);
+    color: #25D366;
+    border: 1px solid rgba(37, 211, 102, 0.3);
+  }
+
+  .search-status-inactive {
+    background: rgba(255, 217, 61, 0.12);
+    color: #FFD93D;
+    border: 1px solid rgba(255, 217, 61, 0.3);
+  }
+
+  .criteria-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .criteria-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid rgba(212, 175, 122, 0.25);
+    color: var(--gold);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+  }
+
+  .neighborhood-pill {
+    background: rgba(44, 95, 77, 0.25);
+    border: 1px solid rgba(44, 95, 77, 0.4);
+    color: var(--cream);
+    padding: 0.2rem 0.65rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+  }
+
+  .search-observations {
+    font-size: 0.83rem;
+    color: var(--text-light);
+    background: rgba(10, 26, 20, 0.45);
+    border-left: 3px solid var(--gold);
+    padding: 0.6rem 0.85rem;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .search-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(245, 241, 232, 0.06);
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .search-date {
+    font-size: 0.75rem;
+    color: var(--gold-soft);
+  }
+
+  .search-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* NOTIFICATIONS DROPDOWN & PANEL */
+  .notification-wrapper {
+    position: relative;
+  }
+
+  .notification-counter {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #E53935;
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--emerald-dark);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    animation: pulseBadge 2s infinite;
+  }
+
+  @keyframes pulseBadge {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .notifications-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 380px;
+    max-width: 90vw;
+    background: linear-gradient(135deg, #132E24 0%, #0A1C15 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(16px);
+    z-index: 1050;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: top right;
+    animation: dropdownSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .notifications-dropdown.open {
+    display: flex;
+  }
+
+  @keyframes dropdownSlide {
+    from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .notif-dropdown-header {
+    padding: 1rem 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.08);
+    background: rgba(245, 241, 232, 0.02);
+  }
+
+  .notif-mark-all-btn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .notif-mark-all-btn:hover {
+    background: rgba(212, 175, 122, 0.1);
+    color: var(--cream);
+  }
+
+  .notif-dropdown-list {
+    max-height: 360px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .notif-item {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.95rem 1.1rem;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.05);
+    transition: background 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .notif-item:hover {
+    background: rgba(245, 241, 232, 0.04);
+  }
+
+  .notif-item.unread {
+    background: rgba(212, 175, 122, 0.06);
+    border-left: 3px solid var(--gold);
+  }
+
+  .notif-thumb {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--emerald-mid);
+    flex-shrink: 0;
+    border: 1px solid rgba(245, 241, 232, 0.1);
+  }
+
+  .notif-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .notif-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cream);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .notif-match-badge {
+    font-size: 0.72rem;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .notif-meta {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.1rem;
+  }
+
+  .notif-dropdown-footer {
+    padding: 0.8rem;
+    text-align: center;
+    border-top: 1px solid rgba(245, 241, 232, 0.08);
+    background: rgba(245, 241, 232, 0.02);
+  }
+
+  .notif-dropdown-footer a {
+    color: var(--gold);
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .notif-dropdown-footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* NOTIFICATIONS SECTION IN DASHBOARD */
+  .unread-count-pill {
+    background: rgba(229, 57, 53, 0.18);
+    border: 1px solid rgba(229, 57, 53, 0.35);
+    color: #FF8A80;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 50px;
+  }
+
+  .notifications-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .notification-card {
+    background: rgba(245, 241, 232, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 1.2rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .notification-card:hover {
+    border-color: rgba(212, 175, 122, 0.3);
+    background: rgba(245, 241, 232, 0.05);
+    transform: translateY(-2px);
+  }
+
+  .notification-card.unread {
+    background: linear-gradient(135deg, rgba(212, 175, 122, 0.08) 0%, rgba(19, 46, 36, 0.4) 100%);
+    border-color: rgba(212, 175, 122, 0.35);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .notification-photo {
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: var(--emerald-mid);
+    flex-shrink: 0;
+    border: 1px solid rgba(212, 175, 122, 0.2);
+  }
+
+  .notification-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .notification-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .notification-prop-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .notification-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .notification-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .notification-photo {
+      width: 100%;
+      height: 140px;
+    }
+    .notification-header-row {
+      flex-direction: column;
+    }
+  }
+
+  /* MODAL */
+  .lc-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 15, 11, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .lc-modal-backdrop.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .lc-modal {
+    background: linear-gradient(135deg, #132E24 0%, #0A1C15 100%);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 620px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    padding: 2.2rem;
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .lc-modal-backdrop.open .lc-modal {
+    transform: scale(1);
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    width: 36px;
+    height: 36px;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    color: var(--cream);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .modal-close-btn:hover {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: #FF6B6B;
+    color: #FF6B6B;
+  }
+
+  .form-group {
+    margin-bottom: 1.15rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gold-soft);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-label span.req {
+    color: #FF6B6B;
+  }
+
+  .form-control {
+    width: 100%;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    color: var(--cream);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s;
+    box-sizing: border-box;
+  }
+
+  .form-control:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 122, 0.15);
+    background: rgba(245, 241, 232, 0.08);
+  }
+
+  .form-control option {
+    background: #0A1C15;
+    color: var(--cream);
+  }
+
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .form-row-2 { grid-template-columns: 1fr; }
+  }
   
   /* RESPONSIVE */
   @media (max-width: 1200px) {
@@ -739,7 +1247,17 @@
       <a href="dashboard.html#favoritos" class="nav-item">
         <span class="nav-icon">❤️</span>
         Favoritos
-        <span class="nav-badge">3</span>
+        <span class="nav-badge" id="navFavBadge">0</span>
+      </a>
+      <a href="dashboard.html#notificacoes" class="nav-item">
+        <span class="nav-icon">🔔</span>
+        Notificações
+        <span class="nav-badge" id="navNotifBadge" style="display: none; background: #E53935; color: #fff;">0</span>
+      </a>
+      <a href="dashboard.html#imovel-dos-sonhos" class="nav-item">
+        <span class="nav-icon">✨</span>
+        Imóvel dos Sonhos
+        <span class="nav-badge" id="navBuscasBadge">0</span>
       </a>
       <a href="agendar.html" class="nav-item">
         <span class="nav-icon">📅</span>
@@ -762,7 +1280,7 @@
     </nav>
     
     <div class="sidebar-footer">
-      <button class="logout-btn" onclick="window.location.href='home.html'">
+      <button class="logout-btn" id="dashboardLogoutBtn">
         <span class="nav-icon">🚪</span>
         Sair da Conta
       </button>
@@ -775,20 +1293,45 @@
     <!-- TOP BAR -->
     <div class="top-bar">
       <div class="welcome-text">
-        <h1>Bom dia, <em>Mariana</em> 👋</h1>
-        <p>Pronta para dar o próximo passo na busca pelo seu cenário ideal?</p>
+        <h1 id="welcomeGreeting">Olá, <em id="welcomeUserName">Carregando...</em> 👋</h1>
+        <p>Pronto(a) para dar o próximo passo na busca pelo seu cenário ideal?</p>
       </div>
       
       <div class="top-bar-actions">
-        <button class="notification-btn">
-          🔔
-          <span class="notification-dot"></span>
-        </button>
-        <div class="user-profile">
-          <div class="user-avatar"></div>
+        <div class="notification-wrapper" id="topBarNotifWrapper">
+          <button class="notification-btn" id="btnNotificationBell" onclick="toggleNotificationsDropdown(event)" aria-label="Notificações" title="Notificações de imóveis">
+            🔔
+            <span class="notification-dot" id="headerNotificationDot" style="display: none;"></span>
+            <span class="notification-counter" id="headerNotificationCounter" style="display: none;">0</span>
+          </button>
+
+          <!-- DROPDOWN DE NOTIFICAÇÕES -->
+          <div class="notifications-dropdown" id="notificationsDropdown">
+            <div class="notif-dropdown-header">
+              <div>
+                <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--gold); margin: 0; font-family: 'Playfair Display', serif;">Notificações de Imóveis</h4>
+                <span style="font-size: 0.75rem; color: var(--text-light);" id="notifDropdownSubtext">0 não lidas</span>
+              </div>
+              <button type="button" class="notif-mark-all-btn" onclick="handleMarkAllNotificationsRead(event)" title="Marcar todas como lidas">
+                ✓ Limpar não lidas
+              </button>
+            </div>
+            <div class="notif-dropdown-list" id="notifDropdownList">
+              <div style="padding: 2rem 1rem; text-align: center; color: var(--text-light); font-size: 0.85rem;">
+                Nenhuma notificação nova no momento.
+              </div>
+            </div>
+            <div class="notif-dropdown-footer">
+              <a href="dashboard.html#notificacoes" onclick="closeNotificationsDropdown()">Ver todas as notificações no painel →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-profile" id="userProfileBadge">
+          <div class="user-avatar" id="profileUserAvatar" style="display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.9rem; color: var(--gold); background: var(--emerald-mid);">LC</div>
           <div class="user-info">
-            <span class="user-name">Mariana Costa</span>
-            <span class="user-role">Cliente VIP</span>
+            <span class="user-name" id="profileUserName">Carregando...</span>
+            <span class="user-role" id="profileUserRole">Cliente</span>
           </div>
         </div>
       </div>
@@ -799,9 +1342,9 @@
       <div class="stat-card">
         <div class="stat-header">
           <div class="stat-icon">❤️</div>
-          <div class="stat-trend">+2 esta semana</div>
+          <div class="stat-trend" id="statsFavoriteTrend">Coleção Privada</div>
         </div>
-        <div class="stat-value">3</div>
+        <div class="stat-value" id="statsFavoriteCount">0</div>
         <div class="stat-label">Imóveis Favoritos</div>
       </div>
       
@@ -816,11 +1359,11 @@
       
       <div class="stat-card">
         <div class="stat-header">
-          <div class="stat-icon">📝</div>
-          <div class="stat-trend">Em análise</div>
+          <div class="stat-icon">✨</div>
+          <div class="stat-trend" id="statsBuscasTrend">0 ativas</div>
         </div>
-        <div class="stat-value">1</div>
-        <div class="stat-label">Proposta Ativa</div>
+        <div class="stat-value" id="statsBuscasCount">0</div>
+        <div class="stat-label">Desejos Cadastrados</div>
       </div>
       
       <div class="stat-card">
@@ -933,58 +1476,84 @@
       </div>
       
     </div>
+
+    <!-- NOTIFICAÇÕES DE MATCH (IMÓVEIS DOS SONHOS) -->
+    <div class="dashboard-grid" style="grid-template-columns: 1fr; margin-bottom: 2.5rem;" id="notificacoes">
+      <div class="dashboard-card" id="notificationPanelCard">
+        <div class="card-header" style="flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.65rem;">
+              <h3 class="card-title">🔔 Notificações de Match</h3>
+              <span class="unread-count-pill" id="unreadNotifCountPill" style="display: none;">0 novas</span>
+            </div>
+            <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 0.2rem;">
+              Oportunidades em tempo real que correspondem aos critérios dos seus Imóveis dos Sonhos.
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+            <!-- Filter Tabs -->
+            <div style="display: inline-flex; background: rgba(245, 241, 232, 0.05); border: 1px solid var(--glass-border); border-radius: 50px; padding: 2px;">
+              <button type="button" id="btnFilterNotifUnread" class="btn-small" style="border-radius: 50px; padding: 0.35rem 0.85rem; font-size: 0.75rem; border: none; background: var(--gold); color: #0A1C15; font-weight: 600;" onclick="window.notificationPanelInstance?.setFilterMode(true)">
+                Não Lidas (<span id="filterUnreadCount">0</span>)
+              </button>
+              <button type="button" id="btnFilterNotifAll" class="btn-small" style="border-radius: 50px; padding: 0.35rem 0.85rem; font-size: 0.75rem; border: none; background: transparent; color: var(--cream);" onclick="window.notificationPanelInstance?.setFilterMode(false)">
+                Todas (<span id="filterAllCount">0</span>)
+              </button>
+            </div>
+
+            <button class="btn-small btn-ghost-small" id="btnMarkAllReadSection" onclick="window.notificationPanelInstance?.markAllAsRead(event)">
+              ✓ Marcar todas como lidas
+            </button>
+          </div>
+        </div>
+
+        <div class="notifications-grid" id="notificationsContainer">
+          <div style="padding: 2.5rem 1rem; text-align: center; color: var(--gold-soft);">
+            <div style="display: inline-block; width: 30px; height: 30px; border: 3px solid rgba(212,175,122,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 0.8rem;"></div>
+            <p style="font-size: 0.9rem;">Carregando notificações de imóveis...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEU IMÓVEL DOS SONHOS (BUSCAS DESEJADAS) -->
+    <div class="dashboard-grid" style="grid-template-columns: 1fr; margin-bottom: 2.5rem;">
+      <div class="dashboard-card" id="imovel-dos-sonhos">
+        <div class="card-header" style="flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 class="card-title">✨ Meu Imóvel dos Sonhos</h3>
+            <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 0.2rem;">
+              Descreva as características do imóvel que você procura. Guardamos seus critérios para encontrar seu próximo cenário.
+            </p>
+          </div>
+          <button class="btn-small btn-primary-small" id="btnOpenNewSearchModal" onclick="openNewSearchModal()">
+            <span>+</span> Cadastrar Busca Desejada
+          </button>
+        </div>
+
+        <div class="saved-searches-list" id="savedSearchesContainer">
+          <div style="padding: 2.5rem 1rem; text-align: center; color: var(--gold-soft);">
+            <div style="display: inline-block; width: 30px; height: 30px; border: 3px solid rgba(212,175,122,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 0.8rem;"></div>
+            <p style="font-size: 0.9rem;">Carregando seus critérios cadastrados...</p>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <!-- FAVORITES & DOCUMENTS GRID -->
     <div class="dashboard-grid">
       
       <!-- FAVORITES -->
-      <div class="dashboard-card">
+      <div class="dashboard-card" id="favoritos">
         <div class="card-header">
           <h3 class="card-title">❤️ Seus Cenários Salvos</h3>
-          <a href="imoveis.html" class="card-link">Ver todos →</a>
+          <a href="imoveis.html" class="card-link">Ver catálogo completo →</a>
         </div>
         
-        <div class="favorites-grid">
-          <div class="fav-card">
-            <div class="fav-image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80')">
-              <button class="fav-remove">×</button>
-            </div>
-            <div class="fav-content">
-              <h4 class="fav-title">Casa do Bosque</h4>
-              <p class="fav-location">Jardim Europa • 420m²</p>
-              <div class="fav-price">
-                <span>R$ 2.8M</span>
-                <a href='imovel.html' class="btn-small btn-primary-small" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Ver</a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="fav-card">
-            <div class="fav-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80')">
-              <button class="fav-remove">×</button>
-            </div>
-            <div class="fav-content">
-              <h4 class="fav-title">Penthouse Urbano</h4>
-              <p class="fav-location">Itaim Bibi • 320m²</p>
-              <div class="fav-price">
-                <span>R$ 3.1M</span>
-                <a href='imovel.html' class="btn-small btn-primary-small" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Ver</a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="fav-card">
-            <div class="fav-image" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80')">
-              <button class="fav-remove">×</button>
-            </div>
-            <div class="fav-content">
-              <h4 class="fav-title">Studio Artístico</h4>
-              <p class="fav-location">Pinheiros • 95m²</p>
-              <div class="fav-price">
-                <span>R$ 1.9M</span>
-                <a href='imovel.html' class="btn-small btn-primary-small" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Ver</a>
-              </div>
-            </div>
+        <div class="favorites-grid" id="dashboardFavoritesGrid">
+          <div style="grid-column: 1 / -1; padding: 2.5rem 1rem; text-align: center; color: var(--gold-soft);">
+            <div style="display: inline-block; width: 32px; height: 32px; border: 3px solid rgba(212,175,122,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 0.8rem;"></div>
+            <p style="font-size: 0.9rem;">Carregando seus imóveis favoritos...</p>
           </div>
         </div>
       </div>
@@ -1040,9 +1609,942 @@
   </main>
 </div>
 
+<!-- MODAL: CADASTRAR / EDITAR BUSCA DESEJADA -->
+<div class="lc-modal-backdrop" id="savedSearchModalBackdrop" onclick="if(event.target === this) closeSearchModal()">
+  <div class="lc-modal" role="dialog" aria-modal="true" aria-labelledby="modalSearchTitle">
+    <button type="button" class="modal-close-btn" onclick="closeSearchModal()" aria-label="Fechar modal">×</button>
+    
+    <div style="margin-bottom: 1.5rem;">
+      <span style="font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Critérios de Busca</span>
+      <h3 id="modalSearchTitle" style="font-family: 'Playfair Display', serif; font-size: 1.45rem; color: var(--cream); margin-top: 0.2rem;">Cadastrar Imóvel dos Sonhos</h3>
+      <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 0.3rem;">
+        Defina os parâmetros do seu imóvel ideal. Somente o nome identificador é obrigatório.
+      </p>
+    </div>
+
+    <form id="savedSearchForm">
+      <input type="hidden" id="searchDocId" value="">
+
+      <div class="form-group">
+        <label class="form-label" for="searchNome">Nome / Identificação da Busca <span class="req">*</span></label>
+        <input type="text" id="searchNome" class="form-control" placeholder="Ex: Apê pra minha mãe, Cobertura nos Jardins, Casa de campo" required maxlength="100">
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label" for="searchTipo">Tipo de Imóvel</label>
+          <select id="searchTipo" class="form-control">
+            <option value="">Qualquer tipo</option>
+            <option value="apartamento">Apartamento</option>
+            <option value="casa">Casa Residencial</option>
+            <option value="cobertura">Cobertura</option>
+            <option value="studio">Studio / Loft</option>
+            <option value="terreno">Terreno</option>
+            <option value="comercial">Comercial</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="searchQuartos">Mínimo de Quartos</label>
+          <select id="searchQuartos" class="form-control">
+            <option value="">Indiferente / Qualquer</option>
+            <option value="1">1+ quarto</option>
+            <option value="2">2+ quartos</option>
+            <option value="3">3+ quartos</option>
+            <option value="4">4+ quartos</option>
+            <option value="5">5+ quartos</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="searchBairros">Bairros de Interesse (separados por vírgula)</label>
+        <input type="text" id="searchBairros" class="form-control" placeholder="Ex: Jardim Europa, Itaim Bibi, Pinheiros, Moema">
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label" for="searchPrecoMin">Preço Mínimo (R$)</label>
+          <input type="number" id="searchPrecoMin" class="form-control" placeholder="Ex: 1500000" min="0" step="50000">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="searchPrecoMax">Preço Máximo (R$)</label>
+          <input type="number" id="searchPrecoMax" class="form-control" placeholder="Ex: 4500000" min="0" step="50000">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="searchObservacoes">Observações & Preferências Livres</label>
+        <textarea id="searchObservacoes" class="form-control" rows="3" placeholder="Ex: Precisa de varanda ampla com vista livre, sol da manhã, 2 vagas de garagem..."></textarea>
+      </div>
+
+      <div class="form-group" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.4rem 0;">
+        <input type="checkbox" id="searchAtiva" checked style="accent-color: var(--gold); width: 18px; height: 18px; cursor: pointer;">
+        <label for="searchAtiva" style="font-size: 0.85rem; color: var(--cream); cursor: pointer;">Manter esta busca ativa para notificações e acompanhamento</label>
+      </div>
+
+      <div id="modalSearchError" style="display: none; padding: 0.6rem 0.9rem; background: rgba(255, 107, 107, 0.15); border: 1px solid rgba(255, 107, 107, 0.3); border-radius: 8px; color: #FF6B6B; font-size: 0.82rem; margin-bottom: 1rem;"></div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+        <button type="button" class="btn-small btn-ghost-small" onclick="closeSearchModal()">Cancelar</button>
+        <button type="submit" class="btn-small btn-primary-small" id="btnSubmitSearch">
+          <span id="btnSubmitSearchText">Salvar Busca Desejada</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
-  // Simple interaction for sidebar on mobile (if needed)
-  // In a real app, this would be tied to a hamburger menu button
+  // Simple interaction for sidebar on mobile
+</script>
+
+<script type="module">
+  import LivingCanvasAuth from '/auth.js';
+  import LivingCanvasFavorites from '/favorites.js';
+  import LivingCanvasProperties from '/properties.js';
+  import LivingCanvasSavedSearches from '/savedSearches.js';
+  import LivingCanvasNotifications from '/notifications.js';
+
+  let userFavoritesList = [];
+  let userSavedSearchesList = [];
+  let userNotificationsList = [];
+  let notifUnsubscribe = null;
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function formatDisplayDate(timestamp) {
+    if (!timestamp) return 'Recentemente';
+    const d = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    if (isNaN(d.getTime())) return 'Recentemente';
+    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  // Renderiza a lista de Buscas Desejadas ("Meu Imóvel dos Sonhos")
+  function renderSavedSearches(searches) {
+    const container = document.getElementById('savedSearchesContainer');
+    const badge = document.getElementById('navBuscasBadge');
+    const statCount = document.getElementById('statsBuscasCount');
+    const statTrend = document.getElementById('statsBuscasTrend');
+
+    const total = searches.length;
+    const activeCount = searches.filter(s => s.ativa).length;
+
+    if (badge) badge.textContent = total.toString();
+    if (statCount) statCount.textContent = total.toString();
+    if (statTrend) {
+      statTrend.textContent = activeCount === 1 ? '1 ativa' : `${activeCount} ativas`;
+    }
+
+    if (!container) return;
+
+    if (total === 0) {
+      container.innerHTML = `
+        <div style="padding: 2.5rem 1.5rem; text-align: center; background: rgba(245, 241, 232, 0.02); border: 1px dashed var(--glass-border); border-radius: 14px;">
+          <div style="font-size: 2.2rem; margin-bottom: 0.6rem;">✨</div>
+          <h4 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 0.3rem; font-family: 'Playfair Display', serif;">Nenhum imóvel dos sonhos cadastrado ainda</h4>
+          <p style="color: var(--text-light); font-size: 0.85rem; max-width: 440px; margin: 0 auto 1.4rem auto; line-height: 1.5;">
+            Descreva com liberdade as características do refúgio ideal que você procura. Guardamos seus critérios para encontrar oportunidades sob medida.
+          </p>
+          <button type="button" class="btn-small btn-primary-small" onclick="openNewSearchModal()" style="padding: 0.6rem 1.4rem; font-size: 0.85rem;">
+            + Cadastrar Primeiro Desejo
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = searches.map(search => {
+      const isAtiva = !!search.ativa;
+      const statusBadge = isAtiva 
+        ? '<span class="search-status-badge search-status-active">● Ativa</span>'
+        : '<span class="search-status-badge search-status-inactive">○ Pausada</span>';
+
+      // Critérios em pills
+      const pills = [];
+      if (search.tipo) {
+        const tipoNome = search.tipo.charAt(0).toUpperCase() + search.tipo.slice(1);
+        pills.push(`<span class="criteria-pill">🏷️ ${tipoNome}</span>`);
+      } else {
+        pills.push(`<span class="criteria-pill">🏷️ Qualquer tipo</span>`);
+      }
+
+      if (search.quartosMin) {
+        pills.push(`<span class="criteria-pill">🛏️ Mín. ${search.quartosMin} quarto${search.quartosMin > 1 ? 's' : ''}</span>`);
+      }
+
+      if (search.precoMin && search.precoMax) {
+        pills.push(`<span class="criteria-pill">💰 ${LivingCanvasProperties.formatCurrency(search.precoMin)} – ${LivingCanvasProperties.formatCurrency(search.precoMax)}</span>`);
+      } else if (search.precoMin) {
+        pills.push(`<span class="criteria-pill">💰 A partir de ${LivingCanvasProperties.formatCurrency(search.precoMin)}</span>`);
+      } else if (search.precoMax) {
+        pills.push(`<span class="criteria-pill">💰 Até ${LivingCanvasProperties.formatCurrency(search.precoMax)}</span>`);
+      }
+
+      // Bairros
+      const bairrosHtml = (search.bairros && search.bairros.length > 0)
+        ? search.bairros.map(b => `<span class="neighborhood-pill">📍 ${escapeHtml(b)}</span>`).join('')
+        : '';
+
+      // Observações
+      const obsHtml = search.observacoes 
+        ? `<div class="search-observations">“${escapeHtml(search.observacoes)}”</div>`
+        : '';
+
+      const updatedDate = formatDisplayDate(search.atualizadoEm || search.criadoEm);
+
+      return `
+        <div class="search-card ${isAtiva ? '' : 'paused'}" id="search-card-${search.id}">
+          <div class="search-header">
+            <div class="search-title-area">
+              <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                <h4 class="search-title">${escapeHtml(search.nome)}</h4>
+                ${statusBadge}
+              </div>
+            </div>
+          </div>
+
+          <div class="criteria-pills">
+            ${pills.join('')}
+            ${bairrosHtml}
+          </div>
+
+          ${obsHtml}
+
+          <div class="search-footer">
+            <span class="search-date">Atualizado em ${updatedDate}</span>
+            <div class="search-actions">
+              <button type="button" class="btn-small btn-ghost-small" onclick="handleToggleSearchStatus('${search.id}', ${isAtiva})" title="${isAtiva ? 'Pausar notificações' : 'Reativar busca'}">
+                ${isAtiva ? '⏸ Pausar' : '▶ Ativar'}
+              </button>
+              <button type="button" class="btn-small btn-ghost-small" onclick="openEditSearchModal('${search.id}')" title="Editar critérios">
+                ✏️ Editar
+              </button>
+              <button type="button" class="btn-small btn-ghost-small" style="color: #FF6B6B; border-color: rgba(255,107,107,0.3);" onclick="handleDeleteSearch('${search.id}')" title="Excluir busca">
+                🗑️ Excluir
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Modal Controls
+  window.openNewSearchModal = function() {
+    document.getElementById('modalSearchTitle').textContent = 'Cadastrar Imóvel dos Sonhos';
+    document.getElementById('btnSubmitSearchText').textContent = 'Salvar Busca Desejada';
+    document.getElementById('searchDocId').value = '';
+    document.getElementById('searchNome').value = '';
+    document.getElementById('searchTipo').value = '';
+    document.getElementById('searchQuartos').value = '';
+    document.getElementById('searchBairros').value = '';
+    document.getElementById('searchPrecoMin').value = '';
+    document.getElementById('searchPrecoMax').value = '';
+    document.getElementById('searchObservacoes').value = '';
+    document.getElementById('searchAtiva').checked = true;
+
+    const errBox = document.getElementById('modalSearchError');
+    if (errBox) errBox.style.display = 'none';
+
+    const backdrop = document.getElementById('savedSearchModalBackdrop');
+    if (backdrop) backdrop.classList.add('open');
+  };
+
+  window.openEditSearchModal = function(searchId) {
+    const search = userSavedSearchesList.find(s => s.id === searchId);
+    if (!search) return;
+
+    document.getElementById('modalSearchTitle').textContent = 'Editar Imóvel dos Sonhos';
+    document.getElementById('btnSubmitSearchText').textContent = 'Atualizar Critérios';
+    document.getElementById('searchDocId').value = search.id;
+    document.getElementById('searchNome').value = search.nome || '';
+    document.getElementById('searchTipo').value = search.tipo || '';
+    document.getElementById('searchQuartos').value = search.quartosMin ? search.quartosMin.toString() : '';
+    document.getElementById('searchBairros').value = (search.bairros || []).join(', ');
+    document.getElementById('searchPrecoMin').value = search.precoMin || '';
+    document.getElementById('searchPrecoMax').value = search.precoMax || '';
+    document.getElementById('searchObservacoes').value = search.observacoes || '';
+    document.getElementById('searchAtiva').checked = search.ativa !== false;
+
+    const errBox = document.getElementById('modalSearchError');
+    if (errBox) errBox.style.display = 'none';
+
+    const backdrop = document.getElementById('savedSearchModalBackdrop');
+    if (backdrop) backdrop.classList.add('open');
+  };
+
+  window.closeSearchModal = function() {
+    const backdrop = document.getElementById('savedSearchModalBackdrop');
+    if (backdrop) backdrop.classList.remove('open');
+  };
+
+  // Salvar (Criar ou Atualizar) formulário de busca desejada
+  const searchForm = document.getElementById('savedSearchForm');
+  if (searchForm) {
+    searchForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const docId = document.getElementById('searchDocId').value.trim();
+      const nome = document.getElementById('searchNome').value.trim();
+      const tipo = document.getElementById('searchTipo').value.trim();
+      const quartosVal = document.getElementById('searchQuartos').value.trim();
+      const bairrosVal = document.getElementById('searchBairros').value.trim();
+      const precoMinVal = document.getElementById('searchPrecoMin').value.trim();
+      const precoMaxVal = document.getElementById('searchPrecoMax').value.trim();
+      const observacoes = document.getElementById('searchObservacoes').value.trim();
+      const ativa = document.getElementById('searchAtiva').checked;
+
+      const errBox = document.getElementById('modalSearchError');
+      const submitBtn = document.getElementById('btnSubmitSearch');
+      const submitText = document.getElementById('btnSubmitSearchText');
+
+      if (!nome) {
+        if (errBox) {
+          errBox.textContent = 'Por favor, informe um nome para identificar a busca desejada.';
+          errBox.style.display = 'block';
+        }
+        return;
+      }
+
+      const bairros = bairrosVal 
+        ? bairrosVal.split(',').map(b => b.trim()).filter(Boolean)
+        : [];
+
+      const payload = {
+        nome,
+        tipo,
+        bairros,
+        precoMin: precoMinVal ? Number(precoMinVal) : null,
+        precoMax: precoMaxVal ? Number(precoMaxVal) : null,
+        quartosMin: quartosVal ? Number(quartosVal) : null,
+        observacoes,
+        ativa
+      };
+
+      try {
+        if (submitBtn) submitBtn.disabled = true;
+        if (submitText) submitText.textContent = 'Gravando...';
+
+        if (docId) {
+          await LivingCanvasSavedSearches.updateSavedSearch(docId, payload);
+        } else {
+          await LivingCanvasSavedSearches.createSavedSearch(payload);
+        }
+
+        closeSearchModal();
+        await loadUserSavedSearches();
+      } catch (err) {
+        console.error("Erro ao salvar busca desejada:", err);
+        if (errBox) {
+          errBox.textContent = err.message || 'Erro ao gravar busca no Firestore.';
+          errBox.style.display = 'block';
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitText) submitText.textContent = docId ? 'Atualizar Critérios' : 'Salvar Busca Desejada';
+      }
+    });
+  }
+
+  // Alternar status da busca (Ativa / Pausada)
+  window.handleToggleSearchStatus = async function(searchId, currentStatus) {
+    if (!searchId) return;
+    const cardEl = document.getElementById(`search-card-${searchId}`);
+    if (cardEl) {
+      cardEl.style.opacity = '0.5';
+      cardEl.style.pointerEvents = 'none';
+    }
+
+    try {
+      await LivingCanvasSavedSearches.toggleSavedSearchStatus(searchId, currentStatus);
+      await loadUserSavedSearches();
+    } catch (err) {
+      console.error("Erro ao alternar status da busca desejada:", err);
+      if (cardEl) {
+        cardEl.style.opacity = '1';
+        cardEl.style.pointerEvents = 'auto';
+      }
+    }
+  };
+
+  // Excluir busca desejada
+  window.handleDeleteSearch = async function(searchId) {
+    if (!searchId) return;
+    const confirmed = window.confirm("Deseja realmente remover esta busca desejada dos seus registros?");
+    if (!confirmed) return;
+
+    const cardEl = document.getElementById(`search-card-${searchId}`);
+    if (cardEl) {
+      cardEl.style.opacity = '0.4';
+      cardEl.style.pointerEvents = 'none';
+    }
+
+    try {
+      await LivingCanvasSavedSearches.deleteSavedSearch(searchId);
+      userSavedSearchesList = userSavedSearchesList.filter(s => s.id !== searchId);
+      renderSavedSearches(userSavedSearchesList);
+    } catch (err) {
+      console.error("Erro ao excluir busca desejada:", err);
+      if (cardEl) {
+        cardEl.style.opacity = '1';
+        cardEl.style.pointerEvents = 'auto';
+      }
+    }
+  };
+
+  // Carrega lista de buscas desejadas do usuário logado
+  async function loadUserSavedSearches() {
+    try {
+      userSavedSearchesList = await LivingCanvasSavedSearches.getSavedSearches();
+      renderSavedSearches(userSavedSearchesList);
+    } catch (err) {
+      console.error("Erro ao carregar buscas desejadas:", err);
+      const container = document.getElementById('savedSearchesContainer');
+      if (container) {
+        container.innerHTML = `
+          <div style="padding: 2rem; text-align: center; color: var(--gold-soft);">
+            <p>Não foi possível carregar suas buscas desejadas. <button onclick="window.location.reload()" style="background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer;">Tentar novamente</button></p>
+          </div>
+        `;
+      }
+    }
+  }
+
+  // Renderiza a grade de favoritos do cliente no Dashboard
+  function renderDashboardFavorites(favorites) {
+    const grid = document.getElementById('dashboardFavoritesGrid');
+    const badge = document.getElementById('navFavBadge');
+    const statCount = document.getElementById('statsFavoriteCount');
+    const statTrend = document.getElementById('statsFavoriteTrend');
+
+    const total = favorites.length;
+    if (badge) badge.textContent = total.toString();
+    if (statCount) statCount.textContent = total.toString();
+    if (statTrend) {
+      statTrend.textContent = total === 0 ? 'Nenhum salvo' : (total === 1 ? '1 salvo' : `${total} salvos`);
+    }
+
+    if (!grid) return;
+
+    if (total === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 2.5rem 1.5rem; text-align: center; background: rgba(245, 241, 232, 0.02); border: 1px dashed var(--glass-border); border-radius: 12px;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🤍</div>
+          <h4 style="color: var(--gold); font-size: 1.05rem; margin-bottom: 0.3rem; font-family: 'Playfair Display', serif;">Nenhum imóvel favoritado ainda</h4>
+          <p style="color: var(--text-light); font-size: 0.85rem; max-width: 400px; margin: 0 auto 1.2rem auto;">Explore nossa curadoria de imóveis exclusivos e clique no coração para salvá-los nesta lista privada.</p>
+          <a href="imoveis.html" class="btn-small btn-primary-small" style="display: inline-block; padding: 0.5rem 1.2rem; text-decoration: none;">Explorar Catálogo de Imóveis</a>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = favorites.map(prop => {
+      const img = (prop.imagens && prop.imagens[0]) || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80';
+      const bairro = prop.endereco?.bairro || 'Localização Nobre';
+      const area = prop.caracteristicas?.areaM2 || 0;
+      const formattedPrice = LivingCanvasProperties.formatCurrency(prop.preco);
+
+      return `
+        <div class="fav-card" id="fav-card-${prop.id}">
+          <div class="fav-image" style="background-image: url('${img}')">
+            <button class="fav-remove" onclick="removeDashboardFavorite('${prop.id}')" title="Remover dos favoritos" aria-label="Remover dos favoritos">×</button>
+          </div>
+          <div class="fav-content">
+            <h4 class="fav-title" title="${prop.titulo || 'Imóvel'}">${prop.titulo || 'Imóvel Exclusivo'}</h4>
+            <p class="fav-location">${bairro} • ${area}m²</p>
+            <div class="fav-price">
+              <span>${formattedPrice}</span>
+              <a href="imovel.html?id=${encodeURIComponent(prop.id)}" class="btn-small btn-primary-small" style="padding: 0.4rem 0.8rem; font-size: 0.75rem; text-decoration: none;">Ver</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Remover favorito a partir do Dashboard
+  window.removeDashboardFavorite = async function(propId) {
+    if (!propId) return;
+    const cardEl = document.getElementById(`fav-card-${propId}`);
+    if (cardEl) {
+      cardEl.style.opacity = '0.5';
+      cardEl.style.pointerEvents = 'none';
+    }
+
+    try {
+      await LivingCanvasFavorites.removeFavorite(propId);
+      userFavoritesList = userFavoritesList.filter(p => p.id !== propId);
+      renderDashboardFavorites(userFavoritesList);
+    } catch (err) {
+      console.error("Erro ao remover favorito no dashboard:", err);
+      if (cardEl) {
+        cardEl.style.opacity = '1';
+        cardEl.style.pointerEvents = 'auto';
+      }
+    }
+  };
+
+  // =========================================================================
+  // COMPONENTE NOTIFICATION PANEL (CONSULTA FIRESTORE & ALERTAS DE MATCH)
+  // =========================================================================
+  class NotificationPanel {
+    constructor(options = {}) {
+      this.containerId = options.containerId || 'notificationsContainer';
+      this.unreadOnly = options.unreadOnly !== undefined ? options.unreadOnly : false;
+      this.notifications = [];
+      this.unreadNotifications = [];
+      this.unsubscribe = null;
+      this.currentUser = null;
+    }
+
+    // Inicializa o painel com o usuário autenticado
+    async init(user) {
+      this.currentUser = user || LivingCanvasAuth.auth.currentUser;
+      if (!this.currentUser) return;
+
+      this.subscribe();
+    }
+
+    // Consulta direta à coleção 'notificacoes' no Firestore (filtrando pelo uid do usuário atual e onde lida == false)
+    async fetchUnreadNotifications() {
+      if (!this.currentUser) {
+        this.currentUser = LivingCanvasAuth.auth.currentUser;
+      }
+      if (!this.currentUser) return [];
+
+      try {
+        return await LivingCanvasNotifications.getUnreadNotifications();
+      } catch (err) {
+        console.error("Erro ao consultar notificações não lidas no NotificationPanel:", err);
+        return [];
+      }
+    }
+
+    // Alterna o modo de filtro entre Não Lidas e Todas
+    setFilterMode(unreadOnly) {
+      this.unreadOnly = !!unreadOnly;
+      
+      const btnUnread = document.getElementById('btnFilterNotifUnread');
+      const btnAll = document.getElementById('btnFilterNotifAll');
+      if (btnUnread && btnAll) {
+        if (this.unreadOnly) {
+          btnUnread.style.background = 'var(--gold)';
+          btnUnread.style.color = '#0A1C15';
+          btnUnread.style.fontWeight = '600';
+          btnAll.style.background = 'transparent';
+          btnAll.style.color = 'var(--cream)';
+          btnAll.style.fontWeight = 'normal';
+        } else {
+          btnAll.style.background = 'var(--gold)';
+          btnAll.style.color = '#0A1C15';
+          btnAll.style.fontWeight = '600';
+          btnUnread.style.background = 'transparent';
+          btnUnread.style.color = 'var(--cream)';
+          btnUnread.style.fontWeight = 'normal';
+        }
+      }
+
+      this.render();
+    }
+
+    // Assina atualizações em tempo real no Firestore
+    subscribe() {
+      if (this.unsubscribe) {
+        this.unsubscribe();
+        this.unsubscribe = null;
+      }
+
+      if (!this.currentUser) {
+        this.currentUser = LivingCanvasAuth.auth.currentUser;
+      }
+      if (!this.currentUser) return;
+
+      this.unsubscribe = LivingCanvasNotifications.subscribeToNotifications((list) => {
+        this.notifications = list || [];
+        this.unreadNotifications = this.notifications.filter(n => !n.lida);
+        this.updateHeaderAndBadges();
+        this.render();
+      });
+    }
+
+    // Atualiza os contadores, badges e o dropdown do topo
+    updateHeaderAndBadges() {
+      const unreadCount = this.unreadNotifications.length;
+      const totalCount = this.notifications.length;
+
+      const dotEl = document.getElementById('headerNotificationDot');
+      const counterEl = document.getElementById('headerNotificationCounter');
+      const navBadgeEl = document.getElementById('navNotifBadge');
+      const sectionPillEl = document.getElementById('unreadNotifCountPill');
+      const dropdownSubtextEl = document.getElementById('notifDropdownSubtext');
+      const filterUnreadCountEl = document.getElementById('filterUnreadCount');
+      const filterAllCountEl = document.getElementById('filterAllCount');
+
+      if (counterEl) {
+        if (unreadCount > 0) {
+          counterEl.textContent = unreadCount > 99 ? '99+' : unreadCount.toString();
+          counterEl.style.display = 'flex';
+        } else {
+          counterEl.style.display = 'none';
+        }
+      }
+
+      if (dotEl) dotEl.style.display = unreadCount > 0 ? 'block' : 'none';
+
+      if (navBadgeEl) {
+        if (unreadCount > 0) {
+          navBadgeEl.textContent = unreadCount.toString();
+          navBadgeEl.style.display = 'inline-block';
+        } else {
+          navBadgeEl.style.display = 'none';
+        }
+      }
+
+      if (sectionPillEl) {
+        if (unreadCount > 0) {
+          sectionPillEl.textContent = unreadCount === 1 ? '1 nova' : `${unreadCount} novas`;
+          sectionPillEl.style.display = 'inline-block';
+        } else {
+          sectionPillEl.style.display = 'none';
+        }
+      }
+
+      if (dropdownSubtextEl) {
+        dropdownSubtextEl.textContent = unreadCount === 0 ? 'Nenhuma pendente' : (unreadCount === 1 ? '1 nova oportunidade' : `${unreadCount} novas oportunidades`);
+      }
+
+      if (filterUnreadCountEl) filterUnreadCountEl.textContent = unreadCount.toString();
+      if (filterAllCountEl) filterAllCountEl.textContent = totalCount.toString();
+
+      // Renderiza lista no Dropdown do Header
+      const dropdownListEl = document.getElementById('notifDropdownList');
+      if (dropdownListEl) {
+        if (this.notifications.length === 0) {
+          dropdownListEl.innerHTML = `
+            <div style="padding: 2.2rem 1.2rem; text-align: center; color: var(--text-light); font-size: 0.85rem;">
+              <div style="font-size: 1.6rem; margin-bottom: 0.4rem;">🔔</div>
+              <p>Nenhuma notificação recebida ainda.</p>
+              <span style="font-size: 0.75rem; color: var(--gold-soft);">Novos imóveis cadastrados que combinarem com seus desejos aparecerão aqui.</span>
+            </div>
+          `;
+        } else {
+          dropdownListEl.innerHTML = this.notifications.slice(0, 5).map(notif => {
+            const isUnread = !notif.lida;
+            const photoUrl = notif.imovelFoto || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=300&q=80';
+            const price = LivingCanvasProperties.formatCurrency(notif.imovelPreco);
+            const dateStr = formatDisplayDate(notif.criadoEm);
+            const buscaNome = notif.buscaNome || 'Desejo cadastrado';
+            const imovelLink = `imovel.html?id=${encodeURIComponent(notif.imovelId || '')}`;
+
+            return `
+              <div class="notif-item ${isUnread ? 'unread' : ''}" onclick="window.notificationPanelInstance.handleNotificationClick('${notif.id}', '${imovelLink}', event)">
+                <img src="${photoUrl}" alt="Imóvel" class="notif-thumb" onerror="this.src='https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=300&q=80'" />
+                <div class="notif-info">
+                  <span class="notif-match-badge">✨ Match: ${escapeHtml(buscaNome)}</span>
+                  <span class="notif-title">${escapeHtml(notif.imovelTitulo || 'Novo Imóvel Disponível')}</span>
+                  <div class="notif-meta">
+                    <span style="color: var(--gold); font-weight: 600;">${price}</span>
+                    <span>${dateStr}</span>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    // Renderiza a lista principal de alertas no Dashboard com links diretos
+    render() {
+      const container = document.getElementById(this.containerId);
+      if (!container) return;
+
+      const listToDisplay = this.unreadOnly ? this.unreadNotifications : this.notifications;
+
+      if (listToDisplay.length === 0) {
+        container.innerHTML = `
+          <div style="padding: 2.8rem 1.5rem; text-align: center; background: rgba(245, 241, 232, 0.02); border: 1px dashed var(--glass-border); border-radius: 14px;">
+            <div style="font-size: 2.2rem; margin-bottom: 0.6rem;">🔔</div>
+            <h4 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 0.35rem; font-family: 'Playfair Display', serif;">
+              ${this.unreadOnly ? 'Nenhum alerta pendente no momento' : 'Nenhuma notificação encontrada'}
+            </h4>
+            <p style="color: var(--text-light); font-size: 0.85rem; max-width: 460px; margin: 0 auto 1.4rem auto; line-height: 1.5;">
+              ${this.unreadOnly ? 'Todos os alertas de match com seus Imóveis dos Sonhos estão em dia. Quando novos imóveis compatíveis forem anunciados, você será avisado aqui em tempo real.' : 'Assim que um corretor disponibilizar um imóvel compatível com os seus desejos cadastrados, você receberá alertas com links diretos para os imóveis.'}
+            </p>
+            <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+              ${this.unreadOnly && this.notifications.length > 0 ? `
+                <button type="button" class="btn-small btn-ghost-small" onclick="window.notificationPanelInstance.setFilterMode(false)">
+                  Ver histórico de lidas (${this.notifications.length})
+                </button>
+              ` : ''}
+              <a href="dashboard.html#imovel-dos-sonhos" class="btn-small btn-primary-small" style="text-decoration: none; padding: 0.5rem 1.2rem;">
+                ✨ Gerenciar Imóveis dos Sonhos
+              </a>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = listToDisplay.map(notif => {
+        const isUnread = !notif.lida;
+        const photoUrl = notif.imovelFoto || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80';
+        const price = LivingCanvasProperties.formatCurrency(notif.imovelPreco);
+        const dateStr = formatDisplayDate(notif.criadoEm);
+        const buscaNome = notif.buscaNome || 'Imóvel dos Sonhos';
+        const bairro = notif.imovelBairro || 'Localização Nobre';
+        const imovelLink = `imovel.html?id=${encodeURIComponent(notif.imovelId || '')}`;
+
+        return `
+          <div class="notification-card ${isUnread ? 'unread' : ''}" id="notif-card-${notif.id}">
+            <a href="${imovelLink}" onclick="window.notificationPanelInstance.handleNotificationClick('${notif.id}', '${imovelLink}', event)" style="display: block; text-decoration: none;" title="Ver detalhes do imóvel">
+              <img src="${photoUrl}" alt="Foto Imóvel" class="notification-photo" onerror="this.src='https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80'" />
+            </a>
+            
+            <div class="notification-content">
+              <div class="notification-header-row">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.25rem;">
+                    <span class="criteria-pill" style="font-size: 0.72rem; padding: 0.15rem 0.55rem;">✨ Match com: ${escapeHtml(buscaNome)}</span>
+                    ${isUnread ? '<span style="background: #E53935; color: #fff; font-size: 0.68rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 50px;">NOVO ALERTA</span>' : '<span style="color: var(--text-light); font-size: 0.72rem;">✓ Lida</span>'}
+                  </div>
+                  <h4 class="notification-prop-title">
+                    <a href="${imovelLink}" onclick="window.notificationPanelInstance.handleNotificationClick('${notif.id}', '${imovelLink}', event)" style="color: inherit; text-decoration: none;">
+                      ${escapeHtml(notif.imovelTitulo || 'Novo Imóvel Disponível')}
+                    </a>
+                  </h4>
+                </div>
+                
+                <div class="notification-card-actions">
+                  <a href="${imovelLink}" class="btn-small btn-primary-small" style="text-decoration: none; padding: 0.45rem 1rem; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.35rem;" onclick="window.notificationPanelInstance.handleNotificationClick('${notif.id}', '${imovelLink}', event)">
+                    Ver Imóvel →
+                  </a>
+                  ${isUnread ? `
+                    <button type="button" class="btn-small btn-ghost-small" onclick="window.notificationPanelInstance.handleMarkRead('${notif.id}', event)" title="Marcar como lida">
+                      ✓ Lida
+                    </button>
+                  ` : `
+                    <button type="button" class="btn-small btn-ghost-small" style="color: var(--text-light); opacity: 0.7;" onclick="window.notificationPanelInstance.handleDelete('${notif.id}', event)" title="Excluir notificação">
+                      🗑️
+                    </button>
+                  `}
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; font-size: 0.85rem; margin-top: 0.4rem;">
+                <span style="color: var(--gold); font-weight: 600; font-size: 1.05rem;">${price}</span>
+                <span style="color: var(--cream); opacity: 0.9;">📍 ${escapeHtml(bairro)}</span>
+                ${notif.imovelTipo ? `<span style="color: var(--text-light); text-transform: capitalize;">🏷️ ${escapeHtml(notif.imovelTipo)}</span>` : ''}
+                <span style="color: var(--gold-soft); font-size: 0.78rem; margin-left: auto;">${dateStr}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async handleNotificationClick(notificationId, targetUrl, event) {
+      if (event) event.stopPropagation();
+      try {
+        await LivingCanvasNotifications.markAsRead(notificationId);
+      } catch (e) {
+        console.warn("Aviso ao marcar como lida:", e);
+      }
+      closeNotificationsDropdown();
+      window.location.href = targetUrl;
+    }
+
+    async handleMarkRead(notificationId, event) {
+      if (event) event.stopPropagation();
+      const cardEl = document.getElementById(`notif-card-${notificationId}`);
+      if (cardEl) cardEl.style.opacity = '0.5';
+
+      try {
+        await LivingCanvasNotifications.markAsRead(notificationId);
+      } catch (err) {
+        console.error("Erro ao marcar notificação como lida:", err);
+        if (cardEl) cardEl.style.opacity = '1';
+      }
+    }
+
+    async markAllAsRead(event) {
+      if (event) event.stopPropagation();
+      try {
+        await LivingCanvasNotifications.markAllAsRead();
+      } catch (err) {
+        console.error("Erro ao marcar todas as notificações como lidas:", err);
+      }
+    }
+
+    async handleDelete(notificationId, event) {
+      if (event) event.stopPropagation();
+      const confirmed = window.confirm("Deseja remover esta notificação?");
+      if (!confirmed) return;
+
+      try {
+        await LivingCanvasNotifications.deleteNotification(notificationId);
+      } catch (err) {
+        console.error("Erro ao remover notificação:", err);
+      }
+    }
+
+    destroy() {
+      if (this.unsubscribe) {
+        this.unsubscribe();
+        this.unsubscribe = null;
+      }
+    }
+  }
+
+  // Instância e exposição global do componente NotificationPanel
+  window.NotificationPanel = NotificationPanel;
+  window.notificationPanelInstance = new NotificationPanel({
+    containerId: 'notificationsContainer',
+    unreadOnly: false
+  });
+
+  // Funções compatíveis para links inline e botões
+  window.handleMarkAllNotificationsRead = function(event) {
+    window.notificationPanelInstance.markAllAsRead(event);
+  };
+  window.handleNotificationClick = function(id, link, event) {
+    window.notificationPanelInstance.handleNotificationClick(id, link, event);
+  };
+  window.handleNotificationOpenLink = function(id) {
+    LivingCanvasNotifications.markAsRead(id).catch(() => {});
+  };
+  window.handleMarkNotificationRead = function(id, event) {
+    window.notificationPanelInstance.handleMarkRead(id, event);
+  };
+  window.handleDeleteNotification = function(id, event) {
+    window.notificationPanelInstance.handleDelete(id, event);
+  };
+
+  // Dropdown Controls
+  window.toggleNotificationsDropdown = function(event) {
+    if (event) event.stopPropagation();
+    const dropdown = document.getElementById('notificationsDropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('open');
+    }
+  };
+
+  window.closeNotificationsDropdown = function() {
+    const dropdown = document.getElementById('notificationsDropdown');
+    if (dropdown) {
+      dropdown.classList.remove('open');
+    }
+  };
+
+  // Fecha o dropdown de notificações se o usuário clicar fora
+  document.addEventListener('click', (e) => {
+    const wrapper = document.getElementById('topBarNotifWrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+      closeNotificationsDropdown();
+    }
+  });
+
+  // Carrega lista inicial de favoritos reais do Firestore
+  async function loadUserFavorites() {
+    try {
+      userFavoritesList = await LivingCanvasFavorites.getFavoriteProperties();
+      renderDashboardFavorites(userFavoritesList);
+    } catch (err) {
+      console.error("Erro ao carregar favoritos no dashboard:", err);
+      const grid = document.getElementById('dashboardFavoritesGrid');
+      if (grid) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: var(--gold-soft);">
+            <p>Não foi possível carregar seus favoritos. <button onclick="window.location.reload()" style="background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer;">Tentar novamente</button></p>
+          </div>
+        `;
+      }
+    }
+  }
+
+  // Protege o dashboard: redireciona para login se não estiver logado
+  async function initDashboardAuth() {
+    try {
+      const { user, profile } = await LivingCanvasAuth.requireAuth('login.html');
+      
+      if (!user) return; // O requireAuth já realiza o redirecionamento
+
+      // Nome do usuário
+      const fullName = profile?.nome || user.displayName || user.email?.split('@')[0] || 'Cliente';
+      const firstName = fullName.split(' ')[0];
+      const role = profile?.role || 'cliente';
+
+      // Atualiza elementos visuais da interface
+      const welcomeNameEl = document.getElementById('welcomeUserName');
+      if (welcomeNameEl) welcomeNameEl.textContent = firstName;
+
+      const profileNameEl = document.getElementById('profileUserName');
+      if (profileNameEl) profileNameEl.textContent = fullName;
+
+      const profileRoleEl = document.getElementById('profileUserRole');
+      if (profileRoleEl) {
+        if (role === 'corretor') {
+          profileRoleEl.textContent = 'Corretor(a) Credenciado(a)';
+          profileRoleEl.style.color = 'var(--gold)';
+        } else if (role === 'admin') {
+          profileRoleEl.textContent = 'Administrador';
+          profileRoleEl.style.color = '#25D366';
+        } else {
+          profileRoleEl.textContent = 'Cliente';
+        }
+      }
+
+      // Iniciais no avatar
+      const avatarEl = document.getElementById('profileUserAvatar');
+      if (avatarEl) {
+        const initials = fullName
+          .split(' ')
+          .filter(Boolean)
+          .slice(0, 2)
+          .map(n => n[0].toUpperCase())
+          .join('') || 'LC';
+        avatarEl.textContent = initials;
+      }
+
+      // Inicializa o componente NotificationPanel com o usuário atual
+      window.notificationPanelInstance.init(user);
+
+      // Carrega os imóveis favoritos e buscas desejadas do usuário conectado em paralelo
+      await Promise.allSettled([
+        loadUserFavorites(),
+        loadUserSavedSearches()
+      ]);
+    } catch (err) {
+      console.error('Erro na verificação de sessão do dashboard:', err);
+    }
+  }
+
+  // Logout
+  const logoutBtn = document.getElementById('dashboardLogoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await LivingCanvasAuth.logout();
+        window.location.href = 'login.html';
+      } catch (err) {
+        console.error('Erro ao sair:', err);
+        window.location.href = 'login.html';
+      }
+    });
+  }
+
+  initDashboardAuth();
 </script>
 
 <script src="/enhance.js" defer></script>

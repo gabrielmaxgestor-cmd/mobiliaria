@@ -5,6 +5,7 @@ import { renderErrorPage } from "./lib/error-page";
 import { handleVibeSearch } from "./server/vibe-search-handler";
 import { handleCompareVerdict } from "./server/compare-verdict-handler";
 import { handleChatAssistant } from "./server/chat-assistant-handler";
+import { handleMatchProperties } from "./server/match-properties-handler";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -67,6 +68,9 @@ export default {
       }
       if (url.pathname === "/api/chat-assistant") {
         return await handleChatAssistant(request);
+      }
+      if (url.pathname === "/api/match-properties") {
+        return await handleMatchProperties(request);
       }
 
       const handler = await getServerEntry();

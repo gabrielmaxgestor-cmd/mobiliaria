@@ -1011,15 +1011,15 @@
 <!-- FILTERS -->
 <div class="filters-bar">
   <div class="filters-tabs">
-    <button class="filter-tab active" onclick="setFilterTab('compra', this)">Comprar</button>
-    <button class="filter-tab" onclick="setFilterTab('aluguel', this)">Alugar</button>
-    <button class="filter-tab" onclick="setFilterTab('temporada', this)">Temporada</button>
+    <button class="filter-tab active" data-tab="compra" onclick="setFilterTab('compra', this)">Comprar</button>
+    <button class="filter-tab" data-tab="aluguel" onclick="setFilterTab('aluguel', this)">Alugar</button>
+    <button class="filter-tab" data-tab="temporada" onclick="setFilterTab('temporada', this)">Temporada</button>
   </div>
   
   <div class="filters-grid">
     <div class="filter-group">
-      <label>Tipo de Imóvel</label>
-      <select>
+      <label for="filterTipo">Tipo de Imóvel</label>
+      <select id="filterTipo">
         <option value="">Todos os tipos</option>
         <option value="casa">Casa</option>
         <option value="apartamento">Apartamento</option>
@@ -1030,21 +1030,24 @@
     </div>
     
     <div class="filter-group">
-      <label>Bairro</label>
-      <select>
+      <label for="filterBairro">Bairro</label>
+      <select id="filterBairro">
         <option value="">Todos os bairros</option>
-        <option value="jardim-europa">Jardim Europa</option>
-        <option value="vila-madalena">Vila Madalena</option>
-        <option value="pinheiros">Pinheiros</option>
-        <option value="itaim-bibi">Itaim Bibi</option>
-        <option value="moema">Moema</option>
-        <option value="morumbi">Morumbi</option>
+        <option value="Jardim Europa">Jardim Europa</option>
+        <option value="Vila Madalena">Vila Madalena</option>
+        <option value="Pinheiros">Pinheiros</option>
+        <option value="Itaim Bibi">Itaim Bibi</option>
+        <option value="Moema">Moema</option>
+        <option value="Morumbi">Morumbi</option>
+        <option value="Alphaville">Alphaville</option>
+        <option value="Riviera">Riviera</option>
+        <option value="Universitário">Universitário</option>
       </select>
     </div>
     
     <div class="filter-group">
-      <label>Faixa de Preço</label>
-      <select>
+      <label for="filterPreco">Faixa de Preço</label>
+      <select id="filterPreco">
         <option value="">Qualquer valor</option>
         <option value="0-500000">Até R$ 500 mil</option>
         <option value="500000-1000000">R$ 500 mil - 1 milhão</option>
@@ -1055,8 +1058,8 @@
     </div>
     
     <div class="filter-group">
-      <label>Quartos</label>
-      <select>
+      <label for="filterQuartos">Quartos</label>
+      <select id="filterQuartos">
         <option value="">Qualquer quantidade</option>
         <option value="1">1 quarto</option>
         <option value="2">2 quartos</option>
@@ -1067,8 +1070,8 @@
     </div>
     
     <div class="filter-group">
-      <label>Área (m²)</label>
-      <select>
+      <label for="filterArea">Área (m²)</label>
+      <select id="filterArea">
         <option value="">Qualquer área</option>
         <option value="0-100">Até 100m²</option>
         <option value="100-200">100 - 200m²</option>
@@ -1080,14 +1083,14 @@
   
   <div class="uni-chips-row">
     <span class="uni-chips-label">Tags</span>
-    <button type="button" class="uni-chip" data-tag="universitario" onclick="toggleUniFilter(this)">🎓 Universitário</button>
-    <button type="button" class="uni-chip" data-tag="mobiliado" onclick="this.classList.toggle('active')">🛋 Mobiliado</button>
-    <button type="button" class="uni-chip" data-tag="pet" onclick="this.classList.toggle('active')">🐾 Aceita pet</button>
+    <button type="button" class="uni-chip" id="tagUni" data-tag="universitario" onclick="toggleTagFilter(this)">🎓 Universitário</button>
+    <button type="button" class="uni-chip" id="tagMobiliado" data-tag="mobiliado" onclick="toggleTagFilter(this)">🛋 Mobiliado</button>
+    <button type="button" class="uni-chip" id="tagPet" data-tag="pet" onclick="toggleTagFilter(this)">🐾 Aceita pet</button>
   </div>
   
   <div class="filters-actions">
-    <button class="filter-btn filter-btn-secondary">Limpar Filtros</button>
-    <button class="filter-btn filter-btn-primary">Aplicar Filtros</button>
+    <button id="btnClearFilters" type="button" class="filter-btn filter-btn-secondary" onclick="resetFilters()">Limpar Filtros</button>
+    <button id="btnApplyFilters" type="button" class="filter-btn filter-btn-primary" onclick="applyFilters()">Aplicar Filtros</button>
   </div>
 </div>
 
@@ -1097,16 +1100,16 @@
   <!-- RESULTS -->
   <div class="results-main">
     <div class="results-header">
-      <div class="results-count">
-        <strong>42</strong> imóveis encontrados
+      <div class="results-count" id="resultsCount">
+        <strong>Carregando</strong> imóveis disponíveis...
       </div>
       <div class="results-controls">
-        <select class="sort-select">
-          <option>Mais recentes</option>
-          <option>Menor preço</option>
-          <option>Maior preço</option>
-          <option>Maior área</option>
-          <option>Mais quartos</option>
+        <select class="sort-select" id="sortSelect" onchange="applyFilters()">
+          <option value="recentes">Mais recentes</option>
+          <option value="menor-preco">Menor preço</option>
+          <option value="maior-preco">Maior preço</option>
+          <option value="maior-area">Maior área</option>
+          <option value="mais-quartos">Mais quartos</option>
         </select>
         <div class="view-toggle">
           <button class="view-btn active" onclick="setView('grid', this)" title="Grade">⊞</button>
@@ -1117,117 +1120,10 @@
     
     <!-- PROPERTY GRID -->
     <div class="properties-grid" id="propertiesGrid">
-      
-      <article class="property-card" onclick="window.location.href='imovel.html'">
-        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80')"></div>
-        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80')"></div>
-        <div class="card-overlay">
-          <span class="card-badge">Exclusivo</span>
-          <span class="card-price">R$ 2.8M</span>
-          <div class="card-favorite" onclick="event.stopPropagation(); toggleFavorite(this)">♡</div>
-          <h3 class="card-title">Casa do Bosque</h3>
-          <p class="card-location">Jardim Europa • 420m²</p>
-          <p class="card-story">"Onde o silêncio da floresta encontra o design contemporâneo."</p>
-          <div class="card-meta">
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">4 suítes</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></span><span class="ic-label">Jardim</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg></span><span class="ic-label">4 vagas</span></span>
-          </div>
-        </div>
-      </article>
-      
-      <article class="property-card" data-universitario="true" onclick="window.location.href='imovel.html'">
-        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80')"></div>
-        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
-        <span class="card-uni-selo"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-4 10 4-10 4z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>Universitário</span>
-        <div class="card-overlay">
-          <span class="card-badge">Novo</span>
-          <span class="card-price">R$ 1.5M</span>
-          <div class="card-favorite" onclick="event.stopPropagation(); toggleFavorite(this)">♡</div>
-          <h3 class="card-title">Loft Horizonte</h3>
-          <p class="card-location">Vila Madalena • 180m²</p>
-          <p class="card-story">"Pé-direito duplo, alma artística e o pôr do sol como testemunha."</p>
-          <div class="card-meta">
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">2 suítes</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="14" cy="8.5" r="1"/><circle cx="16.5" cy="13" r="1"/><path d="M12 21a3 3 0 0 1 0-6 2 2 0 0 0 0-4"/></svg></span><span class="ic-label">Ateliê</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v5M4.5 10.5 6 12M18 12l1.5-1.5M2 18h20M6 18a6 6 0 0 1 12 0M4 22h16"/></svg></span><span class="ic-label">Vista</span></span>
-          </div>
-        </div>
-      </article>
-      
-      <article class="property-card" onclick="window.location.href='imovel.html'">
-        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80')"></div>
-        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80')"></div>
-        <div class="card-overlay">
-          <span class="card-badge">Assinatura</span>
-          <span class="card-price">R$ 4.2M</span>
-          <div class="card-favorite" onclick="event.stopPropagation(); toggleFavorite(this)">♡</div>
-          <h3 class="card-title">Refúgio Oceano</h3>
-          <p class="card-location">Riviera • 560m²</p>
-          <p class="card-story">"Acordar com o som das ondas não tem preço — mas tem endereço."</p>
-          <div class="card-meta">
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">5 suítes</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c1.6 0 1.6 1.2 3.2 1.2S6.8 15 8.4 15s1.6 1.2 3.2 1.2S13.2 15 14.8 15s1.6 1.2 3.2 1.2S19.6 15 22 15M2 19.5c1.6 0 1.6 1.2 3.2 1.2s1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 2.4-1.2 4-1.2M8 15V5a2 2 0 0 1 4 0v10M16 15V5"/></svg></span><span class="ic-label">Piscina</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8c1.6 0 1.6 1.5 3.3 1.5S6.9 8 8.5 8s1.7 1.5 3.3 1.5S13.5 8 15.2 8s1.6 1.5 3.3 1.5S20.4 8 22 8M2 14c1.6 0 1.6 1.5 3.3 1.5S6.9 14 8.5 14s1.7 1.5 3.3 1.5S13.5 14 15.2 14s1.6 1.5 3.3 1.5S20.4 14 22 14M2 20c1.6 0 1.6 1.5 3.3 1.5S6.9 20 8.5 20"/></svg></span><span class="ic-label">Frente mar</span></span>
-          </div>
-        </div>
-      </article>
-      
-      <article class="property-card" onclick="window.location.href='imovel.html'">
-        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80')"></div>
-        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')"></div>
-        <div class="card-overlay">
-          <span class="card-badge">Destaque</span>
-          <span class="card-price">R$ 3.1M</span>
-          <div class="card-favorite" onclick="event.stopPropagation(); toggleFavorite(this)">♡</div>
-          <h3 class="card-title">Penthouse Urbano</h3>
-          <p class="card-location">Itaim Bibi • 320m²</p>
-          <p class="card-story">"No coração da cidade, um oásis de tranquilidade e sofisticação."</p>
-          <div class="card-meta">
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">3 suítes</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V9l6-3v15M9 21V13l6-3v11M15 21V11l6-2v12M2 21h20"/></svg></span><span class="ic-label">Vista 360°</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21h10M6 3.8A3.2 3.2 0 0 1 12 3a3.2 3.2 0 0 1 6 .8 3.2 3.2 0 0 1-1.5 5.9V17h-9V9.7A3.2 3.2 0 0 1 6 3.8"/></svg></span><span class="ic-label">Chef</span></span>
-          </div>
-        </div>
-      </article>
-      
-      <article class="property-card" onclick="window.location.href='imovel.html'">
-        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80')"></div>
-        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80')"></div>
-        <div class="card-overlay">
-          <span class="card-badge">Premium</span>
-          <span class="card-price">R$ 5.5M</span>
-          <div class="card-favorite" onclick="event.stopPropagation(); toggleFavorite(this)">♡</div>
-          <h3 class="card-title">Villa Tropical</h3>
-          <p class="card-location">Alphaville • 680m²</p>
-          <p class="card-story">"Privacidade absoluta em meio à natureza exuberante."</p>
-          <div class="card-meta">
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">6 suítes</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c0-6 .5-9 1.5-11M13.5 10c2-3 5.5-3 7.5-1-2.5-.5-4.5.5-6 2M13.5 10c-2.5-2.5-6-2-7.5 1 2-1.5 4.5-1 6 1M13.5 10c0-3.5 2-6 5-6-2 1-3 3-3 5"/></svg></span><span class="ic-label">Jardim</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M17 9h4M3 15h4M17 15h4"/></svg></span><span class="ic-label">Cinema</span></span>
-          </div>
-        </div>
-      </article>
-      
-      <article class="property-card" data-universitario="true" onclick="window.location.href='imovel.html'">
-        <div class="card-image card-image-exterior" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')"></div>
-        <div class="card-image card-image-interior" style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80')"></div>
-        <span class="card-uni-selo"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-4 10 4-10 4z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>Universitário</span>
-        <div class="card-overlay">
-          <span class="card-badge">Exclusivo</span>
-          <span class="card-price">R$ 1.9M</span>
-          <div class="card-favorite" onclick="event.stopPropagation(); toggleFavorite(this)">♡</div>
-          <h3 class="card-title">Studio Artístico</h3>
-          <p class="card-location">Pinheiros • 95m²</p>
-          <p class="card-story">"Criatividade e funcionalidade em cada metro quadrado."</p>
-          <div class="card-meta">
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">1 suíte</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="14" cy="8.5" r="1"/><circle cx="16.5" cy="13" r="1"/><path d="M12 21a3 3 0 0 1 0-6 2 2 0 0 0 0-4"/></svg></span><span class="ic-label">Studio</span></span>
-            <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 9h1.5a2.5 2.5 0 0 1 0 5H17M6 2v3M10 2v3M14 2v3"/></svg></span><span class="ic-label">Varanda</span></span>
-          </div>
-        </div>
-      </article>
-      
+      <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; color: var(--gold-soft);">
+        <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid rgba(212,175,122,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
+        <p style="font-size: 1rem; letter-spacing: 1px;">Carregando imóveis exclusivos do Firestore...</p>
+      </div>
     </div>
     
     <!-- INLINE CTA -->
@@ -1240,12 +1136,9 @@
     </div>
     
     <!-- PAGINATION -->
-    <div class="pagination">
+    <div class="pagination" id="pagination">
       <button class="page-btn">‹</button>
       <button class="page-btn active">1</button>
-      <button class="page-btn">2</button>
-      <button class="page-btn">3</button>
-      <button class="page-btn">4</button>
       <button class="page-btn">›</button>
     </div>
     
@@ -1259,7 +1152,7 @@
         <h3 class="map-title">🗺️ Mapa</h3>
         <button class="map-toggle">Expandir</button>
       </div>
-      <div class="map-visual">
+      <div class="map-visual" id="mapPins">
         <div class="map-pin">R$2.8M</div>
         <div class="map-pin">R$1.5M</div>
         <div class="map-pin">R$4.2M</div>
@@ -1269,41 +1162,37 @@
       <div class="map-legend">
         <div class="legend-item">
           <span>Imóveis nesta área</span>
-          <strong>42</strong>
+          <strong id="legendTotal">--</strong>
         </div>
         <div class="legend-item">
           <span>Preço médio</span>
-          <strong>R$ 3.2M</strong>
+          <strong id="legendAvgPrice">--</strong>
         </div>
         <div class="legend-item">
           <span>Área média</span>
-          <strong>380m²</strong>
+          <strong id="legendAvgArea">--</strong>
         </div>
       </div>
     </div>
     
     <div class="neighborhoods-quick">
       <h4>Bairros Populares</h4>
-      <div class="neighborhood-list">
-        <div class="neighborhood-item">
+      <div class="neighborhood-list" id="neighborhoodList">
+        <div class="neighborhood-item" onclick="filterByBairro('Jardim Europa')">
           <span class="neighborhood-name">Jardim Europa</span>
-          <span class="neighborhood-count">12 imóveis</span>
+          <span class="neighborhood-count">-- imóveis</span>
         </div>
-        <div class="neighborhood-item">
+        <div class="neighborhood-item" onclick="filterByBairro('Vila Madalena')">
           <span class="neighborhood-name">Vila Madalena</span>
-          <span class="neighborhood-count">8 imóveis</span>
+          <span class="neighborhood-count">-- imóveis</span>
         </div>
-        <div class="neighborhood-item">
+        <div class="neighborhood-item" onclick="filterByBairro('Itaim Bibi')">
           <span class="neighborhood-name">Itaim Bibi</span>
-          <span class="neighborhood-count">15 imóveis</span>
+          <span class="neighborhood-count">-- imóveis</span>
         </div>
-        <div class="neighborhood-item">
+        <div class="neighborhood-item" onclick="filterByBairro('Pinheiros')">
           <span class="neighborhood-name">Pinheiros</span>
-          <span class="neighborhood-count">18 imóveis</span>
-        </div>
-        <div class="neighborhood-item">
-          <span class="neighborhood-name">Moema</span>
-          <span class="neighborhood-count">10 imóveis</span>
+          <span class="neighborhood-count">-- imóveis</span>
         </div>
       </div>
     </div>
@@ -1356,59 +1245,368 @@
   <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
 </div>
 
-<script>
+<script type="module">
+  import LivingCanvasProperties from "./properties.js";
+  import LivingCanvasFavorites from "./favorites.js";
+
+  let allProperties = [];
+  let currentTab = "compra";
+  let activeTags = new Set();
+  let favoriteIds = new Set();
+
   // NAVBAR SCROLL
   window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
+    if (navbar) {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
     }
   });
-  
+
   // FILTER TABS
-  function setFilterTab(type, btn) {
+  window.setFilterTab = function(type, btn) {
     document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  
+    if (btn) btn.classList.add('active');
+    currentTab = type;
+    applyFilters();
+  };
+
   // VIEW TOGGLE
-  function setView(view, btn) {
+  window.setView = function(view, btn) {
     document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn) btn.classList.add('active');
     
     const grid = document.getElementById('propertiesGrid');
+    if (!grid) return;
     if (view === 'list') {
       grid.classList.add('list-view');
     } else {
       grid.classList.remove('list-view');
     }
-  }
-  
-  // FAVORITE TOGGLE
-  function toggleFavorite(btn) {
+  };
+
+  // FAVORITE TOGGLE (Firestore Sync & Unauthenticated Redirect)
+  window.toggleFavorite = async function(btn, propId) {
+    if (!propId) return;
+    try {
+      btn.style.transform = 'scale(1.3)';
+      const isNowFav = await LivingCanvasFavorites.toggleFavorite(propId);
+      if (isNowFav) {
+        btn.classList.add('active');
+        btn.textContent = '♥';
+        btn.title = 'Remover dos favoritos';
+        favoriteIds.add(propId);
+      } else {
+        btn.classList.remove('active');
+        btn.textContent = '♡';
+        btn.title = 'Favoritar imóvel';
+        favoriteIds.delete(propId);
+      }
+      setTimeout(() => { btn.style.transform = ''; }, 200);
+    } catch (err) {
+      console.error("Erro ao favoritar imóvel:", err);
+      setTimeout(() => { btn.style.transform = ''; }, 200);
+    }
+  };
+
+  // TAG FILTERS
+  window.toggleTagFilter = function(btn) {
     btn.classList.toggle('active');
+    const tag = btn.dataset.tag;
     if (btn.classList.contains('active')) {
-      btn.textContent = '♥';
+      activeTags.add(tag);
     } else {
-      btn.textContent = '♡';
+      activeTags.delete(tag);
+    }
+    applyFilters();
+  };
+
+  // FILTRAR POR BAIRRO DIRETO DO MAPA / LISTA LATERAL
+  window.filterByBairro = function(bairroNome) {
+    const select = document.getElementById('filterBairro');
+    if (select) {
+      select.value = bairroNome;
+      applyFilters();
+      window.scrollTo({ top: document.querySelector('.filters-bar').offsetTop - 80, behavior: 'smooth' });
+    }
+  };
+
+  // RESET FILTERS
+  window.resetFilters = function() {
+    const fTipo = document.getElementById('filterTipo');
+    const fBairro = document.getElementById('filterBairro');
+    const fPreco = document.getElementById('filterPreco');
+    const fQuartos = document.getElementById('filterQuartos');
+    const fArea = document.getElementById('filterArea');
+    const fSort = document.getElementById('sortSelect');
+
+    if (fTipo) fTipo.value = "";
+    if (fBairro) fBairro.value = "";
+    if (fPreco) fPreco.value = "";
+    if (fQuartos) fQuartos.value = "";
+    if (fArea) fArea.value = "";
+    if (fSort) fSort.value = "recentes";
+
+    activeTags.clear();
+    document.querySelectorAll('.uni-chip').forEach(c => c.classList.remove('active'));
+
+    applyFilters();
+  };
+
+  // CARREGAR E RENDERIZAR IMÓVEIS DO FIRESTORE
+  async function loadProperties() {
+    const grid = document.getElementById('propertiesGrid');
+    const resultsCount = document.getElementById('resultsCount');
+
+    try {
+      if (grid) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; color: var(--gold-soft);">
+            <div style="display: inline-block; width: 36px; height: 36px; border: 3px solid rgba(212,175,122,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
+            <p style="font-size: 0.95rem; letter-spacing: 1px;">Buscando acervo de imóveis no Firestore...</p>
+          </div>
+        `;
+      }
+
+      allProperties = await LivingCanvasProperties.getProperties({ status: "disponivel" });
+      applyFilters();
+      updateSidebarStats(allProperties);
+    } catch (err) {
+      console.error("Erro ao carregar imóveis:", err);
+      if (grid) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 3rem 1.5rem; text-align: center; background: rgba(19,78,74,0.3); border: 1px solid var(--glass-border); border-radius: var(--radius-lg);">
+            <h3 style="color: var(--gold); margin-bottom: 0.5rem;">Falha temporária de conexão</h3>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Não foi possível carregar a lista em tempo real. Tente novamente.</p>
+            <button onclick="window.location.reload()" class="filter-btn filter-btn-primary">Recarregar</button>
+          </div>
+        `;
+      }
     }
   }
-  
-  // FILTRO UNIVERSITÁRIO
-  function toggleUniFilter(btn) {
-    btn.classList.toggle('active');
+
+  // APLICAR FILTROS E ORDENAÇÃO
+  window.applyFilters = function() {
+    const tipo = document.getElementById('filterTipo')?.value || "";
+    const bairro = document.getElementById('filterBairro')?.value?.toLowerCase() || "";
+    const faixaPreco = document.getElementById('filterPreco')?.value || "";
+    const quartos = document.getElementById('filterQuartos')?.value || "";
+    const faixaArea = document.getElementById('filterArea')?.value || "";
+    const sortBy = document.getElementById('sortSelect')?.value || "recentes";
+
+    let filtered = allProperties.filter(prop => {
+      // Filtro por tipo
+      if (tipo && prop.tipo?.toLowerCase() !== tipo.toLowerCase()) {
+        return false;
+      }
+
+      // Filtro por bairro
+      if (bairro && !prop.endereco?.bairro?.toLowerCase().includes(bairro)) {
+        return false;
+      }
+
+      // Filtro por preço
+      if (faixaPreco) {
+        const preco = prop.preco || 0;
+        if (faixaPreco === "0-500000" && preco > 500000) return false;
+        if (faixaPreco === "500000-1000000" && (preco < 500000 || preco > 1000000)) return false;
+        if (faixaPreco === "1000000-2000000" && (preco < 1000000 || preco > 2000000)) return false;
+        if (faixaPreco === "2000000-3000000" && (preco < 2000000 || preco > 3000000)) return false;
+        if (faixaPreco === "3000000+" && preco < 3000000) return false;
+      }
+
+      // Filtro por quartos
+      if (quartos) {
+        const qCount = prop.caracteristicas?.quartos || 0;
+        if (quartos === "5+" && qCount < 5) return false;
+        if (quartos !== "5+" && qCount !== parseInt(quartos, 10)) return false;
+      }
+
+      // Filtro por área
+      if (faixaArea) {
+        const area = prop.caracteristicas?.areaM2 || 0;
+        if (faixaArea === "0-100" && area > 100) return false;
+        if (faixaArea === "100-200" && (area < 100 || area > 200)) return false;
+        if (faixaArea === "200-400" && (area < 200 || area > 400)) return false;
+        if (faixaArea === "400+" && area < 400) return false;
+      }
+
+      // Filtro por tags
+      if (activeTags.has('universitario') && !prop.universitario && !prop.tags?.includes('universitario')) {
+        return false;
+      }
+      if (activeTags.has('mobiliado') && !prop.caracteristicas?.mobiliado && !prop.mobiliado) {
+        return false;
+      }
+      if (activeTags.has('pet') && !prop.caracteristicas?.aceitaPet && !prop.pet) {
+        return false;
+      }
+
+      return true;
+    });
+
+    // Ordenação
+    if (sortBy === "menor-preco") {
+      filtered.sort((a, b) => (a.preco || 0) - (b.preco || 0));
+    } else if (sortBy === "maior-preco") {
+      filtered.sort((a, b) => (b.preco || 0) - (a.preco || 0));
+    } else if (sortBy === "maior-area") {
+      filtered.sort((a, b) => (b.caracteristicas?.areaM2 || 0) - (a.caracteristicas?.areaM2 || 0));
+    } else if (sortBy === "mais-quartos") {
+      filtered.sort((a, b) => (b.caracteristicas?.quartos || 0) - (a.caracteristicas?.quartos || 0));
+    }
+
+    renderGrid(filtered);
+    updateResultCount(filtered.length);
+  };
+
+  // ATUALIZAR CONTADOR
+  function updateResultCount(count) {
+    const rc = document.getElementById('resultsCount');
+    if (!rc) return;
+    if (count === 0) {
+      rc.innerHTML = `<strong>Nenhum</strong> imóvel encontrado`;
+    } else if (count === 1) {
+      rc.innerHTML = `<strong>1</strong> imóvel exclusivo encontrado`;
+    } else {
+      rc.innerHTML = `<strong>${count}</strong> imóveis encontrados`;
+    }
+  }
+
+  // RENDERIZAR CARDS NO GRID
+  function renderGrid(properties) {
     const grid = document.getElementById('propertiesGrid');
     if (!grid) return;
-    if (btn.classList.contains('active')) {
-      grid.classList.add('filter-uni');
-    } else {
-      grid.classList.remove('filter-uni');
+
+    if (properties.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; background: rgba(19,78,74,0.15); border: 1px dashed var(--glass-border); border-radius: var(--radius-lg);">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏡</div>
+          <h3 style="color: var(--gold); font-size: 1.3rem; margin-bottom: 0.5rem; font-family: var(--font-display, serif);">Nenhum imóvel encontrado</h3>
+          <p style="color: var(--text-light); max-width: 480px; margin: 0 auto 1.5rem auto; font-size: 0.95rem;">Não encontramos imóveis disponíveis com essa combinação de filtros. Tente ajustar seus critérios de busca.</p>
+          <button type="button" onclick="resetFilters()" class="filter-btn filter-btn-primary">Ver Todos os Imóveis</button>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = properties.map(prop => {
+      const isUni = prop.universitario || prop.tags?.includes('universitario');
+      const img1 = (prop.imagens && prop.imagens[0]) || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80';
+      const img2 = (prop.imagens && prop.imagens[1]) || img1;
+      const formattedPrice = LivingCanvasProperties.formatCurrency(prop.preco);
+      const isFav = favoriteIds.has(prop.id);
+      const badgeText = prop.tag || (prop.tipo ? prop.tipo.charAt(0).toUpperCase() + prop.tipo.slice(1) : "Exclusivo");
+      const suitesCount = prop.caracteristicas?.suites || prop.caracteristicas?.quartos || 0;
+      const vagasCount = prop.caracteristicas?.vagas || 0;
+      const area = prop.caracteristicas?.areaM2 || 0;
+      const bairro = prop.endereco?.bairro || "Localização Nobre";
+      const shortStory = prop.descricao ? (prop.descricao.length > 80 ? `"${prop.descricao.substring(0, 80)}..."` : `"${prop.descricao}"`) : "";
+
+      return `
+        <article class="property-card" ${isUni ? 'data-universitario="true"' : ''} onclick="window.location.href='imovel.html?id=${encodeURIComponent(prop.id)}'" tabindex="0" role="button" aria-label="Ver detalhes de ${prop.titulo}">
+          <div class="card-image card-image-exterior" style="background-image: url('${img1}')"></div>
+          <div class="card-image card-image-interior" style="background-image: url('${img2}')"></div>
+          ${isUni ? `<span class="card-uni-selo"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-4 10 4-10 4z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>Universitário</span>` : ''}
+          <div class="card-overlay">
+            <span class="card-badge">${badgeText}</span>
+            <span class="card-price">${formattedPrice}</span>
+            <div class="card-favorite ${isFav ? 'active' : ''}" data-propid="${prop.id}" onclick="event.stopPropagation(); toggleFavorite(this, '${prop.id}')" title="${isFav ? 'Remover dos favoritos' : 'Favoritar imóvel'}" role="button" aria-label="${isFav ? 'Remover dos favoritos' : 'Favoritar imóvel'}">${isFav ? '♥' : '♡'}</div>
+            <h3 class="card-title">${prop.titulo || 'Imóvel Exclusivo'}</h3>
+            <p class="card-location">${bairro} • ${area}m²</p>
+            ${shortStory ? `<p class="card-story">${shortStory}</p>` : ''}
+            <div class="card-meta">
+              <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">${suitesCount} ${suitesCount === 1 ? 'suíte' : 'suítes'}</span></span>
+              <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></span><span class="ic-label">${prop.tipo ? prop.tipo.charAt(0).toUpperCase() + prop.tipo.slice(1) : 'Exclusivo'}</span></span>
+              <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg></span><span class="ic-label">${vagasCount} vagas</span></span>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
+  }
+
+  // ATUALIZAR ESTATÍSTICAS NA BARRA LATERAL
+  function updateSidebarStats(properties) {
+    const legendTotal = document.getElementById('legendTotal');
+    const legendAvgPrice = document.getElementById('legendAvgPrice');
+    const legendAvgArea = document.getElementById('legendAvgArea');
+    const neighborhoodList = document.getElementById('neighborhoodList');
+    const mapPins = document.getElementById('mapPins');
+
+    if (!properties || properties.length === 0) return;
+
+    if (legendTotal) legendTotal.textContent = properties.length.toString();
+
+    // Preço médio
+    const validPrices = properties.filter(p => typeof p.preco === 'number' && p.preco > 0);
+    if (legendAvgPrice && validPrices.length > 0) {
+      const avg = validPrices.reduce((acc, p) => acc + p.preco, 0) / validPrices.length;
+      legendAvgPrice.textContent = LivingCanvasProperties.formatCurrency(avg);
+    }
+
+    // Área média
+    const validAreas = properties.filter(p => p.caracteristicas?.areaM2 && p.caracteristicas.areaM2 > 0);
+    if (legendAvgArea && validAreas.length > 0) {
+      const avgArea = Math.round(validAreas.reduce((acc, p) => acc + p.caracteristicas.areaM2, 0) / validAreas.length);
+      legendAvgArea.textContent = `${avgArea}m²`;
+    }
+
+    // Contagem por bairro
+    if (neighborhoodList) {
+      const neighborhoodCounts = {};
+      properties.forEach(p => {
+        const b = p.endereco?.bairro || "Outros";
+        neighborhoodCounts[b] = (neighborhoodCounts[b] || 0) + 1;
+      });
+
+      const sortedBairros = Object.entries(neighborhoodCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      neighborhoodList.innerHTML = sortedBairros.map(([bairro, count]) => `
+        <div class="neighborhood-item" onclick="filterByBairro('${bairro}')" role="button" tabindex="0">
+          <span class="neighborhood-name">${bairro}</span>
+          <span class="neighborhood-count">${count} ${count === 1 ? 'imóvel' : 'imóveis'}</span>
+        </div>
+      `).join('');
+    }
+
+    // Pinos no mapa visual
+    if (mapPins) {
+      mapPins.innerHTML = properties.slice(0, 5).map(p => `
+        <div class="map-pin" onclick="window.location.href='imovel.html?id=${encodeURIComponent(p.id)}'">${LivingCanvasProperties.formatCurrency(p.preco)}</div>
+      `).join('');
     }
   }
-  
-  
+
+  // INICIALIZAÇÃO
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      await LivingCanvasFavorites.initUserFavorites();
+      favoriteIds = new Set(LivingCanvasFavorites.getFavoriteIds());
+    } catch (e) {
+      console.warn("Aviso ao carregar favoritos:", e);
+    }
+
+    LivingCanvasFavorites.onFavoritesChanged((ids) => {
+      favoriteIds = new Set(ids);
+      document.querySelectorAll('.card-favorite').forEach(btn => {
+        const pId = btn.getAttribute('data-propid');
+        if (pId) {
+          const isFav = favoriteIds.has(pId);
+          btn.classList.toggle('active', isFav);
+          btn.textContent = isFav ? '♥' : '♡';
+          btn.title = isFav ? 'Remover dos favoritos' : 'Favoritar imóvel';
+        }
+      });
+    });
+
+    await loadProperties();
+  });
+</script>
+
+<script>
   // SMOOTH SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

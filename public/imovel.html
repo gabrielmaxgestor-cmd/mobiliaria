@@ -1753,35 +1753,39 @@
 </nav>
 
 <!-- BREADCRUMB -->
-<div class="breadcrumb">
+<div class="breadcrumb" id="propertyBreadcrumb">
   <a href='home.html'>Início</a>
   <span>›</span>
   <a href="imoveis.html">Imóveis</a>
   <span>›</span>
-  <a href="bairro.html">Jardim Europa</a>
+  <a href="imoveis.html" id="breadcrumbBairroLink"><span id="breadcrumbBairro">Jardim Europa</span></a>
   <span>›</span>
-  <strong style="color: var(--gold);">Casa do Bosque</strong>
+  <strong style="color: var(--gold);" id="breadcrumbTitle">Casa do Bosque</strong>
 </div>
 
 <!-- PROPERTY HERO -->
-<section class="property-hero">
-  <div class="property-hero-bg"></div>
+<section class="property-hero" id="propertyHero">
+  <div class="property-hero-bg" id="heroBg"></div>
   <div class="property-hero-content">
     <div class="property-hero-left">
-      <span class="property-badge">Exclusivo </span>
-      <h1 class="property-title">Casa do <em>Bosque</em></h1>
-      <p class="property-location"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11"/><circle cx="12" cy="10" r="2.5"/></svg> Jardim Europa • São Paulo • 420m²</p>
-      <div class="property-quick-stats">
-        <div class="quick-stat"><span class="quick-stat-icon ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span> 4 suítes</div>
-        <div class="quick-stat"><span class="quick-stat-icon ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg></span> 4 vagas</div>
-        <div class="quick-stat"><span class="quick-stat-icon ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></span> 800m² jardim</div>
-        <div class="quick-stat"><span class="quick-stat-icon ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15 15 3l6 6L9 21z"/><path d="M7 11l2 2M11 7l2 2M11 15l2 2"/></svg></span> 420m² área</div>
+      <span class="property-badge" id="heroBadge">Exclusivo</span>
+      <h1 class="property-title" id="heroTitle">Casa do <em>Bosque</em></h1>
+      <p class="property-location" id="heroLocation"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11"/><circle cx="12" cy="10" r="2.5"/></svg> <span id="heroLocationText">Jardim Europa • São Paulo • 420m²</span></p>
+      <div class="property-quick-stats" id="heroQuickStats">
+        <div class="quick-stat"><span class="quick-stat-icon ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span> <span id="statSuites">4 suítes</span></div>
+        <div class="quick-stat"><span class="quick-stat-icon ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg></span> <span id="statVagas">4 vagas</span></div>
+        <div class="quick-stat"><span class="quick-stat-icon ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></span> <span id="statJardim">800m² jardim</span></div>
+        <div class="quick-stat"><span class="quick-stat-icon ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15 15 3l6 6L9 21z"/><path d="M7 11l2 2M11 7l2 2M11 15l2 2"/></svg></span> <span id="statArea">420m² área</span></div>
       </div>
     </div>
     <div class="property-hero-right">
       <div class="property-price-label">Valor</div>
-      <div class="property-price">R$ 2.800.000</div>
-      <div class="property-price-cond">Condomínio: R$ 1.200/mês</div>
+      <div class="property-price" id="heroPrice">R$ 2.800.000</div>
+      <div class="property-price-cond" id="heroCond">Condomínio: R$ 1.200/mês</div>
+      <button class="hero-fav-btn" id="heroFavBtn" onclick="handleSaveFavorite()" style="margin-top: 0.8rem; background: rgba(245,241,232,0.1); border: 1px solid var(--glass-border); color: var(--cream); border-radius: 20px; padding: 0.45rem 1.1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+        <span id="heroFavIcon" style="font-size: 1.1rem; color: #FF6B6B;">♡</span>
+        <span id="heroFavText">Favoritar Imóvel</span>
+      </button>
     </div>
   </div>
 </section>
@@ -1890,20 +1894,20 @@
   <div class="content-main">
     
     <!-- STORY -->
-    <div class="story-block">
+    <div class="story-block" id="storyBlock">
       <h2>A <em>narrativa</em> deste espaço</h2>
-      <p class="story-text">
+      <p class="story-text" id="storyQuote">
         "Onde o silêncio da floresta encontra o design contemporâneo. Cada amanhecer aqui é um convite à calma, cada entardecer, um espetáculo particular."
       </p>
-      <p class="story-description">
-        Esta casa foi concebida para quem valoriza a privacidade sem abrir mão da sofisticação. Integrada ao terreno por um paisagismo premiado, a residência se abre para o jardim através de grandes panos de vidro que dissolvem a fronteira entre interior e exterior. Os 420m² de área construída se distribuem em dois pavimentos, com pé-direito duplo na sala principal e uma suíte master que ocupa todo o andar superior, com closet e banheiro em mármore importado.
+      <p class="story-description" id="storyDescription">
+        Esta residência foi concebida para quem valoriza a privacidade sem abrir mão da sofisticação. Integrada ao terreno por um paisagismo premiado, a residência se abre para o jardim através de grandes panos de vidro que dissolvem a fronteira entre interior e exterior.
       </p>
     </div>
     
     <!-- FEATURES -->
-    <div class="features-block">
+    <div class="features-block" id="featuresBlock">
       <h2>O que torna este imóvel <em>único</em></h2>
-      <div class="features-grid">
+      <div class="features-grid" id="featuresGrid">
         <div class="feature-item">
           <div class="feature-icon ic-chip ic-chip--lg"><svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></div>
           <div class="feature-content">
@@ -1915,123 +1919,95 @@
           <div class="feature-icon ic-chip ic-chip--lg"><svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></div>
           <div class="feature-content">
             <div class="feature-title">Jardim Privativo</div>
-            <div class="feature-description">800m² de área verde com paisagismo de Burle Marx</div>
+            <div class="feature-description">Área verde com paisagismo exclusivo e iluminação cênica</div>
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-icon ic-chip ic-chip--lg"><svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21h10M6 3.8A3.2 3.2 0 0 1 12 3a3.2 3.2 0 0 1 6 .8 3.2 3.2 0 0 1-1.5 5.9V17h-9V9.7A3.2 3.2 0 0 1 6 3.8"/></svg></div>
           <div class="feature-content">
-            <div class="feature-title">Chef Kitchen</div>
-            <div class="feature-description">Cozinha profissional com ilha em granito e cooktop 6 bocas</div>
+            <div class="feature-title">Cozinha Gourmet</div>
+            <div class="feature-description">Cozinha planejada com acabamento nobre e integração social</div>
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-icon ic-chip ic-chip--lg"><svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg></div>
           <div class="feature-content">
-            <div class="feature-title">4 Vagas Cobertas</div>
-            <div class="feature-description">Garagem com portão automatizado e carregador para elétrico</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon ic-chip ic-chip--lg"><svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c1.6 0 1.6 1.2 3.2 1.2S6.8 15 8.4 15s1.6 1.2 3.2 1.2S13.2 15 14.8 15s1.6 1.2 3.2 1.2S19.6 15 22 15M2 19.5c1.6 0 1.6 1.2 3.2 1.2s1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 2.4-1.2 4-1.2M8 15V5a2 2 0 0 1 4 0v10M16 15V5"/></svg></div>
-          <div class="feature-content">
-            <div class="feature-title">Piscina Aquecida</div>
-            <div class="feature-description">Borda infinita com deck em madeira cumaru e iluminação cênica</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon ic-chip ic-chip--lg"><svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M17 9h4M3 15h4M17 15h4"/></svg></div>
-          <div class="feature-content">
-            <div class="feature-title">Home Theater</div>
-            <div class="feature-description">Sala dedicada com isolamento acústico e projetor 4K</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon ic-chip ic-chip--lg"><svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s4.5 4 4.5 8a4.5 4.5 0 0 1-9 0c0-1.3.5-2.4 1.2-3.3 0 1.6.9 2.5 1.8 2.5 1.4 0 1.5-2.6 1.5-7.2"/><path d="M12 21a6 6 0 0 0 6-6"/></svg></div>
-          <div class="feature-content">
-            <div class="feature-title">Lareira a Gás</div>
-            <div class="feature-description">Peça suspensa na sala principal, de design assinado</div>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon ic-chip ic-chip--lg"><svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
-          <div class="feature-content">
-            <div class="feature-title">Segurança 24h</div>
-            <div class="feature-description">Condomínio com ronda, câmeras e controle de acesso</div>
+            <div class="feature-title">Vagas Cobertas</div>
+            <div class="feature-description">Garagem espaçosa com fácil manobra e portão automatizado</div>
           </div>
         </div>
       </div>
     </div>
     
     <!-- FLOOR PLAN -->
-    <div class="floorplan-block">
-      <h2>Planta <em>interativa</em></h2>
-      <p style="color: var(--text-light); margin-top: 1rem;">Passe o mouse sobre cada ambiente para ver os detalhes.</p>
-      <div class="floorplan-container">
-        <div class="floorplan-svg">
+    <div class="floorplan-block" id="floorplanBlock">
+      <h2>Planta <em>arquitetônica</em></h2>
+      <p id="floorplanSubtitle" style="color: var(--text-light); margin-top: 1rem;">Explore a distribuição dos espaços e a planta detalhada deste projeto.</p>
+      <div class="floorplan-container" id="floorplanContainer">
+        <div class="floorplan-svg" id="floorplanInteractiveView">
           <div class="room room-1">
             <div class="room-icon">🛋</div>
             <div class="room-name">Sala de Estar</div>
-            <div class="room-size">65m²</div>
+            <div class="room-size" id="fpRoom1">65m²</div>
           </div>
           <div class="room room-2">
             <div class="room-icon">🍽</div>
             <div class="room-name">Jantar</div>
-            <div class="room-size">35m²</div>
+            <div class="room-size" id="fpRoom2">35m²</div>
           </div>
           <div class="room room-3">
             <div class="room-icon">🍳</div>
             <div class="room-name">Cozinha</div>
-            <div class="room-size">40m²</div>
+            <div class="room-size" id="fpRoom3">40m²</div>
           </div>
           <div class="room room-4">
             <div class="room-icon">🛏</div>
             <div class="room-name">Suíte Master</div>
-            <div class="room-size">75m²</div>
+            <div class="room-size" id="fpRoom4">75m²</div>
           </div>
           <div class="room room-5">
             <div class="room-icon">🛁</div>
-            <div class="room-name">Suítes 2-4</div>
-            <div class="room-size">90m²</div>
+            <div class="room-name">Suítes / Quartos</div>
+            <div class="room-size" id="fpRoom5">90m²</div>
           </div>
           <div class="room room-6">
             <div class="room-icon">🌳</div>
-            <div class="room-name">Jardim</div>
-            <div class="room-size">800m²</div>
+            <div class="room-name">Jardim / Lazer</div>
+            <div class="room-size" id="fpRoom6">800m²</div>
           </div>
         </div>
       </div>
     </div>
     
     <!-- NEIGHBORHOOD -->
-    <div class="neighborhood-block">
+    <div class="neighborhood-block" id="neighborhoodBlock">
       <h2>O <em>bairro</em> ao seu redor</h2>
       <div class="neighborhood-mini">
         <div class="neighborhood-map">
           <div class="neighborhood-map-pin"><svg class="lc-svg lc-svg--inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11"/><circle cx="12" cy="10" r="2.5"/></svg> </div>
         </div>
         <div class="neighborhood-info">
-          <h4>Jardim Europa</h4>
-          <p>Um dos bairros mais nobres de São Paulo, conhecido por suas ruas arborizadas, mansões históricas e proximidade com o Parque Ibirapuera.</p>
-          <div class="neighborhood-pois">
+          <h4 id="neighborhoodTitle">Jardim Europa</h4>
+          <p id="neighborhoodDesc">Um dos bairros mais nobres e valorizados, conhecido por suas ruas arborizadas, segurança, alta gastronomia e proximidade a polos culturais e de negócios.</p>
+          <div class="neighborhood-pois" id="neighborhoodPois">
             <div class="poi-item">
-              <div class="poi-name">🌳 Parque Ibirapuera</div>
+              <div class="poi-name">🌳 Parques & Áreas Verdes</div>
               <div class="poi-distance">800m</div>
             </div>
             <div class="poi-item">
-              <div class="poi-name">🚇 Metrô Faria Lima</div>
+              <div class="poi-name">🚇 Acesso & Mobilidade</div>
               <div class="poi-distance">1.2km</div>
             </div>
             <div class="poi-item">
-              <div class="poi-name">🏥 Hospital Albert Einstein</div>
-              <div class="poi-distance">2km</div>
+              <div class="poi-name">🏥 Hospitais & Serviços de Ponta</div>
+              <div class="poi-distance">2.0km</div>
             </div>
             <div class="poi-item">
-              <div class="poi-name">🎭 MASP</div>
+              <div class="poi-name">🎭 Cultura, Museus & Lazer</div>
               <div class="poi-distance">2.5km</div>
             </div>
             <div class="poi-item">
-              <div class="poi-name">🛍 Shopping JK</div>
+              <div class="poi-name">🛍 Centros Comerciais & Gastronomia</div>
               <div class="poi-distance">1.5km</div>
             </div>
           </div>
@@ -2061,20 +2037,20 @@
         <div class="simulator-field">
           <label>Instituição</label>
           <select id="instituicao">
-            <option>Caixa Econômica</option>
-            <option>Itaú</option>
-            <option>Bradesco</option>
-            <option>Santander</option>
-            <option>BTG Pactual</option>
+            <option value="9.5">Caixa Econômica (9,5% a.a.)</option>
+            <option value="9.8">Itaú Personnalité (9,8% a.a.)</option>
+            <option value="9.9">Bradesco Prime (9,9% a.a.)</option>
+            <option value="9.7">Santander Select (9,7% a.a.)</option>
+            <option value="9.4">BTG Pactual (9,4% a.a.)</option>
           </select>
         </div>
       </div>
       <div class="simulator-result">
         <div>
-          <div class="simulator-result-label">Parcela estimada</div>
-          <div style="font-size: var(--text-xs); color: var(--text-light); margin-top: 0.3rem;">SAC • Taxa média 9.5% a.a.</div>
+          <div class="simulator-result-label">Parcela inicial estimada</div>
+          <div style="font-size: var(--text-xs); color: var(--text-light); margin-top: 0.3rem;" id="simulatorRateLabel">Sistema SAC • Taxa estimada 9.5% a.a.</div>
         </div>
-        <div class="simulator-result-value">R$ 14.820</div>
+        <div class="simulator-result-value" id="simulatorResultValue">R$ 14.820</div>
       </div>
     </div>
     
@@ -2087,51 +2063,51 @@
       <!-- STATS -->
       <div class="sidebar-card">
         <h3>Ficha Técnica</h3>
-        <div class="stats-list">
+        <div class="stats-list" id="sidebarStatsList">
           <div class="stat-row">
             <span class="stat-label">Área total</span>
-            <span class="stat-value">420m²</span>
+            <span class="stat-value" id="sideStatArea">420m²</span>
           </div>
           <div class="stat-row">
-            <span class="stat-label">Terreno</span>
-            <span class="stat-value">1.220m²</span>
+            <span class="stat-label">Terreno / Jardim</span>
+            <span class="stat-value" id="sideStatTerreno">1.220m²</span>
           </div>
           <div class="stat-row">
-            <span class="stat-label">Quartos</span>
-            <span class="stat-value">4 suítes</span>
+            <span class="stat-label">Quartos / Suítes</span>
+            <span class="stat-value" id="sideStatQuartos">4 suítes</span>
           </div>
           <div class="stat-row">
             <span class="stat-label">Vagas</span>
-            <span class="stat-value">4 cobertas</span>
+            <span class="stat-value" id="sideStatVagas">4 cobertas</span>
           </div>
           <div class="stat-row">
-            <span class="stat-label">Ano</span>
-            <span class="stat-value">2019</span>
+            <span class="stat-label">Tipo</span>
+            <span class="stat-value" id="sideStatTipo" style="text-transform: capitalize;">Casa</span>
           </div>
           <div class="stat-row">
             <span class="stat-label">IPTU</span>
-            <span class="stat-value">R$ 1.800/mês</span>
+            <span class="stat-value" id="sideStatIptu">R$ 1.800/mês</span>
           </div>
           <div class="stat-row">
             <span class="stat-label">Condomínio</span>
-            <span class="stat-value">R$ 1.200/mês</span>
+            <span class="stat-value" id="sideStatCond">R$ 1.200/mês</span>
           </div>
         </div>
       </div>
       
       <!-- BROKER -->
-      <div class="sidebar-card">
+      <div class="sidebar-card" id="sidebarBrokerCard">
         <h3>Seu Especialista</h3>
         <div class="broker-card">
-          <div class="broker-avatar" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80')"></div>
+          <div class="broker-avatar" id="brokerAvatar" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80')"></div>
           <div class="broker-info">
-            <h4>Ana Carolina Silva</h4>
-            <p>Corretora Sênior • CRECI 12345</p>
+            <h4 id="brokerName">Ana Carolina Silva</h4>
+            <p id="brokerRole">Corretora Sênior • CRECI 12345</p>
             <div class="broker-rating">★★★★★ 5.0</div>
           </div>
         </div>
-        <button class="cta-whatsapp">💬 Falar no WhatsApp</button>
-        <button class="cta-secondary" style="margin-top: 0.8rem;">📞 Ligar Agora</button>
+        <a id="brokerWhatsappBtn" href="https://wa.me/5511999999999" target="_blank" class="cta-whatsapp" style="text-decoration: none;">💬 Falar no WhatsApp</a>
+        <a id="brokerCallBtn" href="tel:+5511999999999" class="cta-secondary" style="margin-top: 0.8rem; text-decoration: none; display: block; text-align: center;">📞 Ligar Agora</a>
       </div>
       
       <!-- CTAs -->
@@ -2140,9 +2116,9 @@
         <p style="color: var(--text-light); font-size: var(--text-sm); margin-bottom: 1.5rem;">
           Visite pessoalmente e sinta a energia deste espaço.
         </p>
-        <button class="cta-primary">📅 Agendar Visita</button>
-        <button class="cta-secondary">🎥 Tour Virtual 360°</button>
-        <button class="cta-secondary">❤️ Salvar Imóvel</button>
+        <button class="cta-primary" onclick="handleScheduleVisit()">📅 Agendar Visita</button>
+        <button class="cta-secondary" onclick="switchGalleryMode('circular')">🎥 Tour Virtual 360°</button>
+        <button class="cta-secondary" id="btnSaveFavorite" onclick="handleSaveFavorite()">❤️ Salvar Imóvel</button>
       </div>
       
     </div>
@@ -2150,52 +2126,14 @@
 </section>
 
 <!-- SIMILAR PROPERTIES -->
-<section class="similar-section">
+<section class="similar-section" id="similarSection">
   <p class="section-eyebrow">Você também pode gostar</p>
   <h2 class="section-title">Imóveis <em>similares</em></h2>
   
-  <div class="similar-grid">
-    <article class="similar-card">
-      <div class="similar-image" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80')"></div>
-      <div class="similar-overlay">
-        <span class="similar-price">R$ 3.2M</span>
-        <h3 class="similar-title">Villa Horizonte</h3>
-        <p class="similar-location">Jardim Europa • 480m²</p>
-        <div class="similar-meta">
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">5 suítes</span></span>
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c1.6 0 1.6 1.2 3.2 1.2S6.8 15 8.4 15s1.6 1.2 3.2 1.2S13.2 15 14.8 15s1.6 1.2 3.2 1.2S19.6 15 22 15M2 19.5c1.6 0 1.6 1.2 3.2 1.2s1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 2.4-1.2 4-1.2M8 15V5a2 2 0 0 1 4 0v10M16 15V5"/></svg></span><span class="ic-label">Piscina</span></span>
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></span><span class="ic-label">Jardim</span></span>
-        </div>
-      </div>
-    </article>
-    
-    <article class="similar-card">
-      <div class="similar-image" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80')"></div>
-      <div class="similar-overlay">
-        <span class="similar-price">R$ 2.5M</span>
-        <h3 class="similar-title">Casa Jardim</h3>
-        <p class="similar-location">Jardim Paulista • 380m²</p>
-        <div class="similar-meta">
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">4 suítes</span></span>
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21h10M6 3.8A3.2 3.2 0 0 1 12 3a3.2 3.2 0 0 1 6 .8 3.2 3.2 0 0 1-1.5 5.9V17h-9V9.7A3.2 3.2 0 0 1 6 3.8"/></svg></span><span class="ic-label">Chef</span></span>
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg></span><span class="ic-label">3 vagas</span></span>
-        </div>
-      </div>
-    </article>
-    
-    <article class="similar-card">
-      <div class="similar-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80')"></div>
-      <div class="similar-overlay">
-        <span class="similar-price">R$ 3.8M</span>
-        <h3 class="similar-title">Residência Bosque</h3>
-        <p class="similar-location">Morumbi • 520m²</p>
-        <div class="similar-meta">
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">6 suítes</span></span>
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M17 9h4M3 15h4M17 15h4"/></svg></span><span class="ic-label">Cinema</span></span>
-          <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></span><span class="ic-label">1000m²</span></span>
-        </div>
-      </div>
-    </article>
+  <div class="similar-grid" id="similarGrid">
+    <div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: var(--gold-soft);">
+      Carregando imóveis similares...
+    </div>
   </div>
 </section>
 
@@ -2305,9 +2243,12 @@
 <!-- GSAP for Circular Gallery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-<script>
-  // PROPERTY PHOTOS DATA
-  const PROPERTY_PHOTOS = [
+<script type="module">
+  import { LivingCanvasProperties } from '/properties.js';
+  import LivingCanvasFavorites from '/favorites.js';
+
+  // Global property photos array for gallery & lightbox
+  window.PROPERTY_PHOTOS = [
     {
       url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80',
       title: 'Living Principal & Pé-Direito Duplo',
@@ -2336,7 +2277,7 @@
       url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=80',
       title: 'Jardim Privativo & Paisagismo',
       tag: 'Jardim',
-      desc: '800m² de área verde preservada com projeto paisagístico exclusivo, fogo de chão e horta orgânica.'
+      desc: 'Área verde preservada com projeto paisagístico exclusivo, fogo de chão e horta orgânica.'
     },
     {
       url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80',
@@ -2346,51 +2287,442 @@
     }
   ];
 
-  let currentCircularIndex = 0;
-  let currentLbIndex = 0;
-  let currentZoom = 1;
+  window.currentCircularIndex = 0;
+  window.currentLbIndex = 0;
+  window.currentZoom = 1;
+  window.currentProperty = null;
 
-  // INITIALIZE
-  document.addEventListener('DOMContentLoaded', () => {
+  // INITIALIZE ON LOAD
+  document.addEventListener('DOMContentLoaded', async () => {
+    initLightboxKeyboard();
+    await loadPropertyDetails();
+  });
+
+  async function loadPropertyDetails() {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const propId = urlParams.get('id') || 'prop-1';
+
+      const prop = await LivingCanvasProperties.getPropertyById(propId);
+      if (!prop) {
+        showPropertyNotFound();
+        return;
+      }
+
+      window.currentProperty = prop;
+      renderPropertyData(prop);
+      await loadSimilarProperties(prop);
+
+      // Sincroniza estado de favorito com o Firestore
+      try {
+        await LivingCanvasFavorites.initUserFavorites();
+        const isFav = LivingCanvasFavorites.isPropertyFavorited(prop.id);
+        updateFavoriteButtonsUI(isFav);
+      } catch (e) {
+        console.warn("Aviso ao carregar favoritos:", e);
+      }
+    } catch (err) {
+      console.error('Erro ao carregar detalhes do imóvel:', err);
+    }
+  }
+
+  function renderPropertyData(prop) {
+    // 1. Page Title & Breadcrumb
+    document.title = `${prop.titulo} • Living Canvas`;
+    const breadcrumbTitle = document.getElementById('breadcrumbTitle');
+    const breadcrumbBairro = document.getElementById('breadcrumbBairro');
+    const breadcrumbBairroLink = document.getElementById('breadcrumbBairroLink');
+
+    if (breadcrumbTitle) breadcrumbTitle.textContent = prop.titulo;
+    if (breadcrumbBairro) breadcrumbBairro.textContent = prop.endereco?.bairro || 'São Paulo';
+    if (breadcrumbBairroLink && prop.endereco?.bairro) {
+      breadcrumbBairroLink.href = `imoveis.html?bairro=${encodeURIComponent(prop.endereco.bairro)}`;
+    }
+
+    // 2. Hero Section
+    const heroBg = document.getElementById('heroBg');
+    const heroBadge = document.getElementById('heroBadge');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroLocationText = document.getElementById('heroLocationText');
+    const heroPrice = document.getElementById('heroPrice');
+    const heroCond = document.getElementById('heroCond');
+
+    const mainImg = (prop.imagens && prop.imagens[0]) || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80';
+    if (heroBg) {
+      heroBg.style.backgroundImage = `url('${mainImg}')`;
+    }
+
+    if (heroBadge) {
+      heroBadge.textContent = prop.tag || (prop.tipo ? prop.tipo.charAt(0).toUpperCase() + prop.tipo.slice(1) : 'Exclusivo');
+    }
+
+    if (heroTitle) {
+      const words = prop.titulo.split(' ');
+      if (words.length > 1) {
+        const lastWord = words.pop();
+        heroTitle.innerHTML = `${words.join(' ')} <em>${lastWord}</em>`;
+      } else {
+        heroTitle.textContent = prop.titulo;
+      }
+    }
+
+    if (heroLocationText) {
+      heroLocationText.textContent = `${prop.endereco?.bairro || 'Localização Nobre'} • ${prop.endereco?.cidade || 'São Paulo'} • ${prop.caracteristicas?.areaM2 || 0}m²`;
+    }
+
+    if (heroPrice) {
+      heroPrice.textContent = LivingCanvasProperties.formatFullCurrency(prop.preco);
+    }
+
+    if (heroCond) {
+      if (prop.condominio) {
+        heroCond.textContent = `Condomínio: R$ ${prop.condominio.toLocaleString('pt-BR')}/mês`;
+      } else {
+        heroCond.textContent = 'Condomínio: Sob consulta';
+      }
+    }
+
+    // Quick Stats in Hero
+    const statSuites = document.getElementById('statSuites');
+    const statVagas = document.getElementById('statVagas');
+    const statJardim = document.getElementById('statJardim');
+    const statArea = document.getElementById('statArea');
+
+    if (statSuites) statSuites.textContent = `${prop.caracteristicas?.suites || prop.caracteristicas?.quartos || 0} suítes`;
+    if (statVagas) statVagas.textContent = `${prop.caracteristicas?.vagas || 0} vagas`;
+    if (statJardim) {
+      const jSize = prop.caracteristicas?.jardimM2 || prop.caracteristicas?.terrenoM2 || Math.round(prop.caracteristicas?.areaM2 * 1.5);
+      statJardim.textContent = `${jSize}m² terreno`;
+    }
+    if (statArea) statArea.textContent = `${prop.caracteristicas?.areaM2 || 0}m² área`;
+
+    // 3. Photo Gallery Photos Array
+    const defaultPhotoTags = ['Living', 'Cozinha Gourmet', 'Suíte Master', 'Área Externa & Lazer', 'Jardim & Paisagismo', 'Arquitetura & Fachada', 'Detalhes Nobres'];
+    if (prop.imagens && prop.imagens.length > 0) {
+      window.PROPERTY_PHOTOS = prop.imagens.map((url, i) => ({
+        url,
+        title: i === 0 ? `${prop.titulo} - Principal` : `${prop.titulo} - Vista ${i + 1}`,
+        tag: defaultPhotoTags[i % defaultPhotoTags.length],
+        desc: i === 0 ? prop.descricao : `Detalhes arquitetônicos e ambientes de alto padrão em ${prop.endereco?.bairro || 'localização nobre'}.`
+      }));
+    }
+
+    // Render SVGs and Grids
     renderCircularGallerySvg();
     renderGridGallery();
     renderLightboxThumbnails();
-    
-    // Keyboard listeners
-    document.addEventListener('keydown', (e) => {
-      const modal = document.getElementById('imovelLightboxModal');
-      if (modal && modal.style.display !== 'none') {
-        if (e.key === 'Escape') closeImovelLightbox();
-        if (e.key === 'ArrowRight') nextImovelPhoto();
-        if (e.key === 'ArrowLeft') prevImovelPhoto();
-        if (e.key === '+' || e.key === '=') changeZoom(0.5);
-        if (e.key === '-') changeZoom(-0.5);
-      }
-    });
-  });
 
-  // MODE SWITCHER
-  function switchGalleryMode(mode) {
+    // 4. Update Day/Night slider backgrounds
+    if (prop.imagens && prop.imagens.length >= 2) {
+      const morningEl = document.querySelector('.toggle-morning');
+      const afternoonEl = document.querySelector('.toggle-afternoon');
+      const nightEl = document.querySelector('.toggle-night');
+      const rainEl = document.querySelector('.toggle-rain');
+
+      if (morningEl) morningEl.style.backgroundImage = `url('${prop.imagens[0]}')`;
+      if (afternoonEl) afternoonEl.style.backgroundImage = `url('${prop.imagens[1 % prop.imagens.length]}')`;
+      if (nightEl) nightEl.style.backgroundImage = `url('${prop.imagens[2 % prop.imagens.length]}')`;
+      if (rainEl) rainEl.style.backgroundImage = `url('${prop.imagens[3 % prop.imagens.length]}')`;
+    }
+
+    // 5. Story / Narrative
+    const storyQuote = document.getElementById('storyQuote');
+    const storyDescription = document.getElementById('storyDescription');
+
+    if (storyQuote) {
+      storyQuote.textContent = `"${prop.descricao.slice(0, 160)}${prop.descricao.length > 160 ? '...' : ''}"`;
+    }
+
+    if (storyDescription) {
+      storyDescription.textContent = prop.descricao;
+    }
+
+    // 6. Features Grid
+    renderFeaturesGrid(prop);
+
+    // 7. Floorplan
+    renderFloorplanSection(prop);
+
+    // 8. Neighborhood
+    renderNeighborhoodSection(prop);
+
+    // 9. Simulator
+    setupSimulator(prop);
+
+    // 10. Sidebar Ficha Técnica & Broker Card
+    renderSidebarDetails(prop);
+  }
+
+  function renderFeaturesGrid(prop) {
+    const grid = document.getElementById('featuresGrid');
+    if (!grid) return;
+
+    const feats = [];
+    const c = prop.caracteristicas || {};
+
+    if (c.suites || c.quartos) {
+      feats.push({
+        title: `${c.suites || c.quartos} Suítes Master`,
+        desc: 'Espaços amplos, closets planejados e iluminação natural abundante',
+        icon: '<svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg>'
+      });
+    }
+
+    if (c.vagas) {
+      feats.push({
+        title: `${c.vagas} Vagas Cobertas`,
+        desc: 'Garagem privativa com fácil manobra e estrutura para carregador veicular',
+        icon: '<svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg>'
+      });
+    }
+
+    feats.push({
+      title: 'Cozinha Gourmet Integrada',
+      desc: 'Acabamentos em pedra nobre, ilha central e marcenaria de alta precisão',
+      icon: '<svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10M6 3.8A3.2 3.2 0 0 1 12 3a3.2 3.2 0 0 1 6 .8 3.2 3.2 0 0 1-1.5 5.9V17h-9V9.7A3.2 3.2 0 0 1 6 3.8"/></svg>'
+    });
+
+    feats.push({
+      title: 'Área Verde & Lazer Privativo',
+      desc: `${c.areaM2 ? Math.round(c.areaM2 * 0.4) : '200'}m² dedicados ao descanso ao ar livre e convivência`,
+      icon: '<svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg>'
+    });
+
+    feats.push({
+      title: 'Piscina & Deck Exclusivo',
+      desc: 'Área molhada com deck em madeira nobre e iluminação cênica noturna',
+      icon: '<svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c1.6 0 1.6 1.2 3.2 1.2S6.8 15 8.4 15s1.6 1.2 3.2 1.2S13.2 15 14.8 15s1.6 1.2 3.2 1.2S19.6 15 22 15M2 19.5c1.6 0 1.6 1.2 3.2 1.2s1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 1.6-1.2 3.2-1.2 1.6 1.2 3.2 1.2 2.4-1.2 4-1.2M8 15V5a2 2 0 0 1 4 0v10M16 15V5"/></svg>'
+    });
+
+    feats.push({
+      title: 'Segurança & Monitoramento 24h',
+      desc: 'Portaria blindada, câmeras perimetrais e controle de acesso biométrico',
+      icon: '<svg class="lc-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>'
+    });
+
+    grid.innerHTML = feats.map(f => `
+      <div class="feature-item">
+        <div class="feature-icon ic-chip ic-chip--lg">${f.icon}</div>
+        <div class="feature-content">
+          <div class="feature-title">${f.title}</div>
+          <div class="feature-description">${f.desc}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderFloorplanSection(prop) {
+    const area = prop.caracteristicas?.areaM2 || 420;
+    const r1 = document.getElementById('fpRoom1');
+    const r2 = document.getElementById('fpRoom2');
+    const r3 = document.getElementById('fpRoom3');
+    const r4 = document.getElementById('fpRoom4');
+    const r5 = document.getElementById('fpRoom5');
+    const r6 = document.getElementById('fpRoom6');
+
+    if (r1) r1.textContent = `${Math.round(area * 0.20)}m²`;
+    if (r2) r2.textContent = `${Math.round(area * 0.10)}m²`;
+    if (r3) r3.textContent = `${Math.round(area * 0.12)}m²`;
+    if (r4) r4.textContent = `${Math.round(area * 0.22)}m²`;
+    if (r5) r5.textContent = `${Math.round(area * 0.24)}m²`;
+    if (r6) r6.textContent = `${prop.caracteristicas?.terrenoM2 || Math.round(area * 1.5)}m²`;
+
+    if (prop.plantaBaixaUrl) {
+      const container = document.getElementById('floorplanContainer');
+      if (container) {
+        container.innerHTML = `
+          <div style="background: rgba(10,46,42,0.4); border: 1px solid rgba(212,175,122,0.3); border-radius: 12px; padding: 1.5rem; text-align: center;">
+            <img src="${prop.plantaBaixaUrl}" alt="Planta Baixa Oficial" style="max-width: 100%; height: auto; max-height: 480px; object-fit: contain; border-radius: 8px; filter: brightness(0.95);" />
+            <div style="margin-top: 1rem;">
+              <a href="${prop.plantaBaixaUrl}" target="_blank" class="cta-secondary" style="display: inline-block; padding: 0.6rem 1.4rem; text-decoration: none;">🔍 Ver Planta Baixa em Alta Resolução</a>
+            </div>
+          </div>
+        `;
+      }
+    }
+  }
+
+  function renderNeighborhoodSection(prop) {
+    const nTitle = document.getElementById('neighborhoodTitle');
+    const nDesc = document.getElementById('neighborhoodDesc');
+    const bairro = prop.endereco?.bairro || 'Jardim Europa';
+
+    if (nTitle) nTitle.textContent = `${bairro} • ${prop.endereco?.cidade || 'São Paulo'}`;
+    if (nDesc) {
+      nDesc.textContent = `Localizado em ${bairro}, um dos endereços mais procurados e valorizados, oferecendo excelente infraestrutura, áreas arborizadas, alta gastronomia e acesso privilegiado.`;
+    }
+  }
+
+  function setupSimulator(prop) {
+    const inputEntrada = document.getElementById('entrada');
+    const selectPrazo = document.getElementById('prazo');
+    const selectInstituicao = document.getElementById('instituicao');
+    const resultValue = document.getElementById('simulatorResultValue');
+    const rateLabel = document.getElementById('simulatorRateLabel');
+
+    if (!inputEntrada || !resultValue) return;
+
+    const defaultEntrada = Math.round(prop.preco * 0.2);
+    inputEntrada.value = `R$ ${defaultEntrada.toLocaleString('pt-BR')}`;
+
+    function calculate() {
+      const entradaClean = parseInt(inputEntrada.value.replace(/\D/g, '')) || defaultEntrada;
+      const financiado = Math.max(prop.preco - entradaClean, 100000);
+      const anos = parseInt(selectPrazo ? selectPrazo.value : '30') || 30;
+      const meses = anos * 12;
+      const taxaAnual = parseFloat(selectInstituicao ? selectInstituicao.value : '9.5') / 100;
+      const taxaMensal = taxaAnual / 12;
+
+      // SAC first installment: Amortization + Monthly Interest
+      const amortizacao = financiado / meses;
+      const jurosInicial = financiado * taxaMensal;
+      const parcelaInicial = amortizacao + jurosInicial;
+
+      resultValue.textContent = `R$ ${Math.round(parcelaInicial).toLocaleString('pt-BR')}`;
+      if (rateLabel && selectInstituicao) {
+        const instText = selectInstituicao.options[selectInstituicao.selectedIndex]?.text || '9.5% a.a.';
+        rateLabel.textContent = `Sistema SAC • ${instText}`;
+      }
+    }
+
+    inputEntrada.addEventListener('input', calculate);
+    if (selectPrazo) selectPrazo.addEventListener('change', calculate);
+    if (selectInstituicao) selectInstituicao.addEventListener('change', calculate);
+
+    calculate();
+  }
+
+  function renderSidebarDetails(prop) {
+    const area = prop.caracteristicas?.areaM2 || 420;
+    const terreno = prop.caracteristicas?.terrenoM2 || prop.caracteristicas?.jardimM2 || Math.round(area * 1.5);
+    const suites = prop.caracteristicas?.suites || prop.caracteristicas?.quartos || 4;
+    const vagas = prop.caracteristicas?.vagas || 4;
+
+    const sideArea = document.getElementById('sideStatArea');
+    const sideTerreno = document.getElementById('sideStatTerreno');
+    const sideQuartos = document.getElementById('sideStatQuartos');
+    const sideVagas = document.getElementById('sideStatVagas');
+    const sideTipo = document.getElementById('sideStatTipo');
+    const sideIptu = document.getElementById('sideStatIptu');
+    const sideCond = document.getElementById('sideStatCond');
+
+    if (sideArea) sideArea.textContent = `${area}m²`;
+    if (sideTerreno) sideTerreno.textContent = `${terreno}m²`;
+    if (sideQuartos) sideQuartos.textContent = `${suites} suítes`;
+    if (sideVagas) sideVagas.textContent = `${vagas} cobertas`;
+    if (sideTipo) sideTipo.textContent = prop.tipo || 'Imóvel Exclusivo';
+    if (sideIptu) sideIptu.textContent = prop.iptu ? `R$ ${prop.iptu.toLocaleString('pt-BR')}/mês` : 'R$ 1.800/mês';
+    if (sideCond) sideCond.textContent = prop.condominio ? `R$ ${prop.condominio.toLocaleString('pt-BR')}/mês` : 'Sob consulta';
+
+    // Broker info
+    const brokerName = document.getElementById('brokerName');
+    const brokerRole = document.getElementById('brokerRole');
+    const brokerAvatar = document.getElementById('brokerAvatar');
+    const brokerWhatsappBtn = document.getElementById('brokerWhatsappBtn');
+    const brokerCallBtn = document.getElementById('brokerCallBtn');
+    const floatingTooltip = document.getElementById('floatingBrokerTooltip');
+    const floatingWhatsappBtn = document.getElementById('floatingWhatsappBtn');
+
+    const bName = prop.corretor?.nome || 'Ana Carolina Silva';
+    const bTelefone = prop.corretor?.telefone || '5511999999999';
+    const bCleanPhone = bTelefone.replace(/\D/g, '');
+    const bCreci = prop.corretor?.creci ? `CRECI ${prop.corretor.creci}` : 'CRECI 12345';
+    const bAvatarUrl = prop.corretor?.foto || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80';
+
+    if (brokerName) brokerName.textContent = bName;
+    if (brokerRole) brokerRole.textContent = `Especialista Living Canvas • ${bCreci}`;
+    if (brokerAvatar) brokerAvatar.style.backgroundImage = `url('${bAvatarUrl}')`;
+
+    const waMsg = encodeURIComponent(`Olá ${bName}! Tenho interesse no imóvel "${prop.titulo}" (${LivingCanvasProperties.formatFullCurrency(prop.preco)}) em ${prop.endereco?.bairro || 'São Paulo'}. Poderia me passar mais detalhes?`);
+    const waUrl = `https://wa.me/${bCleanPhone || '5511999999999'}?text=${waMsg}`;
+
+    if (brokerWhatsappBtn) brokerWhatsappBtn.href = waUrl;
+    if (brokerCallBtn) brokerCallBtn.href = `tel:+${bCleanPhone || '5511999999999'}`;
+    if (floatingTooltip) floatingTooltip.textContent = `Fale com ${bName.split(' ')[0]}`;
+    if (floatingWhatsappBtn) floatingWhatsappBtn.href = waUrl;
+  }
+
+  async function loadSimilarProperties(currentProp) {
+    const grid = document.getElementById('similarGrid');
+    if (!grid) return;
+
+    try {
+      const allProps = await LivingCanvasProperties.getProperties({ status: 'disponivel' });
+      const filtered = allProps.filter(p => p.id !== currentProp.id).slice(0, 3);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-light);">
+            Nenhum outro imóvel disponível no momento.
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const cover = (item.imagens && item.imagens[0]) || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80';
+        const price = LivingCanvasProperties.formatCurrency(item.preco);
+        const suites = item.caracteristicas?.suites || item.caracteristicas?.quartos || 3;
+        const area = item.caracteristicas?.areaM2 || 350;
+        const vagas = item.caracteristicas?.vagas || 2;
+
+        return `
+          <article class="similar-card" style="cursor: pointer;" onclick="window.location.href='imovel.html?id=${item.id}'">
+            <div class="similar-image" style="background-image: url('${cover}')"></div>
+            <div class="similar-overlay">
+              <span class="similar-price">${price}</span>
+              <h3 class="similar-title">${item.titulo}</h3>
+              <p class="similar-location">${item.endereco?.bairro || 'São Paulo'} • ${area}m²</p>
+              <div class="similar-meta">
+                <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v11M3 12h18M21 12v6M7 12V9h5v3"/></svg></span><span class="ic-label">${suites} suítes</span></span>
+                <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M14.5 17a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17v-4l1.8-4.2A2 2 0 0 1 7.6 7.5h8.8a2 2 0 0 1 1.8 1.3L20 13v4M4.5 13h15"/></svg></span><span class="ic-label">${vagas} vagas</span></span>
+                <span><span class="ic-chip"><svg class="lc-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-6M8.5 15a4 4 0 0 1-1.3-7.6A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.8 4.4A4 4 0 0 1 15.5 15z"/></svg></span><span class="ic-label">Jardim</span></span>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    } catch (err) {
+      console.error('Erro ao carregar similares:', err);
+    }
+  }
+
+  function showPropertyNotFound() {
+    const mainSection = document.querySelector('.content-section');
+    if (mainSection) {
+      mainSection.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; background: rgba(10,46,42,0.6); border: 1px solid rgba(212,175,122,0.3); border-radius: 16px; margin: 2rem 0;">
+          <h2 style="font-family: var(--font-display); color: var(--gold); font-size: 2rem; margin-bottom: 1rem;">Imóvel não encontrado</h2>
+          <p style="color: var(--cream-dark); max-width: 500px; margin: 0 auto 2rem auto; line-height: 1.6;">
+            O imóvel solicitado não está mais disponível ou o link pode ter expirado. Explore nossa curadoria completa de espaços singulares.
+          </p>
+          <a href="imoveis.html" class="cta-primary" style="display: inline-block; padding: 0.8rem 2rem; text-decoration: none;">Ver Catálogo de Imóveis</a>
+        </div>
+      `;
+    }
+  }
+
+  // GLOBAL GALLERY & LIGHTBOX FUNCTIONS
+  window.switchGalleryMode = function(mode) {
     const btnCirc = document.getElementById('btnModeCircular');
     const btnGrid = document.getElementById('btnModeGrid');
     const viewCirc = document.getElementById('viewCircularGallery');
     const viewGrid = document.getElementById('viewGridGallery');
 
     if (mode === 'circular') {
-      btnCirc.classList.add('active');
-      btnGrid.classList.remove('active');
-      viewCirc.style.display = 'block';
-      viewGrid.style.display = 'none';
+      if (btnCirc) btnCirc.classList.add('active');
+      if (btnGrid) btnGrid.classList.remove('active');
+      if (viewCirc) viewCirc.style.display = 'block';
+      if (viewGrid) viewGrid.style.display = 'none';
     } else {
-      btnGrid.classList.add('active');
-      btnCirc.classList.remove('active');
-      viewGrid.style.display = 'block';
-      viewCirc.style.display = 'none';
+      if (btnGrid) btnGrid.classList.add('active');
+      if (btnCirc) btnCirc.classList.remove('active');
+      if (viewGrid) viewGrid.style.display = 'block';
+      if (viewCirc) viewCirc.style.display = 'none';
     }
-  }
+  };
 
-  // RENDER CIRCULAR GALLERY SVG
-  function renderCircularGallerySvg() {
+  window.renderCircularGallerySvg = function() {
     const gImages = document.getElementById('svgImagesGroup');
     const gDots = document.getElementById('svgDotsGroup');
     if (!gImages || !gDots) return;
@@ -2398,22 +2730,21 @@
     let imgHtml = '';
     let dotsHtml = '';
 
-    const total = PROPERTY_PHOTOS.length;
+    const total = window.PROPERTY_PHOTOS.length;
     const radius = 175;
     const cx = 200, cy = 200;
 
-    PROPERTY_PHOTOS.forEach((photo, i) => {
+    window.PROPERTY_PHOTOS.forEach((photo, i) => {
       const isFirst = i === 0;
 
       imgHtml += `
-        <g clip-path="url(#cClip${i})">
+        <g clip-path="url(#cClip${i % 6})">
           <image href="${photo.url}" x="0" y="0" width="400" height="400" preserveAspectRatio="xMidYMid slice" />
           <title>${photo.title} (Clique para Expandir)</title>
         </g>
       `;
 
-      // Dot position around bottom arc
-      const angle = Math.PI * 0.25 + (i / (total - 1)) * (Math.PI * 0.5);
+      const angle = Math.PI * 0.25 + (i / Math.max(total - 1, 1)) * (Math.PI * 0.5);
       const dotX = cx + radius * Math.cos(angle);
       const dotY = cy + radius * Math.sin(angle);
 
@@ -2428,17 +2759,16 @@
     gDots.innerHTML = dotsHtml;
 
     updateCircularInfoCard(0);
-  }
+  };
 
-  function setCircularIndex(index) {
-    if (index === currentCircularIndex) return;
+  window.setCircularIndex = function(index) {
+    if (index === window.currentCircularIndex) return;
 
-    const oldIdx = currentCircularIndex;
-    currentCircularIndex = index;
+    const oldIdx = window.currentCircularIndex;
+    window.currentCircularIndex = index;
 
-    // Animate Masks using GSAP if available
-    const oldMask = document.getElementById(`cMask${oldIdx}`);
-    const newMask = document.getElementById(`cMask${index}`);
+    const oldMask = document.getElementById(`cMask${oldIdx % 6}`);
+    const newMask = document.getElementById(`cMask${index % 6}`);
 
     if (window.gsap && oldMask && newMask) {
       gsap.to(oldMask, { attr: { r: 0 }, duration: 0.6, ease: 'power2.inOut' });
@@ -2448,8 +2778,7 @@
       if (newMask) newMask.setAttribute('r', '180');
     }
 
-    // Update Dots
-    PROPERTY_PHOTOS.forEach((_, i) => {
+    window.PROPERTY_PHOTOS.forEach((_, i) => {
       const dot = document.getElementById(`circDot${i}`);
       if (dot) {
         if (i === index) {
@@ -2463,31 +2792,34 @@
     });
 
     updateCircularInfoCard(index);
-  }
+  };
 
   function updateCircularInfoCard(index) {
-    const photo = PROPERTY_PHOTOS[index];
-    document.getElementById('circBadge').textContent = photo.tag;
-    document.getElementById('circTitle').textContent = photo.title;
-    document.getElementById('circDesc').textContent = photo.desc;
+    const photo = window.PROPERTY_PHOTOS[index] || window.PROPERTY_PHOTOS[0];
+    if (!photo) return;
+    const badge = document.getElementById('circBadge');
+    const title = document.getElementById('circTitle');
+    const desc = document.getElementById('circDesc');
+    if (badge) badge.textContent = photo.tag;
+    if (title) title.textContent = photo.title;
+    if (desc) desc.textContent = photo.desc;
   }
 
-  function nextCircularSlide() {
-    const nextIdx = (currentCircularIndex + 1) % PROPERTY_PHOTOS.length;
-    setCircularIndex(nextIdx);
-  }
+  window.nextCircularSlide = function() {
+    const nextIdx = (window.currentCircularIndex + 1) % window.PROPERTY_PHOTOS.length;
+    window.setCircularIndex(nextIdx);
+  };
 
-  function prevCircularSlide() {
-    const prevIdx = (currentCircularIndex - 1 + PROPERTY_PHOTOS.length) % PROPERTY_PHOTOS.length;
-    setCircularIndex(prevIdx);
-  }
+  window.prevCircularSlide = function() {
+    const prevIdx = (window.currentCircularIndex - 1 + window.PROPERTY_PHOTOS.length) % window.PROPERTY_PHOTOS.length;
+    window.setCircularIndex(prevIdx);
+  };
 
-  // RENDER GRID GALLERY
-  function renderGridGallery() {
+  window.renderGridGallery = function() {
     const gridEl = document.getElementById('propertyPhotoGrid');
     if (!gridEl) return;
 
-    gridEl.innerHTML = PROPERTY_PHOTOS.map((photo, i) => `
+    gridEl.innerHTML = window.PROPERTY_PHOTOS.map((photo, i) => `
       <div class="photo-grid-card" onclick="openImovelLightbox(${i})">
         <img src="${photo.url}" alt="${photo.title}" loading="lazy" />
         <div class="photo-grid-overlay">
@@ -2499,104 +2831,199 @@
         </div>
       </div>
     `).join('');
-  }
+  };
 
-  // LIGHTBOX LOGIC
-  function openImovelLightbox(index = 0) {
-    currentLbIndex = index;
-    currentZoom = 1;
+  window.openImovelLightbox = function(index = 0) {
+    window.currentLbIndex = index;
+    window.currentZoom = 1;
 
     const modal = document.getElementById('imovelLightboxModal');
-    modal.style.display = 'flex';
+    if (modal) modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 
     updateLightboxView();
-  }
+  };
 
-  function closeImovelLightbox() {
+  window.closeImovelLightbox = function() {
     const modal = document.getElementById('imovelLightboxModal');
-    modal.style.display = 'none';
+    if (modal) modal.style.display = 'none';
     document.body.style.overflow = '';
-  }
+  };
 
   function updateLightboxView() {
-    const photo = PROPERTY_PHOTOS[currentLbIndex];
-    document.getElementById('lbBadge').textContent = photo.tag;
-    document.getElementById('lbTitle').textContent = photo.title;
-    document.getElementById('lbCounter').textContent = `${currentLbIndex + 1} de ${PROPERTY_PHOTOS.length}`;
-    document.getElementById('lbCaption').textContent = photo.desc;
+    const photo = window.PROPERTY_PHOTOS[window.currentLbIndex] || window.PROPERTY_PHOTOS[0];
+    if (!photo) return;
 
+    const badge = document.getElementById('lbBadge');
+    const title = document.getElementById('lbTitle');
+    const counter = document.getElementById('lbCounter');
+    const caption = document.getElementById('lbCaption');
     const img = document.getElementById('lbActiveImage');
-    img.src = photo.url;
-    img.alt = photo.title;
+
+    if (badge) badge.textContent = photo.tag;
+    if (title) title.textContent = photo.title;
+    if (counter) counter.textContent = `${window.currentLbIndex + 1} de ${window.PROPERTY_PHOTOS.length}`;
+    if (caption) caption.textContent = photo.desc;
+
+    if (img) {
+      img.src = photo.url;
+      img.alt = photo.title;
+    }
     applyZoom();
 
-    // Highlight Thumbnails
     const thumbs = document.querySelectorAll('.lb-thumb-item');
     thumbs.forEach((th, i) => {
-      if (i === currentLbIndex) th.classList.add('active');
+      if (i === window.currentLbIndex) th.classList.add('active');
       else th.classList.remove('active');
     });
   }
 
-  function renderLightboxThumbnails() {
+  window.renderLightboxThumbnails = function() {
     const container = document.getElementById('lbThumbsContainer');
     if (!container) return;
 
-    container.innerHTML = PROPERTY_PHOTOS.map((photo, i) => `
+    container.innerHTML = window.PROPERTY_PHOTOS.map((photo, i) => `
       <div class="lb-thumb-item ${i === 0 ? 'active' : ''}" onclick="selectLbPhoto(${i})">
         <img src="${photo.url}" alt="${photo.title}" />
       </div>
     `).join('');
-  }
+  };
 
-  function selectLbPhoto(index) {
-    currentLbIndex = index;
-    currentZoom = 1;
+  window.selectLbPhoto = function(index) {
+    window.currentLbIndex = index;
+    window.currentZoom = 1;
     updateLightboxView();
-  }
+  };
 
-  function nextImovelPhoto() {
-    currentLbIndex = (currentLbIndex + 1) % PROPERTY_PHOTOS.length;
-    currentZoom = 1;
+  window.nextImovelPhoto = function() {
+    window.currentLbIndex = (window.currentLbIndex + 1) % window.PROPERTY_PHOTOS.length;
+    window.currentZoom = 1;
     updateLightboxView();
-  }
+  };
 
-  function prevImovelPhoto() {
-    currentLbIndex = (currentLbIndex - 1 + PROPERTY_PHOTOS.length) % PROPERTY_PHOTOS.length;
-    currentZoom = 1;
+  window.prevImovelPhoto = function() {
+    window.currentLbIndex = (window.currentLbIndex - 1 + window.PROPERTY_PHOTOS.length) % window.PROPERTY_PHOTOS.length;
+    window.currentZoom = 1;
     updateLightboxView();
-  }
+  };
 
-  function changeZoom(delta) {
-    currentZoom = Math.min(Math.max(currentZoom + delta, 1), 3);
+  window.changeZoom = function(delta) {
+    window.currentZoom = Math.min(Math.max(window.currentZoom + delta, 1), 3);
     applyZoom();
-  }
+  };
 
-  function resetZoom() {
-    currentZoom = 1;
+  window.resetZoom = function() {
+    window.currentZoom = 1;
     applyZoom();
-  }
+  };
 
-  function toggleDoubleZoom() {
-    currentZoom = currentZoom > 1 ? 1 : 2;
+  window.toggleDoubleZoom = function() {
+    window.currentZoom = window.currentZoom > 1 ? 1 : 2;
     applyZoom();
-  }
+  };
 
   function applyZoom() {
     const img = document.getElementById('lbActiveImage');
     const text = document.getElementById('lbZoomText');
-    if (img) img.style.transform = `scale(${currentZoom})`;
-    if (text) text.textContent = `${Math.round(currentZoom * 100)}%`;
+    if (img) img.style.transform = `scale(${window.currentZoom})`;
+    if (text) text.textContent = `${Math.round(window.currentZoom * 100)}%`;
   }
+
+  function initLightboxKeyboard() {
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('imovelLightboxModal');
+      if (modal && modal.style.display !== 'none') {
+        if (e.key === 'Escape') window.closeImovelLightbox();
+        if (e.key === 'ArrowRight') window.nextImovelPhoto();
+        if (e.key === 'ArrowLeft') window.prevImovelPhoto();
+        if (e.key === '+' || e.key === '=') window.changeZoom(0.5);
+        if (e.key === '-') window.changeZoom(-0.5);
+      }
+    });
+  }
+
+  // Interactivity handlers
+  window.handleScheduleVisit = function() {
+    const prop = window.currentProperty;
+    const bName = prop?.corretor?.nome || 'Especialista Living Canvas';
+    const bPhone = (prop?.corretor?.telefone || '5511999999999').replace(/\D/g, '');
+    const title = prop?.titulo || 'este imóvel';
+    const msg = encodeURIComponent(`Olá ${bName}, gostaria de agendar uma visita para conhecer pessoalmente o imóvel "${title}". Qual o melhor dia e horário?`);
+    window.open(`https://wa.me/${bPhone}?text=${msg}`, '_blank');
+  };
+
+  function updateFavoriteButtonsUI(isFav) {
+    const btnSidebar = document.getElementById('btnSaveFavorite');
+    const heroFavBtn = document.getElementById('heroFavBtn');
+    const heroFavIcon = document.getElementById('heroFavIcon');
+    const heroFavText = document.getElementById('heroFavText');
+
+    if (isFav) {
+      if (btnSidebar) {
+        btnSidebar.textContent = '💖 Imóvel Salvo nos Favoritos';
+        btnSidebar.style.borderColor = 'var(--gold)';
+        btnSidebar.style.color = 'var(--gold)';
+      }
+      if (heroFavIcon) {
+        heroFavIcon.textContent = '♥';
+        heroFavIcon.style.color = '#FF6B6B';
+      }
+      if (heroFavText) heroFavText.textContent = 'Favoritado';
+      if (heroFavBtn) {
+        heroFavBtn.style.background = 'rgba(255, 107, 107, 0.18)';
+        heroFavBtn.style.borderColor = '#FF6B6B';
+      }
+    } else {
+      if (btnSidebar) {
+        btnSidebar.textContent = '❤️ Salvar Imóvel';
+        btnSidebar.style.borderColor = '';
+        btnSidebar.style.color = '';
+      }
+      if (heroFavIcon) {
+        heroFavIcon.textContent = '♡';
+        heroFavIcon.style.color = '#FF6B6B';
+      }
+      if (heroFavText) heroFavText.textContent = 'Favoritar Imóvel';
+      if (heroFavBtn) {
+        heroFavBtn.style.background = 'rgba(245, 241, 232, 0.1)';
+        heroFavBtn.style.borderColor = 'var(--glass-border)';
+      }
+    }
+  }
+
+  window.handleSaveFavorite = async function() {
+    const prop = window.currentProperty;
+    if (!prop || !prop.id) return;
+
+    const heroFavBtn = document.getElementById('heroFavBtn');
+    const btnSidebar = document.getElementById('btnSaveFavorite');
+
+    try {
+      if (heroFavBtn) heroFavBtn.style.transform = 'scale(1.1)';
+      if (btnSidebar) btnSidebar.style.transform = 'scale(1.03)';
+      
+      const isNowFav = await LivingCanvasFavorites.toggleFavorite(prop.id);
+      updateFavoriteButtonsUI(isNowFav);
+
+      setTimeout(() => {
+        if (heroFavBtn) heroFavBtn.style.transform = '';
+        if (btnSidebar) btnSidebar.style.transform = '';
+      }, 200);
+    } catch (err) {
+      console.error("Erro ao favoritar imóvel:", err);
+      setTimeout(() => {
+        if (heroFavBtn) heroFavBtn.style.transform = '';
+        if (btnSidebar) btnSidebar.style.transform = '';
+      }, 200);
+    }
+  };
 
   // NAVBAR SCROLL
   window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
+    if (navbar) {
+      if (window.scrollY > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
     }
   });
   
@@ -2608,7 +3035,7 @@
     rain: '🌧 Chuva — Aconchego com som da natureza'
   };
   
-  function toggleView(view, btn) {
+  window.toggleView = function(view, btn) {
     document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     
@@ -2619,11 +3046,14 @@
       rain: document.querySelector('.toggle-rain')
     };
     
-    Object.values(images).forEach(img => img.style.opacity = '0');
-    images[view].style.opacity = '1';
+    Object.values(images).forEach(img => {
+      if (img) img.style.opacity = '0';
+    });
+    if (images[view]) images[view].style.opacity = '1';
     
-    document.getElementById('toggleCaption').textContent = captions[view];
-  }
+    const captionEl = document.getElementById('toggleCaption');
+    if (captionEl) captionEl.textContent = captions[view];
+  };
   
   // SMOOTH SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
