@@ -1,0 +1,8 @@
+name = "living-canvas"
+compatibility_date = "2026-08-29"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".output/public"
+
+# Configuração de build para deploy via Wrangler CLI ou Cloudflare Pages
+[build]
+command = "npm run build"
