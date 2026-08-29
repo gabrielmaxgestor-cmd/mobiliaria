@@ -1291,6 +1291,43 @@
         </div>
       </div>
     </div>
+
+    <!-- CLIENT DETAILS FORM (STEP 3 & SUBMIT) -->
+    <form id="form-agendar" style="margin-top: 2rem; border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
+      <div style="margin-bottom: 1.2rem;">
+        <h3 style="color: var(--gold); font-size: 1.2rem; font-family: 'Playfair Display', serif; margin-bottom: 0.3rem;">Seus Dados de Contato</h3>
+        <p style="color: var(--text-light); font-size: 0.85rem;">Informe onde devemos enviar a confirmação e o lembrete da visita.</p>
+      </div>
+
+      <!-- Hidden fields for dynamic booking data -->
+      <input type="hidden" name="imovelId" id="inputImovelId" value="">
+      <input type="hidden" name="dataPreferida" id="inputDataPreferida" value="">
+      <input type="hidden" name="horarioPreferido" id="inputHorarioPreferido" value="">
+      <input type="hidden" name="tipoVisita" id="inputTipoVisita" value="presencial">
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; color: var(--gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">Nome completo *</label>
+          <input type="text" name="nome" placeholder="Seu nome completo" required style="width: 100%; padding: 0.85rem 1rem; background: rgba(245, 241, 232, 0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--cream); font-size: 0.9rem; outline: none; box-sizing: border-box;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.8rem; color: var(--gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">WhatsApp / Telefone *</label>
+          <input type="tel" name="telefone" placeholder="(11) 99999-9999" required style="width: 100%; padding: 0.85rem 1rem; background: rgba(245, 241, 232, 0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--cream); font-size: 0.9rem; outline: none; box-sizing: border-box;">
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 0.8rem; color: var(--gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">E-mail *</label>
+        <input type="email" name="email" placeholder="seu@email.com" required style="width: 100%; padding: 0.85rem 1rem; background: rgba(245, 241, 232, 0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--cream); font-size: 0.9rem; outline: none; box-sizing: border-box;">
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; font-size: 0.8rem; color: var(--gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">Observações / Mensagem (opcional)</label>
+        <textarea name="mensagem" rows="3" placeholder="Preferências de rota, acompanhantes ou dúvidas..." style="width: 100%; padding: 0.85rem 1rem; background: rgba(245, 241, 232, 0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--cream); font-size: 0.9rem; outline: none; resize: vertical; box-sizing: border-box;"></textarea>
+      </div>
+
+      <button type="submit" id="mainBookingSubmit" class="booking-submit" style="width: 100%;">Confirmar Agendamento</button>
+    </form>
   </div>
   
   <!-- SIDEBAR -->
@@ -1772,32 +1809,76 @@
     element.querySelector('.broker-select-btn').textContent = 'Selecionada';
   }
   
-  // UPDATE SUMMARY
+  // UPDATE SUMMARY & HIDDEN INPUTS
   function updateSummary() {
     const dateEl = document.getElementById('summaryDate');
     const timeEl = document.getElementById('summaryTime');
     const submitBtn = document.getElementById('bookingSubmit');
+    const inputData = document.getElementById('inputDataPreferida');
+    const inputHora = document.getElementById('inputHorarioPreferido');
+    const inputTipo = document.getElementById('inputTipoVisita');
+    const inputImovel = document.getElementById('inputImovelId');
     
+    const urlParams = new URLSearchParams(window.location.search);
+    if (inputImovel) {
+      inputImovel.value = urlParams.get('id') || 'casa-do-bosque';
+    }
+
+    if (inputTipo) {
+      inputTipo.value = selectedVisitType;
+    }
+
     if (selectedDate) {
       const dayName = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][selectedDate.getDay()];
       const dayNum = selectedDate.getDate();
       const monthName = monthNames[selectedDate.getMonth()];
+      const year = selectedDate.getFullYear();
+      const formattedDate = `${dayName}, ${dayNum} de ${monthName} de ${year}`;
       dateEl.innerHTML = `${dayName}, ${dayNum} de ${monthName}`;
       dateEl.classList.remove('empty');
+      if (inputData) inputData.value = formattedDate;
     } else {
       dateEl.innerHTML = '<span class="empty">Selecione uma data</span>';
+      if (inputData) inputData.value = '';
     }
     
     if (selectedTime) {
       timeEl.innerHTML = selectedTime;
       timeEl.classList.remove('empty');
+      if (inputHora) inputHora.value = selectedTime;
     } else {
       timeEl.innerHTML = '<span class="empty">Selecione um horário</span>';
+      if (inputHora) inputHora.value = '';
     }
     
     // Enable submit if date and time selected
-    submitBtn.disabled = !(selectedDate && selectedTime);
+    if (submitBtn) {
+      submitBtn.disabled = !(selectedDate && selectedTime);
+    }
   }
+
+  // Hook sidebar submit button to scroll to contact form or trigger submission
+  const sidebarSubmitBtn = document.getElementById('bookingSubmit');
+  if (sidebarSubmitBtn) {
+    sidebarSubmitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const contactForm = document.getElementById('form-agendar');
+      if (contactForm) {
+        contactForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const nameInput = contactForm.querySelector('input[name="nome"]');
+        if (nameInput && !nameInput.value) {
+          nameInput.focus();
+        } else {
+          contactForm.requestSubmit();
+        }
+      }
+    });
+  }
+
+  // Make functions available globally
+  window.updateSummary = updateSummary;
+  window.selectedDate = selectedDate;
+  window.selectedTime = selectedTime;
   
   // NAVBAR SCROLL
   window.addEventListener('scroll', () => {
@@ -1833,5 +1914,6 @@
 </script>
 
 <script src="/enhance.js" defer></script>
+<script type="module" src="/leads.js"></script>
 </body>
 </html>

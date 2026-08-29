@@ -1,10 +1,40 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { PROPERTIES_CATALOG, Property } from "../lib/properties-db";
+import { checkRateLimit, validatePromptLength } from "./rate-limiter";
 
 export async function handleCompareVerdict(request: Request): Promise<Response> {
   try {
+    // 1. Rate Limiting por IP (10 requisições por 60 segundos)
+    const rateCheck = checkRateLimit(request, 10, 60_000);
+    if (!rateCheck.allowed) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Muitas requisições. Tente novamente em instantes."
+        }),
+        { status: 429, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const body = await request.json().catch(() => ({}));
-    const selectedIds: string[] = body.propertyIds || ["casa-do-bosque", "loft-horizonte", "penthouse-urbano", "studio-artistico"];
+
+    // 2. Validação do tamanho do prompt caso seja enviado
+    if (body.prompt !== undefined) {
+      const promptValidation = validatePromptLength(body.prompt, 500);
+      if (!promptValidation.valid) {
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: "O texto da requisição excede o limite máximo permitido de 500 caracteres."
+          }),
+          { status: 400, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
+
+    const selectedIds: string[] = Array.isArray(body.propertyIds)
+      ? body.propertyIds.slice(0, 10)
+      : ["casa-do-bosque", "loft-horizonte", "penthouse-urbano", "studio-artistico"];
 
     const selectedProperties: Property[] = selectedIds
       .map((id) => PROPERTIES_CATALOG.find((p) => p.id === id))
@@ -119,7 +149,7 @@ ${JSON.stringify(selectedProperties, null, 2)}`;
     return new Response(
       JSON.stringify({
         success: false,
-        error: err?.message || "Erro ao gerar veredito da IA."
+        error: "Não foi possível gerar o veredito da IA no momento. Tente novamente mais tarde."
       }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );

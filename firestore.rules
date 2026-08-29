@@ -113,6 +113,23 @@ service cloud.firestore {
       allow delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
     }
 
+    // 6. Coleção de Leads (Captação pública de contato/venda/agendamento)
+    match /leads/{leadId} {
+      // Leitura e Gestão: apenas corretores autenticados
+      allow read, list, update, delete: if isCorretor();
+
+      // Criação pública: qualquer visitante (autenticado ou não) pode enviar lead
+      allow create: if request.resource.data.keys().hasAll(['nome', 'email', 'telefone', 'origem', 'status', 'criadoEm'])
+                    && request.resource.data.origem in ['contato', 'vender', 'agendar']
+                    && request.resource.data.status == 'novo'
+                    && request.resource.data.nome is string
+                    && request.resource.data.nome.size() > 0
+                    && request.resource.data.email is string
+                    && request.resource.data.email.size() > 0
+                    && request.resource.data.telefone is string
+                    && request.resource.data.telefone.size() > 0;
+    }
+
     // Bloqueio por padrão para qualquer outro documento
     match /{document=**} {
       allow read, write: if false;

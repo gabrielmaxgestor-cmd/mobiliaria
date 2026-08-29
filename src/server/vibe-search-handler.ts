@@ -1,9 +1,37 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { PROPERTIES_CATALOG } from "../lib/properties-db";
+import { checkRateLimit, validatePromptLength } from "./rate-limiter";
 
 export async function handleVibeSearch(request: Request): Promise<Response> {
   try {
+    // 1. Rate Limiting por IP (10 requisições por 60 segundos)
+    const rateCheck = checkRateLimit(request, 10, 60_000);
+    if (!rateCheck.allowed) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Muitas requisições. Tente novamente em instantes."
+        }),
+        { status: 429, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const body = await request.json().catch(() => ({}));
+
+    // 2. Validação do tamanho do prompt (máximo 500 caracteres)
+    if (body.prompt !== undefined) {
+      const promptValidation = validatePromptLength(body.prompt, 500);
+      if (!promptValidation.valid) {
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: "O texto da busca excede o limite máximo permitido de 500 caracteres."
+          }),
+          { status: 400, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
+
     const prompt = body.prompt || "Quero um lugar tranquilo com muita luz natural, home office e cafés próximos";
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -139,7 +167,7 @@ Sua resposta DEVE ser estritamente em formato JSON contendo:
     return new Response(
       JSON.stringify({
         success: false,
-        error: err?.message || "Erro ao processar busca por vibe."
+        error: "Não foi possível processar a busca por IA no momento. Tente novamente mais tarde."
       }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );

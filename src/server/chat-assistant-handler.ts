@@ -1,11 +1,39 @@
 import { GoogleGenAI } from "@google/genai";
 import { PROPERTIES_CATALOG } from "../lib/properties-db";
+import { checkRateLimit, validatePromptLength } from "./rate-limiter";
 
 export async function handleChatAssistant(request: Request): Promise<Response> {
   try {
+    // 1. Rate Limiting por IP (10 requisições por 60 segundos)
+    const rateCheck = checkRateLimit(request, 10, 60_000);
+    if (!rateCheck.allowed) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Muitas requisições. Tente novamente em instantes."
+        }),
+        { status: 429, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const body = await request.json().catch(() => ({}));
+
+    // 2. Validação do tamanho da mensagem/prompt do chat (máximo 500 caracteres)
+    if (body.message !== undefined) {
+      const messageValidation = validatePromptLength(body.message, 500);
+      if (!messageValidation.valid) {
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: "A mensagem excede o limite máximo permitido de 500 caracteres."
+          }),
+          { status: 400, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
+
     const userMessage = body.message || "Olá, pode me ajudar a encontrar um imóvel com bom investimento?";
-    const history = body.history || [];
+    const history = Array.isArray(body.history) ? body.history.slice(-10) : [];
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -69,7 +97,7 @@ Suas diretrizes:
     return new Response(
       JSON.stringify({
         success: false,
-        error: err?.message || "Erro no assistente de chat."
+        error: "Não foi possível processar a mensagem no momento. Tente novamente mais tarde."
       }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );

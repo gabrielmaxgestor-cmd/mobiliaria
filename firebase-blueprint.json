@@ -231,6 +231,77 @@
         }
       },
       "required": ["usuarioId", "imovelId", "buscaId", "lida", "criadoEm"]
+    },
+    "leads": {
+      "title": "Leads",
+      "description": "Captação de leads e solicitações vindas de formulários de contato, venda de imóvel e agendamento de visitas",
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "description": "Nome completo do interessado"
+        },
+        "email": {
+          "type": "string",
+          "description": "E-mail de contato do interessado"
+        },
+        "telefone": {
+          "type": "string",
+          "description": "Telefone ou WhatsApp do interessado"
+        },
+        "origem": {
+          "type": "string",
+          "enum": ["contato", "vender", "agendar"],
+          "description": "Origem do formulário preenchido"
+        },
+        "assunto": {
+          "type": "string",
+          "description": "Assunto ou objetivo do contato"
+        },
+        "mensagem": {
+          "type": "string",
+          "description": "Mensagem ou observação deixada pelo interessado"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["novo", "em_atendimento", "concluido", "descartado"],
+          "description": "Status do lead no CRM"
+        },
+        "imovelId": {
+          "type": "string",
+          "description": "ID do imóvel associado (quando originado de agendamento ou interesse específico)"
+        },
+        "dataPreferida": {
+          "type": "string",
+          "description": "Data preferida para visita (quando agendamento)"
+        },
+        "horarioPreferido": {
+          "type": "string",
+          "description": "Horário preferido para visita (quando agendamento)"
+        },
+        "tipoVisita": {
+          "type": "string",
+          "description": "Tipo de visita (presencial, virtual, tour 360)"
+        },
+        "tipoImovel": {
+          "type": "string",
+          "description": "Tipo do imóvel a ser vendido ou avaliado"
+        },
+        "enderecoImovel": {
+          "type": "string",
+          "description": "Bairro ou endereço do imóvel a ser vendido"
+        },
+        "valorEstimado": {
+          "type": "number",
+          "description": "Valor estimado pretendido para o imóvel"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora em que o lead foi gerado"
+        }
+      },
+      "required": ["nome", "email", "telefone", "origem", "status", "criadoEm"]
     }
   },
   "firestore": {
@@ -253,6 +324,10 @@
     "/notificacoes/{notificacaoId}": {
       "schema": "notificacoes",
       "description": "Coleção de notificações de match de imóveis para clientes"
+    },
+    "/leads/{leadId}": {
+      "schema": "leads",
+      "description": "Coleção de captação de leads para corretores"
     }
   }
 }

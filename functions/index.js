@@ -1,11 +1,10 @@
 /**
  * Living Canvas - Firebase Cloud Functions
- * Triggers de monitoramento da coleção 'imoveis' (onCreate, onUpdate e onWrite)
+ * Trigger v2 de monitoramento da coleção 'imoveis' (onDocumentWritten)
  * e motor de matching automático contra 'buscasDesejadas' para gerar 'notificacoes'.
  */
 
-const functions = require("firebase-functions");
-const { onDocumentCreated, onDocumentUpdated, onDocumentWritten } = require("firebase-functions/v2/firestore");
+const { onDocumentWritten } = require("firebase-functions/v2/firestore");
 const admin = require("firebase-admin");
 
 if (!admin.apps.length) {
@@ -183,89 +182,8 @@ async function processPropertyMatching(imovelId, imovelData, contextInfo = "Trig
 }
 
 // =========================================================================
-// TRIGGERS FIREBASE FUNCTIONS V1 (Compatibilidade Padrão)
+// TRIGGER FIREBASE FUNCTIONS V2 (2nd Generation Unificado)
 // =========================================================================
-
-/**
- * Trigger onCreate: disparado ao cadastrar um novo imóvel
- */
-const onPropertyCreated = functions.firestore
-  .document("imoveis/{imovelId}")
-  .onCreate(async (snapshot, context) => {
-    const imovelId = context.params.imovelId;
-    const data = snapshot.data();
-    return await processPropertyMatching(imovelId, data, "onCreate v1");
-  });
-
-/**
- * Trigger onUpdate: disparado ao atualizar um imóvel existente
- */
-const onPropertyUpdated = functions.firestore
-  .document("imoveis/{imovelId}")
-  .onUpdate(async (change, context) => {
-    const imovelId = context.params.imovelId;
-    const afterData = change.after.data();
-    const beforeData = change.before.data();
-
-    // Se o status acabou de se tornar disponível ou se já é disponível
-    if (afterData && afterData.status === "disponivel") {
-      return await processPropertyMatching(imovelId, afterData, "onUpdate v1");
-    }
-
-    return null;
-  });
-
-/**
- * Trigger onWrite: listener unificado para criação/atualização
- */
-const onPropertyWritten = functions.firestore
-  .document("imoveis/{imovelId}")
-  .onWrite(async (change, context) => {
-    const imovelId = context.params.imovelId;
-    const afterData = change.after.exists ? change.after.data() : null;
-
-    if (!afterData || afterData.status !== "disponivel") {
-      return null;
-    }
-
-    return await processPropertyMatching(imovelId, afterData, "onWrite v1");
-  });
-
-// =========================================================================
-// TRIGGERS FIREBASE FUNCTIONS V2 (2nd Generation)
-// =========================================================================
-
-const onPropertyCreatedV2 = onDocumentCreated(
-  {
-    document: "imoveis/{imovelId}",
-    database: DATABASE_ID || "(default)"
-  },
-  async (event) => {
-    const snapshot = event.data;
-    if (!snapshot) return;
-    const imovelId = event.params.imovelId;
-    const data = snapshot.data();
-    return await processPropertyMatching(imovelId, data, "onCreate v2");
-  }
-);
-
-const onPropertyUpdatedV2 = onDocumentUpdated(
-  {
-    document: "imoveis/{imovelId}",
-    database: DATABASE_ID || "(default)"
-  },
-  async (event) => {
-    const change = event.data;
-    if (!change) return;
-    const imovelId = event.params.imovelId;
-    const afterData = change.after.data();
-
-    if (afterData && afterData.status === "disponivel") {
-      return await processPropertyMatching(imovelId, afterData, "onUpdate v2");
-    }
-    return null;
-  }
-);
 
 const onPropertyWrittenV2 = onDocumentWritten(
   {
@@ -288,14 +206,7 @@ const onPropertyWrittenV2 = onDocumentWritten(
 
 // Exportações
 module.exports = {
-  // Triggers v1
-  onPropertyCreated,
-  onPropertyUpdated,
-  onPropertyWritten,
-
-  // Triggers v2
-  onPropertyCreatedV2,
-  onPropertyUpdatedV2,
+  // Trigger v2 Unificado
   onPropertyWrittenV2,
 
   // Funções Utilitárias & Motor

@@ -390,7 +390,18 @@
     position: absolute;
     inset: 0;
     overflow: hidden;
-    background: url('/hero_historic_city.jpg') center top / cover no-repeat;
+    background-image: url('/hero_historic_city.jpg');
+    background-image: -webkit-image-set(
+      url('/hero_historic_city.webp') 1x,
+      url('/hero_historic_city.jpg') 1x
+    );
+    background-image: image-set(
+      url('/hero_historic_city.webp') type('image/webp'),
+      url('/hero_historic_city.jpg') type('image/jpeg')
+    );
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-attachment: scroll;
   }
   .hero-video video {

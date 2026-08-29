@@ -2,11 +2,27 @@
    Enhancement layer: sidebar, icon replacement, motion, ⌘K
    Idempotent — safe to include on every page.
    ============================================================ */
+
+/**
+ * Global HTML Escaping Utility for XSS Prevention
+ */
+window.escapeHTML = function (str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+};
+window.escapeHtml = window.escapeHTML;
+
 (function () {
   if (typeof window === 'undefined') return;
   if (window.__lcEnhanceLoaded) return;
   window.__lcEnhanceLoaded = true;
 
+  const escapeHTML = window.escapeHTML;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- SVG icon library (lucide-inspired, inline) ---------- */
@@ -965,7 +981,8 @@
           if (vibeMessages) {
             const lastBotMsg = vibeMessages.querySelector('.vibe-msg.bot:last-child');
             if (lastBotMsg) {
-              lastBotMsg.innerHTML = `✨ <strong>Recomendação IA:</strong> ${data.aiSummary || 'Encontramos imóveis altamente compatíveis com seu perfil. Veja as opções abaixo e entre em contato direto pelo WhatsApp!'}`;
+              const summaryText = data.aiSummary ? escapeHTML(data.aiSummary) : 'Encontramos imóveis altamente compatíveis com seu perfil. Veja as opções abaixo e entre em contato direto pelo WhatsApp!';
+              lastBotMsg.innerHTML = `✨ <strong>Recomendação IA:</strong> ${summaryText}`;
             }
             vibeMessages.scrollTop = vibeMessages.scrollHeight;
           }
@@ -974,7 +991,7 @@
           const tagsContainer = document.querySelector('.ai-insight-block .ai-tags');
           if (tagsContainer && data.extractedPriorities) {
             tagsContainer.innerHTML = data.extractedPriorities.map(p => `
-              <span class="ai-tag">${p.name} <span class="ai-tag-confidence">${p.confidence}</span></span>
+              <span class="ai-tag">${escapeHTML(p.name)} <span class="ai-tag-confidence">${escapeHTML(p.confidence)}</span></span>
             `).join('');
           }
 
@@ -983,24 +1000,24 @@
           if (filtersContainer && data.appliedFilters) {
             const f = data.appliedFilters;
             filtersContainer.innerHTML = `
-              <div class="ai-filter"><span class="ai-filter-label">Nível de ruído</span><span class="ai-filter-value">${f.noiseLevel || 'Silencioso'}</span></div>
-              <div class="ai-filter"><span class="ai-filter-label">Orientação solar</span><span class="ai-filter-value">${f.sunOrientation || 'Norte/Leste'}</span></div>
-              <div class="ai-filter"><span class="ai-filter-label">Distância de parques</span><span class="ai-filter-value">${f.parksDistance || 'Até 800m'}</span></div>
-              <div class="ai-filter"><span class="ai-filter-label">Walkability</span><span class="ai-filter-value">${f.walkability || 'Alto'}</span></div>
-              <div class="ai-filter"><span class="ai-filter-label">Home Office</span><span class="ai-filter-value">${f.homeOfficeSpace || 'Sim'}</span></div>
+              <div class="ai-filter"><span class="ai-filter-label">Nível de ruído</span><span class="ai-filter-value">${escapeHTML(f.noiseLevel || 'Silencioso')}</span></div>
+              <div class="ai-filter"><span class="ai-filter-label">Orientação solar</span><span class="ai-filter-value">${escapeHTML(f.sunOrientation || 'Norte/Leste')}</span></div>
+              <div class="ai-filter"><span class="ai-filter-label">Distância de parques</span><span class="ai-filter-value">${escapeHTML(f.parksDistance || 'Até 800m')}</span></div>
+              <div class="ai-filter"><span class="ai-filter-label">Walkability</span><span class="ai-filter-value">${escapeHTML(f.walkability || 'Alto')}</span></div>
+              <div class="ai-filter"><span class="ai-filter-label">Home Office</span><span class="ai-filter-value">${escapeHTML(f.homeOfficeSpace || 'Sim')}</span></div>
             `;
           }
 
           // Update AI Summary
           const summaryEl = document.querySelector('.ai-summary');
           if (summaryEl && data.aiSummary) {
-            summaryEl.innerHTML = `✨ ${data.aiSummary}`;
+            summaryEl.innerHTML = `✨ ${escapeHTML(data.aiSummary)}`;
           }
 
           // Update Results Count
           const countEl = document.querySelector('.results-count');
           if (countEl && data.matches) {
-            countEl.innerHTML = `<strong>${data.matches.length} imóveis</strong> com alta compatibilidade`;
+            countEl.innerHTML = `<strong>${Number(data.matches.length)} imóveis</strong> com alta compatibilidade`;
           }
 
           // Update Property Cards with CTA buttons
@@ -1010,27 +1027,27 @@
               const p = m.property;
               const waText = encodeURIComponent(`Olá! Encontrei o imóvel ${p.title} (${p.neighborhood}) pela Busca por Vibe e gostaria de agendar uma visita.`);
               return `
-                <article class="property-card" onclick="window.location.href='imovel.html?id=${p.id}'">
-                  <div class="card-image card-image-exterior" style="background-image: url('${p.imageUrl}')"></div>
+                <article class="property-card" onclick="window.location.href='imovel.html?id=${encodeURIComponent(p.id)}'">
+                  <div class="card-image card-image-exterior" style="background-image: url('${encodeURI(p.imageUrl)}')"></div>
                   <div class="card-overlay">
                     <div class="card-badges">
                       <span class="card-badge">Exclusivo</span>
-                      <span class="match-badge">${m.matchPercentage}% match</span>
+                      <span class="match-badge">${escapeHTML(m.matchPercentage)}% match</span>
                     </div>
-                    <span class="card-price">${p.priceFormatted}</span>
-                    <h3 class="card-title">${p.title}</h3>
-                    <p class="card-location">${p.neighborhood} • ${p.area}m²</p>
-                    <div class="card-match-reason">${m.vibeMatchReason}</div>
+                    <span class="card-price">${escapeHTML(p.priceFormatted)}</span>
+                    <h3 class="card-title">${escapeHTML(p.title)}</h3>
+                    <p class="card-location">${escapeHTML(p.neighborhood)} • ${escapeHTML(p.area)}m²</p>
+                    <div class="card-match-reason">${escapeHTML(m.vibeMatchReason)}</div>
                     <div class="card-match-tags">
-                      ${p.tags.map(t => `<span class="card-match-tag matched">${t}</span>`).join('')}
+                      ${(p.tags || []).map(t => `<span class="card-match-tag matched">${escapeHTML(t)}</span>`).join('')}
                     </div>
                     <div class="card-meta">
-                      <span>🛏 ${p.bedrooms} suítes</span>
-                      <span>🚗 ${p.parking} vagas</span>
-                      <span>📐 ${p.area}m²</span>
+                      <span>🛏 ${escapeHTML(p.bedrooms)} suítes</span>
+                      <span>🚗 ${escapeHTML(p.parking)} vagas</span>
+                      <span>📐 ${escapeHTML(p.area)}m²</span>
                     </div>
                     <div class="card-action-btns" onclick="event.stopPropagation();">
-                      <a href="imovel.html?id=${p.id}" class="card-btn-details">
+                      <a href="imovel.html?id=${encodeURIComponent(p.id)}" class="card-btn-details">
                         🔍 Ver Detalhes
                       </a>
                       <a href="https://wa.me/5511999999999?text=${waText}" target="_blank" class="card-btn-whatsapp">
@@ -1120,11 +1137,11 @@
         if (data.success && data.verdicts) {
           verdictGrid.innerHTML = data.verdicts.map((v, i) => `
             <div class="verdict-card ${i === 0 ? 'winner-card' : ''}">
-              <span class="verdict-badge">${v.badge}</span>
-              <div class="verdict-icon">${v.icon}</div>
-              <h3 class="verdict-title">${v.title}</h3>
-              <p class="verdict-subtitle">${v.subtitle}</p>
-              <p class="verdict-reason">${v.reason}</p>
+              <span class="verdict-badge">${escapeHTML(v.badge)}</span>
+              <div class="verdict-icon">${escapeHTML(v.icon)}</div>
+              <h3 class="verdict-title">${escapeHTML(v.title)}</h3>
+              <p class="verdict-subtitle">${escapeHTML(v.subtitle)}</p>
+              <p class="verdict-reason">${escapeHTML(v.reason)}</p>
             </div>
           `).join('');
         }

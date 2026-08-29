@@ -1037,26 +1037,26 @@
       <p>Preencha o formulário e retornaremos em até 24 horas.</p>
     </div>
     
-    <form>
+    <form id="form-contato">
       <div class="form-row">
         <div class="form-group">
           <label>Nome completo</label>
-          <input type="text" placeholder="Seu nome" required>
+          <input type="text" name="nome" placeholder="Seu nome" required>
         </div>
         <div class="form-group">
           <label>E-mail</label>
-          <input type="email" placeholder="seu@email.com" required>
+          <input type="email" name="email" placeholder="seu@email.com" required>
         </div>
       </div>
       
       <div class="form-row">
         <div class="form-group">
           <label>Telefone</label>
-          <input type="tel" placeholder="(11) 99999-9999" required>
+          <input type="tel" name="telefone" placeholder="(11) 99999-9999" required>
         </div>
         <div class="form-group">
           <label>Assunto</label>
-          <select required>
+          <select name="assunto" required>
             <option value="">Selecione</option>
             <option value="comprar">Quero comprar um imóvel</option>
             <option value="vender">Quero vender meu imóvel</option>
@@ -1070,13 +1070,13 @@
       
       <div class="form-group full" style="margin-bottom: 1.5rem;">
         <label>Sua mensagem</label>
-        <textarea rows="5" placeholder="Conte-nos o que você busca, suas preferências, dúvidas..." required></textarea>
+        <textarea name="mensagem" rows="5" placeholder="Conte-nos o que você busca, suas preferências, dúvidas..." required></textarea>
       </div>
       
       <div class="form-checkbox">
-        <input type="checkbox" id="privacy" required>
+        <input type="checkbox" name="termos" id="privacy" required>
         <label for="privacy">
-          Li e concordo com a <a href="#">Política de Privacidade</a> e autorizo o contato pela Living Canvas.
+          Li e concordo com a <a href="/privacidade.html" target="_blank">Política de Privacidade</a> e autorizo o contato pela Living Canvas.
         </label>
       </div>
       
@@ -1445,5 +1445,6 @@
 </script>
 
 <script src="/enhance.js" defer></script>
+<script type="module" src="/leads.js"></script>
 </body>
 </html>

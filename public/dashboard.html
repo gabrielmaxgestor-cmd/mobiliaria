@@ -2053,15 +2053,18 @@
       const bairro = prop.endereco?.bairro || 'Localização Nobre';
       const area = prop.caracteristicas?.areaM2 || 0;
       const formattedPrice = LivingCanvasProperties.formatCurrency(prop.preco);
+      const safeTitle = escapeHtml(prop.titulo || 'Imóvel Exclusivo');
+      const safeBairro = escapeHtml(bairro);
+      const safeArea = escapeHtml(area);
 
       return `
         <div class="fav-card" id="fav-card-${prop.id}">
-          <div class="fav-image" style="background-image: url('${img}')">
-            <button class="fav-remove" onclick="removeDashboardFavorite('${prop.id}')" title="Remover dos favoritos" aria-label="Remover dos favoritos">×</button>
+          <div class="fav-image" style="background-image: url('${encodeURI(img)}')">
+            <button class="fav-remove" onclick="removeDashboardFavorite('${encodeURIComponent(prop.id)}')" title="Remover dos favoritos" aria-label="Remover dos favoritos">×</button>
           </div>
           <div class="fav-content">
-            <h4 class="fav-title" title="${prop.titulo || 'Imóvel'}">${prop.titulo || 'Imóvel Exclusivo'}</h4>
-            <p class="fav-location">${bairro} • ${area}m²</p>
+            <h4 class="fav-title" title="${safeTitle}">${safeTitle}</h4>
+            <p class="fav-location">${safeBairro} • ${safeArea}m²</p>
             <div class="fav-price">
               <span>${formattedPrice}</span>
               <a href="imovel.html?id=${encodeURIComponent(prop.id)}" class="btn-small btn-primary-small" style="padding: 0.4rem 0.8rem; font-size: 0.75rem; text-decoration: none;">Ver</a>
