@@ -1,6 +1,6 @@
 {
-  "name": "Living Canvas",
-  "description": "Plataforma imobiliária de alto padrão com curadoria inteligente, busca por vibe e assistente IA.",
+  "name": "Remix imobiliria_copia",
+  "description": "Imported from GitHub: gabrielmaxgestor-cmd/imobiliria_copia",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

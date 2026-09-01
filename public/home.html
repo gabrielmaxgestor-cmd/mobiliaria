@@ -357,6 +357,48 @@
   
   .nav-links a:hover { color: var(--gold); }
   .nav-links a:hover::after { width: 100%; }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  /* Hamburger Button */
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+  }
+
+  .hamburger-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger-btn.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  .hamburger-btn.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
   
   .nav-cta {
     padding: var(--space-3) var(--space-5);
@@ -390,14 +432,14 @@
     position: absolute;
     inset: 0;
     overflow: hidden;
-    background-image: url('/hero_historic_city.jpg');
+    background-image: url('/hero-cidade.jpg');
     background-image: -webkit-image-set(
-      url('/hero_historic_city.webp') 1x,
-      url('/hero_historic_city.jpg') 1x
+      url('/hero-cidade.webp') 1x,
+      url('/hero-cidade.jpg') 1x
     );
     background-image: image-set(
-      url('/hero_historic_city.webp') type('image/webp'),
-      url('/hero_historic_city.jpg') type('image/jpeg')
+      url('/hero-cidade.webp') type('image/webp'),
+      url('/hero-cidade.jpg') type('image/jpeg')
     );
     background-position: center top;
     background-size: cover;
@@ -408,7 +450,10 @@
     display: none;
   }
   .hero-video::after {
-    display: none;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,46,42,0.55) 0%, rgba(10,46,42,0.25) 40%, rgba(10,46,42,0.65) 100%);
   }
 
   @keyframes heroIntro {
@@ -1447,7 +1492,33 @@
   
   @media (max-width: 768px) {
     nav { padding: var(--space-4) var(--space-5); }
-    .nav-links { display: none; }
+    .hamburger-btn { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 46, 42, 0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212, 175, 122, 0.25);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      padding: var(--space-6) var(--space-6);
+      flex-direction: column;
+      gap: var(--space-5);
+      z-index: 999;
+      margin: 0;
+    }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+    }
+    .nav-links a {
+      font-size: var(--text-base);
+      display: block;
+      padding: var(--space-2) 0;
+    }
     .section, .testimonials-section { padding: var(--space-8) var(--space-5); }
     .footer-content { grid-template-columns: 1fr 1fr; }
     .filter-grid { grid-template-columns: 1fr; }
@@ -1508,7 +1579,22 @@
 <!-- NAVBAR -->
 <nav id="navbar">
   <a href="home.html" class="logo">LIVING<span>canvas</span></a>
-  <button class="nav-cta" onclick="scrollToFilter()">Buscar Imóvel</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="home.html">Início</a></li>
+    <li><a href="imoveis.html">Imóveis</a></li>
+    <li><a href="lancamentos.html">Lançamentos</a></li>
+    <li><a href="bairros.html">Bairros</a></li>
+    <li><a href="vender.html">Vender</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-cta" onclick="scrollToFilter()">Buscar Imóvel</button>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- HERO SECTION -->
@@ -2260,6 +2346,42 @@
   function scrollToFilter() {
     document.getElementById('imoveis').scrollIntoView({ behavior: 'smooth' });
   }
+
+  // MOBILE MENU HAMBURGER
+  function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    if (!navLinks || !hamburgerBtn) return;
+    
+    const isOpen = navLinks.classList.toggle('open');
+    hamburgerBtn.classList.toggle('active', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.getElementById('navLinks');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    if (navLinks && hamburgerBtn) {
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('open');
+          hamburgerBtn.classList.remove('active');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('#navbar') && navLinks.classList.contains('open')) {
+          navLinks.classList.remove('open');
+          hamburgerBtn.classList.remove('active');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+        }
+      });
+    }
+  });
   
   // SMOOTH SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
