@@ -1210,7 +1210,55 @@
     .dashboard-grid { grid-template-columns: 1fr; }
   }
   
+  /* SIDEBAR TOGGLE BUTTON (MOBILE) */
+  .sidebar-toggle-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1002;
+    flex-shrink: 0;
+  }
+
+  .sidebar-toggle-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--gold, #d4af7a);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .sidebar-toggle-btn.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .sidebar-toggle-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  .sidebar-toggle-btn.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  /* SIDEBAR OVERLAY */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
   @media (max-width: 768px) {
+    .sidebar-overlay.open { display: block; }
+    .sidebar-toggle-btn { display: flex; }
     .dashboard-layout { grid-template-columns: 1fr; }
     .sidebar { 
       position: fixed; 
@@ -1292,6 +1340,12 @@
     
     <!-- TOP BAR -->
     <div class="top-bar">
+      <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Abrir menu" aria-expanded="false" onclick="toggleSidebar()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
       <div class="welcome-text">
         <h1 id="welcomeGreeting">Olá, <em id="welcomeUserName">Carregando...</em> 👋</h1>
         <p>Pronto(a) para dar o próximo passo na busca pelo seu cenário ideal?</p>
@@ -1607,6 +1661,7 @@
     </div>
     
   </main>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 </div>
 
 <!-- MODAL: CADASTRAR / EDITAR BUSCA DESEJADA -->
@@ -1697,7 +1752,39 @@
 </div>
 
 <script>
-  // Simple interaction for sidebar on mobile
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    if (!sidebar || !toggleBtn) return;
+    const isOpen = sidebar.classList.toggle('open');
+    if (overlay) overlay.classList.toggle('open', isOpen);
+    toggleBtn.classList.toggle('active', isOpen);
+    toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    toggleBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    if (sidebar) {
+      const navLinks = sidebar.querySelectorAll('.sidebar-nav a');
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('open');
+            if (toggleBtn) {
+              toggleBtn.classList.remove('active');
+              toggleBtn.setAttribute('aria-expanded', 'false');
+              toggleBtn.setAttribute('aria-label', 'Abrir menu');
+            }
+          }
+        });
+      });
+    }
+  });
 </script>
 
 <script type="module">
