@@ -153,6 +153,42 @@
     color: var(--bg-primary);
   }
 
+  /* Hamburger Button */
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+  }
+
+  .hamburger-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--gold, #d4af7a);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger-btn.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  .hamburger-btn.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
   /* HERO HEADER */
   .policy-header {
     padding: 9rem 2rem 3.5rem;
@@ -429,11 +465,22 @@
   }
 
   @media (max-width: 768px) {
-    .navbar {
-      padding: 1rem 1.5rem;
-    }
+    .hamburger-btn { display: flex; }
     .nav-links {
       display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--emerald-deep, #0a2e2a);
+      padding: 1rem 1.5rem;
+    }
+    .nav-links.open {
+      display: flex;
+    }
+    .navbar {
+      padding: 1rem 1.5rem;
     }
     .policy-header {
       padding: 7rem 1.5rem 2.5rem;
@@ -468,15 +515,21 @@
     </div>
   </a>
 
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="/home.html" class="nav-link">Início</a></li>
-    <li><a href="/imoveis.html" class="nav-link">Acervo</a></li>
+    <li><a href="/imoveis.html" class="nav-link">Imóveis</a></li>
+    <li><a href="/lancamentos.html" class="nav-link">Lançamentos</a></li>
+    <li><a href="/bairros.html" class="nav-link">Bairros</a></li>
     <li><a href="/vender.html" class="nav-link">Vender</a></li>
-    <li><a href="/agendar.html" class="nav-link">Agendar</a></li>
     <li><a href="/contato.html" class="nav-link">Contato</a></li>
   </ul>
 
   <a href="/agendar.html" class="nav-cta">Agendar Visita</a>
+  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <!-- HEADER -->
@@ -662,5 +715,41 @@
 </script>
 
 <script src="/enhance.js" defer></script>
+<script>
+  // MOBILE MENU HAMBURGER
+  function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    if (!navLinks || !hamburgerBtn) return;
+    const isOpen = navLinks.classList.toggle('open');
+    hamburgerBtn.classList.toggle('active', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.getElementById('navLinks');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    if (navLinks && hamburgerBtn) {
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('open');
+          hamburgerBtn.classList.remove('active');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('#mainNavbar') && navLinks.classList.contains('open')) {
+          navLinks.classList.remove('open');
+          hamburgerBtn.classList.remove('active');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+        }
+      });
+    }
+  });
+</script>
 </body>
 </html>
