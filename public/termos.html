@@ -15,13 +15,172 @@
   
   <link rel="stylesheet" href="/design-tokens.css">
   <link rel="stylesheet" href="/enhance.css">
-  <link rel="stylesheet" href="/styles.css">
   
   <style>
+    :root {
+      --emerald-deep: #0a2e2a;
+      --emerald-mid: #134e4a;
+      --emerald-light: #1a5f5a;
+      --gold: #d4af7a;
+      --gold-soft: #e8c9a0;
+      --cream: #f5f1e8;
+      --glass-border: rgba(212, 175, 122, 0.2);
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      background: rgba(10, 46, 42, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s;
+    }
+    
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    
+    .logo span { font-style: italic; color: var(--cream); }
+    
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    /* Hamburger Button */
+    .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1001;
+    }
+
+    .hamburger-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--gold, #d4af7a);
+      border-radius: 2px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .hamburger-btn.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+
+    .hamburger-btn.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+
+    .nav-cta {
+      padding: 0.7rem 1.5rem;
+      background: var(--gold);
+      border: none;
+      color: var(--emerald-deep);
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      font-weight: 600;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-soft);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(212, 175, 122, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .hamburger-btn { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 46, 42, 0.98);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(212, 175, 122, 0.25);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        padding: 1.5rem;
+        flex-direction: column;
+        gap: 1.25rem;
+        z-index: 999;
+        margin: 0;
+      }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+      }
+      .nav-links a {
+        font-size: 1rem;
+        display: block;
+        padding: 0.5rem 0;
+      }
+    }
+
     .legal-container {
       max-width: 900px;
       margin: 0 auto;
-      padding: var(--space-8, 2rem) var(--space-4, 1rem) var(--space-16, 4rem);
+      padding: 7rem var(--space-4, 1rem) var(--space-16, 4rem);
     }
     .legal-header {
       text-align: center;
@@ -104,37 +263,26 @@
   </style>
 </head>
 <body class="bg-sand-light text-ink antialiased">
-  <!-- Header / Navbar -->
-  <header class="site-header sticky top-0 z-50 bg-surface/90 backdrop-blur-md border-b border-border/80 transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <a href="/home.html" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-terracotta to-terracotta-dark flex items-center justify-center text-surface font-display text-xl font-bold shadow-sm group-hover:scale-105 transition-transform">
-          LC
-        </div>
-        <span class="font-display text-xl sm:text-2xl font-bold tracking-tight text-ink">Living Canvas</span>
-      </a>
-      
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-ink-muted">
-        <a href="/imoveis.html" class="hover:text-terracotta transition-colors">Imóveis</a>
-        <a href="/lancamentos.html" class="hover:text-terracotta transition-colors">Lançamentos</a>
-        <a href="/bairros.html" class="hover:text-terracotta transition-colors">Bairros</a>
-        <a href="/busca-ia.html" class="hover:text-terracotta transition-colors flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
-          Busca por Vibe
-        </a>
-        <a href="/vender.html" class="hover:text-terracotta transition-colors">Anunciar</a>
-      </nav>
-
-      <div class="flex items-center gap-3">
-        <a href="/login.html" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-ink hover:text-terracotta transition-colors">
-          Entrar
-        </a>
-        <a href="/agendar.html" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-surface bg-terracotta hover:bg-terracotta-dark rounded-xl transition-all shadow-sm">
-          Agendar Visita
-        </a>
-      </div>
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="home.html" class="logo">LIVING<span>canvas</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="home.html">Início</a></li>
+      <li><a href="imoveis.html">Imóveis</a></li>
+      <li><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="bairros.html">Bairros</a></li>
+      <li><a href="vender.html">Vender</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="agendar.html" class="nav-cta">Agendar Visita</a>
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
-  </header>
+  </nav>
 
   <!-- Main Content -->
   <main class="legal-container">
@@ -317,5 +465,43 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // MOBILE MENU HAMBURGER
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      if (!navLinks || !hamburgerBtn) return;
+      
+      const isOpen = navLinks.classList.toggle('open');
+      hamburgerBtn.classList.toggle('active', isOpen);
+      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const navLinks = document.getElementById('navLinks');
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      if (navLinks && hamburgerBtn) {
+        navLinks.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            navLinks.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+          });
+        });
+
+        document.addEventListener('click', function (e) {
+          if (!e.target.closest('#navbar') && navLinks.classList.contains('open')) {
+            navLinks.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>
