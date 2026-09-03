@@ -1138,4 +1138,90 @@
         <div class="poi-icon">🎓</div>
         <div class="poi-content">
           <div class="poi-category-label">Educação</div>
-          <div class="poi-name">Escola<script src="/enhance.js" defer></script>
+          <div class="poi-name">Escola Britânica de São Paulo</div>
+          <div class="poi-description">Instituição internacional de ensino com currículo britânico, excelência acadêmica e formação bilíngue.</div>
+          <div class="poi-meta">
+            <span>📍 1.5km</span>
+            <span>⭐ 4.9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">LIVING<span>canvas</span></div>
+        <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href='imoveis.html'>Imóveis</a></li>
+          <li><a href="bairros.html">Bairros</a></li>
+          <li><a href="lancamentos.html">Lançamentos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href='sobre.html'>Sobre nós</a></li>
+          <li><a href="sobre.html">Corretores</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+551130000000">(11) 3000-0000</a></li>
+          <li><a href="mailto:contato@livingcanvas.com">contato@livingcanvas.com</a></li>
+          <li><a href="agendar.html">Agendar Visita</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+      <span>CRECI-SP 00000-J</span>
+    </div>
+  </footer>
+
+  <script src="/enhance.js" defer></script>
+  <script>
+    // MOBILE MENU HAMBURGER
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      if (!navLinks || !hamburgerBtn) return;
+      const isOpen = navLinks.classList.toggle('open');
+      hamburgerBtn.classList.toggle('active', isOpen);
+      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const navLinks = document.getElementById('navLinks');
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      if (navLinks && hamburgerBtn) {
+        navLinks.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            navLinks.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+          });
+        });
+
+        document.addEventListener('click', function (e) {
+          if (!e.target.closest('#navbar') && navLinks.classList.contains('open')) {
+            navLinks.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
