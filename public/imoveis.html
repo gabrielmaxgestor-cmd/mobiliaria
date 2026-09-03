@@ -107,6 +107,48 @@
   .nav-links a:hover { color: var(--gold); }
   .nav-links a:hover::after { width: 100%; }
   
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* Hamburger Button */
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+  }
+
+  .hamburger-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--gold, #d4af7a);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger-btn.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  .hamburger-btn.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
   .nav-cta {
     padding: var(--space-3) var(--space-5);
     background: var(--gold);
@@ -932,9 +974,35 @@
     .map-sidebar { position: relative; top: 0; }
   }
   
-  @media (max-width: 768px) {
-    nav { padding: var(--space-4) var(--space-5); }
-    .nav-links { display: none; }
+    @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hamburger-btn { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 46, 42, 0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212, 175, 122, 0.25);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      padding: 1.5rem;
+      flex-direction: column;
+      gap: 1.25rem;
+      z-index: 999;
+      margin: 0;
+    }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+    }
+    .nav-links a {
+      font-size: 1rem;
+      display: block;
+      padding: 0.5rem 0;
+    }
     .listings-header, .listings-container { padding-left: 1.5rem; padding-right: 1.5rem; }
     .filters-bar { margin-left: 1.5rem; margin-right: 1.5rem; }
     .filters-grid { grid-template-columns: 1fr; }
@@ -994,7 +1062,22 @@
 <!-- NAVBAR -->
 <nav id="navbar">
   <a href='home.html' class="logo">LIVING<span>canvas</span></a>
-  <a href="imoveis.html" class="nav-cta">Buscar Imóvel</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="home.html">Início</a></li>
+    <li><a href="imoveis.html">Imóveis</a></li>
+    <li><a href="lancamentos.html">Lançamentos</a></li>
+    <li><a href="bairros.html">Bairros</a></li>
+    <li><a href="vender.html">Vender</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="imoveis.html" class="nav-cta">Buscar Imóvel</a>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- HEADER -->
@@ -1640,5 +1723,42 @@
 
 <script src="/scroll-animations.js" defer></script>
 <script src="/enhance.js" defer></script>
+<script>
+  // MOBILE MENU HAMBURGER
+  function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    if (!navLinks || !hamburgerBtn) return;
+    
+    const isOpen = navLinks.classList.toggle('open');
+    hamburgerBtn.classList.toggle('active', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.getElementById('navLinks');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    if (navLinks && hamburgerBtn) {
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('open');
+          hamburgerBtn.classList.remove('active');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('#navbar') && navLinks.classList.contains('open')) {
+          navLinks.classList.remove('open');
+          hamburgerBtn.classList.remove('active');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+          hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
+        }
+      });
+    }
+  });
+</script>
 </body>
 </html>
