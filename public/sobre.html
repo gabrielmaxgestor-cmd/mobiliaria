@@ -454,7 +454,8 @@
     position: relative;
   }
   
-  .timeline-line {
+  .timeline-container::before {
+    content: '';
     position: absolute;
     left: 50%;
     top: 0;
@@ -1064,7 +1065,7 @@
     .story-container { grid-template-columns: 1fr; }
     .mvv-grid { grid-template-columns: 1fr; }
     .timeline-item { grid-template-columns: 1fr; gap: 1rem; }
-    .timeline-line { display: none; }
+    .timeline-container::before { display: none; }
     .timeline-dot { display: none; }
     .timeline-item:nth-child(even) .timeline-content { grid-column: auto; }
   }
@@ -1244,8 +1245,6 @@
   </div>
   
   <div class="timeline-container">
-    <div class="timeline-line"></div>
-    
     <div class="timeline-item">
       <div class="timeline-content">
         <div class="timeline-year">2011</div>
