@@ -1087,8 +1087,8 @@
     <span>›</span>
     <strong style="color: var(--gold);">Imóveis Disponíveis</strong>
   </div>
-  <h1 class="listings-title">Encontre seu <em>cenário</em> ideal</h1>
-  <p class="listings-subtitle">Explore nossa curadoria de imóveis únicos. Cada espaço foi selecionado para oferecer uma experiência de vida excepcional.</p>
+  <h1 class="listings-title">Todos os imóveis disponíveis, <em>num só lugar</em></h1>
+  <p class="listings-subtitle">Filtre por bairro, preço e tipo de imóvel, e fale direto com quem pode fechar negócio hoje.</p>
 </section>
 
 <!-- FILTERS -->
@@ -1173,7 +1173,7 @@
   
   <div class="filters-actions">
     <button id="btnClearFilters" type="button" class="filter-btn filter-btn-secondary" onclick="resetFilters()">Limpar Filtros</button>
-    <button id="btnApplyFilters" type="button" class="filter-btn filter-btn-primary" onclick="applyFilters()">Aplicar Filtros</button>
+    <button id="btnApplyFilters" type="button" class="filter-btn filter-btn-primary" onclick="applyFilters()">Ver Resultados</button>
   </div>
 </div>
 
@@ -1205,7 +1205,7 @@
     <div class="properties-grid" id="propertiesGrid">
       <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; color: var(--gold-soft);">
         <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid rgba(212,175,122,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
-        <p style="font-size: 1rem; letter-spacing: 1px;">Carregando imóveis exclusivos do Firestore...</p>
+        <p style="font-size: 1rem; letter-spacing: 1px;">Carregando os melhores imóveis pra você...</p>
       </div>
     </div>
     
@@ -1448,7 +1448,7 @@
         grid.innerHTML = `
           <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; color: var(--gold-soft);">
             <div style="display: inline-block; width: 36px; height: 36px; border: 3px solid rgba(212,175,122,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
-            <p style="font-size: 0.95rem; letter-spacing: 1px;">Buscando acervo de imóveis no Firestore...</p>
+            <p style="font-size: 0.95rem; letter-spacing: 1px;">Buscando imóveis disponíveis...</p>
           </div>
         `;
       }
@@ -1578,9 +1578,12 @@
       grid.innerHTML = `
         <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; background: rgba(19,78,74,0.15); border: 1px dashed var(--glass-border); border-radius: var(--radius-lg);">
           <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏡</div>
-          <h3 style="color: var(--gold); font-size: 1.3rem; margin-bottom: 0.5rem; font-family: var(--font-display, serif);">Nenhum imóvel encontrado</h3>
-          <p style="color: var(--text-light); max-width: 480px; margin: 0 auto 1.5rem auto; font-size: 0.95rem;">Não encontramos imóveis disponíveis com essa combinação de filtros. Tente ajustar seus critérios de busca.</p>
-          <button type="button" onclick="resetFilters()" class="filter-btn filter-btn-primary">Ver Todos os Imóveis</button>
+          <h3 style="color: var(--gold); font-size: 1.3rem; margin-bottom: 0.5rem; font-family: var(--font-display, serif);">Nada com esses filtros ainda</h3>
+          <p style="color: var(--text-light); max-width: 480px; margin: 0 auto 1.5rem auto; font-size: 0.95rem;">Mas isso não significa que não temos o que você procura. Ajuste os filtros ou fale com um especialista agora.</p>
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <button type="button" onclick="resetFilters()" class="filter-btn filter-btn-secondary">Ver Todos os Imóveis</button>
+            <a href="contato.html" class="filter-btn filter-btn-primary" style="text-decoration: none; display: inline-flex; align-items: center;">Falar com Especialista</a>
+          </div>
         </div>
       `;
       return;
