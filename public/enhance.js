@@ -433,6 +433,199 @@ window.escapeHtml = window.escapeHTML;
     });
 
     navbar.appendChild(navContainer);
+
+    // Clean up any previously created mobile nav elements for idempotency
+    navbar.querySelectorAll('.lc-mobile-nav-trigger').forEach(el => el.remove());
+    document.querySelectorAll('#lcMobileNavDrawer, #lcMobileNavScrim').forEach(el => el.remove());
+
+    // 1. Mobile navigation trigger (hamburger button)
+    const mobileTrigger = document.createElement('button');
+    mobileTrigger.type = 'button';
+    mobileTrigger.className = 'lc-mobile-nav-trigger';
+    mobileTrigger.setAttribute('aria-label', 'Abrir menu de navegação');
+    mobileTrigger.setAttribute('aria-expanded', 'false');
+    mobileTrigger.innerHTML = svg('menu');
+    navbar.appendChild(mobileTrigger);
+
+    // 2. Scrim (dark overlay)
+    const scrim = document.createElement('div');
+    scrim.id = 'lcMobileNavScrim';
+    scrim.className = 'lc-mobile-nav-scrim';
+    document.body.appendChild(scrim);
+
+    // 3. Off-canvas drawer
+    const drawer = document.createElement('aside');
+    drawer.id = 'lcMobileNavDrawer';
+    drawer.className = 'lc-mobile-nav-drawer';
+    drawer.setAttribute('aria-label', 'Menu Principal');
+    drawer.setAttribute('role', 'dialog');
+    drawer.setAttribute('aria-modal', 'true');
+
+    // Drawer Header
+    const drawerHeader = document.createElement('div');
+    drawerHeader.className = 'lc-mobile-nav-header';
+    drawerHeader.innerHTML = `
+      <div class="lc-mobile-nav-title">Navegação</div>
+      <button type="button" class="lc-mobile-nav-close" aria-label="Fechar menu">
+        ${svg('close')}
+      </button>
+    `;
+
+    // Drawer Body
+    const drawerBody = document.createElement('div');
+    drawerBody.className = 'lc-mobile-nav-body';
+
+    // Populate drawer with the 6 groups from navContainer (reusing existing nodes/data)
+    const navItems = navContainer.querySelectorAll('.top-nav-item');
+    navItems.forEach(item => {
+      const link = item.querySelector('.top-nav-link');
+      const menu = item.querySelector('.top-nav-menu');
+      if (!link) return;
+
+      if (menu) {
+        // Group with sublinks: accordion
+        const titleSpan = link.querySelector('span');
+        const titleText = titleSpan ? titleSpan.textContent.trim() : link.textContent.trim();
+
+        const accordion = document.createElement('div');
+        accordion.className = 'lc-nav-accordion';
+
+        const headerBtn = document.createElement('button');
+        headerBtn.type = 'button';
+        headerBtn.className = 'lc-nav-accordion-header';
+        headerBtn.innerHTML = `
+          <span>${escapeHTML(titleText)}</span>
+          <svg class="chevron-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        `;
+
+        const content = document.createElement('div');
+        content.className = 'lc-nav-accordion-content';
+
+        // Reutiliza e clona os sublinks e títulos de grupo do menu original
+        const clonedMenu = menu.cloneNode(true);
+        while (clonedMenu.firstChild) {
+          content.appendChild(clonedMenu.firstChild);
+        }
+
+        headerBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isOpen = accordion.classList.contains('is-open');
+          drawerBody.querySelectorAll('.lc-nav-accordion').forEach(a => a.classList.remove('is-open'));
+          if (!isOpen) {
+            accordion.classList.add('is-open');
+          }
+        });
+
+        accordion.appendChild(headerBtn);
+        accordion.appendChild(content);
+        drawerBody.appendChild(accordion);
+      } else {
+        // Direct link (e.g. Busca IA)
+        const href = link.getAttribute('href') || '#';
+        const directLink = document.createElement('a');
+        directLink.href = href;
+        directLink.className = 'lc-mobile-direct-link';
+        directLink.innerHTML = link.innerHTML;
+        drawerBody.appendChild(directLink);
+      }
+    });
+
+    drawer.appendChild(drawerHeader);
+    drawer.appendChild(drawerBody);
+    document.body.appendChild(drawer);
+
+    // State & Animations with GSAP
+    let isMobileNavOpen = false;
+
+    function openMobileNav() {
+      if (isMobileNavOpen) return;
+      isMobileNavOpen = true;
+      mobileTrigger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+
+      loadGSAP(() => {
+        if (window.gsap) {
+          gsap.killTweensOf([scrim, drawer]);
+          scrim.style.display = 'block';
+          gsap.fromTo(scrim, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
+          gsap.fromTo(drawer, { x: '100%', opacity: 0.7 }, { x: '0%', opacity: 1, duration: 0.3, ease: 'power2.out' });
+        } else {
+          scrim.style.display = 'block';
+          scrim.style.opacity = '1';
+          drawer.style.transform = 'translateX(0%)';
+          drawer.style.opacity = '1';
+        }
+      });
+    }
+
+    function closeMobileNav() {
+      if (!isMobileNavOpen) return;
+      isMobileNavOpen = false;
+      mobileTrigger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+
+      loadGSAP(() => {
+        if (window.gsap) {
+          gsap.killTweensOf([scrim, drawer]);
+          gsap.to(scrim, {
+            opacity: 0,
+            duration: 0.25,
+            ease: 'power2.in',
+            onComplete: () => {
+              scrim.style.display = 'none';
+            }
+          });
+          gsap.to(drawer, {
+            x: '100%',
+            opacity: 0.7,
+            duration: 0.3,
+            ease: 'power2.in'
+          });
+        } else {
+          scrim.style.opacity = '0';
+          scrim.style.display = 'none';
+          drawer.style.transform = 'translateX(100%)';
+        }
+      });
+    }
+
+    mobileTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openMobileNav();
+    });
+
+    const closeBtn = drawer.querySelector('.lc-mobile-nav-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMobileNav();
+      });
+    }
+
+    scrim.addEventListener('click', () => {
+      closeMobileNav();
+    });
+
+    // Close on any link click inside drawer
+    drawer.querySelectorAll('a').forEach(linkEl => {
+      linkEl.addEventListener('click', () => {
+        closeMobileNav();
+      });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isMobileNavOpen) {
+        closeMobileNav();
+      }
+    });
+
+    // Close on resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 992 && isMobileNavOpen) {
+        closeMobileNav();
+      }
+    });
   }
 
   /* ---------- Command palette (⌘K / Ctrl+K) ---------- */

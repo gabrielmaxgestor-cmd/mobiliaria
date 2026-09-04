@@ -15,6 +15,8 @@
   
   <link rel="stylesheet" href="/design-tokens.css">
   <link rel="stylesheet" href="/enhance.css">
+  <script src="/config.js"></script>
+  <script src="/jsonld.js" defer></script>
   
   <style>
     :root {
@@ -260,9 +262,71 @@
       font-weight: 600;
       margin-bottom: var(--space-3, 0.75rem);
     }
+
+    /* FOOTER */
+    footer {
+      background: var(--emerald-deep);
+      border-top: 1px solid var(--glass-border);
+      padding: 4rem 3rem 2rem;
+    }
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand p {
+      color: var(--text-light);
+      margin-top: 1rem;
+      max-width: 300px;
+      font-size: 0.9rem;
+    }
+    .footer-col h4 {
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .footer-col a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+    @media (max-width: 768px) {
+      .footer-content { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Legal Section Contact Links */
+    .text-terracotta {
+      color: var(--color-terracotta, #c86d51);
+    }
+    .hover\:underline:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
-<body class="bg-sand-light text-ink antialiased">
+<body>
   <!-- NAVBAR -->
   <nav id="navbar">
     <a href="home.html" class="logo">LIVING<span>canvas</span></a>
@@ -408,64 +472,45 @@
   </main>
 
   <!-- Footer -->
-  <footer class="site-footer bg-ink text-sand-light pt-16 pb-12 border-t border-border-dark">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-border-dark/60">
-        <div class="lg:col-span-2">
-          <a href="/home.html" class="flex items-center gap-3 mb-4">
-            <div class="w-9 h-9 rounded-xl bg-terracotta flex items-center justify-center text-surface font-display text-lg font-bold">
-              LC
-            </div>
-            <span class="font-display text-xl font-bold tracking-tight text-surface">Living Canvas</span>
-          </a>
-          <p class="text-ink-light text-sm max-w-sm mb-6 leading-relaxed">
-            Curadoria imobiliária de alto padrão orientada por inteligência artificial, sensibilidade arquitetônica e design sofisticado.
-          </p>
-        </div>
-
-        <div>
-          <h4 class="font-display font-semibold text-surface mb-4 text-sm tracking-wider uppercase">Navegação</h4>
-          <ul class="space-y-2.5 text-sm text-ink-light">
-            <li><a href="/imoveis.html" class="hover:text-surface transition-colors">Imóveis</a></li>
-            <li><a href="/lancamentos.html" class="hover:text-surface transition-colors">Lançamentos</a></li>
-            <li><a href="/bairros.html" class="hover:text-surface transition-colors">Bairros</a></li>
-            <li><a href="/busca-ia.html" class="hover:text-surface transition-colors">Busca por Vibe</a></li>
-            <li><a href="/comparador.html" class="hover:text-surface transition-colors">Comparador</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-display font-semibold text-surface mb-4 text-sm tracking-wider uppercase">Serviços</h4>
-          <ul class="space-y-2.5 text-sm text-ink-light">
-            <li><a href="/vender.html" class="hover:text-surface transition-colors">Vender Imóvel</a></li>
-            <li><a href="/agendar.html" class="hover:text-surface transition-colors">Agendar Visita</a></li>
-            <li><a href="/financiamento.html" class="hover:text-surface transition-colors">Simulador de Financiamento</a></li>
-            <li><a href="/corretor.html" class="hover:text-surface transition-colors">Área do Corretor</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-display font-semibold text-surface mb-4 text-sm tracking-wider uppercase">Empresa</h4>
-          <ul class="space-y-2.5 text-sm text-ink-light">
-            <li><a href="/sobre.html" class="hover:text-surface transition-colors">Sobre Nós</a></li>
-            <li><a href="/depoimentos.html" class="hover:text-surface transition-colors">Depoimentos</a></li>
-            <li><a href="/faq.html" class="hover:text-surface transition-colors">Dúvidas Frequentes</a></li>
-            <li><a href="/contato.html" class="hover:text-surface transition-colors">Contato</a></li>
-          </ul>
-        </div>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">LIVING<span>canvas</span></div>
+        <p>Curadoria de espaços únicos para quem busca mais que um endereço.</p>
       </div>
-
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-light">
-        <p>&copy; 2026 Living Canvas Imóveis. Todos os direitos reservados. CRECI Jurídico 00000-J.</p>
-        <div class="flex items-center gap-6">
-          <a href="/termos.html" class="text-surface font-medium hover:underline">Termos de Uso</a>
-          <a href="/privacidade.html" class="hover:text-surface transition-colors">Política de Privacidade</a>
-          <a href="/faq.html" class="hover:text-surface transition-colors">FAQ</a>
-        </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="imoveis.html">Imóveis</a></li>
+          <li><a href="bairros.html">Bairros</a></li>
+          <li><a href="lancamentos.html">Lançamentos</a></li>
+        </ul>
       </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="sobre.html">Sobre nós</a></li>
+          <li><a href="corretor.html">Corretores</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="termos.html">Termos de Uso</a></li>
+          <li><a href="privacidade.html">Política de Privacidade</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Living Canvas. Todos os direitos reservados.</span>
+      <span>CRECI-SP 00000-J</span>
     </div>
   </footer>
 
+  <script src="/textures.js" defer></script>
+  <script src="/scroll-animations.js" defer></script>
+  <script src="/enhance.js" defer></script>
   <script>
     // MOBILE MENU HAMBURGER
     function toggleMobileMenu() {

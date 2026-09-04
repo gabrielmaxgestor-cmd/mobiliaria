@@ -172,8 +172,7 @@
   .map-layout {
     display: grid;
     grid-template-columns: 420px 1fr;
-    height: 100vh;
-    padding-top: 80px;
+    height: calc(100vh - 72px);
   }
   
   /* SIDEBAR */
@@ -1145,7 +1144,6 @@
       display: block;
       padding: 0.5rem 0;
     }
-    .map-layout { padding-top: 70px; }
     .sidebar-header, .filters-panel, .layer-toggles, .stats-bar, .properties-list-header, .properties-list { padding-left: 1.5rem; padding-right: 1.5rem; }
     .filters-grid { grid-template-columns: 1fr; }
     .map-legend { bottom: 1rem; left: 1rem; right: 1rem; min-width: auto; }

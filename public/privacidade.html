@@ -47,28 +47,15 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* NAVBAR */
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 1.25rem 2.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    background: transparent;
+  /* LOGO */
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-decoration: none;
   }
-
-  .navbar.scrolled {
-    background: rgba(10, 20, 16, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1rem 2.5rem;
-  }
+  .logo span { font-style: italic; color: var(--cream); }
 
   .nav-logo {
     display: flex;
@@ -119,21 +106,6 @@
     align-items: center;
     gap: 2rem;
     list-style: none;
-  }
-
-  .nav-link {
-    color: var(--cream-muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.3s ease;
-    position: relative;
-    padding: 0.25rem 0;
-  }
-
-  .nav-link:hover, .nav-link.active {
-    color: var(--gold);
   }
 
   .nav-cta {
@@ -479,9 +451,6 @@
     .nav-links.open {
       display: flex;
     }
-    .navbar {
-      padding: 1rem 1.5rem;
-    }
     .policy-header {
       padding: 7rem 1.5rem 2.5rem;
     }
@@ -506,30 +475,22 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar" id="mainNavbar">
-  <a href="/home.html" class="nav-logo">
-    <div class="nav-logo-icon"></div>
-    <div>
-      <span class="nav-logo-text">Living Canvas</span>
-      <span class="nav-logo-sub">Imóveis de Luxo</span>
-    </div>
-  </a>
-
+<nav id="navbar">
+  <a href="home.html" class="logo">LIVING<span>canvas</span></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="/home.html" class="nav-link">Início</a></li>
-    <li><a href="/imoveis.html" class="nav-link">Imóveis</a></li>
-    <li><a href="/lancamentos.html" class="nav-link">Lançamentos</a></li>
-    <li><a href="/bairros.html" class="nav-link">Bairros</a></li>
-    <li><a href="/vender.html" class="nav-link">Vender</a></li>
-    <li><a href="/contato.html" class="nav-link">Contato</a></li>
+    <li><a href="home.html">Início</a></li>
+    <li><a href="imoveis.html">Imóveis</a></li>
+    <li><a href="lancamentos.html">Lançamentos</a></li>
+    <li><a href="bairros.html">Bairros</a></li>
+    <li><a href="vender.html">Vender</a></li>
+    <li><a href="contato.html">Contato</a></li>
   </ul>
-
-  <a href="/agendar.html" class="nav-cta">Agendar Visita</a>
-  <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMobileMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+  <div class="nav-right">
+    <button class="nav-cta" onclick="scrollToFilter()">Buscar Imóvel</button>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- HEADER -->
@@ -700,56 +661,11 @@
   </div>
 </footer>
 
-<script>
-  // Navbar scroll glass effect
-  window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('mainNavbar');
-    if (navbar) {
-      if (window.scrollY > 40) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    }
-  });
-</script>
-
 <script src="/enhance.js" defer></script>
 <script>
-  // MOBILE MENU HAMBURGER
-  function toggleMobileMenu() {
-    const navLinks = document.getElementById('navLinks');
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    if (!navLinks || !hamburgerBtn) return;
-    const isOpen = navLinks.classList.toggle('open');
-    hamburgerBtn.classList.toggle('active', isOpen);
-    hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    hamburgerBtn.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  function scrollToFilter() {
+    window.location.href = 'imoveis.html';
   }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.getElementById('navLinks');
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    if (navLinks && hamburgerBtn) {
-      navLinks.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-          navLinks.classList.remove('open');
-          hamburgerBtn.classList.remove('active');
-          hamburgerBtn.setAttribute('aria-expanded', 'false');
-          hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
-        });
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!e.target.closest('#mainNavbar') && navLinks.classList.contains('open')) {
-          navLinks.classList.remove('open');
-          hamburgerBtn.classList.remove('active');
-          hamburgerBtn.setAttribute('aria-expanded', 'false');
-          hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
-        }
-      });
-    }
-  });
 </script>
 </body>
 </html>
