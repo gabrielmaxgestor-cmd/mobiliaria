@@ -1582,6 +1582,283 @@
   a:focus:not(:focus-visible),
   button:focus:not(:focus-visible) { outline: none; }
 
+  /* ============================================ */
+  /* FAQ SECTION (ACORDEÃO EXPANSÍVEL)            */
+  /* ============================================ */
+  .faq-section-home {
+    background: linear-gradient(180deg, var(--emerald-deep) 0%, rgba(19, 78, 74, 0.4) 50%, var(--emerald-deep) 100%);
+    position: relative;
+    padding: clamp(4.5rem, 8vw, 7.5rem) var(--space-7);
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .faq-home-container {
+    max-width: 940px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .faq-home-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .faq-home-header .section-eyebrow {
+    margin-bottom: 0.75rem;
+  }
+
+  .faq-home-header .section-title {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .faq-home-subtitle {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  .faq-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .faq-accordion-item {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md, 14px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    overflow: hidden;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+  }
+
+  .faq-accordion-item:hover {
+    border-color: rgba(212, 175, 122, 0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+
+  .faq-accordion-item.active {
+    border-color: var(--gold);
+    background: rgba(212, 175, 122, 0.05);
+    box-shadow: 0 12px 32px -8px rgba(10, 46, 42, 0.55);
+  }
+
+  .faq-accordion-trigger {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 1.4rem 1.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    color: var(--cream);
+    transition: color 0.25s ease;
+  }
+
+  .faq-accordion-trigger:hover h3 {
+    color: var(--gold-soft);
+  }
+
+  .faq-accordion-trigger h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0;
+    transition: color 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .faq-accordion-item.active .faq-accordion-trigger h3 {
+    color: var(--gold);
+  }
+
+  .faq-accordion-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(212, 175, 122, 0.12);
+    border: 1px solid rgba(212, 175, 122, 0.25);
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .faq-accordion-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(212, 175, 122, 0.1);
+    border: 1px solid rgba(212, 175, 122, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .faq-accordion-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .faq-accordion-item.active .faq-accordion-icon {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--emerald-deep);
+    transform: rotate(180deg);
+  }
+
+  .faq-accordion-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .faq-accordion-item.active .faq-accordion-panel {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-accordion-content {
+    overflow: hidden;
+  }
+
+  .faq-accordion-body {
+    padding: 0 1.75rem 1.6rem 1.75rem;
+    color: var(--text-light);
+    font-size: 0.96rem;
+    line-height: 1.8;
+    border-top: 1px solid rgba(245, 241, 232, 0.08);
+    padding-top: 1.15rem;
+  }
+
+  .faq-accordion-body strong {
+    color: var(--cream);
+    font-weight: 600;
+  }
+
+  .faq-home-footer {
+    margin-top: 3.5rem;
+    padding: 2.25rem 2.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md, 14px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .faq-home-footer-text h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .faq-home-footer-text p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .faq-home-footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .faq-cta-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gold);
+    color: var(--emerald-deep);
+    padding: 0.75rem 1.6rem;
+    border-radius: var(--radius-pill, 9999px);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .faq-cta-btn-primary:hover {
+    background: var(--gold-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 122, 0.35);
+  }
+
+  .faq-cta-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid var(--glass-border);
+    padding: 0.75rem 1.6rem;
+    border-radius: var(--radius-pill, 9999px);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .faq-cta-btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .faq-accordion-trigger {
+      padding: 1.15rem 1.25rem;
+    }
+    .faq-accordion-trigger h3 {
+      font-size: 0.98rem;
+    }
+    .faq-accordion-body {
+      padding: 0 1.25rem 1.35rem 1.25rem;
+      font-size: 0.92rem;
+    }
+    .faq-home-footer {
+      padding: 1.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .faq-home-footer-actions {
+      width: 100%;
+    }
+    .faq-cta-btn-primary,
+    .faq-cta-btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
 </style>
 <link rel="stylesheet" href="/design-tokens.css">
   <link rel="stylesheet" href="/microinteractions.css">
@@ -2255,6 +2532,153 @@
   </div>
 </section>
 
+<!-- FAQ SECTION (ACORDEÃO) -->
+<section class="section faq-section-home" id="faq">
+  <div class="faq-home-container">
+    <div class="faq-home-header">
+      <p class="section-eyebrow">Dúvidas Frequentes</p>
+      <h2 class="section-title">Perguntas <em>frequentes</em></h2>
+      <p class="faq-home-subtitle">Tudo o que você precisa saber sobre visitas, financiamento, custos e segurança na escolha do seu imóvel.</p>
+    </div>
+
+    <div class="faq-accordion-list" id="faqAccordionList">
+      
+      <!-- ITEM 1 -->
+      <div class="faq-accordion-item active" id="faq-item-1">
+        <button type="button" class="faq-accordion-trigger" aria-expanded="true" aria-controls="faq-panel-1" id="faq-trigger-1" onclick="toggleHomeFaq(this)">
+          <h3>
+            <span class="faq-accordion-badge">01</span>
+            <span>Como funciona o agendamento de visitas presenciais ou tours virtuais?</span>
+          </h3>
+          <div class="faq-accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-accordion-panel" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1">
+          <div class="faq-accordion-content">
+            <div class="faq-accordion-body">
+              Você pode agendar sua visita em poucos cliques diretamente pela página do imóvel desejado ou pelo nosso canal de agendamento. Oferecemos três formatos: <strong>visita presencial acompanhada</strong> por um consultor especialista, <strong>videoconferência ao vivo</strong> guiada ou <strong>tour imersivo 360°</strong>. Tudo com horário marcado, respeitando seu tempo e sem nenhum compromisso.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div class="faq-accordion-item" id="faq-item-2">
+        <button type="button" class="faq-accordion-trigger" aria-expanded="false" aria-controls="faq-panel-2" id="faq-trigger-2" onclick="toggleHomeFaq(this)">
+          <h3>
+            <span class="faq-accordion-badge">02</span>
+            <span>Quais são os custos e tributos extras ao comprar um imóvel?</span>
+          </h3>
+          <div class="faq-accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-accordion-panel" id="faq-panel-2" role="region" aria-labelledby="faq-trigger-2">
+          <div class="faq-accordion-content">
+            <div class="faq-accordion-body">
+              Além do valor acordado do imóvel, recomenda-se planejar entre <strong>4% e 5%</strong> do montante total para despesas cartorárias e tributárias. Esse valor inclui o <strong>ITBI</strong> (Imposto sobre Transmissão de Bens Imóveis, que varia por município), os emolumentos de <strong>escritura pública</strong> em Tabelionato de Notas e o <strong>registro oficial</strong> no Cartório de Registro de Imóveis competente. Nossa equipe apresenta uma planilha detalhada com todos os custos prévios.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="faq-accordion-item" id="faq-item-3">
+        <button type="button" class="faq-accordion-trigger" aria-expanded="false" aria-controls="faq-panel-3" id="faq-trigger-3" onclick="toggleHomeFaq(this)">
+          <h3>
+            <span class="faq-accordion-badge">03</span>
+            <span>Vocês auxiliam na aprovação de financiamento bancário e uso do FGTS?</span>
+          </h3>
+          <div class="faq-accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-accordion-panel" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3">
+          <div class="faq-accordion-content">
+            <div class="faq-accordion-body">
+              Sim, possuímos assessoria financeira integrada em parceria com as principais instituições financeiras (Caixa, Itaú, Bradesco, Santander e Banco do Brasil). Realizamos simulações comparativas para garantir as menores taxas de juros (sistemas SAC ou PRICE) e cuidamos de todo o processo de aprovação de crédito e utilização do <strong>saldo do FGTS</strong> como entrada ou amortização, caso elegível às regras do SFH.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 4 -->
+      <div class="faq-accordion-item" id="faq-item-4">
+        <button type="button" class="faq-accordion-trigger" aria-expanded="false" aria-controls="faq-panel-4" id="faq-trigger-4" onclick="toggleHomeFaq(this)">
+          <h3>
+            <span class="faq-accordion-badge">04</span>
+            <span>Como a Living Canvas garante a segurança jurídica da negociação?</span>
+          </h3>
+          <div class="faq-accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-accordion-panel" id="faq-panel-4" role="region" aria-labelledby="faq-trigger-4">
+          <div class="faq-accordion-content">
+            <div class="faq-accordion-body">
+              Cada imóvel do nosso catálogo passa por uma rigorosa auditoria preventiva antes de ser anunciado. Nosso departamento jurídico levanta certidões negativas de ônus reais, débitos tributários, processos cíveis e trabalhistas dos proprietários, garantindo um contrato de compra e venda blindado e uma <strong>transação 100% segura e transparente</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 5 -->
+      <div class="faq-accordion-item" id="faq-item-5">
+        <button type="button" class="faq-accordion-trigger" aria-expanded="false" aria-controls="faq-panel-5" id="faq-trigger-5" onclick="toggleHomeFaq(this)">
+          <h3>
+            <span class="faq-accordion-badge">05</span>
+            <span>Quero vender ou alugar meu imóvel. Como funciona o anúncio com vocês?</span>
+          </h3>
+          <div class="faq-accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-accordion-panel" id="faq-panel-5" role="region" aria-labelledby="faq-trigger-5">
+          <div class="faq-accordion-content">
+            <div class="faq-accordion-body">
+              Você pode cadastrar seu imóvel na nossa página <strong>Vender</strong> ou conversar diretamente com nossos consultores. Nós realizamos uma avaliação mercadológica precisa, ensaio fotográfico profissional de alto padrão, redação editorial dos diferenciais e veiculação em canais selecionados com alta conversão para compradores qualificados.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 6 -->
+      <div class="faq-accordion-item" id="faq-item-6">
+        <button type="button" class="faq-accordion-trigger" aria-expanded="false" aria-controls="faq-panel-6" id="faq-trigger-6" onclick="toggleHomeFaq(this)">
+          <h3>
+            <span class="faq-accordion-badge">06</span>
+            <span>O atendimento consultivo e a curadoria possuem algum custo inicial?</span>
+          </h3>
+          <div class="faq-accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+        <div class="faq-accordion-panel" id="faq-panel-6" role="region" aria-labelledby="faq-trigger-6">
+          <div class="faq-accordion-content">
+            <div class="faq-accordion-body">
+              <strong>Não cobramos absolutamente nada adiantado.</strong> O serviço de curadoria, atendimento personalizado com corretores credenciados pelo CRECI e os agendamentos de visita são gratuitos para quem procura um imóvel. A remuneração profissional só acontece no êxito da transação, conforme as normas legais do mercado.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MINI FOOTER DO FAQ -->
+    <div class="faq-home-footer">
+      <div class="faq-home-footer-text">
+        <h4>Ainda tem alguma dúvida específica?</h4>
+        <p>Nossa equipe de corretores e especialistas está online para te responder sem enrolação.</p>
+      </div>
+      <div class="faq-home-footer-actions">
+        <a href="https://wa.me/5511999999999" target="_blank" class="faq-cta-btn-primary">💬 Falar no WhatsApp</a>
+        <a href="faq.html" class="faq-cta-btn-secondary">Central de Dúvidas ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-content">
@@ -2275,6 +2699,7 @@
       <ul>
         <li><a href="sobre.html">Sobre nós</a></li>
         <li><a href="sobre.html">Corretores</a></li>
+        <li><a href="#faq">Dúvidas Frequentes</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -2397,6 +2822,32 @@
     }
   });
   
+  // FAQ ACCORDION TOGGLE
+  function toggleHomeFaq(button) {
+    const item = button.closest('.faq-accordion-item');
+    if (!item) return;
+
+    const isActive = item.classList.contains('active');
+
+    // Fecha outros itens para comportamento de acordeão exclusivo
+    document.querySelectorAll('.faq-accordion-item').forEach(otherItem => {
+      if (otherItem !== item) {
+        otherItem.classList.remove('active');
+        const trigger = otherItem.querySelector('.faq-accordion-trigger');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Alterna o estado do item clicado
+    if (isActive) {
+      item.classList.remove('active');
+      button.setAttribute('aria-expanded', 'false');
+    } else {
+      item.classList.add('active');
+      button.setAttribute('aria-expanded', 'true');
+    }
+  }
+
   // SMOOTH SCROLL
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
