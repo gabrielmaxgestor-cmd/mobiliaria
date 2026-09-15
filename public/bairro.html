@@ -844,6 +844,78 @@
     opacity: 1;
     transform: translateX(0);
   }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 6rem 3rem;
+    background: linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 122, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .cta-content h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  .cta-content h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .cta-content p {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cta-btn {
+    padding: 1.1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .cta-primary {
+    background: var(--gold);
+    color: var(--emerald-deep);
+  }
+  .cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 175, 122, 0.3);
+  }
+  .cta-secondary {
+    background: transparent;
+    border: 1px solid var(--cream) !important;
+    color: var(--cream);
+  }
+  .cta-secondary:hover {
+    background: var(--cream);
+    color: var(--emerald-deep);
+  }
   
   /* RESPONSIVE */
     @media (max-width: 768px) {
@@ -956,7 +1028,7 @@
   <!-- STORY -->
   <div class="story-block">
     <p class="section-eyebrow">Sobre o Bairro</p>
-    <h2 class="section-title">Um refúgio de <em>tranquilidade</em> no coração da cidade</h2>
+    <h2 class="section-title">Por que morar <em>aqui</em></h2>
     <p class="story-text">
       "Onde as ruas arborizadas encontram a sofisticação discreta. Jardim Europa é mais que um endereço — é um estilo de vida para quem valoriza privacidade, segurança e proximidade com o melhor que São Paulo tem a oferecer."
     </p>
@@ -1008,7 +1080,7 @@
   <!-- MAP -->
   <div class="map-section">
     <p class="section-eyebrow">Localização</p>
-    <h2 class="section-title">Explore o <em>bairro</em> ao seu redor</h2>
+    <h2 class="section-title">Veja a <em>localização</em> no mapa</h2>
     
     <div class="map-container">
       <div class="map-visual">
@@ -1149,6 +1221,18 @@
     </div>
   </div>
 
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Gostou do <em id="ctaBairroNome">bairro</em>?</h2>
+      <p>Veja os imóveis disponíveis aqui ou fale com um especialista que conhece cada rua da região.</p>
+      <div class="cta-buttons">
+        <a href="imoveis.html" class="cta-btn cta-primary">Ver Imóveis do Bairro</a>
+        <a href="contato.html" class="cta-btn cta-secondary">Falar com Especialista</a>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-content">
@@ -1220,6 +1304,14 @@
             hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
           }
         });
+      }
+
+      // PREENCHIMENTO DINÂMICO DO NOME DO BAIRRO NO CTA
+      const titleEl = document.querySelector('.neighborhood-title');
+      const ctaBairroEl = document.getElementById('ctaBairroNome');
+      if (titleEl && ctaBairroEl) {
+        const nome = titleEl.textContent.trim();
+        if (nome) ctaBairroEl.textContent = nome;
       }
     });
   </script>
