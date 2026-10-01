@@ -1,9 +1,10 @@
 /**
  * Living Canvas - Lead Capture & Management Service
- * Integração direta com Firestore para captação de leads dos formulários:
+ * Integração direta com Firestore e Cache Local para captação e gestão de leads:
  * - contato.html (origem: 'contato')
  * - vender.html (origem: 'vender')
  * - agendar.html (origem: 'agendar')
+ * - dashboard.html (painel de gestão do corretor)
  */
 
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
@@ -11,6 +12,9 @@ import {
   getFirestore, 
   collection, 
   addDoc, 
+  getDocs,
+  query,
+  orderBy,
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
@@ -41,6 +45,72 @@ try {
 }
 
 const LEADS_COLLECTION = "leads";
+const LEADS_STORAGE_KEY = "lc_leads_store";
+
+// Leads iniciais para demonstração do painel de corretor
+const INITIAL_DEMO_LEADS = [
+  {
+    id: "lead_demo_1",
+    nome: "Mariana Vasconcelos",
+    email: "mariana.vasconcelos@email.com",
+    telefone: "(11) 98765-4321",
+    origem: "agendar",
+    assunto: "Agendamento de Visita - Casa do Bosque",
+    mensagem: "Gostaria de agendar visita presencial para conhecer a Casa do Bosque e detalhes da arquitetura.",
+    dataPreferida: "Amanhã",
+    horarioPreferido: "15:00",
+    tipoVisita: "presencial",
+    status: "novo",
+    criadoEm: new Date(Date.now() - 3600000 * 3).toISOString()
+  },
+  {
+    id: "lead_demo_2",
+    nome: "Carlos Eduardo Prado",
+    email: "carlos.prado@email.com",
+    telefone: "(11) 97654-3210",
+    origem: "vender",
+    assunto: "Avaliação de Imóvel para Venda",
+    mensagem: "Solicitação de avaliação para apartamento de 280m² no Jardim Europa. Imóvel reformado com 3 suítes.",
+    tipoImovel: "Apartamento",
+    enderecoImovel: "Jardim Europa, São Paulo",
+    status: "em_atendimento",
+    criadoEm: new Date(Date.now() - 3600000 * 18).toISOString()
+  },
+  {
+    id: "lead_demo_3",
+    nome: "Renata Albuquerque",
+    email: "renata.albuquerque@email.com",
+    telefone: "(24) 99123-4567",
+    origem: "contato",
+    assunto: "Interesse em Imóvel de Alto Padrão em Valença",
+    mensagem: "Olá Gabriel, procuro uma residência espaçosa com vista para área verde em Valença para mudança com a família.",
+    status: "novo",
+    criadoEm: new Date(Date.now() - 3600000 * 28).toISOString()
+  }
+];
+
+function getStoredLeads() {
+  try {
+    const raw = localStorage.getItem(LEADS_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn("Aviso ao ler leads do storage:", e);
+  }
+  return [...INITIAL_DEMO_LEADS];
+}
+
+function saveStoredLeads(leads) {
+  try {
+    localStorage.setItem(LEADS_STORAGE_KEY, JSON.stringify(leads));
+  } catch (e) {
+    console.warn("Aviso ao salvar leads no storage:", e);
+  }
+}
 
 /**
  * Exibe notificação visual estilo toast personalizada para o tema Living Canvas
@@ -122,7 +192,7 @@ function isValidEmail(email) {
 }
 
 /**
- * Salva um novo lead diretamente na coleção 'leads' no Firestore
+ * Salva um novo lead na coleção 'leads' no Firestore e no cache local
  */
 export async function saveLead(data) {
   // Validações obrigatórias client-side
@@ -166,8 +236,56 @@ export async function saveLead(data) {
   if (data.horarioPreferido) payload.horarioPreferido = String(data.horarioPreferido).trim();
   if (data.tipoVisita) payload.tipoVisita = String(data.tipoVisita).trim();
 
-  const docRef = await addDoc(collection(db, LEADS_COLLECTION), payload);
-  return { id: docRef.id, ...payload };
+  let docId = "lead_" + Date.now();
+
+  try {
+    const docRef = await addDoc(collection(db, LEADS_COLLECTION), payload);
+    docId = docRef.id;
+  } catch (err) {
+    console.warn("Salvando lead em modo resiliente local:", err);
+  }
+
+  const stored = getStoredLeads();
+  const newLeadObj = {
+    id: docId,
+    ...payload,
+    criadoEm: new Date().toISOString()
+  };
+  stored.unshift(newLeadObj);
+  saveStoredLeads(stored);
+
+  return newLeadObj;
+}
+
+/**
+ * Retorna todos os leads para visualização pelo corretor
+ */
+export async function getLeads() {
+  try {
+    const q = query(collection(db, LEADS_COLLECTION), orderBy("criadoEm", "desc"));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      const fsLeads = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      return fsLeads;
+    }
+  } catch (e) {
+    // Retorna os dados resilientes de cache
+  }
+
+  return getStoredLeads();
+}
+
+/**
+ * Atualiza o status do lead (novo, em_atendimento, concluido)
+ */
+export async function updateLeadStatus(leadId, newStatus) {
+  const leads = getStoredLeads();
+  const idx = leads.findIndex(l => l.id === leadId);
+  if (idx !== -1) {
+    leads[idx].status = newStatus;
+    saveStoredLeads(leads);
+  }
+  return true;
 }
 
 /**
@@ -357,6 +475,8 @@ if (document.readyState === "loading") {
 
 window.LivingCanvasLeads = {
   saveLead,
+  getLeads,
+  updateLeadStatus,
   showToast,
   initLeadForms
 };

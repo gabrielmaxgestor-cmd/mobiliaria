@@ -736,6 +736,17 @@
         <!-- Feedback Message Area -->
         <div id="loginFeedback" style="display: none; padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 1.2rem; font-size: 0.9rem; line-height: 1.4;"></div>
         
+        <!-- Broker Access Quick Fill Card -->
+        <div style="background: rgba(212, 175, 122, 0.08); border: 1px dashed var(--gold); border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;">
+          <div style="font-size: 0.82rem; color: var(--cream); line-height: 1.35;">
+            <strong style="color: var(--gold); display: block; margin-bottom: 0.2rem;">💼 Acesso Rápido — Corretor Gestor</strong>
+            <span style="opacity: 0.9;">gabrielmaxgestor@gmail.com</span>
+          </div>
+          <button type="button" onclick="fillBrokerCredentials()" style="background: var(--gold); color: var(--emerald-deep); border: none; border-radius: 6px; font-weight: 600; font-size: 0.75rem; padding: 0.45rem 0.75rem; cursor: pointer; white-space: nowrap; transition: all 0.2s;">
+            Preencher
+          </button>
+        </div>
+
         <form id="actualLoginForm">
           <div class="form-group">
             <label for="loginEmail">E-mail</label>
@@ -937,6 +948,17 @@
     strengthText.style.color = levels[strength].color;
   }
   
+  // FILL BROKER CREDENTIALS
+  window.fillBrokerCredentials = function() {
+    const emailInput = document.getElementById('loginEmail');
+    const passInput = document.getElementById('loginPassword');
+    if (emailInput && passInput) {
+      emailInput.value = 'gabrielmaxgestor@gmail.com';
+      passInput.value = '12345678';
+      emailInput.focus();
+    }
+  };
+
   // FORGOT PASSWORD
   function showForgotPassword(event) {
     event.preventDefault();

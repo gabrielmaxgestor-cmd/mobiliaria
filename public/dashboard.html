@@ -1328,6 +1328,24 @@
         <span class="nav-icon">⚙️</span>
         Configurações
       </a>
+
+      <!-- SEÇÃO EXCLUSIVA DO CORRETOR -->
+      <div id="corretorNavSection" style="display: none; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+        <p style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 0.6rem; padding-left: 0.6rem; font-weight: 700;">Visão do Corretor</p>
+        <a href="#painel-leads" class="nav-item" id="navItemLeads" style="color: var(--gold);">
+          <span class="nav-icon">💼</span>
+          Painel de Leads
+          <span class="nav-badge" id="navLeadsBadge" style="background: var(--gold); color: var(--emerald-deep); font-weight: bold;">3</span>
+        </a>
+        <a href="imoveis.html" class="nav-item">
+          <span class="nav-icon">🏡</span>
+          Catálogo Imóveis
+        </a>
+        <a href="corretor.html" class="nav-item">
+          <span class="nav-icon">👤</span>
+          Perfil Público
+        </a>
+      </div>
     </nav>
     
     <div class="sidebar-footer">
@@ -1394,6 +1412,25 @@
       </div>
     </div>
     
+    <!-- BANNER DE BOAS-VINDAS DO CORRETOR -->
+    <div id="corretorBanner" style="display: none; background: linear-gradient(135deg, rgba(212,175,122,0.18) 0%, rgba(10,46,42,0.95) 100%); border: 1px solid var(--gold); border-radius: 16px; padding: 1.5rem 2rem; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.35);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span style="display: inline-block; background: var(--gold); color: var(--emerald-deep); font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Visão do Corretor Gestor</span>
+          <h2 style="font-size: 1.5rem; color: var(--cream); font-family: 'Playfair Display', serif; margin: 0 0 0.3rem 0;">Painel de Gestão & Captação</h2>
+          <p style="color: var(--text-light); font-size: 0.9rem; margin: 0;">Você está autenticado como <strong>Corretor Gestor</strong> (<span id="corretorEmailDisplay">gabrielmaxgestor@gmail.com</span>). Gerencie leads e contatos abaixo.</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="#painel-leads" style="background: var(--gold); color: var(--emerald-deep); padding: 0.65rem 1.2rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+            💼 Leads (<span id="corretorLeadsCountBadge">3</span>)
+          </a>
+          <a href="imoveis.html" style="background: var(--glass-bg); color: var(--cream); border: 1px solid var(--glass-border); padding: 0.65rem 1.2rem; border-radius: 8px; font-weight: 500; text-decoration: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+            🏡 Catálogo de Imóveis
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- STATS -->
     <div class="stats-grid">
       <div class="stat-card">
@@ -1430,6 +1467,31 @@
         </div>
         <div class="stat-value">5</div>
         <div class="stat-label">Documentos</div>
+      </div>
+    </div>
+    
+    <!-- SEÇÃO EXCLUSIVA DE LEADS DO CORRETOR -->
+    <div id="corretorLeadsSection" style="display: none; margin-bottom: 2.5rem; scroll-margin-top: 100px;">
+      <div style="background: rgba(10, 46, 42, 0.7); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.8rem; backdrop-filter: blur(10px);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+              <span style="font-size: 1.5rem;">💼</span>
+              <h2 id="painel-leads" style="font-size: 1.45rem; color: var(--cream); font-family: 'Playfair Display', serif; margin: 0;">Painel de Leads & Atendimentos</h2>
+            </div>
+            <p style="color: var(--text-light); font-size: 0.88rem; margin-top: 0.3rem;">Contatos, pedidos de avaliação e agendamentos de visita recebidos pelo site.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="leadFilterButtons">
+            <button type="button" class="lead-filter-btn" data-filter="todos" onclick="window.filterCorretorLeads('todos', this)" style="background: var(--gold); color: var(--emerald-deep); border: none; padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">Todos (<span id="countTodos">3</span>)</button>
+            <button type="button" class="lead-filter-btn" data-filter="agendar" onclick="window.filterCorretorLeads('agendar', this)" style="background: var(--glass-bg); color: var(--cream); border: 1px solid var(--glass-border); padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer;">📅 Visitas</button>
+            <button type="button" class="lead-filter-btn" data-filter="vender" onclick="window.filterCorretorLeads('vender', this)" style="background: var(--glass-bg); color: var(--cream); border: 1px solid var(--glass-border); padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer;">🏠 Avaliações</button>
+            <button type="button" class="lead-filter-btn" data-filter="contato" onclick="window.filterCorretorLeads('contato', this)" style="background: var(--glass-bg); color: var(--cream); border: 1px solid var(--glass-border); padding: 0.45rem 0.9rem; border-radius: 8px; font-size: 0.8rem; cursor: pointer;">💬 Mensagens</button>
+          </div>
+        </div>
+
+        <div id="corretorLeadsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.2rem;">
+          <!-- Injetado dinamicamente via JS -->
+        </div>
       </div>
     </div>
     
@@ -1796,6 +1858,10 @@
   import LivingCanvasProperties from '/properties.js';
   import LivingCanvasSavedSearches from '/savedSearches.js';
   import LivingCanvasNotifications from '/notifications.js';
+  import LivingCanvasLeads from '/leads.js';
+
+  let allCorretorLeadsList = [];
+  let activeLeadFilter = 'todos';
 
   let userFavoritesList = [];
   let userSavedSearchesList = [];
@@ -2612,6 +2678,23 @@
       // Inicializa o componente NotificationPanel com o usuário atual
       window.notificationPanelInstance.init(user);
 
+      // Se for corretor ou admin, ativa a Visão do Corretor e carrega os leads
+      if (role === 'corretor' || role === 'admin') {
+        const corretorNav = document.getElementById('corretorNavSection');
+        if (corretorNav) corretorNav.style.display = 'block';
+
+        const corretorBanner = document.getElementById('corretorBanner');
+        if (corretorBanner) corretorBanner.style.display = 'block';
+
+        const corretorEmailDisplay = document.getElementById('corretorEmailDisplay');
+        if (corretorEmailDisplay) corretorEmailDisplay.textContent = user.email || 'gabrielmaxgestor@gmail.com';
+
+        const corretorLeadsSec = document.getElementById('corretorLeadsSection');
+        if (corretorLeadsSec) corretorLeadsSec.style.display = 'block';
+
+        await loadCorretorLeads();
+      }
+
       // Carrega os imóveis favoritos e buscas desejadas do usuário conectado em paralelo
       await Promise.allSettled([
         loadUserFavorites(),
@@ -2621,6 +2704,127 @@
       console.error('Erro na verificação de sessão do dashboard:', err);
     }
   }
+
+  // Funções de Gestão de Leads para o Corretor
+  async function loadCorretorLeads() {
+    try {
+      allCorretorLeadsList = await LivingCanvasLeads.getLeads();
+      renderCorretorLeads();
+    } catch (err) {
+      console.error('Erro ao carregar leads do corretor:', err);
+    }
+  }
+
+  function renderCorretorLeads() {
+    const container = document.getElementById('corretorLeadsContainer');
+    const badgeSidebar = document.getElementById('navLeadsBadge');
+    const badgeBanner = document.getElementById('corretorLeadsCountBadge');
+    const countTodos = document.getElementById('countTodos');
+
+    if (!container) return;
+
+    if (badgeSidebar) badgeSidebar.textContent = allCorretorLeadsList.length;
+    if (badgeBanner) badgeBanner.textContent = allCorretorLeadsList.length;
+    if (countTodos) countTodos.textContent = allCorretorLeadsList.length;
+
+    const filtered = activeLeadFilter === 'todos' 
+      ? allCorretorLeadsList 
+      : allCorretorLeadsList.filter(l => l.origem === activeLeadFilter);
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 2.5rem; text-align: center; background: rgba(245, 241, 232, 0.02); border: 1px dashed var(--glass-border); border-radius: 12px;">
+          <p style="color: var(--gold-soft); font-size: 1rem; margin-bottom: 0.3rem;">Nenhum lead encontrado neste filtro.</p>
+          <p style="color: var(--text-light); font-size: 0.85rem;">Novos contatos do site aparecerão aqui em tempo real.</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = filtered.map(lead => {
+      const isNovo = lead.status === 'novo';
+      const isEmAtendimento = lead.status === 'em_atendimento';
+      const statusLabel = isNovo ? 'Novo Lead' : (isEmAtendimento ? 'Em Atendimento' : 'Concluído');
+      const statusBg = isNovo ? 'rgba(37, 211, 102, 0.15)' : (isEmAtendimento ? 'rgba(212, 175, 122, 0.2)' : 'rgba(255, 255, 255, 0.08)');
+      const statusColor = isNovo ? '#25D366' : (isEmAtendimento ? 'var(--gold)' : 'var(--cream)');
+
+      let badgeOrigem = '💬 Contato';
+      if (lead.origem === 'agendar') badgeOrigem = '📅 Visita Agendada';
+      if (lead.origem === 'vender') badgeOrigem = '🏠 Avaliação / Venda';
+
+      const cleanPhone = (lead.telefone || '').replace(/\\D/g, '');
+      const whatsAppMsg = encodeURIComponent(`Olá ${lead.nome}, sou Gabriel da Living Canvas. Recebi sua solicitação sobre "${lead.assunto || 'imóveis'}" e estou à disposição!`);
+      const whatsAppLink = cleanPhone ? `https://wa.me/55${cleanPhone}?text=${whatsAppMsg}` : '#';
+
+      return `
+        <div class="lead-card" style="background: rgba(10, 46, 42, 0.85); border: 1px solid ${isNovo ? 'rgba(37, 211, 102, 0.4)' : 'var(--glass-border)'}; border-radius: 14px; padding: 1.4rem; display: flex; flex-direction: column; gap: 0.9rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: transform 0.2s, border-color 0.2s;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+            <div>
+              <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); font-weight: 600;">${badgeOrigem}</span>
+              <h3 style="color: var(--cream); font-size: 1.15rem; font-family: 'Playfair Display', serif; margin: 0.2rem 0 0 0;">${escapeHtml(lead.nome)}</h3>
+            </div>
+            <span style="background: ${statusBg}; color: ${statusColor}; font-size: 0.72rem; font-weight: 600; padding: 0.25rem 0.65rem; border-radius: 50px; white-space: nowrap;">
+              ${statusLabel}
+            </span>
+          </div>
+
+          <div style="font-size: 0.85rem; color: var(--text-light); line-height: 1.45; background: rgba(0,0,0,0.2); padding: 0.75rem 0.9rem; border-radius: 8px;">
+            ${lead.assunto ? `<div style="font-weight: 600; color: var(--cream); margin-bottom: 0.25rem;">${escapeHtml(lead.assunto)}</div>` : ''}
+            <div>${escapeHtml(lead.mensagem || 'Sem mensagem adicional.')}</div>
+            ${lead.dataPreferida ? `<div style="margin-top: 0.4rem; color: var(--gold);">📅 Data desejada: <strong>${escapeHtml(lead.dataPreferida)} às ${escapeHtml(lead.horarioPreferido || '')}</strong> (${escapeHtml(lead.tipoVisita || 'presencial')})</div>` : ''}
+            ${lead.tipoImovel ? `<div style="margin-top: 0.4rem; color: var(--gold);">🏠 Imóvel: <strong>${escapeHtml(lead.tipoImovel)}</strong> - ${escapeHtml(lead.enderecoImovel || '')}</div>` : ''}
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: auto; padding-top: 0.5rem;">
+            ${cleanPhone ? `
+              <a href="${whatsAppLink}" target="_blank" rel="noopener noreferrer" style="flex: 1; background: #25D366; color: #0A1C15; text-decoration: none; padding: 0.55rem 0.8rem; border-radius: 8px; font-weight: 600; font-size: 0.8rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                💬 WhatsApp (${escapeHtml(lead.telefone)})
+              </a>
+            ` : ''}
+            ${lead.email ? `
+              <a href="mailto:${escapeHtml(lead.email)}?subject=${encodeURIComponent('Living Canvas — Atendimento com Corretor Gabriel')}" style="background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--cream); text-decoration: none; padding: 0.55rem 0.8rem; border-radius: 8px; font-size: 0.8rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                ✉️ E-mail
+              </a>
+            ` : ''}
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(245,241,232,0.06); padding-top: 0.6rem; font-size: 0.75rem; color: var(--text-light);">
+            <span>Status:</span>
+            <div style="display: flex; gap: 0.3rem;">
+              <button type="button" onclick="window.updateCorretorLeadStatus('${lead.id}', 'novo')" style="background: ${isNovo ? 'var(--gold)' : 'transparent'}; color: ${isNovo ? '#0A1C15' : 'var(--text-light)'}; border: 1px solid var(--glass-border); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer;">Novo</button>
+              <button type="button" onclick="window.updateCorretorLeadStatus('${lead.id}', 'em_atendimento')" style="background: ${isEmAtendimento ? 'var(--gold)' : 'transparent'}; color: ${isEmAtendimento ? '#0A1C15' : 'var(--text-light)'}; border: 1px solid var(--glass-border); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer;">Atendendo</button>
+              <button type="button" onclick="window.updateCorretorLeadStatus('${lead.id}', 'concluido')" style="background: ${lead.status === 'concluido' ? 'var(--gold)' : 'transparent'}; color: ${lead.status === 'concluido' ? '#0A1C15' : 'var(--text-light)'}; border: 1px solid var(--glass-border); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer;">Concluído</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.filterCorretorLeads = function(filter, btn) {
+    activeLeadFilter = filter;
+    document.querySelectorAll('.lead-filter-btn').forEach(b => {
+      b.style.background = 'var(--glass-bg)';
+      b.style.color = 'var(--cream)';
+      b.style.border = '1px solid var(--glass-border)';
+      b.style.fontWeight = 'normal';
+    });
+    if (btn) {
+      btn.style.background = 'var(--gold)';
+      btn.style.color = 'var(--emerald-deep)';
+      btn.style.border = 'none';
+      btn.style.fontWeight = '600';
+    }
+    renderCorretorLeads();
+  };
+
+  window.updateCorretorLeadStatus = async function(leadId, newStatus) {
+    await LivingCanvasLeads.updateLeadStatus(leadId, newStatus);
+    const item = allCorretorLeadsList.find(l => l.id === leadId);
+    if (item) item.status = newStatus;
+    renderCorretorLeads();
+    LivingCanvasLeads.showToast('Status do lead atualizado!', 'success');
+  };
 
   // Logout
   const logoutBtn = document.getElementById('dashboardLogoutBtn');

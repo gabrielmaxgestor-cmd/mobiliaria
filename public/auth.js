@@ -1,6 +1,6 @@
 /**
  * Living Canvas - Firebase Authentication & Profile Service
- * Integração com Firebase Auth e Firestore para as páginas públicas HTML
+ * Integração com Firebase Auth, Firestore e credenciais credenciadas de Corretor
  */
 
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
@@ -49,6 +49,84 @@ try {
   db = getFirestore(app);
 }
 
+// Credencial oficial de Corretor Gestor solicitada
+const BROKER_CREDENTIALS = {
+  email: "gabrielmaxgestor@gmail.com",
+  password: "12345678",
+  user: {
+    uid: "corretor_gabrielmaxgestor",
+    email: "gabrielmaxgestor@gmail.com",
+    displayName: "Gabriel Max",
+    emailVerified: true
+  },
+  profile: {
+    uid: "corretor_gabrielmaxgestor",
+    nome: "Gabriel Max",
+    email: "gabrielmaxgestor@gmail.com",
+    role: "corretor",
+    cargo: "Corretor Gestor",
+    creci: "CRECI-SP 12345",
+    telefone: "(11) 99999-9999",
+    criadoEm: "2026-01-01T00:00:00.000Z"
+  }
+};
+
+const SESSION_STORAGE_KEY = "lc_auth_session";
+let localSessionUser = null;
+let localSessionProfile = null;
+const authChangeListeners = new Set();
+
+// Cria um objeto de usuário seguro com métodos mock caso alguma biblioteca chame métodos do Firebase User
+function createSafeUser(userData) {
+  if (!userData) return null;
+  return {
+    ...userData,
+    getIdToken: async () => "mock-broker-token",
+    getIdTokenResult: async () => ({ token: "mock-broker-token", claims: { role: userData.role || "corretor" } }),
+    reload: async () => {},
+    _startProactiveRefresh() {},
+    _stopProactiveRefresh() {}
+  };
+}
+
+// Carrega sessão salva no navegador se existir
+try {
+  const saved = localStorage.getItem(SESSION_STORAGE_KEY);
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    if (parsed && parsed.user && parsed.profile) {
+      localSessionUser = createSafeUser(parsed.user);
+      localSessionProfile = parsed.profile;
+    }
+  }
+} catch (e) {
+  console.warn("Aviso ao ler sessão salva:", e);
+}
+
+// Proxy seguro para auth: não corrompe a instância original do Firebase Auth SDK
+const authProxy = new Proxy(auth, {
+  get(target, prop, receiver) {
+    if (prop === "currentUser") {
+      return target.currentUser || localSessionUser;
+    }
+    const val = Reflect.get(target, prop, receiver);
+    if (typeof val === "function") {
+      return val.bind(target);
+    }
+    return val;
+  }
+});
+
+function notifyAuthListeners(user, profile) {
+  authChangeListeners.forEach((callback) => {
+    try {
+      callback(user, profile);
+    } catch (err) {
+      console.error("Erro no ouvinte de autenticação:", err);
+    }
+  });
+}
+
 /**
  * Tradutor de códigos de erro do Firebase Auth para português
  */
@@ -71,6 +149,8 @@ function translateAuthError(error) {
       return "Falha de conexão. Verifique sua internet e tente novamente.";
     case "auth/too-many-requests":
       return "Muitas tentativas sem sucesso. Tente novamente mais tarde.";
+    case "auth/operation-not-allowed":
+      return "Operação de login indisponível no momento. Use as credenciais autorizadas.";
     default:
       return error?.message || "Ocorreu um erro ao processar a autenticação.";
   }
@@ -80,6 +160,10 @@ function translateAuthError(error) {
  * Obter o perfil do usuário na coleção 'usuarios'
  */
 async function getUserProfile(uid) {
+  if (localSessionUser && localSessionUser.uid === uid) {
+    return localSessionProfile;
+  }
+
   try {
     const userDocRef = doc(db, "usuarios", uid);
     const docSnap = await getDoc(userDocRef);
@@ -104,8 +188,15 @@ async function register({ nome, email, password, telefone }) {
     throw new Error("A senha deve ter pelo menos 6 caracteres.");
   }
 
+  const cleanEmail = email.trim().toLowerCase();
+
+  // Se for o e-mail do corretor credenciado, direciona para login direto
+  if (cleanEmail === BROKER_CREDENTIALS.email.toLowerCase()) {
+    return login(cleanEmail, password);
+  }
+
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+    const userCredential = await createUserWithEmailAndPassword(auth, cleanEmail, password);
     const user = userCredential.user;
 
     // Atualiza nome de exibição no Firebase Auth
@@ -120,7 +211,7 @@ async function register({ nome, email, password, telefone }) {
     const profileData = {
       uid: user.uid,
       nome: nome.trim(),
-      email: email.trim().toLowerCase(),
+      email: cleanEmail,
       role: "cliente",
       telefone: telefone ? telefone.trim() : "",
       criadoEm: serverTimestamp()
@@ -128,12 +219,16 @@ async function register({ nome, email, password, telefone }) {
 
     await setDoc(userDocRef, profileData);
 
+    const fullProfile = {
+      ...profileData,
+      criadoEm: new Date()
+    };
+
+    notifyAuthListeners(user, fullProfile);
+
     return {
       user,
-      profile: {
-        ...profileData,
-        criadoEm: new Date()
-      }
+      profile: fullProfile
     };
   } catch (error) {
     throw new Error(translateAuthError(error));
@@ -148,10 +243,45 @@ async function login(email, password) {
     throw new Error("Informe seu e-mail e senha.");
   }
 
+  const cleanEmail = email.trim().toLowerCase();
+
+  // 1. Verificação da conta de Corretor Gestor
+  if (cleanEmail === BROKER_CREDENTIALS.email.toLowerCase()) {
+    if (password === BROKER_CREDENTIALS.password) {
+      const safeUser = createSafeUser(BROKER_CREDENTIALS.user);
+      const session = {
+        user: safeUser,
+        profile: BROKER_CREDENTIALS.profile,
+        loggedAt: new Date().toISOString()
+      };
+
+      try {
+        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
+      } catch (e) {
+        console.warn("Não foi possível persistir no localStorage:", e);
+      }
+
+      localSessionUser = safeUser;
+      localSessionProfile = session.profile;
+
+      notifyAuthListeners(localSessionUser, localSessionProfile);
+
+      return {
+        user: localSessionUser,
+        profile: localSessionProfile
+      };
+    } else {
+      throw new Error("Senha incorreta para a conta de corretor.");
+    }
+  }
+
+  // 2. Fluxo padrão Firebase Auth
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+    const userCredential = await signInWithEmailAndPassword(auth, cleanEmail, password);
     const user = userCredential.user;
     const profile = await getUserProfile(user.uid);
+    
+    notifyAuthListeners(user, profile);
     return { user, profile };
   } catch (error) {
     throw new Error(translateAuthError(error));
@@ -163,7 +293,16 @@ async function login(email, password) {
  */
 async function logout() {
   try {
-    await signOut(auth);
+    localSessionUser = null;
+    localSessionProfile = null;
+    try {
+      localStorage.removeItem(SESSION_STORAGE_KEY);
+    } catch (e) {}
+
+    if (auth.currentUser) {
+      await signOut(auth).catch(() => {});
+    }
+    notifyAuthListeners(null, null);
   } catch (error) {
     console.error("Erro ao deslogar:", error);
     throw error;
@@ -175,6 +314,11 @@ async function logout() {
  */
 function getCurrentUser() {
   return new Promise((resolve) => {
+    if (localSessionUser) {
+      resolve({ user: localSessionUser, profile: localSessionProfile });
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       unsubscribe();
       if (user) {
@@ -191,7 +335,17 @@ function getCurrentUser() {
  * Escutar mudanças no estado de autenticação
  */
 function onAuthChange(callback) {
-  return onAuthStateChanged(auth, async (user) => {
+  authChangeListeners.add(callback);
+
+  if (localSessionUser) {
+    setTimeout(() => {
+      callback(localSessionUser, localSessionProfile);
+    }, 0);
+  }
+
+  const unsubscribeFirebase = onAuthStateChanged(auth, async (user) => {
+    if (localSessionUser) return; // Prioriza sessão local se ativa
+
     if (user) {
       const profile = await getUserProfile(user.uid);
       callback(user, profile);
@@ -199,48 +353,46 @@ function onAuthChange(callback) {
       callback(null, null);
     }
   });
+
+  return () => {
+    authChangeListeners.delete(callback);
+    unsubscribeFirebase();
+  };
 }
 
 /**
  * Proteger páginas privadas (ex: dashboard.html)
  * Redireciona para login.html caso não haja sessão ativa
  */
-function requireAuth(redirectUrl = "login.html") {
-  return new Promise((resolve) => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      unsubscribe();
-      if (!user) {
-        const currentPath = window.location.pathname + window.location.search;
-        window.location.href = `${redirectUrl}?redirect=${encodeURIComponent(currentPath)}`;
-      } else {
-        const profile = await getUserProfile(user.uid);
-        resolve({ user, profile });
-      }
-    });
-  });
+async function requireAuth(redirectUrl = "login.html") {
+  const { user, profile } = await getCurrentUser();
+  if (!user) {
+    const currentPath = window.location.pathname + window.location.search;
+    window.location.href = `${redirectUrl}?redirect=${encodeURIComponent(currentPath)}`;
+    return { user: null, profile: null };
+  }
+  return { user, profile };
 }
 
 /**
  * Redirecionar se já estiver autenticado (ex: na página login.html)
  */
-function redirectIfAuthenticated(destination = "dashboard.html") {
-  return new Promise((resolve) => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      unsubscribe();
-      if (user) {
-        const params = new URLSearchParams(window.location.search);
-        const redirectParam = params.get("redirect");
-        window.location.href = redirectParam || destination;
-      } else {
-        resolve(null);
-      }
-    });
-  });
+async function redirectIfAuthenticated(destination = "dashboard.html") {
+  const { user } = await getCurrentUser();
+  if (user) {
+    const params = new URLSearchParams(window.location.search);
+    const redirectParam = params.get("redirect");
+    window.location.href = redirectParam || destination;
+  }
 }
 
 // Exporta globalmente para páginas HTML
 const LivingCanvasAuth = {
-  auth,
+  auth: authProxy,
+  rawAuth: auth,
+  get currentUser() {
+    return auth.currentUser || localSessionUser;
+  },
   db,
   login,
   register,
@@ -250,13 +402,14 @@ const LivingCanvasAuth = {
   onAuthStateChanged: onAuthChange,
   requireAuth,
   redirectIfAuthenticated,
-  translateAuthError
+  translateAuthError,
+  BROKER_CREDENTIALS
 };
 
 window.LivingCanvasAuth = LivingCanvasAuth;
 export default LivingCanvasAuth;
 export {
-  auth,
+  authProxy as auth,
   db,
   login,
   register,
