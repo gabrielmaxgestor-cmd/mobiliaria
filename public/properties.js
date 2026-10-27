@@ -312,9 +312,12 @@ export async function getProperties(filters = {}) {
       ...docSnap.data()
     }));
 
+    // O catálogo público ignora rigorosamente imóveis com status "arquivado"
+    firestoreProperties = firestoreProperties.filter(p => p.status !== "arquivado");
+
     // Se o Firestore não tiver nenhum imóvel gravado ainda, retorna os dados modelo
     if (firestoreProperties.length === 0 && (!filters.status || filters.status === "disponivel")) {
-      firestoreProperties = [...SAMPLE_PROPERTIES];
+      firestoreProperties = SAMPLE_PROPERTIES.filter(p => p.status !== "arquivado");
       
       // Aplicar filtros nos dados de fallback se existirem
       if (filters.tipo) {
@@ -328,7 +331,7 @@ export async function getProperties(filters = {}) {
     return firestoreProperties;
   } catch (error) {
     console.warn("Aviso ao buscar imóveis do Firestore (usando catálogo seguro):", error);
-    return [...SAMPLE_PROPERTIES];
+    return SAMPLE_PROPERTIES.filter(p => p.status !== "arquivado");
   }
 }
 

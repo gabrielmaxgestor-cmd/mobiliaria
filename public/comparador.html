@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comparador de Imóveis — Living Canvas</title>
 <meta name="description" content="Compare até três imóveis lado a lado antes de decidir.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/comparador.html">
+<link rel="canonical" href="https://livingcanvas.com.br/comparador.html">
 <meta property="og:title" content="Comparador de Imóveis — Living Canvas">
 <meta property="og:description" content="Compare até três imóveis lado a lado antes de decidir.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/comparador.html">
+<meta property="og:url" content="https://livingcanvas.com.br/comparador.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -1738,7 +1738,7 @@
 <!-- FLOATING CTA -->
 <div class="floating-cta">
   <div class="cta-tooltip">Fale com um especialista</div>
-  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">💬</a>
 </div>
 
 <script>
@@ -1827,6 +1827,120 @@
           hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
         }
       });
+    }
+  });
+</script>
+
+<script type="module">
+  import { getPropertyById } from '/properties.js';
+
+  function formatMoeda(val) {
+    if (val == null || isNaN(val)) return 'Consulte';
+    return 'R$ ' + Number(val).toLocaleString('pt-BR', { maximumFractionDigits: 0 });
+  }
+
+  function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const params = new URLSearchParams(window.location.search);
+    const idsParam = params.get('ids');
+    if (!idsParam) return;
+
+    const ids = idsParam.split(',').map(s => s.trim()).filter(Boolean).slice(0, 4);
+    if (ids.length === 0) return;
+
+    try {
+      const propPromises = ids.map(id => getPropertyById(id));
+      const loaded = (await Promise.all(propPromises)).filter(Boolean);
+
+      if (loaded.length === 0) return;
+
+      // Atualiza o subtítulo
+      const subTitle = document.querySelector('.compare-subtitle');
+      if (subTitle) {
+        subTitle.innerHTML = `Comparando <strong>${loaded.length} imóveis selecionados</strong> do seu painel de favoritos. Análise direta de especificações lado a lado.`;
+      }
+
+      // Atualiza a barra de propriedades no topo
+      const barGrid = document.querySelector('.properties-bar-grid');
+      if (barGrid) {
+        const letters = ['A', 'B', 'C', 'D'];
+        barGrid.innerHTML = loaded.map((p, idx) => {
+          const img = (p.imagens && p.imagens[0]) || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80';
+          const bairro = p.endereco?.bairro || 'Localização Nobre';
+          const area = p.caracteristicas?.areaM2 || 0;
+          return `
+            <div class="property-slot">
+              <div class="property-slot-image" style="background-image: url('${encodeURI(img)}')">
+                <span class="property-slot-badge">Imóvel ${letters[idx] || (idx + 1)}</span>
+                <a href="comparador.html" class="property-slot-remove" style="text-decoration:none; display:flex; align-items:center; justify-content:center;" title="Voltar para comparador geral">×</a>
+              </div>
+              <div class="property-slot-content">
+                <h3 class="property-slot-title"><a href="imovel.html?id=${encodeURIComponent(p.id)}" style="color:inherit; text-decoration:none;">${escapeHtml(p.titulo || 'Imóvel')}</a></h3>
+                <p class="property-slot-location">📍 ${escapeHtml(bairro)}${area > 0 ? ` • ${area}m²` : ''}</p>
+                <div class="property-slot-price">${formatMoeda(p.preco)}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Atualiza cabeçalho da tabela de comparação
+      const headerRow = document.querySelector('.comparison-row.header');
+      if (headerRow) {
+        let headerHtml = `<div class="comparison-cell label" style="background: rgba(212, 175, 122, 0.08);">Critério</div>`;
+        loaded.forEach(p => {
+          headerHtml += `<div class="comparison-cell header-cell">${escapeHtml(p.titulo || 'Imóvel')}</div>`;
+        });
+        headerRow.innerHTML = headerHtml;
+      }
+
+      // Mapeamento de linhas de dados da tabela
+      const rowUpdates = {
+        'Tipo': p => `<span class="value-text">${escapeHtml((p.tipo || 'Imóvel').charAt(0).toUpperCase() + (p.tipo || '').slice(1))}</span>`,
+        'Área total': p => `<span class="value-text">${p.caracteristicas?.areaM2 ? `${p.caracteristicas.areaM2}m²` : '—'}</span>`,
+        'Quartos': p => `<span class="value-text">${p.caracteristicas?.quartos ? `${p.caracteristicas.quartos} qtos (${p.caracteristicas?.suites || 0} suítes)` : '—'}</span>`,
+        'Vagas': p => `<span class="value-text">${p.caracteristicas?.vagas ? `${p.caracteristicas.vagas} vagas` : '—'}</span>`,
+        'Bairro': p => `<span class="value-text">${escapeHtml(p.endereco?.bairro || '—')}</span>`,
+        'Preço': p => `<span class="value-text" style="color:var(--gold); font-weight:700;">${formatMoeda(p.preco)}</span>`,
+        'Condomínio': p => `<span class="value-text">${formatMoeda(p.condominio)}</span>`,
+        'IPTU': p => `<span class="value-text">${formatMoeda(p.iptu)}</span>`,
+        'Piscina': p => `<span class="value-text">${p.caracteristicas?.piscina ? '✓ Sim' : '✗ Não'}</span>`,
+        'Varanda / Terraço': p => `<span class="value-text">${p.caracteristicas?.varandaGourmet ? '✓ Gourmet' : '✓ Sim'}</span>`
+      };
+
+      document.querySelectorAll('.comparison-row:not(.header):not(.category)').forEach(row => {
+        const labelEl = row.querySelector('.comparison-cell.label');
+        if (!labelEl) return;
+        const labelText = labelEl.textContent.trim();
+        const formatter = rowUpdates[labelText];
+        if (formatter) {
+          let rowHtml = `<div class="comparison-cell label">${escapeHtml(labelText)}</div>`;
+          loaded.forEach(p => {
+            rowHtml += `<div class="comparison-cell value">${formatter(p)}</div>`;
+          });
+          row.innerHTML = rowHtml;
+        } else {
+          // Ajusta a quantidade de colunas se não houver formatador específico
+          const existingValues = row.querySelectorAll('.comparison-cell.value');
+          if (existingValues.length > loaded.length) {
+            for (let i = loaded.length; i < existingValues.length; i++) {
+              existingValues[i].style.display = 'none';
+            }
+          }
+        }
+      });
+
+    } catch (err) {
+      console.warn('Erro ao carregar comparação dinâmica por ?ids=', err);
     }
   });
 </script>

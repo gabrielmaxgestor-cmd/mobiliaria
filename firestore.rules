@@ -2,7 +2,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Funções auxiliares de autenticação e papel
+    // =========================================================================
+    // FUNÇÕES AUXILIARES DE AUTENTICAÇÃO E PAPÉIS
+    // =========================================================================
+
     function isAuthenticated() {
       return request.auth != null;
     }
@@ -11,126 +14,370 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
-    function getUserData() {
-      return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
-    }
-
+    // Papel de corretor validado exclusivamente pelo Custom Claim no token JWT
     function isCorretor() {
-      return isAuthenticated() && getUserData().role == 'corretor';
+      return isAuthenticated() && request.auth.token.role == 'corretor';
     }
 
-    // 1. Coleção de Usuários
-    match /usuarios/{userId} {
-      // Leitura do próprio perfil ou consulta de perfil de corretores
-      allow read: if isUser(userId) || (isAuthenticated() && resource.data.role == 'corretor');
+    // Consulta de documento de usuário no mesmo banco de dados
+    function getUser(userId) {
+      return get(/databases/$(database)/documents/usuarios/$(userId)).data;
+    }
 
-      // Cadastro de cliente novo
+    // Verifica se o cliente concedeu consentimento para corretores lerem seus favoritos/buscas
+    function clienteCompartilha(userId) {
+      let userData = getUser(userId);
+      return userData != null && ('compartilharPreferencias' in userData) && userData.compartilharPreferencias == true;
+    }
+
+    // Consulta conversa para validar participantes
+    function getConversa(conversaId) {
+      return get(/databases/$(database)/documents/conversas/$(conversaId)).data;
+    }
+
+    function isParticipanteConversa(conversaId) {
+      let conversa = getConversa(conversaId);
+      return isCorretor() || (isAuthenticated() && conversa != null && conversa.usuarioId == request.auth.uid);
+    }
+
+    // =========================================================================
+    // 1. USUÁRIOS & SUBCOLEÇÃO DE NOTAS DE CORRETOR
+    // =========================================================================
+
+    match /usuarios/{userId} {
+      // Leitura: o próprio usuário ou qualquer corretor
+      allow read: if isUser(userId) || isCorretor();
+
+      // Criação: novo cliente cadastrado com papel 'cliente' obrigatório
       allow create: if isUser(userId)
                     && request.resource.data.uid == request.auth.uid
                     && request.resource.data.role == 'cliente';
 
-      // Atualização do próprio perfil sem poder alterar o próprio cargo (role) ou UID
+      // Atualização: o próprio usuário mantendo uid e role imutáveis
       allow update: if isUser(userId)
                     && request.resource.data.uid == resource.data.uid
-                    && request.resource.data.role == resource.data.role;
+                    && request.resource.data.role == resource.data.role
+                    && (!('avatarUrl' in request.resource.data) || request.resource.data.avatarUrl is string)
+                    && (!('preferenciasNotif' in request.resource.data) || request.resource.data.preferenciasNotif is map)
+                    && (!('compartilharPreferencias' in request.resource.data) || request.resource.data.compartilharPreferencias is bool);
 
-      // Exclusão desabilitada
+      // Exclusão negada diretamente
       allow delete: if false;
+
+      // Subcoleção de anotações internas privadas de corretores sobre o cliente
+      match /notasCorretor/{notaId} {
+        allow read, write: if isCorretor();
+      }
     }
 
-    // 2. Coleção de Imóveis
-    match /imoveis/{imovelId} {
-      // LEITURA PÚBLICA: Qualquer visitante (mesmo sem login) pode visualizar o catálogo de imóveis
+    // =========================================================================
+    // 2. CORRETORES PÚBLICOS (Perfil e CRECI para exibição pública)
+    // =========================================================================
+
+    match /corretoresPublicos/{uid} {
+      // Leitura pública
       allow read: if true;
 
-      // CRIAÇÃO: Apenas usuários autenticados com role 'corretor', vinculando a si mesmos como corretorId
-      allow create: if isCorretor()
-                    && request.resource.data.corretorId == request.auth.uid;
+      // Escrita apenas pelo próprio corretor oficial autenticado
+      allow create, update, delete: if isUser(uid) && isCorretor();
+    }
 
-      // ATUALIZAÇÃO: Apenas o corretor responsável/proprietário do cadastro do imóvel
+    // =========================================================================
+    // 3. IMÓVEIS (Catálogo da imobiliária)
+    // =========================================================================
+
+    match /imoveis/{imovelId} {
+      // Leitura pública de todo o catálogo
+      allow read: if true;
+
+      // Criação: apenas corretores vinculando-se como corretorId
+      allow create: if isCorretor()
+                    && request.resource.data.corretorId == request.auth.uid
+                    && (!('status' in request.resource.data) || request.resource.data.status in ['disponivel', 'reservado', 'vendido', 'alugado', 'arquivado']);
+
+      // Atualização: apenas o corretor responsável pelo imóvel
       allow update: if isCorretor()
                     && resource.data.corretorId == request.auth.uid
-                    && request.resource.data.corretorId == resource.data.corretorId;
+                    && request.resource.data.corretorId == resource.data.corretorId
+                    && (!('status' in request.resource.data) || request.resource.data.status in ['disponivel', 'reservado', 'vendido', 'alugado', 'arquivado']);
 
-      // EXCLUSÃO: Apenas o corretor responsável pelo imóvel
+      // Exclusão: apenas o corretor responsável
       allow delete: if isCorretor()
                     && resource.data.corretorId == request.auth.uid;
     }
 
-    // 3. Coleção de Favoritos (Privada por Usuário)
-    match /favoritos/{favoritoId} {
-      // Leitura: apenas o próprio usuário pode ler ou listar seus favoritos
-      allow read: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+    // =========================================================================
+    // 4. LEADS (Captação pública e CRM de atendimento)
+    // =========================================================================
 
-      // Criação: usuário autenticado gravando seu próprio UID
-      allow create: if isAuthenticated()
-                    && request.resource.data.usuarioId == request.auth.uid
-                    && request.resource.data.imovelId is string;
+    match /leads/{leadId} {
+      // Leitura: corretores ou o cliente logado dono do lead
+      allow read: if isCorretor() || (isAuthenticated() && resource.data.get('usuarioId', '') == request.auth.uid);
 
-      // Exclusão: apenas o próprio usuário pode remover seu favorito
-      allow delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+      // Criação pública: campos obrigatórios estritos e apenas chaves permitidas
+      allow create: if request.resource.data.keys().hasAll(['nome', 'email', 'telefone', 'origem', 'status', 'criadoEm'])
+                    && request.resource.data.keys().hasOnly([
+                      'nome', 'email', 'telefone', 'origem', 'status', 'criadoEm',
+                      'usuarioId', 'imovelId', 'corretorId', 'etapa', 'visitaId', 'assunto', 'mensagem',
+                      'dataPreferida', 'horarioPreferido', 'tipoVisita', 'tipoImovel',
+                      'enderecoImovel', 'valorEstimado'
+                    ])
+                    && request.resource.data.origem in ['contato', 'vender', 'agendar']
+                    && request.resource.data.status == 'novo'
+                    && request.resource.data.nome is string && request.resource.data.nome.size() > 0
+                    && request.resource.data.email is string && request.resource.data.email.size() > 0
+                    && request.resource.data.telefone is string && request.resource.data.telefone.size() > 0
+                    && (!('usuarioId' in request.resource.data) || (isAuthenticated() && request.resource.data.usuarioId == request.auth.uid));
 
-      // Atualização não permitida
-      allow update: if false;
+      // Atualização e Exclusão: restrita exclusivamente aos corretores
+      allow update, delete: if isCorretor();
+
+      // Subcoleção de anotações internas da equipe de corretores sobre o lead
+      match /notas/{notaId} {
+        allow read, write: if isCorretor();
+      }
     }
 
-    // 4. Coleção de Buscas Desejadas (Privada por Usuário)
-    match /buscasDesejadas/{buscaId} {
-      // Leitura: apenas o próprio cliente pode ler ou listar suas buscas
-      allow read: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+    // =========================================================================
+    // 5. VISITAS (Agendamento de visitas a imóveis)
+    // =========================================================================
 
-      // Criação: usuário autenticado gravando seu próprio UID com campo obrigatório 'nome'
+    match /visitas/{visitaId} {
+      // Leitura: corretores ou o próprio cliente solicitante
+      allow read: if isCorretor() || (isAuthenticated() && resource.data.usuarioId == request.auth.uid);
+
+      // Criação: cliente solicitando visita com status inicial 'pendente'
+      allow create: if isAuthenticated()
+                    && request.resource.data.usuarioId == request.auth.uid
+                    && request.resource.data.status == 'pendente'
+                    && request.resource.data.imovelId is string;
+
+      // Atualização:
+      // - Corretor pode atualizar qualquer aspecto da visita
+      // - Cliente pode:
+      //   a) Cancelar a visita (status -> 'cancelada')
+      //   b) Responder a reagendamento (status 'reagendada' -> 'confirmada' ou 'cancelada')
+      //   c) Preencher avaliação quando status == 'realizada'
+      allow update: if isCorretor()
+                    || (isAuthenticated() && resource.data.usuarioId == request.auth.uid && (
+                        (resource.data.status != 'cancelada'
+                         && request.resource.data.status == 'cancelada'
+                         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'motivoCancelamento', 'atualizadoEm']))
+                        ||
+                        (resource.data.status == 'reagendada'
+                         && request.resource.data.status in ['confirmada', 'cancelada']
+                         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'atualizadoEm']))
+                        ||
+                        (resource.data.status == 'realizada'
+                         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['avaliacao', 'comentarioAvaliacao', 'avaliadoEm', 'atualizadoEm']))
+                    ));
+
+      // Exclusão: apenas corretores
+      allow delete: if isCorretor();
+    }
+
+    // =========================================================================
+    // 6. PROPOSTAS (Negociações e ofertas de compra/locação)
+    // =========================================================================
+
+    match /propostas/{propostaId} {
+      // Leitura: corretores ou o próprio proponente
+      allow read: if isCorretor() || (isAuthenticated() && resource.data.usuarioId == request.auth.uid);
+
+      // Criação: cliente enviando proposta com valor positivo e status 'enviada'
+      allow create: if isAuthenticated()
+                    && request.resource.data.usuarioId == request.auth.uid
+                    && request.resource.data.status == 'enviada'
+                    && request.resource.data.valor is number
+                    && request.resource.data.valor > 0;
+
+      // Atualização:
+      // - Corretor: gerencia contrapropostas, aceite, recusa e motivos
+      // - Cliente:
+      //   a) Cancelar proposta aberta
+      //   b) Responder contraproposta (aceitar, recusar ou enviar nova rodada)
+      allow update: if isCorretor()
+                    || (isAuthenticated() && resource.data.usuarioId == request.auth.uid && (
+                        (resource.data.status in ['enviada', 'em_analise', 'contraproposta']
+                         && request.resource.data.status == 'cancelada'
+                         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'atualizadoEm']))
+                        ||
+                        (resource.data.status == 'contraproposta'
+                         && request.resource.data.status in ['aceita', 'recusada', 'contraproposta']
+                         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'valorAtual', 'rodadas', 'atualizadoEm']))
+                    ));
+
+      // Exclusão: apenas corretores
+      allow delete: if isCorretor();
+    }
+
+    // =========================================================================
+    // 7. CONVERSAS & SUBCOLEÇÃO DE MENSAGENS (Chat em tempo real)
+    // =========================================================================
+
+    match /conversas/{conversaId} {
+      // Leitura: corretores ou o próprio cliente participante
+      allow read: if isCorretor() || (isAuthenticated() && resource.data.usuarioId == request.auth.uid);
+
+      // Criação: cliente iniciando conversa vinculando seu uid
+      allow create: if isAuthenticated()
+                    && request.resource.data.usuarioId == request.auth.uid;
+
+      // Atualização: participantes da conversa atualizando última mensagem ou contador de não lidas
+      allow update: if isCorretor() || (isAuthenticated() && resource.data.usuarioId == request.auth.uid);
+
+      // Exclusão: apenas corretores
+      allow delete: if isCorretor();
+
+      // Subcoleção de mensagens individuais
+      match /mensagens/{msgId} {
+        allow read: if isParticipanteConversa(conversaId);
+
+        allow create: if isParticipanteConversa(conversaId)
+                      && request.resource.data.autorId == request.auth.uid;
+
+        // Atualização permitida estritamente para marcar leitura ('lidaEm')
+        allow update: if isParticipanteConversa(conversaId)
+                      && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lidaEm']);
+
+        allow delete: if false;
+      }
+    }
+
+    // =========================================================================
+    // 8. DOCUMENTOS (Envio e validação de certidões, contratos e comprovantes)
+    // =========================================================================
+
+    match /documentos/{docId} {
+      // Leitura: corretores ou o cliente dono do documento
+      allow read: if isCorretor() || (isAuthenticated() && resource.data.usuarioId == request.auth.uid);
+
+      // Criação:
+      // - Cliente enviando seu próprio documento (status inicial 'enviado')
+      // - Corretor solicitando documento pendente para um cliente (status 'pendente')
+      allow create: if (isAuthenticated()
+                        && request.resource.data.usuarioId == request.auth.uid
+                        && request.resource.data.status == 'enviado')
+                    || (isCorretor()
+                        && request.resource.data.status == 'pendente'
+                        && request.resource.data.usuarioId is string);
+
+      // Atualização: restrita exclusivamente ao corretor (aprovar, reprovar com motivo, revisar)
+      allow update: if isCorretor()
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'motivoReprovacao', 'revisadoEm', 'atualizadoEm']);
+
+      // Exclusão:
+      // - Cliente pode remover seus documentos somente se não estiverem aprovados
+      // - Corretor pode remover documentos
+      allow delete: if (isAuthenticated() && resource.data.usuarioId == request.auth.uid && resource.data.status != 'aprovado')
+                    || isCorretor();
+    }
+
+    // =========================================================================
+    // 9. ATIVIDADES (Histórico e linha do tempo de interações)
+    // =========================================================================
+
+    match /atividades/{atividadeId} {
+      // Leitura: corretores ou o cliente dono da atividade
+      allow read: if isCorretor() || (isAuthenticated() && resource.data.usuarioId == request.auth.uid);
+
+      // Criação: cliente registrando sua própria atividade ou corretor
+      allow create: if isCorretor()
+                    || (isAuthenticated() && request.resource.data.usuarioId == request.auth.uid);
+
+      // Registros de histórico imutáveis: sem alteração ou remoção
+      allow update, delete: if false;
+    }
+
+    // =========================================================================
+    // 10. SIMULAÇÕES (Simulações financeiras privadas de financiamento)
+    // =========================================================================
+
+    match /simulacoes/{simulacaoId} {
+      // CRUD totalmente privado do cliente proprietário
+      allow read, update, delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+
+      allow create: if isAuthenticated() && request.resource.data.usuarioId == request.auth.uid;
+    }
+
+    // =========================================================================
+    // 11. SOLICITAÇÕES LGPD (Exportação de dados e revogação de consentimento)
+    // =========================================================================
+
+    match /solicitacoesLgpd/{solicitacaoId} {
+      // Leitura: o próprio cliente solicitante ou corretores
+      allow read: if isCorretor() || (isAuthenticated() && resource.data.usuarioId == request.auth.uid);
+
+      // Criação: apenas o titular solicitando seus direitos
+      allow create: if isAuthenticated() && request.resource.data.usuarioId == request.auth.uid;
+
+      allow update, delete: if false;
+    }
+
+    // =========================================================================
+    // 12. BUSCAS DESEJADAS ("Meu Imóvel dos Sonhos")
+    // =========================================================================
+
+    match /buscasDesejadas/{buscaId} {
+      // Leitura: o próprio usuário ou corretores se o cliente consentiu o compartilhamento de preferências
+      allow read: if (isAuthenticated() && resource.data.usuarioId == request.auth.uid)
+                  || (isCorretor() && clienteCompartilha(resource.data.usuarioId));
+
       allow create: if isAuthenticated()
                     && request.resource.data.usuarioId == request.auth.uid
                     && request.resource.data.nome is string
                     && request.resource.data.nome.size() > 0;
 
-      // Atualização: apenas o próprio usuário sobre seus próprios registros
       allow update: if isAuthenticated()
                     && resource.data.usuarioId == request.auth.uid
                     && request.resource.data.usuarioId == request.auth.uid;
 
-      // Exclusão: apenas o próprio usuário pode remover sua busca
       allow delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
     }
 
-    // 5. Coleção de Notificações (Privada por Usuário)
+    // =========================================================================
+    // 13. FAVORITOS (Lista de imóveis salvos)
+    // =========================================================================
+
+    match /favoritos/{favoritoId} {
+      // Leitura: o próprio usuário ou corretores se o cliente consentiu o compartilhamento de preferências
+      allow read: if (isAuthenticated() && resource.data.usuarioId == request.auth.uid)
+                  || (isCorretor() && clienteCompartilha(resource.data.usuarioId));
+
+      allow create: if isAuthenticated()
+                    && request.resource.data.usuarioId == request.auth.uid
+                    && request.resource.data.imovelId is string;
+
+      allow delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
+
+      allow update: if false;
+    }
+
+    // =========================================================================
+    // 14. NOTIFICAÇÕES (Alertas automáticos gerados por backend/Cloud Functions)
+    // =========================================================================
+
     match /notificacoes/{notificacaoId} {
-      // Leitura: apenas o próprio cliente destinatário pode ler suas notificações
+      // Leitura privada do cliente destinatário
       allow read: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
 
-      // Criação pelo client: negada explicitamente (gerada exclusivamente pela Cloud Function / backend)
+      // Criação negada no client (gerada exclusivamente pelas Cloud Functions)
       allow create: if false;
 
-      // Atualização: apenas o próprio usuário marcando como lida
+      // Atualização restrita para marcação de leitura pelo próprio cliente
       allow update: if isAuthenticated()
                     && resource.data.usuarioId == request.auth.uid
                     && request.resource.data.usuarioId == resource.data.usuarioId
                     && request.resource.data.imovelId == resource.data.imovelId
                     && request.resource.data.buscaId == resource.data.buscaId;
 
-      // Exclusão: apenas o próprio usuário destinatário
       allow delete: if isAuthenticated() && resource.data.usuarioId == request.auth.uid;
     }
 
-    // 6. Coleção de Leads (Captação pública de contato/venda/agendamento)
-    match /leads/{leadId} {
-      // Leitura e Gestão: apenas corretores autenticados
-      allow read, list, update, delete: if isCorretor();
+    // =========================================================================
+    // BLOQUEIO PADRÃO PARA QUALQUER OUTRA COLEÇÃO OU CAMINHO
+    // =========================================================================
 
-      // Criação pública: qualquer visitante (autenticado ou não) pode enviar lead
-      allow create: if request.resource.data.keys().hasAll(['nome', 'email', 'telefone', 'origem', 'status', 'criadoEm'])
-                    && request.resource.data.origem in ['contato', 'vender', 'agendar']
-                    && request.resource.data.status == 'novo'
-                    && request.resource.data.nome is string
-                    && request.resource.data.nome.size() > 0
-                    && request.resource.data.email is string
-                    && request.resource.data.email.size() > 0
-                    && request.resource.data.telefone is string
-                    && request.resource.data.telefone.size() > 0;
-    }
-
-    // Bloqueio por padrão para qualquer outro documento
     match /{document=**} {
       allow read, write: if false;
     }

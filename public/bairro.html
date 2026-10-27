@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Perfil do Bairro — Living Canvas</title>
 <meta name="description" content="Guia completo do bairro: lifestyle, mobilidade, comércio e imóveis à venda.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/bairro.html">
+<link rel="canonical" href="https://livingcanvas.com.br/bairro.html">
 <meta property="og:title" content="Perfil do Bairro — Living Canvas">
 <meta property="og:description" content="Guia completo do bairro: lifestyle, mobilidade, comércio e imóveis à venda.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/bairro.html">
+<meta property="og:url" content="https://livingcanvas.com.br/bairro.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -1306,12 +1306,159 @@
         });
       }
 
-      // PREENCHIMENTO DINÂMICO DO NOME DO BAIRRO NO CTA
-      const titleEl = document.querySelector('.neighborhood-title');
-      const ctaBairroEl = document.getElementById('ctaBairroNome');
-      if (titleEl && ctaBairroEl) {
-        const nome = titleEl.textContent.trim();
-        if (nome) ctaBairroEl.textContent = nome;
+      // PREENCHIMENTO DINÂMICO DO NOME DO BAIRRO E DADOS A PARTIR DO PARÂMETRO ?b=
+      const BAIRROS_DATA = {
+        'jardim-europa': {
+          nome: 'Jardim Europa',
+          htmlTitle: 'Jardim <em>Europa</em>',
+          regiao: 'Zona Sul • São Paulo',
+          tag: '📍 Um dos bairros mais nobres de São Paulo',
+          imoveisCount: '12',
+          precoMedio: 'R$ 3.2M',
+          areaMedia: '420m²',
+          qualidade: '9.5',
+          storyQuote: '"Onde as ruas arborizadas encontram a sofisticação discreta. Jardim Europa é mais que um endereço — é um estilo de vida para quem valoriza privacidade, segurança e proximidade com o melhor que São Paulo tem a oferecer."',
+          storyDesc: 'Localizado na Zona Sul de São Paulo, o Jardim Europa é reconhecido por suas mansões históricas, ruas largas e arborizadas, e pela proximidade com o Parque Ibirapuera. O bairro combina a tranquilidade de uma área residencial premium com fácil acesso a restaurantes, centros culturais e principais vias da cidade.',
+          metro: '1.2km • Estação Faria Lima',
+          seguranca: '9.2',
+          verde: '92%',
+          bgImg: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1600&q=80'
+        },
+        'vila-madalena': {
+          nome: 'Vila Madalena',
+          htmlTitle: 'Vila <em>Madalena</em>',
+          regiao: 'Zona Oeste • São Paulo',
+          tag: '📍 O polo cultural, gastronômico e artístico de São Paulo',
+          imoveisCount: '8',
+          precoMedio: 'R$ 1.8M',
+          areaMedia: '150m²',
+          qualidade: '9.4',
+          storyQuote: '"Pé-direito duplo, ateliês independentes e cafés autorais. A Vila Madalena oferece a combinação perfeita entre efervescência criativa e refúgios tranquilos para morar."',
+          storyDesc: 'Reconhecido internacionalmente por suas galerias de arte, becos icônicos e vida boêmia refinada, o bairro atrai quem busca morar perto de tudo com muita personalidade e identidade visual autêntica.',
+          metro: '400m • Estação Fradique Coutinho',
+          seguranca: '8.9',
+          verde: '78%',
+          bgImg: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1600&q=80'
+        },
+        'itaim-bibi': {
+          nome: 'Itaim Bibi',
+          htmlTitle: 'Itaim <em>Bibi</em>',
+          regiao: 'Zona Sul • São Paulo',
+          tag: '📍 O coração financeiro e gastronômico da capital',
+          imoveisCount: '15',
+          precoMedio: 'R$ 3.5M',
+          areaMedia: '280m²',
+          qualidade: '9.6',
+          storyQuote: '"Alta gastronomia, sedes das maiores empresas do país e penthouses exclusivas. O Itaim Bibi reúne o ápice do estilo de vida contemporâneo e dinâmico."',
+          storyDesc: 'Próximo à Faria Lima e ao Parque do Povo, o Itaim Bibi é o epicentro do mercado de alto padrão em São Paulo, com edifícios corporativos e residenciais premiados por arquitetos renomados.',
+          metro: '600m • Estação Cidade Jardim',
+          seguranca: '9.1',
+          verde: '74%',
+          bgImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80'
+        },
+        'pinheiros': {
+          nome: 'Pinheiros',
+          htmlTitle: '<em>Pinheiros</em>',
+          regiao: 'Zona Oeste • São Paulo',
+          tag: '📍 Tradição, mobilidade e vanguarda urbana',
+          imoveisCount: '18',
+          precoMedio: 'R$ 1.5M',
+          areaMedia: '120m²',
+          qualidade: '9.3',
+          storyQuote: '"Praças vibrantes, feiras aos finais de semana e facilidade incomparável de deslocamento. Pinheiros é o bairro para viver a pé com requinte e conveniência."',
+          storyDesc: 'Um dos bairros mais antigos e plurais de São Paulo, Pinheiros mescla sobrados históricos restaurados a condomínios modernos com design sustentável, cercados por ciclovias e estações de metrô.',
+          metro: '300m • Estação Pinheiros',
+          seguranca: '9.0',
+          verde: '80%',
+          bgImg: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80'
+        },
+        'moema': {
+          nome: 'Moema',
+          htmlTitle: '<em>Moema</em>',
+          regiao: 'Zona Sul • São Paulo',
+          tag: '📍 Ruas planas, proximidade com o Ibirapuera e tranquilidade familiar',
+          imoveisCount: '10',
+          precoMedio: 'R$ 2.1M',
+          areaMedia: '180m²',
+          qualidade: '9.5',
+          storyQuote: '"Passeios matinais de bicicleta, comércio sofisticado a céu aberto e o Parque Ibirapuera como extensão do seu jardim privativo."',
+          storyDesc: 'Dividida entre Moema Pássaros e Moema Índios, a região destaca-se pela topografia plana, calçadas largas arborizadas e alto índice de desenvolvimento humano.',
+          metro: '500m • Estação Moema',
+          seguranca: '9.3',
+          verde: '88%',
+          bgImg: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80'
+        },
+        'riviera': {
+          nome: 'Riviera de São Lourenço',
+          htmlTitle: 'Riviera de <em>São Lourenço</em>',
+          regiao: 'Litoral Norte • São Paulo',
+          tag: '📍 Segurança 24h, praia limpa e condomínio sustentável certificado',
+          imoveisCount: '5',
+          precoMedio: 'R$ 4.5M',
+          areaMedia: '560m²',
+          qualidade: '9.7',
+          storyQuote: '"O encontro privativo entre a Mata Atlântica preservada e o mar. Mansões de alto luxo com acesso exclusivo à praia e clube de golfe."',
+          storyDesc: 'Planejado com certificação ambiental ISO 14001, a Riviera oferece infraestrutura completa com saneamento próprio, shopping center, quadras de tênis e vigilância motorizada contínua.',
+          metro: 'Acesso por heliponto e Rod. Rio-Santos',
+          seguranca: '9.8',
+          verde: '96%',
+          bgImg: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1600&q=80'
+        }
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const rawSlug = (params.get('b') || params.get('bairro') || 'jardim-europa').toLowerCase().trim();
+      const slug = BAIRROS_DATA[rawSlug] ? rawSlug : (Object.keys(BAIRROS_DATA).find(k => rawSlug.includes(k)) || 'jardim-europa');
+      const data = BAIRROS_DATA[slug];
+
+      if (data) {
+        document.title = `${data.nome} — Bairros Nobres | Living Canvas`;
+        
+        // Breadcrumb
+        const breadcrumbStrong = document.querySelector('.breadcrumb strong');
+        if (breadcrumbStrong) breadcrumbStrong.textContent = data.nome;
+
+        // Hero badge & title
+        const heroBadge = document.querySelector('.neighborhood-badge');
+        if (heroBadge) heroBadge.textContent = data.regiao;
+
+        const heroTitle = document.querySelector('.neighborhood-title');
+        if (heroTitle) heroTitle.innerHTML = data.htmlTitle;
+
+        const heroLoc = document.querySelector('.neighborhood-location');
+        if (heroLoc) heroLoc.textContent = data.tag;
+
+        // Hero stats
+        const quickStats = document.querySelectorAll('.neighborhood-quick-stats .quick-stat-value');
+        if (quickStats.length >= 4) {
+          quickStats[0].textContent = data.imoveisCount;
+          quickStats[1].textContent = data.precoMedio;
+          quickStats[2].textContent = data.areaMedia;
+          quickStats[3].textContent = data.qualidade;
+        }
+
+        // Hero BG image
+        const heroBg = document.querySelector('.neighborhood-hero-bg');
+        if (heroBg && data.bgImg) {
+          heroBg.style.backgroundImage = `url('${data.bgImg}')`;
+        }
+
+        // Story
+        const storyQuote = document.querySelector('.story-text');
+        if (storyQuote) storyQuote.textContent = data.storyQuote;
+
+        const storyDesc = document.querySelector('.story-description');
+        if (storyDesc) storyDesc.textContent = data.storyDesc;
+
+        // CTA
+        const ctaBairroEl = document.getElementById('ctaBairroNome');
+        if (ctaBairroEl) ctaBairroEl.textContent = data.nome;
+
+        // Catálogo link filtro
+        const ctaBtn = document.querySelector('.neighborhood-cta-btn');
+        if (ctaBtn) {
+          ctaBtn.href = `imoveis.html?bairro=${encodeURIComponent(data.nome)}`;
+        }
       }
     });
   </script>

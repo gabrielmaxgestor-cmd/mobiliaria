@@ -7,11 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contato — Living Canvas</title>
 <meta name="description" content="Fale com nossos especialistas para encontrar o imóvel certo para você.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/contato.html">
+<link rel="canonical" href="https://livingcanvas.com.br/contato.html">
 <meta property="og:title" content="Contato — Living Canvas">
 <meta property="og:description" content="Fale com nossos especialistas para encontrar o imóvel certo para você.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/contato.html">
+<meta property="og:url" content="https://livingcanvas.com.br/contato.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -1117,7 +1117,16 @@
   <div class="contact-form-container">
     <div class="form-header">
       <h2>Me conta o que <em>você procura</em></h2>
-      <p>Leva menos de 1 minuto. Respondemos em até 24 horas.</p>
+    <div id="contatoSuccessFeedback" style="display:none; background:rgba(19,78,74,0.4); border:1px solid var(--gold, #d4af7a); border-radius:12px; padding:1.2rem; margin-bottom:1.5rem; color:var(--cream, #f5f1e8);">
+      <div style="display:flex; align-items:center; gap:0.6rem; font-weight:600; color:var(--gold, #d4af7a); margin-bottom:0.4rem;">
+        <span>✨</span> Mensagem enviada com sucesso!
+      </div>
+      <p style="font-size:0.9rem; color:var(--text-light, rgba(245,241,232,0.9)); margin-bottom:0.8rem;">Nossa equipe já recebeu seus dados e retornará o contato em breve.</p>
+      <div id="contatoPainelLink" style="display:none;">
+        <a href="/dashboard.html" style="display:inline-flex; align-items:center; gap:0.4rem; color:var(--gold, #d4af7a); text-decoration:underline; font-weight:600; font-size:0.9rem;">
+          Acompanhar no meu painel →
+        </a>
+      </div>
     </div>
     
     <form id="form-contato">
@@ -1159,7 +1168,7 @@
       <div class="form-checkbox">
         <input type="checkbox" name="termos" id="privacy" required>
         <label for="privacy">
-          Li e concordo com a <a href="/privacidade.html" target="_blank">Política de Privacidade</a> e autorizo o contato pela Living Canvas.
+          Li e concordo com a <a href="/privacidade.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a> e autorizo o contato pela Living Canvas.
         </label>
       </div>
       
@@ -1351,7 +1360,7 @@
       </div>
     </div>
     <div class="map-directions">
-      <a href="https://maps.google.com" target="_blank" class="map-directions-btn">🗺️ Ver no Google Maps</a>
+      <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="map-directions-btn">🗺️ Ver no Google Maps</a>
     </div>
   </div>
 </section>
@@ -1492,7 +1501,7 @@
 <!-- FLOATING CTA -->
 <div class="floating-cta">
   <div class="cta-tooltip">Fale conosco agora!</div>
-  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">💬</a>
 </div>
 
 <script>
@@ -1528,6 +1537,38 @@
 
 <script src="/enhance.js" defer></script>
 <script type="module" src="/leads.js"></script>
+<script type="module">
+  import LivingCanvasAuth from "/auth.js";
+
+  // Pré-preenchimento para usuário logado
+  LivingCanvasAuth.observeAuthState((user) => {
+    if (!user) return;
+    const form = document.getElementById("form-contato");
+    if (!form) return;
+    const inputNome = form.querySelector('input[name="nome"]');
+    const inputEmail = form.querySelector('input[name="email"]');
+    const inputTel = form.querySelector('input[name="telefone"]');
+    if (inputNome && !inputNome.value && user.displayName) inputNome.value = user.displayName;
+    if (inputEmail && !inputEmail.value && user.email) inputEmail.value = user.email;
+    if (inputTel && !inputTel.value && user.phoneNumber) inputTel.value = user.phoneNumber;
+  });
+
+  // Exibição do link para o painel se logado
+  const formContato = document.getElementById("form-contato");
+  if (formContato) {
+    formContato.addEventListener("submit", () => {
+      setTimeout(() => {
+        const user = LivingCanvasAuth.auth?.currentUser;
+        const box = document.getElementById("contatoSuccessFeedback");
+        const link = document.getElementById("contatoPainelLink");
+        if (box) {
+          box.style.display = "block";
+          if (link && user) link.style.display = "block";
+        }
+      }, 600);
+    });
+  }
+</script>
 <script>
   // MOBILE MENU HAMBURGER
   function toggleMobileMenu() {

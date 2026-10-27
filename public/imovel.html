@@ -7,11 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Casa do Bosque — Imóvel em Destaque | Living Canvas</title>
 <meta name="description" content="Detalhes completos do imóvel: fotos, plantas, localização e agendamento de visita.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/imovel.html">
+<link rel="canonical" href="https://livingcanvas.com.br/imovel.html">
 <meta property="og:title" content="Casa do Bosque — Imóvel em Destaque | Living Canvas">
 <meta property="og:description" content="Detalhes completos do imóvel: fotos, plantas, localização e agendamento de visita.">
 <meta property="og:type" content="product">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/imovel.html">
+<meta property="og:url" content="https://livingcanvas.com.br/imovel.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -2184,13 +2184,15 @@
         <div class="broker-card">
           <div class="broker-avatar" id="brokerAvatar" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80')"></div>
           <div class="broker-info">
-            <h4 id="brokerName">Ana Carolina Silva</h4>
-            <p id="brokerRole">Corretora Sênior • CRECI 12345</p>
+            <h4 id="brokerName">Especialista Living Canvas</h4>
+            <p id="brokerRole">Consultoria Imobiliária Exclusiva</p>
             <div class="broker-rating">★★★★★ 5.0</div>
           </div>
         </div>
-        <a id="brokerWhatsappBtn" href="https://wa.me/5511999999999" target="_blank" class="cta-whatsapp" style="text-decoration: none;">💬 Falar no WhatsApp</a>
+        <a id="brokerWhatsappBtn" href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" class="cta-whatsapp" style="text-decoration: none;">💬 Falar no WhatsApp</a>
         <a id="brokerCallBtn" href="tel:+5511999999999" class="cta-secondary" style="margin-top: 0.8rem; text-decoration: none; display: block; text-align: center;">📞 Ligar Agora</a>
+        <button id="btnChatCorretorSidebar" onclick="handleStartChat()" class="cta-secondary" style="margin-top: 0.8rem; width: 100%; border-color: var(--gold); color: var(--gold); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">💬 Conversar no Painel</button>
+        <button id="btnFazerPropostaSidebar" onclick="handleOpenProposalModal()" class="cta-primary" style="margin-top: 0.8rem; width: 100%; background: linear-gradient(135deg, var(--gold), #b89255); color: var(--emerald-deep); font-weight: 600;">📑 Fazer uma Proposta</button>
       </div>
       
       <!-- CTAs -->
@@ -2226,8 +2228,9 @@
     <h2>Quer conhecer esse imóvel <em>de perto</em>?</h2>
     <p>Agende uma visita agora e veja pessoalmente o que nenhuma foto mostra.</p>
     <div class="final-cta-buttons">
-      <button class="final-cta-primary">📅 Agendar Visita</button>
-      <button class="final-cta-secondary">💬 Falar com Corretor</button>
+      <button class="final-cta-primary" onclick="handleScheduleVisit()">📅 Agendar Visita</button>
+      <button class="final-cta-secondary" id="btnFazerPropostaBottom" onclick="handleOpenProposalModal()">📑 Fazer Proposta</button>
+      <button class="final-cta-secondary" id="btnChatCorretorBottom" onclick="handleStartChat()">💬 Falar com Corretor</button>
     </div>
   </div>
 </section>
@@ -2271,8 +2274,8 @@
 
 <!-- FLOATING CTA -->
 <div class="floating-cta">
-  <div class="cta-tooltip">Fale com Ana Carolina</div>
-  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+  <div class="cta-tooltip" id="floatingBrokerTooltip">Fale com um corretor</div>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" id="floatingWhatsappBtn" target="_blank" rel="noopener noreferrer">💬</a>
 </div>
 
 <!-- FULLSCREEN LIGHTBOX MODAL -->
@@ -2328,6 +2331,13 @@
 <script type="module">
   import { LivingCanvasProperties } from '/properties.js';
   import LivingCanvasFavorites from '/favorites.js';
+  import LivingCanvasAuth from '/auth.js';
+  import LivingCanvasData from '/lc-data.js';
+  import { showToast } from '/leads.js';
+
+  window.LivingCanvasAuth = LivingCanvasAuth;
+  window.LivingCanvasData = LivingCanvasData;
+  window.showToast = showToast;
 
   // Global property photos array for gallery & lightbox
   window.PROPERTY_PHOTOS = [
@@ -2618,7 +2628,7 @@
           <div style="background: rgba(10,46,42,0.4); border: 1px solid rgba(212,175,122,0.3); border-radius: 12px; padding: 1.5rem; text-align: center;">
             <img src="${prop.plantaBaixaUrl}" alt="Planta Baixa Oficial" style="max-width: 100%; height: auto; max-height: 480px; object-fit: contain; border-radius: 8px; filter: brightness(0.95);" />
             <div style="margin-top: 1rem;">
-              <a href="${prop.plantaBaixaUrl}" target="_blank" class="cta-secondary" style="display: inline-block; padding: 0.6rem 1.4rem; text-decoration: none;">🔍 Ver Planta Baixa em Alta Resolução</a>
+              <a href="${prop.plantaBaixaUrl}" target="_blank" rel="noopener noreferrer" class="cta-secondary" style="display: inline-block; padding: 0.6rem 1.4rem; text-decoration: none;">🔍 Ver Planta Baixa em Alta Resolução</a>
             </div>
           </div>
         `;
@@ -2698,7 +2708,7 @@
     if (sideIptu) sideIptu.textContent = prop.iptu ? `R$ ${prop.iptu.toLocaleString('pt-BR')}/mês` : 'R$ 1.800/mês';
     if (sideCond) sideCond.textContent = prop.condominio ? `R$ ${prop.condominio.toLocaleString('pt-BR')}/mês` : 'Sob consulta';
 
-    // Broker info
+    // Broker info & Status handling
     const brokerName = document.getElementById('brokerName');
     const brokerRole = document.getElementById('brokerRole');
     const brokerAvatar = document.getElementById('brokerAvatar');
@@ -2707,11 +2717,32 @@
     const floatingTooltip = document.getElementById('floatingBrokerTooltip');
     const floatingWhatsappBtn = document.getElementById('floatingWhatsappBtn');
 
-    const bName = prop.corretor?.nome || 'Ana Carolina Silva';
-    const bTelefone = prop.corretor?.telefone || '5511999999999';
+    const siteConfig = window.SITE_CONFIG || {};
+    let bName = siteConfig.brandName ? `Especialista ${siteConfig.brandName}` : 'Especialista Living Canvas';
+    let bTelefone = siteConfig.whatsappNumber || '5511999999999';
+    let bCreci = siteConfig.creci || 'CRECI Sob Consulta';
+    let bAvatarUrl = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80';
+
+    if (prop.corretorId) {
+      try {
+        const pubCorretor = await LivingCanvasData.CorretoresPublicos.obter(prop.corretorId);
+        if (pubCorretor) {
+          bName = pubCorretor.nome || bName;
+          if (pubCorretor.telefone) bTelefone = pubCorretor.telefone;
+          if (pubCorretor.creci) bCreci = `CRECI ${pubCorretor.creci}`;
+          if (pubCorretor.foto) bAvatarUrl = pubCorretor.foto;
+        }
+      } catch (err) {
+        console.warn('Aviso ao carregar corretor do imóvel:', err.message);
+      }
+    } else if (prop.corretor && prop.corretor.nome && !prop.corretor.nome.includes('Ana Carolina Silva')) {
+      bName = prop.corretor.nome;
+      if (prop.corretor.telefone) bTelefone = prop.corretor.telefone;
+      if (prop.corretor.creci) bCreci = prop.corretor.creci;
+      if (prop.corretor.foto) bAvatarUrl = prop.corretor.foto;
+    }
+
     const bCleanPhone = bTelefone.replace(/\D/g, '');
-    const bCreci = prop.corretor?.creci ? `CRECI ${prop.corretor.creci}` : 'CRECI 12345';
-    const bAvatarUrl = prop.corretor?.foto || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80';
 
     if (brokerName) brokerName.textContent = bName;
     if (brokerRole) brokerRole.textContent = `Especialista Living Canvas • ${bCreci}`;
@@ -2724,6 +2755,20 @@
     if (brokerCallBtn) brokerCallBtn.href = `tel:+${bCleanPhone || '5511999999999'}`;
     if (floatingTooltip) floatingTooltip.textContent = `Fale com ${bName.split(' ')[0]}`;
     if (floatingWhatsappBtn) floatingWhatsappBtn.href = waUrl;
+
+    // (e) Esconder botões de proposta e conversa quando o imóvel estiver vendido/alugado/arquivado
+    const isIndisponivel = ['vendido', 'alugado', 'arquivado'].includes(prop.status);
+    const btnFazerPropostaSidebar = document.getElementById('btnFazerPropostaSidebar');
+    const btnFazerPropostaBottom = document.getElementById('btnFazerPropostaBottom');
+    const btnChatCorretorSidebar = document.getElementById('btnChatCorretorSidebar');
+    const btnChatCorretorBottom = document.getElementById('btnChatCorretorBottom');
+
+    if (isIndisponivel) {
+      if (btnFazerPropostaSidebar) btnFazerPropostaSidebar.style.display = 'none';
+      if (btnFazerPropostaBottom) btnFazerPropostaBottom.style.display = 'none';
+      if (btnChatCorretorSidebar) btnChatCorretorSidebar.style.display = 'none';
+      if (btnChatCorretorBottom) btnChatCorretorBottom.style.display = 'none';
+    }
   }
 
   async function loadSimilarProperties(currentProp) {
@@ -3035,12 +3080,111 @@
   // Interactivity handlers
   window.handleScheduleVisit = function() {
     const prop = window.currentProperty;
-    const bName = prop?.corretor?.nome || 'Especialista Living Canvas';
-    const bPhone = (prop?.corretor?.telefone || '5511999999999').replace(/\D/g, '');
-    const title = prop?.titulo || 'este imóvel';
-    const msg = encodeURIComponent(`Olá ${bName}, gostaria de agendar uma visita para conhecer pessoalmente o imóvel "${title}". Qual o melhor dia e horário?`);
-    window.open(`https://wa.me/${bPhone}?text=${msg}`, '_blank');
+    const propId = prop?.id || (new URLSearchParams(window.location.search)).get('id') || 'casa-do-bosque';
+    window.location.href = `agendar.html?id=${encodeURIComponent(propId)}`;
   };
+
+  window.handleOpenProposalModal = function() {
+    const prop = window.currentProperty;
+    const propId = prop?.id || (new URLSearchParams(window.location.search)).get('id') || 'casa-do-bosque';
+
+    // (b) exige login e, se anônimo, vai para login.html?redirect=imovel.html?id=<id>
+    const user = window.LivingCanvasAuth?.auth?.currentUser;
+    if (!user) {
+      const returnUrl = `imovel.html?id=${encodeURIComponent(propId)}`;
+      window.location.href = `login.html?redirect=${encodeURIComponent(returnUrl)}`;
+      return;
+    }
+
+    const modal = document.getElementById('modalFazerProposta');
+    if (modal) {
+      const propTitleInput = document.getElementById('propostaImovelTitulo');
+      const propValorInput = document.getElementById('propostaValor');
+      if (propTitleInput && prop) propTitleInput.value = prop.titulo || '';
+      if (propValorInput && prop && !propValorInput.value) propValorInput.value = prop.preco || '';
+      modal.style.display = 'flex';
+    }
+  };
+
+  window.handleStartChat = async function() {
+    const prop = window.currentProperty;
+    const propId = prop?.id || (new URLSearchParams(window.location.search)).get('id') || 'casa-do-bosque';
+
+    // (c) exige login e, se anônimo, vai para login com retorno; se logado, abre conversa e vai para dashboard.html#mensagens
+    const user = window.LivingCanvasAuth?.auth?.currentUser;
+    if (!user) {
+      const returnUrl = `imovel.html?id=${encodeURIComponent(propId)}`;
+      window.location.href = `login.html?redirect=${encodeURIComponent(returnUrl)}`;
+      return;
+    }
+
+    try {
+      await window.LivingCanvasData.Conversas.abrirOuObter(user.uid, propId);
+      window.location.href = 'dashboard.html#mensagens';
+    } catch (err) {
+      console.error('Erro ao abrir conversa com corretor:', err);
+      window.showToast?.(err.message || 'Erro ao conectar ao chat.', 'error');
+    }
+  };
+
+  // Listener para envio de proposta
+  document.addEventListener('DOMContentLoaded', () => {
+    const formProposta = document.getElementById('formProposta');
+    if (formProposta) {
+      formProposta.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('btnSubmitProposta');
+        const originalText = submitBtn ? submitBtn.innerHTML : 'Enviar Proposta Formal';
+
+        const prop = window.currentProperty;
+        const propId = prop?.id || (new URLSearchParams(window.location.search)).get('id') || 'casa-do-bosque';
+        const valor = document.getElementById('propostaValor')?.value;
+        const formaPagamento = document.getElementById('propostaFormaPagamento')?.value || 'financiamento';
+        const condicoes = document.getElementById('propostaCondicoes')?.value || '';
+        const validade = document.getElementById('propostaValidade')?.value || '';
+
+        const user = window.LivingCanvasAuth?.auth?.currentUser;
+        if (!user) {
+          const returnUrl = `imovel.html?id=${encodeURIComponent(propId)}`;
+          window.location.href = `login.html?redirect=${encodeURIComponent(returnUrl)}`;
+          return;
+        }
+
+        try {
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Enviando proposta...';
+          }
+
+          await window.LivingCanvasData.Propostas.criar({
+            imovelId: propId,
+            valor: Number(valor),
+            formaPagamento,
+            condicoes,
+            validade,
+            imovelTitulo: prop?.titulo || 'Imóvel Selecionado',
+            corretorId: prop?.corretorId || null
+          });
+
+          document.getElementById('modalFazerProposta').style.display = 'none';
+          formProposta.reset();
+
+          window.showToast?.(
+            `Proposta enviada com sucesso! <a href="/dashboard.html#propostas" style="color: var(--gold, #d4af7a); text-decoration: underline; margin-left: 0.5rem; font-weight: 600;">Ver no painel →</a>`,
+            'success'
+          );
+        } catch (err) {
+          console.error('Erro ao enviar proposta:', err);
+          window.showToast?.(err.message || 'Erro ao enviar proposta. Tente novamente.', 'error');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+        }
+      });
+    }
+  });
 
   function updateFavoriteButtonsUI(isFav) {
     const btnSidebar = document.getElementById('btnSaveFavorite');
@@ -3197,5 +3341,57 @@
     }
   });
 </script>
+
+<!-- MODAL DE FAZER PROPOSTA -->
+<div id="modalFazerProposta" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(5,20,18,0.85); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1.5rem;">
+  <div style="background:var(--emerald-deep, #0a2e2a); border:1px solid var(--gold, #d4af7a); border-radius:16px; max-width:540px; width:100%; padding:2.5rem 2rem; box-shadow:0 25px 60px rgba(0,0,0,0.7); position:relative;">
+    <button type="button" onclick="document.getElementById('modalFazerProposta').style.display='none'" style="position:absolute; top:1.2rem; right:1.2rem; background:transparent; border:none; color:var(--cream, #f5f1e8); font-size:1.5rem; cursor:pointer;" aria-label="Fechar">&times;</button>
+    
+    <div style="margin-bottom:1.5rem; text-align:center;">
+      <span style="color:var(--gold, #d4af7a); font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; font-weight:600;">Negociação Direta</span>
+      <h3 style="font-family:'Playfair Display',serif; color:var(--cream, #f5f1e8); font-size:1.8rem; margin:0.3rem 0;">Apresentar Proposta</h3>
+      <p style="color:var(--text-light, rgba(245,241,232,0.9)); font-size:0.85rem;">Sua proposta será enviada diretamente ao corretor responsável pelo imóvel.</p>
+    </div>
+
+    <form id="formProposta">
+      <input type="hidden" id="propostaImovelTitulo" value="">
+      
+      <div style="margin-bottom:1rem;">
+        <label style="display:block; font-size:0.8rem; color:var(--gold, #d4af7a); margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.5px;">Valor Ofertado (R$) *</label>
+        <input type="number" id="propostaValor" required min="10000" step="1000" placeholder="Ex: 2500000" style="width:100%; padding:0.85rem 1rem; background:rgba(245,241,232,0.05); border:1px solid var(--glass-border, rgba(245,241,232,0.15)); border-radius:8px; color:var(--cream, #f5f1e8); font-size:1rem; outline:none; box-sizing:border-box;">
+      </div>
+
+      <div style="margin-bottom:1rem;">
+        <label style="display:block; font-size:0.8rem; color:var(--gold, #d4af7a); margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.5px;">Forma de Pagamento *</label>
+        <select id="propostaFormaPagamento" required style="width:100%; padding:0.85rem 1rem; background:var(--emerald-mid, #134e4a); border:1px solid var(--glass-border, rgba(245,241,232,0.15)); border-radius:8px; color:var(--cream, #f5f1e8); font-size:0.9rem; outline:none; box-sizing:border-box;">
+          <option value="financiamento">Financiamento Bancário</option>
+          <option value="a_vista">À Vista (Recursos Próprios)</option>
+          <option value="consorcio">Carta de Consórcio Contemplada</option>
+          <option value="permuta">Permuta com Imóvel</option>
+          <option value="parcelamento_direto">Parcelamento Direto com Proprietário</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:1rem;">
+        <label style="display:block; font-size:0.8rem; color:var(--gold, #d4af7a); margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.5px;">Condições da Oferta (opcional)</label>
+        <textarea id="propostaCondicoes" rows="3" placeholder="Ex: 30% de entrada no ato e saldo financiado em até 60 dias..." style="width:100%; padding:0.85rem 1rem; background:rgba(245,241,232,0.05); border:1px solid var(--glass-border, rgba(245,241,232,0.15)); border-radius:8px; color:var(--cream, #f5f1e8); font-size:0.85rem; outline:none; resize:vertical; box-sizing:border-box;"></textarea>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; font-size:0.8rem; color:var(--gold, #d4af7a); margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.5px;">Validade da Proposta</label>
+        <input type="date" id="propostaValidade" style="width:100%; padding:0.85rem 1rem; background:rgba(245,241,232,0.05); border:1px solid var(--glass-border, rgba(245,241,232,0.15)); border-radius:8px; color:var(--cream, #f5f1e8); font-size:0.9rem; outline:none; box-sizing:border-box;">
+      </div>
+
+      <div style="display:flex; gap:1rem;">
+        <button type="button" onclick="document.getElementById('modalFazerProposta').style.display='none'" class="cta-secondary" style="flex:1; padding:0.85rem; border-radius:8px; border:1px solid var(--glass-border, rgba(245,241,232,0.15)); background:transparent; color:var(--cream, #f5f1e8); cursor:pointer;">
+          Cancelar
+        </button>
+        <button type="submit" id="btnSubmitProposta" class="cta-primary" style="flex:2; padding:0.85rem; border-radius:8px; border:none; background:var(--gold, #d4af7a); color:var(--emerald-deep, #0a2e2a); font-weight:600; cursor:pointer;">
+          Enviar Proposta Formal
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
 </html>

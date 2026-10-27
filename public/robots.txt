@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /dashboard.html
+Disallow: /painel-corretor.html
 Disallow: /login.html
+Disallow: /lc-data.test.html
 
-Sitemap: https://faithful-property-showcase.lovable.app/sitemap.xml
+Sitemap: https://livingcanvas.com.br/sitemap.xml

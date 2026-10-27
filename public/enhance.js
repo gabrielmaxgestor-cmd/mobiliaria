@@ -240,7 +240,7 @@ window.escapeHtml = window.escapeHTML;
                 <div class="top-nav-sublink-desc">Projetos na planta e novidades</div>
               </div>
             </a>
-            <a href="imovel.html" class="top-nav-sublink">
+            <a href="imovel.html?id=casa-do-bosque" class="top-nav-sublink">
               <div class="top-nav-sublink-icon">${svg('door')}</div>
               <div>
                 <div class="top-nav-sublink-title">Ficha do Imóvel</div>
@@ -281,7 +281,7 @@ window.escapeHtml = window.escapeHTML;
               <div class="top-nav-sublink-desc">Jardins, Pinheiros, Itaim e mais</div>
             </div>
           </a>
-          <a href="bairro.html" class="top-nav-sublink">
+          <a href="bairro.html?b=jardim-europa" class="top-nav-sublink">
             <div class="top-nav-sublink-icon">${svg('pin')}</div>
             <div>
               <div class="top-nav-sublink-title">Perfil do Bairro</div>
@@ -326,8 +326,15 @@ window.escapeHtml = window.escapeHTML;
             <a href="agendar.html" class="top-nav-sublink">
               <div class="top-nav-sublink-icon">${svg('calendar')}</div>
               <div>
-                <div class="top-nav-sublink-title">Agendar Visita VIP</div>
-                <div class="top-nav-sublink-desc">Atendimento presencial exclusivo</div>
+                <div class="top-nav-sublink-title">Nova Visita VIP</div>
+                <div class="top-nav-sublink-desc">Agende uma visita presencial</div>
+              </div>
+            </a>
+            <a href="dashboard.html#visitas" class="top-nav-sublink">
+              <div class="top-nav-sublink-icon">${svg('clock')}</div>
+              <div>
+                <div class="top-nav-sublink-title">Minhas Visitas</div>
+                <div class="top-nav-sublink-desc">Acompanhe suas visitas agendadas</div>
               </div>
             </a>
             <a href="corretor.html" class="top-nav-sublink">
@@ -372,7 +379,14 @@ window.escapeHtml = window.escapeHTML;
             <div class="top-nav-sublink-icon">${svg('chat')}</div>
             <div>
               <div class="top-nav-sublink-title">Fale Conosco</div>
-              <div class="top-nav-sublink-desc">Nossa matriz e suporte</div>
+              <div class="top-nav-sublink-desc">Nossa matriz e canais de contato</div>
+            </div>
+          </a>
+          <a href="dashboard.html#mensagens" class="top-nav-sublink">
+            <div class="top-nav-sublink-icon">${svg('mail')}</div>
+            <div>
+              <div class="top-nav-sublink-title">Minhas Mensagens</div>
+              <div class="top-nav-sublink-desc">Histórico de conversas no painel</div>
             </div>
           </a>
         </div>
@@ -387,8 +401,29 @@ window.escapeHtml = window.escapeHTML;
           <a href="dashboard.html" class="top-nav-sublink">
             <div class="top-nav-sublink-icon">${svg('chart')}</div>
             <div>
-              <div class="top-nav-sublink-title">Painel / CRM</div>
-              <div class="top-nav-sublink-desc">Favoritos, propostas e histórico</div>
+              <div class="top-nav-sublink-title">Painel do Cliente</div>
+              <div class="top-nav-sublink-desc">Favoritos, buscas, propostas e simulador</div>
+            </div>
+          </a>
+          <a href="dashboard.html#visitas" class="top-nav-sublink">
+            <div class="top-nav-sublink-icon">${svg('calendar')}</div>
+            <div>
+              <div class="top-nav-sublink-title">Minhas Visitas</div>
+              <div class="top-nav-sublink-desc">Status e reagendamentos</div>
+            </div>
+          </a>
+          <a href="dashboard.html#mensagens" class="top-nav-sublink">
+            <div class="top-nav-sublink-icon">${svg('chat')}</div>
+            <div>
+              <div class="top-nav-sublink-title">Minhas Mensagens</div>
+              <div class="top-nav-sublink-desc">Chat e suporte com a equipe</div>
+            </div>
+          </a>
+          <a href="painel-corretor.html" class="top-nav-sublink">
+            <div class="top-nav-sublink-icon">${svg('briefcase')}</div>
+            <div>
+              <div class="top-nav-sublink-title">Painel do Corretor</div>
+              <div class="top-nav-sublink-desc">Gestão de leads, CRM e captação</div>
             </div>
           </a>
           <a href="login.html" class="top-nav-sublink">
@@ -429,6 +464,25 @@ window.escapeHtml = window.escapeHTML;
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.top-nav-item')) {
         navContainer.querySelectorAll('.top-nav-item').forEach(i => i.classList.remove('is-open'));
+      }
+    });
+
+    // Detect active link based on current path and hash
+    const currentPath = window.location.pathname.split('/').pop() || 'home.html';
+    const currentHash = window.location.hash || '';
+    navContainer.querySelectorAll('a').forEach(a => {
+      const href = a.getAttribute('href');
+      if (!href) return;
+      const [linkPath, linkHash] = href.split('#');
+      if (linkPath === currentPath) {
+        if (!linkHash || (currentHash && '#' + linkHash === currentHash)) {
+          a.classList.add('is-active');
+          const parentItem = a.closest('.top-nav-item');
+          if (parentItem) {
+            const btn = parentItem.querySelector('.top-nav-link');
+            if (btn) btn.classList.add('is-active');
+          }
+        }
       }
     });
 
@@ -627,6 +681,30 @@ window.escapeHtml = window.escapeHTML;
       }
     });
   }
+
+  /* ---------- Nav Items Directory ---------- */
+  const NAV_ITEMS = [
+    { label: 'Página Inicial', href: 'home.html', icon: 'home' },
+    { label: 'Todos os Imóveis', href: 'imoveis.html', icon: 'building' },
+    { label: 'Lançamentos', href: 'lancamentos.html', icon: 'launch' },
+    { label: 'Mapa Interativo', href: 'mapa.html', icon: 'map' },
+    { label: 'Comparador de Imóveis', href: 'comparador.html', icon: 'scale' },
+    { label: 'Guia de Bairros', href: 'bairros.html', icon: 'tree' },
+    { label: 'Busca por Vibe (IA)', href: 'busca-ia.html', icon: 'sparkle' },
+    { label: 'Simulador de Financiamento', href: 'financiamento.html', icon: 'money' },
+    { label: 'Vender meu Imóvel', href: 'vender.html', icon: 'key' },
+    { label: 'Agendar Visita', href: 'agendar.html', icon: 'calendar' },
+    { label: 'Falar com Corretor', href: 'corretor.html', icon: 'user' },
+    { label: 'Sobre Nós', href: 'sobre.html', icon: 'users' },
+    { label: 'Depoimentos', href: 'depoimentos.html', icon: 'heart' },
+    { label: 'Dúvidas Frequentes (FAQ)', href: 'faq.html', icon: 'question' },
+    { label: 'Fale Conosco', href: 'contato.html', icon: 'chat' },
+    { label: 'Painel do Cliente', href: 'dashboard.html', icon: 'chart' },
+    { label: 'Painel do Corretor', href: 'painel-corretor.html', icon: 'briefcase' },
+    { label: 'Entrar / Cadastrar', href: 'login.html', icon: 'lock' },
+    { label: 'Política de Privacidade', href: 'privacidade.html', icon: 'shield' },
+    { label: 'Termos de Uso', href: 'termos.html', icon: 'file' }
+  ];
 
   /* ---------- Command palette (⌘K / Ctrl+K) ---------- */
   function buildCmdK() {
@@ -1346,8 +1424,49 @@ window.escapeHtml = window.escapeHTML;
     runCompareVerdict();
   }
 
+  /* ---------- SITE_CONFIG Synchronization ---------- */
+  function syncSiteConfig() {
+    const cfg = window.SITE_CONFIG;
+    if (!cfg) return;
+    const phoneClean = cfg.telefoneLimpo || (cfg.telefone ? cfg.telefone.replace(/\D/g, '') : '');
+    const phoneDisplay = cfg.telefone || '';
+    const email = cfg.email || '';
+
+    // Update tel: links
+    if (phoneClean) {
+      document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+        a.href = `tel:+${phoneClean.startsWith('55') ? phoneClean : '55' + phoneClean}`;
+        if (phoneDisplay && (a.textContent.trim().match(/^\+?55|^\(?\d{2}\)?\s*\d{4,5}/) || a.dataset.syncText === 'phone')) {
+          a.textContent = phoneDisplay;
+        }
+      });
+    }
+
+    // Update mailto: links
+    if (email) {
+      document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+        a.href = `mailto:${email}`;
+        if (a.textContent.includes('@') || a.dataset.syncText === 'email') {
+          a.textContent = email;
+        }
+      });
+    }
+
+    // Update generic whatsapp links
+    if (phoneClean) {
+      document.querySelectorAll('a[href*="wa.me/"]').forEach(a => {
+        try {
+          const url = new URL(a.href);
+          const search = url.search;
+          a.href = `https://wa.me/${phoneClean.startsWith('55') ? phoneClean : '55' + phoneClean}${search}`;
+        } catch (_) {}
+      });
+    }
+  }
+
   /* ---------- Init ---------- */
   function init() {
+    try { syncSiteConfig(); } catch(e) { console.warn('siteconfig', e); }
     try { buildTopNavigationDropdowns(); } catch(e) { console.warn('topnav', e); }
     try { buildCmdK(); } catch(e) { console.warn('cmdk', e); }
     try { buildScrollProgress(); } catch(e) {}

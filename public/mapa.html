@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mapa Interativo — Living Canvas</title>
 <meta name="description" content="Explore imóveis geograficamente com o mapa interativo por região.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/mapa.html">
+<link rel="canonical" href="https://livingcanvas.com.br/mapa.html">
 <meta property="og:title" content="Mapa Interativo — Living Canvas">
 <meta property="og:description" content="Explore imóveis geograficamente com o mapa interativo por região.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/mapa.html">
+<meta property="og:url" content="https://livingcanvas.com.br/mapa.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -1521,18 +1521,18 @@
 <!-- FLOATING CTA -->
 <div class="floating-cta">
   <div class="cta-tooltip">Fale com um especialista</div>
-  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">💬</a>
 </div>
 
 <script>
   // PROPERTY DATA — Valença-RJ e arredores
   const properties = [
-    { id: 1, lat: -22.2447, lng: -43.7014, title: 'Casa do Bosque',    location: '📍 Centro • 420m²',        price: 'R$ 2.800.000', priceShort: 'R$ 2.8M', badge: 'Exclusivo',  thumbnailUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80', meta: '<span>🛏 4 suítes</span><span>🌳 Jardim</span><span>🚗 4 vagas</span>' },
-    { id: 2, lat: -22.2390, lng: -43.6890, title: 'Loft Horizonte',    location: '📍 Chacrinha • 180m²',     price: 'R$ 1.500.000', priceShort: 'R$ 1.5M', badge: 'Novo',       thumbnailUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80', meta: '<span>🛏 2 suítes</span><span>🎨 Ateliê</span><span>🌇 Vista</span>' },
-    { id: 3, lat: -22.2520, lng: -43.7140, title: 'Penthouse Urbano',  location: '📍 Belo Horizonte • 320m²',price: 'R$ 3.100.000', priceShort: 'R$ 3.1M', badge: 'Destaque',   thumbnailUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80', meta: '<span>🛏 3 suítes</span><span>🏙 360°</span><span>🍳 Chef</span>' },
-    { id: 4, lat: -22.2360, lng: -43.7150, title: 'Studio Artístico',  location: '📍 Vila Esperança • 95m²', price: 'R$ 1.900.000', priceShort: 'R$ 1.9M', badge: 'Exclusivo',  thumbnailUrl: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80', meta: '<span>🛏 1 suíte</span><span>🎨 Studio</span><span>☕ Varanda</span>' },
-    { id: 5, lat: -22.2560, lng: -43.6910, title: 'Refúgio Oceano',    location: '📍 Parque Pentagna • 560m²',price:'R$ 4.200.000', priceShort: 'R$ 4.2M', badge: 'Assinatura', thumbnailUrl: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80', meta: '<span>🛏 5 suítes</span><span>🏊 Piscina</span><span>🌊 Vista</span>' },
-    { id: 6, lat: -22.2300, lng: -43.7050, title: 'Villa Tropical',    location: '📍 Bom Retiro • 680m²',    price: 'R$ 5.500.000', priceShort: 'R$ 5.5M', badge: 'Premium',    thumbnailUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80', meta: '<span>🛏 6 suítes</span><span>🌴 Jardim</span><span>🎬 Cinema</span>' }
+    { id: 1, slug: 'casa-do-bosque', lat: -22.2447, lng: -43.7014, title: 'Casa do Bosque',    location: '📍 Centro • 420m²',        price: 'R$ 2.800.000', priceShort: 'R$ 2.8M', badge: 'Exclusivo',  thumbnailUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80', meta: '<span>🛏 4 suítes</span><span>🌳 Jardim</span><span>🚗 4 vagas</span>' },
+    { id: 2, slug: 'loft-horizonte', lat: -22.2390, lng: -43.6890, title: 'Loft Horizonte',    location: '📍 Chacrinha • 180m²',     price: 'R$ 1.500.000', priceShort: 'R$ 1.5M', badge: 'Novo',       thumbnailUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80', meta: '<span>🛏 2 suítes</span><span>🎨 Ateliê</span><span>🌇 Vista</span>' },
+    { id: 3, slug: 'penthouse-urbano', lat: -22.2520, lng: -43.7140, title: 'Penthouse Urbano',  location: '📍 Belo Horizonte • 320m²',price: 'R$ 3.100.000', priceShort: 'R$ 3.1M', badge: 'Destaque',   thumbnailUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80', meta: '<span>🛏 3 suítes</span><span>🏙 360°</span><span>🍳 Chef</span>' },
+    { id: 4, slug: 'studio-artistico', lat: -22.2360, lng: -43.7150, title: 'Studio Artístico',  location: '📍 Vila Esperança • 95m²', price: 'R$ 1.900.000', priceShort: 'R$ 1.9M', badge: 'Exclusivo',  thumbnailUrl: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80', meta: '<span>🛏 1 suíte</span><span>🎨 Studio</span><span>☕ Varanda</span>' },
+    { id: 5, slug: 'refugio-oceano', lat: -22.2560, lng: -43.6910, title: 'Refúgio Oceano',    location: '📍 Parque Pentagna • 560m²',price:'R$ 4.200.000', priceShort: 'R$ 4.2M', badge: 'Assinatura', thumbnailUrl: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80', meta: '<span>🛏 5 suítes</span><span>🏊 Piscina</span><span>🌊 Vista</span>' },
+    { id: 6, slug: 'villa-tropical', lat: -22.2300, lng: -43.7050, title: 'Villa Tropical',    location: '📍 Bom Retiro • 680m²',    price: 'R$ 5.500.000', priceShort: 'R$ 5.5M', badge: 'Premium',    thumbnailUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80', meta: '<span>🛏 6 suítes</span><span>🌴 Jardim</span><span>🎬 Cinema</span>' }
   ];
 
   const VALENCA_CENTER = [-22.2447, -43.7014];
@@ -1570,8 +1570,8 @@
         <div class="lc-pop-loc">${p.location}</div>
         <div class="lc-pop-price">${p.price}</div>
         <div class="lc-pop-actions">
-          <a href="imovel.html" class="lc-pop-btn primary">Ver detalhes</a>
-          <a href="agendar.html" class="lc-pop-btn secondary">Agendar</a>
+          <a href="imovel.html?id=${encodeURIComponent(p.slug || p.id)}" class="lc-pop-btn primary">Ver detalhes</a>
+          <a href="agendar.html?id=${encodeURIComponent(p.slug || p.id)}" class="lc-pop-btn secondary">Agendar</a>
         </div>
       </div>`;
 

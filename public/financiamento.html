@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulador de Financiamento — Living Canvas</title>
 <meta name="description" content="Simule seu financiamento imobiliário com taxas atualizadas e cenários personalizados.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/financiamento.html">
+<link rel="canonical" href="https://livingcanvas.com.br/financiamento.html">
 <meta property="og:title" content="Simulador de Financiamento — Living Canvas">
 <meta property="og:description" content="Simule seu financiamento imobiliário com taxas atualizadas e cenários personalizados.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/financiamento.html">
+<meta property="og:url" content="https://livingcanvas.com.br/financiamento.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -1376,6 +1376,9 @@
       <div class="results-cta">
         <a href="https://wa.me/5511999999999" class="results-btn results-btn-primary">💬 Falar com Consultor Financeiro</a>
         <a href='imoveis.html' class="results-btn results-btn-secondary">🏠 Ver Imóveis Compatíveis</a>
+        <button type="button" id="btnSalvarSimulacao" class="results-btn" style="background: rgba(212, 175, 122, 0.15); border: 1px solid var(--gold); color: var(--gold); grid-column: 1 / -1; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600;">
+          💾 Salvar Simulação no Painel
+        </button>
       </div>
     </div>
   </div>
@@ -1693,7 +1696,7 @@
 <!-- FLOATING CTA -->
 <div class="floating-cta">
   <div class="cta-tooltip">Fale com um consultor</div>
-  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">💬</a>
 </div>
 
 <script>
@@ -1919,8 +1922,114 @@
     });
   });
   
+  // LEITURA DE PARÂMETROS DA URL (?valor=...&entrada=...&prazo=...&taxa=...&banco=...&amort=...)
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('valor')) {
+      const v = parseFloat(urlParams.get('valor'));
+      if (!isNaN(v) && v > 0) document.getElementById('valor').value = v;
+    }
+    if (urlParams.has('entrada')) {
+      const e = parseFloat(urlParams.get('entrada'));
+      if (!isNaN(e) && e >= 10 && e <= 90) document.getElementById('entrada').value = e;
+    }
+    if (urlParams.has('prazo')) {
+      const p = parseFloat(urlParams.get('prazo'));
+      if (!isNaN(p) && p >= 5 && p <= 35) document.getElementById('prazo').value = p;
+    }
+    if (urlParams.has('taxa')) {
+      const t = parseFloat(urlParams.get('taxa'));
+      if (!isNaN(t) && t > 0) document.getElementById('taxa').value = t;
+    }
+    if (urlParams.has('banco')) {
+      const b = urlParams.get('banco').toLowerCase();
+      const sel = document.getElementById('banco');
+      if (sel && sel.querySelector(`option[value="${b}"]`)) {
+        sel.value = b;
+      }
+    }
+    if (urlParams.has('amort')) {
+      const a = urlParams.get('amort').toLowerCase();
+      if (a === 'price' || a === 'sac') {
+        const opt = document.querySelector(`.amort-option[onclick*="${a}"]`);
+        if (opt) setAmort(a, opt);
+      }
+    }
+  } catch (err) {
+    console.warn('Erro ao processar parâmetros de simulação da URL:', err);
+  }
+
   // INICIALIZAÇÃO
   atualizarSimulacao();
+</script>
+
+<script type="module">
+  import LivingCanvasAuth from '/auth.js';
+  import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
+
+  const btnSalvar = document.getElementById('btnSalvarSimulacao');
+  if (btnSalvar) {
+    btnSalvar.addEventListener('click', async () => {
+      const user = LivingCanvasAuth.auth?.currentUser;
+      if (!user) {
+        if (confirm('Faça login para salvar esta simulação no seu painel. Deseja ir para o login?')) {
+          const currentPath = window.location.pathname + window.location.search;
+          window.location.href = `login.html?redirect=${encodeURIComponent(currentPath)}`;
+        }
+        return;
+      }
+
+      btnSalvar.disabled = true;
+      btnSalvar.textContent = '💾 Salvando cenário...';
+
+      try {
+        const valor = parseFloat(document.getElementById('valor').value);
+        const entradaPct = parseFloat(document.getElementById('entrada').value);
+        const prazo = parseFloat(document.getElementById('prazo').value);
+        const taxa = parseFloat(document.getElementById('taxa').value);
+        const banco = document.getElementById('banco').value;
+        const entradaValor = valor * (entradaPct / 100);
+        const meses = prazo * 12;
+
+        const payload = {
+          usuarioId: user.uid,
+          valor: valor,
+          entradaPct: entradaPct,
+          entradaValor: entradaValor,
+          prazoAnos: prazo,
+          meses: meses,
+          taxaAnual: taxa,
+          banco: banco,
+          amortType: (typeof amortType !== 'undefined' ? amortType : 'sac'),
+          primeiraParcela: parseFloat(document.getElementById('parcelaValue')?.textContent.replace(/[^0-9]/g, '')) || 0,
+          totalPago: parseFloat(document.getElementById('totalValue')?.textContent.replace(/[^0-9]/g, '')) || 0,
+          criadoEm: serverTimestamp()
+        };
+
+        const db = LivingCanvasAuth.db;
+        await addDoc(collection(db, 'simulacoes'), payload);
+
+        btnSalvar.innerHTML = '✓ Salvo no Painel!';
+        btnSalvar.style.background = 'rgba(16, 185, 129, 0.2)';
+        btnSalvar.style.borderColor = '#10b981';
+        btnSalvar.style.color = '#34d399';
+
+        setTimeout(() => {
+          btnSalvar.disabled = false;
+          btnSalvar.innerHTML = '💾 Salvar Simulação no Painel';
+          btnSalvar.style.background = 'rgba(212, 175, 122, 0.15)';
+          btnSalvar.style.borderColor = 'var(--gold)';
+          btnSalvar.style.color = 'var(--gold)';
+        }, 3000);
+
+      } catch (err) {
+        console.error('Erro ao salvar simulação:', err);
+        alert('Erro ao salvar simulação: ' + (err.message || 'Tente novamente.'));
+        btnSalvar.disabled = false;
+        btnSalvar.textContent = '💾 Salvar Simulação no Painel';
+      }
+    });
+  }
 </script>
 
 <script src="/enhance.js" defer></script>

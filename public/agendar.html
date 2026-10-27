@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agendar Visita — Living Canvas</title>
 <meta name="description" content="Agende uma visita presencial ou virtual ao imóvel de sua escolha.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/agendar.html">
+<link rel="canonical" href="https://livingcanvas.com.br/agendar.html">
 <meta property="og:title" content="Agendar Visita — Living Canvas">
 <meta property="og:description" content="Agende uma visita presencial ou virtual ao imóvel de sua escolha.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/agendar.html">
+<meta property="og:url" content="https://livingcanvas.com.br/agendar.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -1279,7 +1279,7 @@
 <div class="breadcrumb">
   <a href='home.html'>Início</a>
   <span>›</span>
-  <a href='imovel.html'>Casa do Bosque</a>
+  <a href='imovel.html?id=casa-do-bosque'>Casa do Bosque</a>
   <span>›</span>
   <strong style="color: var(--gold);">Agendar Visita</strong>
 </div>
@@ -1417,18 +1417,18 @@
     
     <!-- PROPERTY SUMMARY -->
     <div class="property-summary">
-      <div class="property-summary-image">
-        <span class="property-summary-badge">Exclusivo</span>
+      <div class="property-summary-image" id="agendarPropImage">
+        <span class="property-summary-badge" id="agendarPropBadge">Exclusivo</span>
       </div>
       <div class="property-summary-content">
-        <h3 class="property-summary-title">Casa do Bosque</h3>
-        <p class="property-summary-location">📍 Jardim Europa • 420m²</p>
-        <div class="property-summary-stats">
+        <h3 class="property-summary-title" id="agendarPropTitle">Casa do Bosque</h3>
+        <p class="property-summary-location" id="agendarPropLocation">📍 Jardim Europa • 420m²</p>
+        <div class="property-summary-stats" id="agendarPropStats">
           <span>🛏 4 suítes</span>
           <span>🌳 Jardim</span>
           <span>🚗 4 vagas</span>
         </div>
-        <div class="property-summary-price">R$ 2.800.000</div>
+        <div class="property-summary-price" id="agendarPropPrice">R$ 2.800.000</div>
       </div>
     </div>
     
@@ -1462,7 +1462,7 @@
           <div class="booking-detail-icon">👤</div>
           <div class="booking-detail-content">
             <div class="booking-detail-label">Corretor</div>
-            <div class="booking-detail-value">Ana Carolina Silva</div>
+            <div class="booking-detail-value" id="agendarBrokerName">Especialista Living Canvas</div>
           </div>
         </div>
       </div>
@@ -1474,7 +1474,7 @@
       <button class="booking-submit" id="bookingSubmit" disabled>Confirmar Agendamento</button>
       
       <div class="booking-alt">
-        Prefere agendar por WhatsApp? <a href="https://wa.me/5511999999999">Clique aqui</a>
+        Prefere agendar por WhatsApp? <a href="https://wa.me/5511999999999" id="agendarBrokerWaLink">Clique aqui</a>
       </div>
     </div>
     
@@ -1539,11 +1539,11 @@
     <div class="brokers-grid">
       <div class="broker-card selected" onclick="selectBroker(this)">
         <div class="broker-avatar" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80')"></div>
-        <h3 class="broker-name">Ana Carolina Silva</h3>
-        <p class="broker-role">Corretora Sênior</p>
-        <p class="broker-specialty">Especialista em Jardim Europa e Zona Sul</p>
-        <div class="broker-rating">★★★★★ 5.0 • 150+ vendas</div>
-        <button class="broker-select-btn">Selecionada</button>
+        <h3 class="broker-name">Especialista Living Canvas</h3>
+        <p class="broker-role">Consultoria de Alto Padrão</p>
+        <p class="broker-specialty">Atendimento personalizado com curadoria exclusiva</p>
+        <div class="broker-rating">★★★★★ 5.0</div>
+        <button class="broker-select-btn">Selecionado</button>
       </div>
       
       <div class="broker-card" onclick="selectBroker(this)">
@@ -1737,7 +1737,7 @@
 <!-- FLOATING CTA -->
 <div class="floating-cta">
   <div class="cta-tooltip">Fale conosco agora!</div>
-  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">💬</a>
 </div>
 
 <script>
@@ -1819,35 +1819,67 @@
     updateSummary();
   }
   
-  // RENDER TIME SLOTS
+  // RENDER TIME SLOTS (Respeita horários configurados pelo corretor)
   function renderTimeSlots() {
     if (!selectedDate) return;
     
     const section = document.getElementById('timeSlotsSection');
     section.style.display = 'block';
     
-    const dayName = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][selectedDate.getDay()];
+    const dayIndex = selectedDate.getDay();
+    const dayName = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][dayIndex];
     const dayNum = selectedDate.getDate();
     const monthName = monthNames[selectedDate.getMonth()];
     
     document.getElementById('timeSlotsTitle').textContent = `Horários para ${dayName}, ${dayNum} de ${monthName}`;
     
-    const slots = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
-    const unavailable = ['11:00', '16:00']; // Simulação
-    
     const grid = document.getElementById('timeSlotsGrid');
     grid.innerHTML = '';
+    
+    const brokerHorarios = window._selectedBrokerData?.horarios;
+    const dayKeys = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'];
+    const currentDayKey = dayKeys[dayIndex];
+
+    let slots = [];
+    if (brokerHorarios) {
+      const diasAtivos = brokerHorarios.diasSemana || ['seg', 'ter', 'qua', 'qui', 'sex'];
+      if (!diasAtivos.includes(currentDayKey)) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 1.5rem; background: rgba(255,255,255,0.03); border: 1px dashed var(--glass-border); border-radius: 8px; font-size: 0.88rem; color: var(--cream); opacity: 0.85;">
+            🗓️ O corretor responsável não possui atendimento presencial aos ${dayName.toLowerCase()}s. Por favor, escolha outro dia no calendário acima.
+          </div>
+        `;
+        return;
+      }
+
+      // Horários de semana ou sábado
+      const isSab = dayIndex === 6;
+      const inStr = isSab ? (brokerHorarios.inicioSabado || '09:00') : (brokerHorarios.inicioSemana || '09:00');
+      const fimStr = isSab ? (brokerHorarios.fimSabado || '13:00') : (brokerHorarios.fimSemana || '18:00');
+      const intervaloMin = parseInt(brokerHorarios.intervaloMinutos, 10) || 60;
+
+      const [inH, inM] = inStr.split(':').map(Number);
+      const [fimH, fimM] = fimStr.split(':').map(Number);
+      let curMin = inH * 60 + inM;
+      const endMin = fimH * 60 + fimM;
+
+      while (curMin < endMin) {
+        const h = Math.floor(curMin / 60);
+        const m = curMin % 60;
+        slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+        curMin += intervaloMin;
+      }
+    }
+
+    if (slots.length === 0) {
+      slots = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+    }
     
     slots.forEach(slot => {
       const slotEl = document.createElement('div');
       slotEl.className = 'time-slot';
       slotEl.textContent = slot;
-      
-      if (unavailable.includes(slot)) {
-        slotEl.classList.add('unavailable');
-      } else {
-        slotEl.onclick = () => selectTime(slot, slotEl);
-      }
+      slotEl.onclick = () => selectTime(slot, slotEl);
       
       if (selectedTime === slot) {
         slotEl.classList.add('selected');
@@ -1994,8 +2026,384 @@
   renderCalendar();
 </script>
 
+<!-- MODAL DE SUCESSO DO AGENDAMENTO -->
+<div id="agendarSuccessModal" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(5,20,18,0.85); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1.5rem;">
+  <div style="background:var(--emerald-deep, #0a2e2a); border:1px solid var(--gold, #d4af7a); border-radius:16px; max-width:520px; width:100%; padding:2.5rem 2rem; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.6); position:relative;">
+    <div style="font-size:3rem; margin-bottom:1rem;" id="modalSuccessIcon">✨</div>
+    <h3 style="font-family:'Playfair Display',serif; color:var(--cream, #f5f1e8); font-size:1.8rem; margin-bottom:0.75rem;" id="modalSuccessTitle">Agendamento Confirmado!</h3>
+    <p style="color:var(--text-light, rgba(245,241,232,0.9)); font-size:0.95rem; line-height:1.6; margin-bottom:1.5rem;" id="modalSuccessMessage">
+      Sua visita foi registrada com sucesso.
+    </p>
+    <div id="modalSuccessDetails" style="background:rgba(245,241,232,0.05); border:1px solid var(--glass-border, rgba(245,241,232,0.15)); border-radius:12px; padding:1.2rem; margin-bottom:1.5rem; text-align:left; font-size:0.9rem; color:var(--cream, #f5f1e8); line-height:1.7;">
+      <!-- Detalhes do resumo -->
+    </div>
+    <div id="modalSuccessActions" style="display:flex; flex-direction:column; gap:0.75rem;">
+      <!-- Ações do usuário -->
+    </div>
+  </div>
+</div>
+
 <script src="/enhance.js" defer></script>
 <script type="module" src="/leads.js"></script>
+<script type="module">
+  import LivingCanvasAuth from "/auth.js";
+  import LivingCanvasData from "/lc-data.js";
+  import { saveLead, showToast } from "/leads.js";
+  import LivingCanvasProperties from "/properties.js";
+
+  // Marca para evitar processamento duplicado no leads.js genérico
+  window._agendarHandlesSubmitInternally = true;
+
+  let currentProp = null;
+
+  function escapeHtml(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  // 1. CARREGAMENTO DO IMÓVEL SELECIONADO VIA QUERY STRING (?id=...)
+  async function loadSelectedProperty() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const propId = urlParams.get("id") || "casa-do-bosque";
+
+    try {
+      currentProp = await LivingCanvasProperties.getPropertyById(propId);
+      if (!currentProp) {
+        currentProp = LivingCanvasProperties.sampleProperties.find(p => p.id === propId) || LivingCanvasProperties.sampleProperties[0];
+      }
+    } catch {
+      currentProp = LivingCanvasProperties.sampleProperties[0];
+    }
+
+    if (currentProp) {
+      // Atualiza campos ocultos
+      const inputImovel = document.getElementById("inputImovelId");
+      if (inputImovel) inputImovel.value = currentProp.id;
+
+      // Atualiza card de resumo lateral
+      const titleEl = document.getElementById("agendarPropTitle");
+      const locEl = document.getElementById("agendarPropLocation");
+      const statsEl = document.getElementById("agendarPropStats");
+      const priceEl = document.getElementById("agendarPropPrice");
+      const badgeEl = document.getElementById("agendarPropBadge");
+      const imgEl = document.getElementById("agendarPropImage");
+
+      if (titleEl) titleEl.textContent = currentProp.titulo;
+      if (locEl) {
+        const bairro = currentProp.endereco?.bairro || "Localização Exclusiva";
+        const area = currentProp.caracteristicas?.areaM2 ? ` • ${currentProp.caracteristicas.areaM2}m²` : "";
+        locEl.textContent = `📍 ${bairro}${area}`;
+      }
+      if (statsEl && currentProp.caracteristicas) {
+        const c = currentProp.caracteristicas;
+        statsEl.innerHTML = `
+          <span>🛏 ${c.quartos || c.suites || 0} quartos</span>
+          <span>🌳 Jardim</span>
+          <span>🚗 ${c.vagas || 0} vagas</span>
+        `;
+      }
+      if (priceEl) {
+        priceEl.textContent = LivingCanvasProperties.formatFullCurrency(currentProp.preco);
+      }
+      if (badgeEl && currentProp.tag) {
+        badgeEl.textContent = currentProp.tag;
+      }
+      if (imgEl && currentProp.imagens && currentProp.imagens.length > 0) {
+        imgEl.style.backgroundImage = `url('${currentProp.imagens[0]}')`;
+        imgEl.style.backgroundSize = "cover";
+        imgEl.style.backgroundPosition = "center";
+      }
+
+      // Atualiza corretor responsável dinâmico
+      await updateBrokerInfo(currentProp);
+    }
+  }
+
+  // 2. BUSCA DO CORRETOR DINÂMICO
+  async function updateBrokerInfo(prop) {
+    const brokerNameEl = document.getElementById("agendarBrokerName");
+    const brokerWaEl = document.getElementById("agendarBrokerWaLink");
+    const siteConfig = window.SITE_CONFIG || {};
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetCorretorId = urlParams.get("corretor") || urlParams.get("corretorId") || prop?.corretorId;
+
+    let brokerNome = siteConfig.brandName ? `Especialista ${siteConfig.brandName}` : "Especialista Living Canvas";
+    let brokerPhone = siteConfig.whatsappNumber || "5511999999999";
+
+    if (targetCorretorId) {
+      try {
+        const pubCorretor = await LivingCanvasData.CorretoresPublicos.obter(targetCorretorId);
+        if (pubCorretor) {
+          window._selectedBrokerData = pubCorretor;
+          window._selectedBrokerId = pubCorretor.id;
+          brokerNome = pubCorretor.nome || brokerNome;
+          if (pubCorretor.whatsapp || pubCorretor.telefone) {
+            brokerPhone = (pubCorretor.whatsapp || pubCorretor.telefone).replace(/\D/g, "");
+          }
+
+          // Se houver título da seção de corretores, atualiza
+          const brokerHeader = document.querySelector(".brokers-header h2");
+          if (brokerHeader) {
+            brokerHeader.innerHTML = `Atendimento com <em>${escapeHtml(pubCorretor.nome.split(' ')[0])}</em>`;
+          }
+
+          // Atualiza card visual do corretor selecionado
+          const brokerCard0 = document.querySelector(".broker-card.selected");
+          if (brokerCard0) {
+            const nameEl = brokerCard0.querySelector(".broker-name");
+            const roleEl = brokerCard0.querySelector(".broker-role");
+            const avatarEl = brokerCard0.querySelector(".broker-avatar");
+            if (nameEl) nameEl.textContent = pubCorretor.nome;
+            if (roleEl) roleEl.textContent = pubCorretor.creci || "Corretor(a) Credenciado(a)";
+            if (avatarEl && pubCorretor.fotoURL) {
+              avatarEl.style.backgroundImage = `url('${pubCorretor.fotoURL}')`;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Aviso ao carregar corretor para agendamento:", err.message);
+      }
+    } else if (prop?.corretor?.nome && !prop.corretor.nome.includes("Ana Carolina Silva")) {
+      brokerNome = prop.corretor.nome;
+      if (prop.corretor.telefone) brokerPhone = prop.corretor.telefone.replace(/\D/g, "");
+    }
+
+    if (brokerNameEl) brokerNameEl.textContent = brokerNome;
+    if (brokerWaEl) {
+      const msg = encodeURIComponent(`Olá! Gostaria de tirar dúvidas sobre o agendamento de visita do imóvel "${prop?.titulo || "selecionado"}".`);
+      brokerWaEl.href = `https://wa.me/${brokerPhone}?text=${msg}`;
+    }
+
+    // Re-renderiza slots se uma data já estiver selecionada
+    if (typeof selectedDate !== "undefined" && selectedDate) {
+      renderTimeSlots();
+    }
+  }
+
+  // 3. PRÉ-PREENCHIMENTO DE DADOS DO USUÁRIO LOGADO
+  function setupAuthAutoFill() {
+    LivingCanvasAuth.observeAuthState(async (user) => {
+      if (!user) return;
+      
+      const form = document.getElementById("form-agendar");
+      if (!form) return;
+
+      const inputNome = form.querySelector('input[name="nome"]');
+      const inputEmail = form.querySelector('input[name="email"]');
+      const inputTelefone = form.querySelector('input[name="telefone"]');
+
+      if (inputNome && !inputNome.value && user.displayName) {
+        inputNome.value = user.displayName;
+      }
+      if (inputEmail && !inputEmail.value && user.email) {
+        inputEmail.value = user.email;
+      }
+      if (inputTelefone && !inputTelefone.value && user.phoneNumber) {
+        inputTelefone.value = user.phoneNumber;
+      }
+
+      // Tenta obter telefone do perfil Firestore se não tiver no auth object
+      if (inputTelefone && !inputTelefone.value) {
+        try {
+          const profile = await LivingCanvasAuth.getUserProfile(user.uid);
+          if (profile?.telefone) {
+            inputTelefone.value = profile.telefone;
+          }
+        } catch {
+          // Ignora
+        }
+      }
+    });
+  }
+
+  // 4. SUBMISSÃO DE AGENDAMENTO (LOGADO = VISITAS.SOLICITAR + LEAD; ANÔNIMO = LEAD COM CONVITE)
+  function setupFormHandler() {
+    const form = document.getElementById("form-agendar");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector("button[type='submit']") || document.getElementById("bookingSubmit");
+      const originalText = submitBtn ? submitBtn.innerHTML : "Confirmar Agendamento";
+
+      const formData = new FormData(form);
+      const nome = (formData.get("nome") || "").trim();
+      const telefone = (formData.get("telefone") || "").trim();
+      const email = (formData.get("email") || "").trim();
+      const mensagem = (formData.get("mensagem") || "").trim();
+      const imovelId = formData.get("imovelId") || (currentProp ? currentProp.id : "casa-do-bosque");
+      const imovelTitulo = currentProp ? currentProp.titulo : "Imóvel Selecionado";
+      const dataPreferida = formData.get("dataPreferida") || "";
+      const horarioPreferido = formData.get("horarioPreferido") || "";
+      const tipoVisita = formData.get("tipoVisita") || "presencial";
+      const corretorVinculadoId = window._selectedBrokerId || currentProp?.corretorId || null;
+
+      if (!dataPreferida || !horarioPreferido) {
+        showToast("Por favor, selecione uma data e um horário no calendário acima antes de confirmar.", "error");
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = "Processando agendamento...";
+        }
+
+        const currentUser = LivingCanvasAuth.auth?.currentUser;
+        let createdVisitaId = null;
+
+        if (currentUser) {
+          // 4a. USUÁRIO AUTENTICADO: Cria a visita formal no Firestore
+          createdVisitaId = await LivingCanvasData.Visitas.solicitar({
+            imovelId,
+            imovelTitulo,
+            data: dataPreferida,
+            horario: horarioPreferido,
+            tipoVisita,
+            observacao: mensagem,
+            corretorId: corretorVinculadoId
+          });
+
+          // Cria também o lead vinculado com visitaId e usuarioId
+          await saveLead({
+            nome,
+            telefone,
+            email,
+            mensagem: mensagem || `Visita agendada (${tipoVisita}) para ${dataPreferida} às ${horarioPreferido}.`,
+            imovelId,
+            dataPreferida,
+            horarioPreferido,
+            tipoVisita,
+            origem: "agendar",
+            assunto: `Agendamento de Visita - ${imovelTitulo}`,
+            visitaId: createdVisitaId,
+            corretorId: corretorVinculadoId
+          });
+
+          // Apresenta modal de sucesso para usuário logado
+          showSuccessModal({
+            isLogged: true,
+            imovelTitulo,
+            data: dataPreferida,
+            horario: horarioPreferido,
+            tipoVisita,
+            visitaId: createdVisitaId
+          });
+        } else {
+          // 4b. USUÁRIO ANÔNIMO: Cria apenas o lead com origem 'agendar'
+          await saveLead({
+            nome,
+            telefone,
+            email,
+            mensagem: mensagem || `Solicitação de visita (${tipoVisita}) para ${dataPreferida} às ${horarioPreferido}.`,
+            imovelId,
+            dataPreferida,
+            horarioPreferido,
+            tipoVisita,
+            origem: "agendar",
+            assunto: `Solicitação de Visita - ${imovelTitulo}`,
+            corretorId: corretorVinculadoId
+          });
+
+          // Apresenta modal de sucesso com convite para criar conta
+          showSuccessModal({
+            isLogged: false,
+            imovelTitulo,
+            data: dataPreferida,
+            horario: horarioPreferido,
+            tipoVisita
+          });
+        }
+
+        form.reset();
+        if (typeof window.updateSummary === "function") {
+          window.selectedDate = null;
+          window.selectedTime = null;
+          window.updateSummary();
+        }
+      } catch (err) {
+        console.error("Erro ao registrar agendamento:", err);
+        showToast(err.message || "Ocorreu um erro ao processar o agendamento. Tente novamente.", "error");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      }
+    });
+  }
+
+  function showSuccessModal({ isLogged, imovelTitulo, data, horario, tipoVisita, visitaId }) {
+    const modal = document.getElementById("agendarSuccessModal");
+    const titleEl = document.getElementById("modalSuccessTitle");
+    const msgEl = document.getElementById("modalSuccessMessage");
+    const detailsEl = document.getElementById("modalSuccessDetails");
+    const actionsEl = document.getElementById("modalSuccessActions");
+
+    if (!modal) return;
+
+    const names = {
+      presencial: "Presencial no Imóvel",
+      virtual: "Virtual (Videochamada)",
+      tour360: "Tour Guiado 360°"
+    };
+    const tipoLabel = names[tipoVisita] || tipoVisita;
+
+    detailsEl.innerHTML = `
+      <div><strong>Imóvel:</strong> ${escapeHtml(imovelTitulo)}</div>
+      <div><strong>Data & Horário:</strong> ${escapeHtml(data)} às ${escapeHtml(horario)}</div>
+      <div><strong>Modalidade:</strong> ${escapeHtml(tipoLabel)}</div>
+    `;
+
+    if (isLogged) {
+      titleEl.textContent = "Visita Agendada com Sucesso!";
+      msgEl.textContent = "Sua solicitação foi registrada no sistema. Você pode acompanhar confirmações, reagendamentos e detalhes pelo seu painel de cliente:";
+      actionsEl.innerHTML = `
+        <a href="/dashboard.html#visitas" class="booking-submit" style="display:block; text-align:center; text-decoration:none; padding:0.9rem; font-weight:600;">
+          Acompanhar no Meu Painel do Cliente →
+        </a>
+        <button onclick="document.getElementById('agendarSuccessModal').style.display='none'" class="cta-secondary" style="background:transparent; border:1px solid var(--glass-border); color:var(--cream); padding:0.7rem 1.5rem; border-radius:50px; cursor:pointer;">
+          Fechar
+        </button>
+      `;
+    } else {
+      titleEl.textContent = "Solicitação Recebida com Sucesso!";
+      msgEl.textContent = "Nossa equipe já recebeu seus dados de contato. Para acompanhar a confirmação em tempo real e conversar com o corretor responsável, crie sua conta gratuita ou acesse seu painel:";
+      actionsEl.innerHTML = `
+        <a href="/login.html#cadastro" class="booking-submit" style="display:block; text-align:center; text-decoration:none; padding:0.9rem; font-weight:600;">
+          Criar Minha Conta para Acompanhar →
+        </a>
+        <a href="/login.html" style="color:var(--gold); text-decoration:none; font-size:0.85rem; padding:0.4rem;">
+          Já tem conta? Fazer login
+        </a>
+        <button onclick="document.getElementById('agendarSuccessModal').style.display='none'" class="cta-secondary" style="background:transparent; border:1px solid var(--glass-border); color:var(--cream); padding:0.6rem 1.2rem; border-radius:50px; cursor:pointer; font-size:0.85rem;">
+          Concluir e fechar
+        </button>
+      `;
+    }
+
+    modal.style.display = "flex";
+  }
+
+  // Inicializa quando o DOM estiver pronto
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      loadSelectedProperty();
+      setupAuthAutoFill();
+      setupFormHandler();
+    });
+  } else {
+    loadSelectedProperty();
+    setupAuthAutoFill();
+    setupFormHandler();
+  }
+</script>
 <script>
   // MOBILE MENU HAMBURGER
   function toggleMobileMenu() {

@@ -96,6 +96,9 @@ export async function createSavedSearch(data) {
     precoMax: data.precoMax ? Number(data.precoMax) : null,
     quartosMin: data.quartosMin ? Number(data.quartosMin) : null,
     observacoes: (data.observacoes || "").trim(),
+    frequenciaAlerta: ["imediata", "diaria", "semanal", "desativada"].includes(data.frequenciaAlerta) 
+      ? data.frequenciaAlerta 
+      : "imediata",
     ativa: data.ativa !== undefined ? Boolean(data.ativa) : true,
     criadoEm: serverTimestamp(),
     atualizadoEm: serverTimestamp()
@@ -157,6 +160,12 @@ export async function updateSavedSearch(searchId, data) {
 
   if (data.quartosMin !== undefined) {
     updates.quartosMin = data.quartosMin ? Number(data.quartosMin) : null;
+  }
+
+  if (data.frequenciaAlerta !== undefined) {
+    updates.frequenciaAlerta = ["imediata", "diaria", "semanal", "desativada"].includes(data.frequenciaAlerta)
+      ? data.frequenciaAlerta
+      : "imediata";
   }
 
   if (data.observacoes !== undefined) {
@@ -235,13 +244,33 @@ export function formatSearchCriteria(search) {
   return parts;
 }
 
+/**
+ * Constrói a URL para a página de catálogo com os parâmetros da busca desejada
+ * @param {Object} search 
+ * @returns {string} URL relativa
+ */
+export function buildSearchCatalogUrl(search) {
+  if (!search) return 'imoveis.html';
+  const params = new URLSearchParams();
+  if (search.tipo) params.set('tipo', search.tipo);
+  if (search.quartosMin) params.set('quartos', search.quartosMin);
+  if (search.precoMin) params.set('precoMin', search.precoMin);
+  if (search.precoMax) params.set('precoMax', search.precoMax);
+  if (Array.isArray(search.bairros) && search.bairros.length > 0) {
+    params.set('bairros', search.bairros.join(','));
+  }
+  const qs = params.toString();
+  return qs ? `imoveis.html?${qs}` : 'imoveis.html';
+}
+
 const LivingCanvasSavedSearches = {
   getSavedSearches,
   createSavedSearch,
   updateSavedSearch,
   toggleSavedSearchStatus,
   deleteSavedSearch,
-  formatSearchCriteria
+  formatSearchCriteria,
+  buildSearchCatalogUrl
 };
 
 window.LivingCanvasSavedSearches = LivingCanvasSavedSearches;

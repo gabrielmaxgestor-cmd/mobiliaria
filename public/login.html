@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entrar ou Cadastrar — Living Canvas</title>
 <meta name="description" content="Acesse sua conta para salvar imóveis favoritos e acompanhar agendamentos.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/login.html">
+<link rel="canonical" href="https://livingcanvas.com.br/login.html">
 <meta property="og:title" content="Entrar ou Cadastrar — Living Canvas">
 <meta property="og:description" content="Acesse sua conta para salvar imóveis favoritos e acompanhar agendamentos.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/login.html">
+<meta property="og:url" content="https://livingcanvas.com.br/login.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -711,7 +711,7 @@
       <!-- TABS -->
       <div class="auth-tabs">
         <button class="auth-tab active" onclick="switchTab('login', this)">Entrar</button>
-        <button class="auth-tab" onclick="switchTab('register', this)">Criar conta</button>
+        <button class="auth-tab" id="cadastro" onclick="switchTab('register', this)">Criar conta</button>
       </div>
       
       <!-- LOGIN FORM -->
@@ -736,17 +736,6 @@
         <!-- Feedback Message Area -->
         <div id="loginFeedback" style="display: none; padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 1.2rem; font-size: 0.9rem; line-height: 1.4;"></div>
         
-        <!-- Broker Access Quick Fill Card -->
-        <div style="background: rgba(212, 175, 122, 0.08); border: 1px dashed var(--gold); border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;">
-          <div style="font-size: 0.82rem; color: var(--cream); line-height: 1.35;">
-            <strong style="color: var(--gold); display: block; margin-bottom: 0.2rem;">💼 Acesso Rápido — Corretor Gestor</strong>
-            <span style="opacity: 0.9;">gabrielmaxgestor@gmail.com</span>
-          </div>
-          <button type="button" onclick="fillBrokerCredentials()" style="background: var(--gold); color: var(--emerald-deep); border: none; border-radius: 6px; font-weight: 600; font-size: 0.75rem; padding: 0.45rem 0.75rem; cursor: pointer; white-space: nowrap; transition: all 0.2s;">
-            Preencher
-          </button>
-        </div>
-
         <form id="actualLoginForm">
           <div class="form-group">
             <label for="loginEmail">E-mail</label>
@@ -775,7 +764,7 @@
         </form>
         
         <p class="terms-text">
-          Ao entrar, você concorda com nossos <a href="/termos.html" target="_blank">Termos de Uso</a> e <a href="/privacidade.html" target="_blank">Política de Privacidade</a>.
+          Ao entrar, você concorda com nossos <a href="/termos.html" target="_blank" rel="noopener noreferrer">Termos de Uso</a> e <a href="/privacidade.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>.
         </p>
       </div>
       
@@ -837,7 +826,7 @@
           <div class="form-options">
             <label class="checkbox-wrapper">
               <input type="checkbox" required checked>
-              <span>Concordo com os <a href="/termos.html" target="_blank" style="color: var(--gold); text-decoration: none;">Termos</a> e <a href="/privacidade.html" target="_blank" style="color: var(--gold); text-decoration: none;">Privacidade</a></span>
+              <span>Concordo com os <a href="/termos.html" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: none;">Termos</a> e <a href="/privacidade.html" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: none;">Privacidade</a></span>
             </label>
           </div>
           
@@ -868,7 +857,7 @@
 <!-- FLOATING CTA -->
 <div class="floating-cta">
   <div class="cta-tooltip">Precisa de ajuda?</div>
-  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">💬</a>
 </div>
 
 <script>
@@ -886,11 +875,16 @@
   function switchTab(tab, btn) {
     // Update active tab
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
+    if (btn) btn.classList.add('active');
     
     // Show/hide forms
     document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-    document.getElementById(tab + 'Form').classList.add('active');
+    document.getElementById(tab + 'Form')?.classList.add('active');
+  }
+
+  if (window.location.hash === '#cadastro' || window.location.hash === '#register') {
+    const regBtn = document.getElementById('cadastro');
+    if (regBtn) switchTab('register', regBtn);
   }
   
   // TOGGLE PASSWORD VISIBILITY
@@ -948,17 +942,6 @@
     strengthText.style.color = levels[strength].color;
   }
   
-  // FILL BROKER CREDENTIALS
-  window.fillBrokerCredentials = function() {
-    const emailInput = document.getElementById('loginEmail');
-    const passInput = document.getElementById('loginPassword');
-    if (emailInput && passInput) {
-      emailInput.value = 'gabrielmaxgestor@gmail.com';
-      passInput.value = '12345678';
-      emailInput.focus();
-    }
-  };
-
   // FORGOT PASSWORD
   function showForgotPassword(event) {
     event.preventDefault();
@@ -1026,13 +1009,29 @@
       submitBtn.innerHTML = 'Entrando...';
 
       try {
-        await LivingCanvasAuth.login(email, password);
+        const { user } = await LivingCanvasAuth.login(email, password);
         showMessage('loginFeedback', 'Login realizado com sucesso! Redirecionando...', false);
         
+        const role = await LivingCanvasAuth.getRole(user);
+        const defaultRoute = LivingCanvasAuth.routeForRole(role);
+
         const params = new URLSearchParams(window.location.search);
-        const redirect = params.get('redirect') || 'dashboard.html';
+        const rawRedirect = params.get('redirect');
+        
+        let targetRoute = defaultRoute;
+        if (rawRedirect) {
+          const sanitized = LivingCanvasAuth.safeRedirect(rawRedirect, defaultRoute);
+          if (role === 'cliente' && sanitized.includes('painel-corretor.html')) {
+            targetRoute = defaultRoute;
+          } else if (role === 'corretor' && sanitized === 'dashboard.html') {
+            targetRoute = defaultRoute;
+          } else {
+            targetRoute = sanitized;
+          }
+        }
+
         setTimeout(() => {
-          window.location.href = redirect;
+          window.location.href = targetRoute;
         }, 600);
       } catch (err) {
         showMessage('loginFeedback', err.message || 'Erro ao entrar. Verifique os dados.');
@@ -1064,9 +1063,11 @@
         showMessage('registerFeedback', 'Conta criada com sucesso! Bem-vindo ao Living Canvas.', false);
         
         const params = new URLSearchParams(window.location.search);
-        const redirect = params.get('redirect') || 'dashboard.html';
+        const rawRedirect = params.get('redirect');
+        const targetRoute = LivingCanvasAuth.safeRedirect(rawRedirect, 'dashboard.html');
+
         setTimeout(() => {
-          window.location.href = redirect;
+          window.location.href = targetRoute;
         }, 800);
       } catch (err) {
         showMessage('registerFeedback', err.message || 'Erro ao criar conta.');

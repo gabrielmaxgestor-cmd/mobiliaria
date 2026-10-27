@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <link rel="canonical" href="https://livingcanvas.com.br/painel-corretor.html">
+<meta charset="UTF-8">
+<script src="/config.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Corretor — Living Canvas</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/panel-shell.css">
+<link rel="stylesheet" href="/microinteractions.css">
+<link rel="stylesheet" href="/enhance.css">
+<style>
+  body { padding-top: 0 !important; }
+  .lead-kanban-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  .lead-column {
+    background: rgba(10, 46, 42, 0.55);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+  }
+  .lead-column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .lead-column-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lead-column-count {
+    background: var(--glass-bg);
+    padding: 0.15rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .lead-card-item {
+    background: var(--glass-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.85rem;
+    transition: all 0.2s ease;
+  }
+  .lead-card-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body data-panel-title="Painel do Corretor">
+
+<div class="panel-layout">
+  
+  <!-- SIDEBAR DO CORRETOR -->
+  <aside class="panel-sidebar" id="sidebar">
+    <a href="home.html" class="panel-brand">
+      <span class="panel-brand-title">LIVING<em style="color:var(--cream);font-style:italic;">canvas</em></span>
+      <span class="panel-brand-badge" style="background:rgba(212,175,122,0.25); color:var(--gold); border-color:var(--gold);">Corretor</span>
+    </a>
+    
+    <nav class="panel-nav">
+      <div class="panel-nav-group-title">Operação</div>
+      <a href="#visao-geral" class="panel-nav-item active" id="nav-visao-geral">
+        <span class="panel-nav-icon">📊</span>
+        <span>Visão Geral</span>
+      </a>
+      <a href="#leads" class="panel-nav-item" id="nav-leads">
+        <span class="panel-nav-icon">💼</span>
+        <span>Leads & CRM</span>
+        <span class="panel-nav-badge" id="corretorNavLeadsBadge" style="display: none;">0</span>
+      </a>
+      <a href="#meus-imoveis" class="panel-nav-item" id="nav-meus-imoveis">
+        <span class="panel-nav-icon">🏡</span>
+        <span>Meus Imóveis</span>
+        <span class="panel-nav-badge" id="corretorNavImoveisBadge" style="display: none;">0</span>
+      </a>
+      <a href="#visitas" class="panel-nav-item" id="nav-visitas">
+        <span class="panel-nav-icon">📅</span>
+        <span>Visitas Agendadas</span>
+        <span class="panel-nav-badge" id="corretorNavVisitasBadge" style="display: none;">0</span>
+      </a>
+      <a href="#propostas" class="panel-nav-item" id="nav-propostas">
+        <span class="panel-nav-icon">📝</span>
+        <span>Propostas</span>
+        <span class="panel-nav-badge" id="corretorNavPropostasBadge" style="display: none;">0</span>
+      </a>
+
+      <div class="panel-nav-group-title">Relacionamento</div>
+      <a href="#mensagens" class="panel-nav-item" id="nav-mensagens">
+        <span class="panel-nav-icon">💬</span>
+        <span>Mensagens</span>
+        <span class="panel-nav-badge danger" id="corretorNavMensagensBadge" style="display: none;">0</span>
+      </a>
+      <a href="#documentos" class="panel-nav-item" id="nav-documentos">
+        <span class="panel-nav-icon">📁</span>
+        <span>Documentos</span>
+      </a>
+      <a href="#clientes" class="panel-nav-item" id="nav-clientes">
+        <span class="panel-nav-icon">👥</span>
+        <span>Clientes</span>
+      </a>
+
+      <div class="panel-nav-group-title">Gestão</div>
+      <a href="#desempenho" class="panel-nav-item" id="nav-desempenho">
+        <span class="panel-nav-icon">📈</span>
+        <span>Desempenho</span>
+      </a>
+      <a href="#perfil" class="panel-nav-item" id="nav-perfil">
+        <span class="panel-nav-icon">⚙️</span>
+        <span>Perfil & Horários</span>
+      </a>
+      <a href="corretor.html" class="panel-nav-item" id="nav-perfil-publico-link" target="_blank" rel="noopener noreferrer" style="margin-top:0.5rem; opacity:0.85;">
+        <span class="panel-nav-icon">👤</span>
+        <span>Ver Perfil Público ↗</span>
+      </a>
+    </nav>
+    
+    <div class="panel-sidebar-footer">
+      <button class="panel-btn-logout" id="corretorLogoutBtn">
+        <span>🚪</span>
+        <span>Sair do Painel</span>
+      </button>
+    </div>
+  </aside>
+  
+  <!-- CONTEÚDO PRINCIPAL DO CORRETOR -->
+  <main class="panel-main">
+    
+    <!-- TOPBAR -->
+    <header class="panel-topbar">
+      <div class="panel-topbar-left">
+        <button class="panel-toggle-btn" id="panelToggleBtn" aria-label="Abrir menu">☰</button>
+        <div class="panel-welcome">
+          <h1>Painel de Gestão & Captação</h1>
+          <p>Bem-vindo(a), <span id="corretorTopName" style="color:var(--gold); font-weight:600;">Corretor(a)</span>. Gerencie oportunidades em tempo real.</p>
+        </div>
+      </div>
+      
+      <div class="panel-topbar-actions">
+        <a href="#leads" class="panel-btn panel-btn-primary panel-btn-sm">+ Ver Leads</a>
+        <div class="panel-user-chip">
+          <div class="panel-user-avatar" id="corretorAvatar">CR</div>
+          <div class="panel-user-meta">
+            <span class="panel-user-name" id="corretorUserName">Corretor</span>
+            <span class="panel-user-role" style="color:var(--gold);">Credenciado</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================================
+         VIEW: VISÃO GERAL (#visao-geral)
+         ======================================================== -->
+    <section id="view-visao-geral" data-view-section="visao-geral">
+      <div class="panel-skeleton" style="height: 140px; margin-bottom: 2rem;"></div>
+      <div class="panel-skeleton" style="height: 280px; margin-bottom: 2rem;"></div>
+    </section>
+
+    <!-- ========================================================
+         VIEW: LEADS (#leads)
+         ======================================================== -->
+    <section id="view-leads" data-view-section="leads" style="display:none;">
+      <div class="panel-skeleton" style="height: 400px;"></div>
+    </section>
+
+    <!-- ========================================================
+         VIEW: MEUS IMÓVEIS (#meus-imoveis / #imoveis)
+         ======================================================== -->
+    <section id="view-meus-imoveis" data-view-section="meus-imoveis" style="display:none;">
+      <div class="panel-skeleton" style="height: 380px;"></div>
+    </section>
+
+    <!-- ========================================================
+         VIEW: VISITAS (#visitas / #agenda)
+         ======================================================== -->
+    <section id="view-visitas" data-view-section="visitas" style="display:none;"></section>
+
+    <!-- ========================================================
+         VIEW: PROPOSTAS (#propostas)
+         ======================================================== -->
+    <section id="view-propostas" data-view-section="propostas" style="display:none;"></section>
+
+    <!-- ========================================================
+         VIEW: MENSAGENS (#mensagens)
+         ======================================================== -->
+    <section id="view-mensagens" data-view-section="mensagens" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <div>
+            <h3 class="panel-card-title">💬 Chat & Mensagens</h3>
+            <p class="panel-card-subtitle">Conversas diretas em tempo real com compradores e locatários</p>
+          </div>
+        </div>
+        <div id="corretorMensagensContainer">
+          <div class="panel-empty-state">
+            <div class="panel-empty-icon">💬</div>
+            <h4 class="panel-empty-title">Central de Mensagens</h4>
+            <p class="panel-empty-desc">O canal aberto pelos clientes será conectado diretamente ao seu painel.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW: DOCUMENTOS (#documentos)
+         ======================================================== -->
+    <section id="view-documentos" data-view-section="documentos" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <div>
+            <h3 class="panel-card-title">📁 Gestão Documental</h3>
+            <p class="panel-card-subtitle">Validação, aprovação e solicitação de documentos aos clientes</p>
+          </div>
+        </div>
+        <div class="panel-empty-state">
+          <div class="panel-empty-icon">📁</div>
+          <h4 class="panel-empty-title">Repositório de Documentos</h4>
+          <p class="panel-empty-desc">Documentos anexados pelos clientes para diligência e contratos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW: CLIENTES (#clientes)
+         ======================================================== -->
+    <section id="view-clientes" data-view-section="clientes" style="display:none;">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <div>
+            <h3 class="panel-card-title">👥 Carteira de Clientes</h3>
+            <p class="panel-card-subtitle">Base de contatos, histórico de interações e perfil de interesse</p>
+          </div>
+        </div>
+        <div class="panel-empty-state">
+          <div class="panel-empty-icon">👥</div>
+          <h4 class="panel-empty-title">Carteira Integrada</h4>
+          <p class="panel-empty-desc">Visualização unificada de todos os clientes atendidos pelo corretor.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         VIEW: DESEMPENHO & RELATÓRIOS (#desempenho / #relatorios)
+         ======================================================== -->
+    <section id="view-desempenho" data-view-section="desempenho" style="display:none;"></section>
+    <section id="view-relatorios" data-view-section="relatorios" style="display:none;"></section>
+
+    <!-- ========================================================
+         VIEW: PERFIL & CONFIGURAÇÕES (#perfil / #configuracoes)
+         ======================================================== -->
+    <section id="view-perfil" data-view-section="perfil" style="display:none;"></section>
+    <section id="view-configuracoes" data-view-section="configuracoes" style="display:none;"></section>
+
+  </main>
+</div>
+
+<script type="module">
+  import LivingCanvasAuth from '/auth.js';
+  import LivingCanvasData from '/lc-data.js';
+  import { 
+    registerView, 
+    initPanelShell, 
+    escapeHtml, 
+    formatMoeda, 
+    formatData, 
+    showToast 
+  } from '/panel-shell.js';
+
+  let currentCorretor = null;
+  let allLeads = [];
+
+  // =========================================================================
+  // GUARDA DE AUTENTICAÇÃO E PAPEL (CORRETOR)
+  // =========================================================================
+  async function initCorretorAuth() {
+    try {
+      // Exige papel 'corretor'. Se for 'cliente', redireciona para o painel do cliente.
+      const session = await LivingCanvasAuth.requireRole(['corretor'], {
+        redirectToLogin: 'login.html?redirect=painel-corretor.html',
+        redirectToUnauthorized: 'dashboard.html'
+      });
+
+      if (!session || !session.user) return;
+      currentCorretor = session.user;
+      const profile = session.profile || {};
+
+      const fullName = profile.nome || currentCorretor.displayName || currentCorretor.email?.split('@')[0] || 'Corretor';
+      const firstName = fullName.split(' ')[0];
+
+      const topName = document.getElementById('corretorTopName');
+      if (topName) topName.textContent = firstName;
+
+      const userName = document.getElementById('corretorUserName');
+      if (userName) userName.textContent = fullName;
+
+      const cfgNome = document.getElementById('cfgCorretorNome');
+      if (cfgNome) cfgNome.value = fullName;
+
+      const cfgEmail = document.getElementById('cfgCorretorEmail');
+      if (cfgEmail) cfgEmail.value = currentCorretor.email || '';
+
+      const avatar = document.getElementById('corretorAvatar');
+      if (avatar) {
+        if (profile.fotoURL) {
+          avatar.innerHTML = `<img src="${escapeHtml(profile.fotoURL)}" alt="" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+        } else {
+          avatar.textContent = fullName.split(' ').filter(Boolean).slice(0, 2).map(n => n[0].toUpperCase()).join('') || 'CR';
+        }
+      }
+
+      // Atualiza link direto para o perfil público do corretor logado
+      const publicLink = document.getElementById('nav-perfil-publico-link');
+      if (publicLink && currentCorretor?.uid) {
+        publicLink.href = `corretor.html?id=${currentCorretor.uid}`;
+      }
+
+      // Inicia roteador por hash (todas as views gerenciadas pelos módulos modulares)
+      initPanelShell({ defaultView: 'visao-geral', user: currentCorretor });
+    } catch (err) {
+      console.error('Falha na autenticação do corretor:', err);
+    }
+  }
+
+  // Logout
+  const logoutBtn = document.getElementById('corretorLogoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await LivingCanvasAuth.logout();
+      window.location.href = 'login.html';
+    });
+  }
+
+  // Inicializa
+  initCorretorAuth();
+</script>
+
+<!-- Módulos do Painel do Corretor -->
+<script type="module" src="/painel-corretor-leads.js"></script>
+<script type="module" src="/painel-corretor-imoveis.js"></script>
+<script type="module" src="/painel-corretor-agenda.js"></script>
+<script type="module" src="/painel-corretor-propostas.js"></script>
+<script type="module" src="/painel-corretor-desempenho.js"></script>
+<script type="module" src="/painel-corretor-perfil.js"></script>
+<script type="module">
+  import { initClientesView } from '/painel-corretor-clientes.js';
+  import { initMensagensView } from '/painel-corretor-mensagens.js';
+  import { initDocumentosView } from '/painel-corretor-documentos.js';
+
+  initClientesView();
+  initMensagensView();
+  initDocumentosView();
+</script>
+<script src="/enhance.js" defer></script>
+</body>
+</html>

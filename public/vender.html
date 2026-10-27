@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quero Vender — Living Canvas</title>
 <meta name="description" content="Anuncie seu imóvel com quem entende de alto padrão. Avaliação profissional e marketing dedicado.">
-<link rel="canonical" href="https://faithful-property-showcase.lovable.app/vender.html">
+<link rel="canonical" href="https://livingcanvas.com.br/vender.html">
 <meta property="og:title" content="Quero Vender — Living Canvas">
 <meta property="og:description" content="Anuncie seu imóvel com quem entende de alto padrão. Avaliação profissional e marketing dedicado.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://faithful-property-showcase.lovable.app/vender.html">
+<meta property="og:url" content="https://livingcanvas.com.br/vender.html">
 <meta property="og:site_name" content="Living Canvas">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
@@ -1155,7 +1155,17 @@
   <!-- EVALUATION FORM -->
   <div class="evaluation-form" id="avaliacao">
     <h2 class="form-title">Solicite sua <em>avaliação</em></h2>
-    <p class="form-subtitle">Descubra o valor real do seu imóvel com nossa análise gratuita.</p>
+    <div id="venderSuccessFeedback" style="display:none; background:rgba(19,78,74,0.4); border:1px solid var(--gold, #d4af7a); border-radius:12px; padding:1.2rem; margin-bottom:1.5rem; color:var(--cream, #f5f1e8);">
+      <div style="display:flex; align-items:center; gap:0.6rem; font-weight:600; color:var(--gold, #d4af7a); margin-bottom:0.4rem;">
+        <span>✨</span> Solicitação de avaliação enviada com sucesso!
+      </div>
+      <p style="font-size:0.9rem; color:var(--text-light, rgba(245,241,232,0.9)); margin-bottom:0.8rem;">Em até 48 horas nossa equipe de especialistas apresentará o estudo completo do seu imóvel.</p>
+      <div id="venderPainelLink" style="display:none;">
+        <a href="/dashboard.html" style="display:inline-flex; align-items:center; gap:0.4rem; color:var(--gold, #d4af7a); text-decoration:underline; font-weight:600; font-size:0.9rem;">
+          Acompanhar no meu painel →
+        </a>
+      </div>
+    </div>
     
     <form id="form-vender">
       <div class="form-group">
@@ -1599,7 +1609,7 @@
 <!-- FLOATING CTA -->
 <div class="floating-cta">
   <div class="cta-tooltip">Fale com um especialista</div>
-  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank">💬</a>
+  <a href="https://wa.me/5511999999999" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">💬</a>
 </div>
 
 <script>
@@ -1635,6 +1645,38 @@
 
 <script src="/enhance.js" defer></script>
 <script type="module" src="/leads.js"></script>
+<script type="module">
+  import LivingCanvasAuth from "/auth.js";
+
+  // Pré-preenchimento para usuário logado
+  LivingCanvasAuth.observeAuthState((user) => {
+    if (!user) return;
+    const form = document.getElementById("form-vender");
+    if (!form) return;
+    const inputNome = form.querySelector('input[name="nome"]');
+    const inputTel = form.querySelector('input[name="telefone"]');
+    const inputEmail = form.querySelector('input[name="email"]');
+    if (inputNome && !inputNome.value && user.displayName) inputNome.value = user.displayName;
+    if (inputEmail && !inputEmail.value && user.email) inputEmail.value = user.email;
+    if (inputTel && !inputTel.value && user.phoneNumber) inputTel.value = user.phoneNumber;
+  });
+
+  // Exibição do link para o painel se logado
+  const formVender = document.getElementById("form-vender");
+  if (formVender) {
+    formVender.addEventListener("submit", () => {
+      setTimeout(() => {
+        const user = LivingCanvasAuth.auth?.currentUser;
+        const box = document.getElementById("venderSuccessFeedback");
+        const link = document.getElementById("venderPainelLink");
+        if (box) {
+          box.style.display = "block";
+          if (link && user) link.style.display = "block";
+        }
+      }, 600);
+    });
+  }
+</script>
 <script>
   // MOBILE MENU HAMBURGER
   function toggleMobileMenu() {

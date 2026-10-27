@@ -1,21 +1,60 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    
-    // Imóveis: fotos e plantas baixas
-    // Estrutura:
-    // - /imoveis/{imovelId}/fotos/{arquivo}
-    // - /imoveis/{imovelId}/planta/{arquivo}
+
+    // =========================================================================
+    // 1. IMÓVEIS (Fotos de fachada, interiores e plantas baixas)
+    // =========================================================================
     match /imoveis/{imovelId}/{folder}/{fileName} {
-      // Leitura pública de fotos e plantas
+      // Leitura pública para exibição no catálogo da imobiliária
       allow read: if true;
-      
-      // Escrita restrita a usuários autenticados (corretores)
-      // Validação de tipo de arquivo (apenas imagens e pdfs) e tamanho máximo (até 15MB)
+
+      // Escrita restrita a corretores autenticados (verificado por custom claim no token)
       allow write: if request.auth != null
+                   && request.auth.token.role == 'corretor'
                    && (folder == 'fotos' || folder == 'planta')
                    && request.resource.size < 15 * 1024 * 1024
                    && (request.resource.contentType.matches('image/.*') || request.resource.contentType == 'application/pdf');
+    }
+
+    // =========================================================================
+    // 2. DOCUMENTOS (Certidões, comprovantes e contratos vinculados a processos)
+    // =========================================================================
+    match /documentos/{usuarioId}/{processo}/{fileName} {
+      // Leitura pelo titular do documento ou por qualquer corretor
+      allow read: if request.auth != null
+                  && (request.auth.uid == usuarioId || request.auth.token.role == 'corretor');
+
+      // Upload exclusivo pelo titular do documento
+      allow write: if request.auth != null
+                   && request.auth.uid == usuarioId
+                   && request.resource.size < 15 * 1024 * 1024
+                   && (request.resource.contentType.matches('image/.*') || request.resource.contentType == 'application/pdf');
+    }
+
+    // =========================================================================
+    // 3. AVATARES (Fotos de perfil dos usuários e corretores)
+    // =========================================================================
+    match /avatares/{uid}/{fileName} {
+      // Leitura pública das fotos de perfil
+      allow read: if true;
+
+      // Upload exclusivo pelo próprio usuário proprietário da conta
+      allow write: if request.auth != null
+                   && request.auth.uid == uid
+                   && request.resource.size < 3 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    match /corretores/{uid}/{fileName} {
+      // Leitura pública das fotos de perfil de corretores
+      allow read: if true;
+
+      // Upload exclusivo pelo próprio corretor autenticado
+      allow write: if request.auth != null
+                   && request.auth.uid == uid
+                   && request.resource.size < 3 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
     }
   }
 }

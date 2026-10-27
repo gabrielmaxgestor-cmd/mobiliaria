@@ -1,0 +1,14 @@
+# Living Canvas — Cloudflare Pages Redirects & Routing
+
+# Rotas principais
+/ /home.html 302
+/abertura /home.html 301
+/home /home.html 301
+/imoveis /imoveis.html 301
+/bairros /bairros.html 301
+/contato /contato.html 301
+/sobre /sobre.html 301
+/dashboard /dashboard.html 301
+
+# Tratamento e fallback para páginas não encontradas (404)
+/* /404.html 404

@@ -2,7 +2,7 @@
   "entities": {
     "usuarios": {
       "title": "Usuários",
-      "description": "Perfis de usuários cadastrados no Living Canvas",
+      "description": "Perfis de usuários cadastrados no Living Canvas (clientes e corretores)",
       "type": "object",
       "properties": {
         "uid": {
@@ -19,12 +19,24 @@
         },
         "role": {
           "type": "string",
-          "enum": ["cliente", "corretor", "admin"],
-          "description": "Papel do usuário no sistema (cliente por padrão)"
+          "enum": ["cliente", "corretor"],
+          "description": "Papel do usuário no sistema"
         },
         "telefone": {
           "type": "string",
           "description": "Telefone / WhatsApp de contato"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "description": "URL da foto de perfil no Storage"
+        },
+        "preferenciasNotif": {
+          "type": "object",
+          "description": "Preferências de recebimento de notificações"
+        },
+        "compartilharPreferencias": {
+          "type": "boolean",
+          "description": "Consentimento para corretores lerem favoritos e buscas desejadas"
         },
         "criadoEm": {
           "type": "string",
@@ -33,6 +45,72 @@
         }
       },
       "required": ["uid", "nome", "email", "role", "criadoEm"]
+    },
+    "notasCorretor": {
+      "title": "Notas de Corretor sobre Usuário",
+      "description": "Anotações internas confidenciais da equipe de corretores sobre o cliente",
+      "type": "object",
+      "properties": {
+        "autorId": {
+          "type": "string",
+          "description": "UID do corretor autor da anotação"
+        },
+        "autorNome": {
+          "type": "string",
+          "description": "Nome do corretor autor"
+        },
+        "conteudo": {
+          "type": "string",
+          "description": "Texto da anotação interna"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de registro da anotação"
+        }
+      },
+      "required": ["autorId", "conteudo", "criadoEm"]
+    },
+    "corretoresPublicos": {
+      "title": "Corretores Públicos",
+      "description": "Perfis públicos dos corretores exibidos para visitantes do site",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "UID do corretor no Firebase Auth"
+        },
+        "nome": {
+          "type": "string",
+          "description": "Nome profissional do corretor"
+        },
+        "creci": {
+          "type": "string",
+          "description": "Número do registro CRECI com UF"
+        },
+        "telefone": {
+          "type": "string",
+          "description": "Telefone de contato do corretor"
+        },
+        "fotoUrl": {
+          "type": "string",
+          "description": "URL da foto pública no Storage"
+        },
+        "biografia": {
+          "type": "string",
+          "description": "Apresentação e especialidades do corretor"
+        },
+        "visivel": {
+          "type": "boolean",
+          "description": "Indica se o corretor está ativo no catálogo público"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de homologação do corretor"
+        }
+      },
+      "required": ["nome", "creci", "visivel"]
     },
     "imoveis": {
       "title": "Imóveis",
@@ -58,43 +136,24 @@
         },
         "status": {
           "type": "string",
-          "enum": ["disponivel", "reservado", "vendido"],
+          "enum": ["disponivel", "reservado", "vendido", "alugado", "arquivado"],
           "description": "Status de disponibilidade do imóvel"
         },
         "endereco": {
           "type": "object",
-          "description": "Localização do imóvel",
-          "properties": {
-            "bairro": { "type": "string" },
-            "cidade": { "type": "string" },
-            "estado": { "type": "string" },
-            "cep": { "type": "string" },
-            "rua": { "type": "string" }
-          },
-          "required": ["bairro", "cidade", "estado", "cep"]
+          "description": "Localização do imóvel"
         },
         "caracteristicas": {
           "type": "object",
-          "description": "Atributos físicos do imóvel",
-          "properties": {
-            "areaM2": { "type": "number" },
-            "quartos": { "type": "number" },
-            "banheiros": { "type": "number" },
-            "vagas": { "type": "number" },
-            "suites": { "type": "number" }
-          },
-          "required": ["areaM2", "quartos", "banheiros", "vagas"]
+          "description": "Atributos físicos do imóvel"
         },
         "imagens": {
           "type": "array",
-          "description": "Lista de URLs das imagens do imóvel no Firebase Storage",
-          "items": {
-            "type": "string"
-          }
+          "description": "Lista de URLs das imagens do imóvel no Storage"
         },
         "plantaBaixaUrl": {
           "type": "string",
-          "description": "URL da imagem ou PDF da planta baixa no Storage (ou null)"
+          "description": "URL da planta baixa no Storage"
         },
         "corretorId": {
           "type": "string",
@@ -103,27 +162,495 @@
         "criadoEm": {
           "type": "string",
           "format": "date-time",
-          "description": "Data e hora de cadastro do imóvel"
+          "description": "Data de cadastro do imóvel"
         },
         "atualizadoEm": {
           "type": "string",
           "format": "date-time",
-          "description": "Data e hora da última atualização do imóvel"
+          "description": "Data da última alteração"
         }
       },
-      "required": [
-        "titulo",
-        "descricao",
-        "tipo",
-        "preco",
-        "status",
-        "endereco",
-        "caracteristicas",
-        "imagens",
-        "corretorId",
-        "criadoEm",
-        "atualizadoEm"
-      ]
+      "required": ["titulo", "tipo", "preco", "status", "corretorId", "criadoEm", "atualizadoEm"]
+    },
+    "leads": {
+      "title": "Leads",
+      "description": "Captação de leads e solicitações para o CRM da imobiliária",
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "description": "Nome completo do interessado"
+        },
+        "email": {
+          "type": "string",
+          "description": "E-mail de contato"
+        },
+        "telefone": {
+          "type": "string",
+          "description": "Telefone ou WhatsApp"
+        },
+        "origem": {
+          "type": "string",
+          "enum": ["contato", "vender", "agendar"],
+          "description": "Origem do lead"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["novo", "em_atendimento", "concluido", "descartado"],
+          "description": "Status do lead no CRM"
+        },
+        "etapa": {
+          "type": "string",
+          "description": "Etapa no funil de vendas (ex: novo, qualificado, visita, proposta)"
+        },
+        "prioridade": {
+          "type": "string",
+          "description": "Prioridade de atendimento (baixa, media, alta)"
+        },
+        "proximoContato": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data agendada para retorno"
+        },
+        "corretorId": {
+          "type": "string",
+          "description": "UID do corretor atribuído ao lead"
+        },
+        "motivoPerda": {
+          "type": "string",
+          "description": "Justificativa em caso de descarte do lead"
+        },
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do usuário logado se houver"
+        },
+        "imovelId": {
+          "type": "string",
+          "description": "ID do imóvel de interesse"
+        },
+        "visitaId": {
+          "type": "string",
+          "description": "ID da visita associada se houver"
+        },
+        "assunto": {
+          "type": "string",
+          "description": "Assunto do contato"
+        },
+        "mensagem": {
+          "type": "string",
+          "description": "Mensagem detalhada do interessado"
+        },
+        "dataPreferida": {
+          "type": "string",
+          "description": "Data preferida para visita"
+        },
+        "horarioPreferido": {
+          "type": "string",
+          "description": "Horário preferido para visita"
+        },
+        "tipoVisita": {
+          "type": "string",
+          "description": "Tipo de visita (presencial ou remota)"
+        },
+        "tipoImovel": {
+          "type": "string",
+          "description": "Tipo de imóvel a vender/avaliar"
+        },
+        "enderecoImovel": {
+          "type": "string",
+          "description": "Endereço do imóvel a vender/avaliar"
+        },
+        "valorEstimado": {
+          "type": "number",
+          "description": "Valor estimado pretendido"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de recebimento do lead"
+        },
+        "atualizadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data da última atualização"
+        }
+      },
+      "required": ["nome", "email", "telefone", "origem", "status", "criadoEm"]
+    },
+    "notasLead": {
+      "title": "Notas de Lead",
+      "description": "Histórico de acompanhamento e anotações do corretor sobre o lead",
+      "type": "object",
+      "properties": {
+        "autorId": {
+          "type": "string",
+          "description": "UID do corretor autor"
+        },
+        "autorNome": {
+          "type": "string",
+          "description": "Nome do corretor autor"
+        },
+        "texto": {
+          "type": "string",
+          "description": "Conteúdo da nota de acompanhamento"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de registro da nota"
+        }
+      },
+      "required": ["autorId", "texto", "criadoEm"]
+    },
+    "visitas": {
+      "title": "Visitas",
+      "description": "Agendamentos de visitas a imóveis do catálogo",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do cliente solicitante"
+        },
+        "imovelId": {
+          "type": "string",
+          "description": "ID do imóvel a ser visitado"
+        },
+        "corretorId": {
+          "type": "string",
+          "description": "UID do corretor responsável pelo atendimento"
+        },
+        "data": {
+          "type": "string",
+          "description": "Data marcada para a visita (YYYY-MM-DD)"
+        },
+        "horario": {
+          "type": "string",
+          "description": "Horário marcado (HH:mm)"
+        },
+        "tipoVisita": {
+          "type": "string",
+          "description": "Modalidade da visita (presencial, tour_virtual)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pendente", "confirmada", "reagendada", "realizada", "cancelada"],
+          "description": "Status do agendamento"
+        },
+        "motivoCancelamento": {
+          "type": "string",
+          "description": "Motivo do cancelamento quando aplicável"
+        },
+        "avaliacao": {
+          "type": "number",
+          "description": "Nota de avaliação dada pelo cliente após a visita (1 a 5)"
+        },
+        "comentarioAvaliacao": {
+          "type": "string",
+          "description": "Feedback descritivo do cliente sobre a visita"
+        },
+        "avaliadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de envio da avaliação"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de criação do agendamento"
+        },
+        "atualizadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data da última atualização"
+        }
+      },
+      "required": ["usuarioId", "imovelId", "status", "criadoEm"]
+    },
+    "propostas": {
+      "title": "Propostas",
+      "description": "Propostas e negociações de valores e condições de compra/locação",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do cliente proponente"
+        },
+        "imovelId": {
+          "type": "string",
+          "description": "ID do imóvel alvo da proposta"
+        },
+        "corretorId": {
+          "type": "string",
+          "description": "UID do corretor mediador"
+        },
+        "valor": {
+          "type": "number",
+          "description": "Valor original da proposta em reais"
+        },
+        "valorAtual": {
+          "type": "number",
+          "description": "Valor atualizado na rodada de negociação"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["enviada", "em_analise", "contraproposta", "aceita", "recusada", "cancelada"],
+          "description": "Status atual da proposta"
+        },
+        "condicoesPagamento": {
+          "type": "string",
+          "description": "Condições e forma de pagamento sugeridas"
+        },
+        "rodadas": {
+          "type": "number",
+          "description": "Número de rodadas de contraproposta"
+        },
+        "motivo": {
+          "type": "string",
+          "description": "Justificativa da resposta ou recusa"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de envio da proposta"
+        },
+        "atualizadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data da última atualização"
+        }
+      },
+      "required": ["usuarioId", "imovelId", "valor", "status", "criadoEm"]
+    },
+    "conversas": {
+      "title": "Conversas",
+      "description": "Canais de conversação direta entre clientes e corretores",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do cliente participante"
+        },
+        "corretorId": {
+          "type": "string",
+          "description": "UID do corretor responsável"
+        },
+        "imovelId": {
+          "type": "string",
+          "description": "ID do imóvel de contexto (opcional)"
+        },
+        "ultimaMensagem": {
+          "type": "string",
+          "description": "Prévia do último texto enviado"
+        },
+        "ultimaAtividade": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora da mensagem mais recente"
+        },
+        "naoLidasCliente": {
+          "type": "number",
+          "description": "Quantidade de mensagens não lidas pelo cliente"
+        },
+        "naoLidasCorretor": {
+          "type": "number",
+          "description": "Quantidade de mensagens não lidas pelo corretor"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de abertura do canal"
+        }
+      },
+      "required": ["usuarioId", "ultimaAtividade", "criadoEm"]
+    },
+    "mensagens": {
+      "title": "Mensagens",
+      "description": "Mensagens individuais enviadas no canal de conversa",
+      "type": "object",
+      "properties": {
+        "autorId": {
+          "type": "string",
+          "description": "UID do remetente da mensagem"
+        },
+        "texto": {
+          "type": "string",
+          "description": "Conteúdo textual da mensagem"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora de envio"
+        },
+        "lidaEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora de leitura pelo destinatário"
+        }
+      },
+      "required": ["autorId", "texto", "criadoEm"]
+    },
+    "documentos": {
+      "title": "Documentos",
+      "description": "Arquivos, certidões e comprovantes enviados para validação de processos imobiliários",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do cliente titular"
+        },
+        "processo": {
+          "type": "string",
+          "description": "Identificador do processo (compra, locacao, financiamento)"
+        },
+        "tipo": {
+          "type": "string",
+          "description": "Tipo do documento (rg_cnh, comprovante_renda, certidao_casamento, etc.)"
+        },
+        "nome": {
+          "type": "string",
+          "description": "Nome de exibição do documento"
+        },
+        "storagePath": {
+          "type": "string",
+          "description": "Caminho do arquivo no Storage"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pendente", "enviado", "em_analise", "aprovado", "reprovado"],
+          "description": "Status de homologação do documento"
+        },
+        "motivoReprovacao": {
+          "type": "string",
+          "description": "Justificativa informada pelo corretor caso seja reprovado"
+        },
+        "solicitadoPor": {
+          "type": "string",
+          "description": "UID do corretor que solicitou o documento"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de criação/envio"
+        },
+        "revisadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de análise pelo corretor"
+        },
+        "atualizadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data da última alteração"
+        }
+      },
+      "required": ["usuarioId", "status", "criadoEm"]
+    },
+    "atividades": {
+      "title": "Atividades",
+      "description": "Trilha de auditoria e linha do tempo de eventos do cliente e corretor",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do cliente relacionado"
+        },
+        "corretorId": {
+          "type": "string",
+          "description": "UID do corretor executor se aplicável"
+        },
+        "tipo": {
+          "type": "string",
+          "description": "Categoria do evento (visita_agendada, proposta_enviada, doc_aprovado, etc.)"
+        },
+        "descricao": {
+          "type": "string",
+          "description": "Descrição amigável do evento"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Metadados adicionais específicos do evento"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data e hora do registro"
+        }
+      },
+      "required": ["usuarioId", "tipo", "descricao", "criadoEm"]
+    },
+    "simulacoes": {
+      "title": "Simulações Financeiras",
+      "description": "Cálculos e simulações de financiamento imobiliário salvos pelo cliente",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do cliente"
+        },
+        "imovelId": {
+          "type": "string",
+          "description": "ID do imóvel simulado (opcional)"
+        },
+        "valorImovel": {
+          "type": "number",
+          "description": "Valor total do imóvel simulado"
+        },
+        "entrada": {
+          "type": "number",
+          "description": "Valor de entrada disponibilizado"
+        },
+        "prazoMeses": {
+          "type": "number",
+          "description": "Prazo de amortização em meses"
+        },
+        "taxaJurosAnual": {
+          "type": "number",
+          "description": "Taxa de juros anual simulada em percentual"
+        },
+        "parcelaMensal": {
+          "type": "number",
+          "description": "Valor da primeira parcela calculada"
+        },
+        "sistemaAmortizacao": {
+          "type": "string",
+          "description": "Tabela SAC ou PRICE"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data da realização da simulação"
+        }
+      },
+      "required": ["usuarioId", "valorImovel", "entrada", "prazoMeses", "parcelaMensal", "criadoEm"]
+    },
+    "solicitacoesLgpd": {
+      "title": "Solicitações LGPD",
+      "description": "Pedidos de exportação ou exclusão de dados nos termos da LGPD",
+      "type": "object",
+      "properties": {
+        "usuarioId": {
+          "type": "string",
+          "description": "UID do titular requisitante"
+        },
+        "tipo": {
+          "type": "string",
+          "description": "Tipo de solicitação (exportacao_dados, anonimizacao, revogacao_consentimento)"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status do atendimento (pendente, atendido, recusado)"
+        },
+        "justificativa": {
+          "type": "string",
+          "description": "Comentários do solicitante ou justificativa de recusa"
+        },
+        "criadoEm": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Data de abertura da requisição"
+        }
+      },
+      "required": ["usuarioId", "tipo", "criadoEm"]
     },
     "favoritos": {
       "title": "Favoritos",
@@ -157,38 +684,35 @@
         },
         "nome": {
           "type": "string",
-          "description": "Nome ou rótulo de identificação da busca desejada (ex: Apê pra minha mãe)"
+          "description": "Nome ou rótulo de identificação da busca desejada"
         },
         "tipo": {
           "type": "string",
-          "description": "Tipo de imóvel desejado (apartamento, casa, cobertura, studio, comercial ou vazio para qualquer)"
+          "description": "Tipo de imóvel desejado"
         },
         "bairros": {
           "type": "array",
-          "description": "Lista de bairros de interesse",
-          "items": {
-            "type": "string"
-          }
+          "description": "Lista de bairros de interesse"
         },
         "precoMin": {
           "type": "number",
-          "description": "Preço mínimo desejado em reais (opcional)"
+          "description": "Preço mínimo desejado em reais"
         },
         "precoMax": {
           "type": "number",
-          "description": "Preço máximo desejado em reais (opcional)"
+          "description": "Preço máximo desejado em reais"
         },
         "quartosMin": {
           "type": "number",
-          "description": "Número mínimo de quartos desejados (opcional)"
+          "description": "Número mínimo de quartos desejados"
         },
         "observacoes": {
           "type": "string",
-          "description": "Notas e preferências livres adicionais do cliente (opcional)"
+          "description": "Notas e preferências adicionais"
         },
         "ativa": {
           "type": "boolean",
-          "description": "Indica se a busca desejada está ativa para notificações e acompanhamento"
+          "description": "Indica se a busca desejada está ativa"
         },
         "criadoEm": {
           "type": "string",
@@ -222,7 +746,7 @@
         },
         "lida": {
           "type": "boolean",
-          "description": "Status de leitura da notificação pelo cliente (false por padrão)"
+          "description": "Status de leitura da notificação pelo cliente"
         },
         "criadoEm": {
           "type": "string",
@@ -231,103 +755,76 @@
         }
       },
       "required": ["usuarioId", "imovelId", "buscaId", "lida", "criadoEm"]
-    },
-    "leads": {
-      "title": "Leads",
-      "description": "Captação de leads e solicitações vindas de formulários de contato, venda de imóvel e agendamento de visitas",
-      "type": "object",
-      "properties": {
-        "nome": {
-          "type": "string",
-          "description": "Nome completo do interessado"
-        },
-        "email": {
-          "type": "string",
-          "description": "E-mail de contato do interessado"
-        },
-        "telefone": {
-          "type": "string",
-          "description": "Telefone ou WhatsApp do interessado"
-        },
-        "origem": {
-          "type": "string",
-          "enum": ["contato", "vender", "agendar"],
-          "description": "Origem do formulário preenchido"
-        },
-        "assunto": {
-          "type": "string",
-          "description": "Assunto ou objetivo do contato"
-        },
-        "mensagem": {
-          "type": "string",
-          "description": "Mensagem ou observação deixada pelo interessado"
-        },
-        "status": {
-          "type": "string",
-          "enum": ["novo", "em_atendimento", "concluido", "descartado"],
-          "description": "Status do lead no CRM"
-        },
-        "imovelId": {
-          "type": "string",
-          "description": "ID do imóvel associado (quando originado de agendamento ou interesse específico)"
-        },
-        "dataPreferida": {
-          "type": "string",
-          "description": "Data preferida para visita (quando agendamento)"
-        },
-        "horarioPreferido": {
-          "type": "string",
-          "description": "Horário preferido para visita (quando agendamento)"
-        },
-        "tipoVisita": {
-          "type": "string",
-          "description": "Tipo de visita (presencial, virtual, tour 360)"
-        },
-        "tipoImovel": {
-          "type": "string",
-          "description": "Tipo do imóvel a ser vendido ou avaliado"
-        },
-        "enderecoImovel": {
-          "type": "string",
-          "description": "Bairro ou endereço do imóvel a ser vendido"
-        },
-        "valorEstimado": {
-          "type": "number",
-          "description": "Valor estimado pretendido para o imóvel"
-        },
-        "criadoEm": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Data e hora em que o lead foi gerado"
-        }
-      },
-      "required": ["nome", "email", "telefone", "origem", "status", "criadoEm"]
     }
   },
   "firestore": {
     "/usuarios/{userId}": {
       "schema": "usuarios",
-      "description": "Documentos de perfil dos usuários"
+      "description": "Perfis dos usuários cadastrados"
+    },
+    "/usuarios/{userId}/notasCorretor/{notaId}": {
+      "schema": "notasCorretor",
+      "description": "Anotações confidenciais dos corretores sobre o cliente"
+    },
+    "/corretoresPublicos/{uid}": {
+      "schema": "corretoresPublicos",
+      "description": "Perfis públicos dos corretores"
     },
     "/imoveis/{imovelId}": {
       "schema": "imoveis",
-      "description": "Coleção do catálogo de imóveis disponíveis no Living Canvas"
-    },
-    "/favoritos/{favoritoId}": {
-      "schema": "favoritos",
-      "description": "Coleção de favoritos privados dos usuários"
-    },
-    "/buscasDesejadas/{buscaId}": {
-      "schema": "buscasDesejadas",
-      "description": "Coleção de buscas desejadas cadastradas privativamente pelos clientes"
-    },
-    "/notificacoes/{notificacaoId}": {
-      "schema": "notificacoes",
-      "description": "Coleção de notificações de match de imóveis para clientes"
+      "description": "Catálogo de imóveis da imobiliária"
     },
     "/leads/{leadId}": {
       "schema": "leads",
-      "description": "Coleção de captação de leads para corretores"
+      "description": "Leads captados para o CRM"
+    },
+    "/leads/{leadId}/notas/{notaId}": {
+      "schema": "notasLead",
+      "description": "Anotações de acompanhamento do corretor sobre o lead"
+    },
+    "/visitas/{visitaId}": {
+      "schema": "visitas",
+      "description": "Agendamentos de visitas aos imóveis"
+    },
+    "/propostas/{propostaId}": {
+      "schema": "propostas",
+      "description": "Propostas e negociações de compra e locação"
+    },
+    "/conversas/{conversaId}": {
+      "schema": "conversas",
+      "description": "Canais de conversas diretas entre clientes e corretores"
+    },
+    "/conversas/{conversaId}/mensagens/{mensagemId}": {
+      "schema": "mensagens",
+      "description": "Mensagens trocadas no canal de conversa"
+    },
+    "/documentos/{documentoId}": {
+      "schema": "documentos",
+      "description": "Documentos e comprovantes para processos imobiliários"
+    },
+    "/atividades/{atividadeId}": {
+      "schema": "atividades",
+      "description": "Trilha de eventos e histórico de atividades"
+    },
+    "/simulacoes/{simulacaoId}": {
+      "schema": "simulacoes",
+      "description": "Simulações financeiras privadas"
+    },
+    "/solicitacoesLgpd/{solicitacaoId}": {
+      "schema": "solicitacoesLgpd",
+      "description": "Solicitações de direitos LGPD"
+    },
+    "/favoritos/{favoritoId}": {
+      "schema": "favoritos",
+      "description": "Imóveis favoritados pelos clientes"
+    },
+    "/buscasDesejadas/{buscaId}": {
+      "schema": "buscasDesejadas",
+      "description": "Buscas desejadas configuradas pelos clientes"
+    },
+    "/notificacoes/{notificacaoId}": {
+      "schema": "notificacoes",
+      "description": "Notificações de imóveis compatíveis"
     }
   }
 }

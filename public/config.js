@@ -22,8 +22,23 @@ window.SITE_CONFIG = {
     facebook: "https://facebook.com/livingcanvas"
   },
   creci: "CRECI-SP 12345-J",
+  siteUrl: "https://livingcanvas.com.br",
   primaryColor: "#0a0a0a",
-  accentColor: "#c9a961"
+  accentColor: "#c9a961",
+
+  // Google Analytics 4 (GA4) — Opcional por cliente / imobiliária
+  gaTrackingId: "",    // ID de rastreamento do GA4 (ex.: "G-XXXXXXXXXX", deixe vazio se não utilizar)
+  gaMeasurementId: "", // Alias mantido para retrocompatibilidade
+  analyticsPrivacy: {
+    enabled: true,                   // Se falso, desativa a injeção do script do Google
+    respectDoNotTrack: true,         // Respeita a preferência Do Not Track (DNT) do navegador do visitante
+    restrictedDataProcessing: true,  // Sinaliza processamento restrito de dados (LGPD / CCPA)
+    allowGoogleSignals: false,        // Desativa coleta para Google Signals / audiências de anúncios
+    allowAdPersonalization: false,    // Desativa personalização de publicidade
+    anonymizeIp: true,               // Anonimização de IP ativada nativamente
+    defaultConsent: "denied",        // Consent Mode v2: inicia negado até interação do usuário
+    showConsentBanner: true          // Exibe aviso e controle de consentimento de métricas/LGPD
+  }
 };
 
 (function () {
@@ -120,7 +135,26 @@ window.SITE_CONFIG = {
     });
   }
 
+  // Carregamento dinâmico do módulo de Analytics e Privacidade
+  function loadAnalyticsModule() {
+    const trackingId = cfg.gaTrackingId || cfg.gaMeasurementId;
+    if (!trackingId || (cfg.analyticsPrivacy && cfg.analyticsPrivacy.enabled === false)) return;
+
+    if (!document.querySelector('script[src*="analytics.js"]')) {
+      const s = document.createElement("script");
+      s.src = "/analytics.js";
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+  }
+
   window.applySiteConfig = applyConfig;
+
+  try {
+    loadAnalyticsModule();
+  } catch (err) {
+    console.warn("Aviso ao carregar módulo de analytics:", err);
+  }
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", applyConfig);

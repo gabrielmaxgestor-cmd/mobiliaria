@@ -1,116 +1,23 @@
 /**
  * Living Canvas - Lead Capture & Management Service
- * Integração direta com Firestore e Cache Local para captação e gestão de leads:
+ * Integração direta com Firestore via LivingCanvasAuth e LivingCanvasData:
  * - contato.html (origem: 'contato')
  * - vender.html (origem: 'vender')
  * - agendar.html (origem: 'agendar')
- * - dashboard.html (painel de gestão do corretor)
+ * - dashboard.html / painel-corretor.html (gestão de leads)
  */
 
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
 import { 
-  getFirestore, 
   collection, 
   addDoc, 
-  getDocs,
-  query,
-  orderBy,
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import LivingCanvasAuth from "./auth.js";
+import LivingCanvasData from "./lc-data.js";
 
-// Configuração padrão do Firebase
-const firebaseConfig = {
-  projectId: "climbing-starlight-m8gvj",
-  appId: "1:371500905682:web:c04d452d25ac0343a9290b",
-  apiKey: "AIzaSyBAUZyQSC8Bf3GswNTS-DArmLsrdNC-pW4",
-  authDomain: "climbing-starlight-m8gvj.firebaseapp.com",
-  firestoreDatabaseId: "ai-studio-imobiliariabase-9b8dd04f-184a-4ea2-acf4-aadee30e202e",
-  storageBucket: "climbing-starlight-m8gvj.firebasestorage.app",
-  messagingSenderId: "371500905682",
-  oAuthClientId: "371500905682-36c10kb8uhkojpcicu0pnr1ib12jq0e0.apps.googleusercontent.com"
-};
-
-// Inicialização do Firebase App e Firestore
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-let db;
-try {
-  if (firebaseConfig.firestoreDatabaseId && firebaseConfig.firestoreDatabaseId !== "(default)") {
-    db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
-  } else {
-    db = getFirestore(app);
-  }
-} catch (e) {
-  console.warn("Inicializando Firestore de leads no modo padrão:", e);
-  db = getFirestore(app);
-}
-
+const db = LivingCanvasAuth.db;
+const auth = LivingCanvasAuth.auth;
 const LEADS_COLLECTION = "leads";
-const LEADS_STORAGE_KEY = "lc_leads_store";
-
-// Leads iniciais para demonstração do painel de corretor
-const INITIAL_DEMO_LEADS = [
-  {
-    id: "lead_demo_1",
-    nome: "Mariana Vasconcelos",
-    email: "mariana.vasconcelos@email.com",
-    telefone: "(11) 98765-4321",
-    origem: "agendar",
-    assunto: "Agendamento de Visita - Casa do Bosque",
-    mensagem: "Gostaria de agendar visita presencial para conhecer a Casa do Bosque e detalhes da arquitetura.",
-    dataPreferida: "Amanhã",
-    horarioPreferido: "15:00",
-    tipoVisita: "presencial",
-    status: "novo",
-    criadoEm: new Date(Date.now() - 3600000 * 3).toISOString()
-  },
-  {
-    id: "lead_demo_2",
-    nome: "Carlos Eduardo Prado",
-    email: "carlos.prado@email.com",
-    telefone: "(11) 97654-3210",
-    origem: "vender",
-    assunto: "Avaliação de Imóvel para Venda",
-    mensagem: "Solicitação de avaliação para apartamento de 280m² no Jardim Europa. Imóvel reformado com 3 suítes.",
-    tipoImovel: "Apartamento",
-    enderecoImovel: "Jardim Europa, São Paulo",
-    status: "em_atendimento",
-    criadoEm: new Date(Date.now() - 3600000 * 18).toISOString()
-  },
-  {
-    id: "lead_demo_3",
-    nome: "Renata Albuquerque",
-    email: "renata.albuquerque@email.com",
-    telefone: "(24) 99123-4567",
-    origem: "contato",
-    assunto: "Interesse em Imóvel de Alto Padrão em Valença",
-    mensagem: "Olá Gabriel, procuro uma residência espaçosa com vista para área verde em Valença para mudança com a família.",
-    status: "novo",
-    criadoEm: new Date(Date.now() - 3600000 * 28).toISOString()
-  }
-];
-
-function getStoredLeads() {
-  try {
-    const raw = localStorage.getItem(LEADS_STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
-      }
-    }
-  } catch (e) {
-    console.warn("Aviso ao ler leads do storage:", e);
-  }
-  return [...INITIAL_DEMO_LEADS];
-}
-
-function saveStoredLeads(leads) {
-  try {
-    localStorage.setItem(LEADS_STORAGE_KEY, JSON.stringify(leads));
-  } catch (e) {
-    console.warn("Aviso ao salvar leads no storage:", e);
-  }
-}
 
 /**
  * Exibe notificação visual estilo toast personalizada para o tema Living Canvas
@@ -164,7 +71,7 @@ export function showToast(message, type = "success") {
   iconSpan.textContent = icon;
 
   const msgDiv = document.createElement("div");
-  msgDiv.textContent = message;
+  msgDiv.innerHTML = message; // Permite links formatados de retorno
 
   toast.appendChild(iconSpan);
   toast.appendChild(msgDiv);
@@ -175,13 +82,14 @@ export function showToast(message, type = "success") {
     toast.style.opacity = "1";
   });
 
+  const duration = message.includes("<a") ? 8000 : 5000;
   setTimeout(() => {
     toast.style.opacity = "0";
     toast.style.transform = "translateY(10px)";
     setTimeout(() => {
       toast.remove();
     }, 400);
-  }, 5000);
+  }, duration);
 }
 
 /**
@@ -192,7 +100,7 @@ function isValidEmail(email) {
 }
 
 /**
- * Salva um novo lead na coleção 'leads' no Firestore e no cache local
+ * Salva um novo lead na coleção 'leads' no Firestore com validação estrita das regras
  */
 export async function saveLead(data) {
   // Validações obrigatórias client-side
@@ -214,78 +122,82 @@ export async function saveLead(data) {
     throw new Error("Origem de formulário inválida.");
   }
 
-  // Montagem do payload sem campos undefined
+  // Montagem estrita do payload conforme firestore.rules
   const payload = {
     nome,
     email,
     telefone,
     origem,
     status: "novo",
+    etapa: "novo",
     criadoEm: serverTimestamp()
   };
 
-  if (data.assunto) payload.assunto = String(data.assunto).trim();
-  if (data.mensagem) payload.mensagem = String(data.mensagem).trim();
-  if (data.tipoImovel) payload.tipoImovel = String(data.tipoImovel).trim();
-  if (data.enderecoImovel) payload.enderecoImovel = String(data.enderecoImovel).trim();
+  // Se o usuário estiver autenticado, vincula usuarioId de forma estrita
+  const currentUser = auth?.currentUser;
+  if (currentUser && currentUser.uid) {
+    payload.usuarioId = currentUser.uid;
+  }
+
+  // Chaves opcionais autorizadas pelas regras
+  if (data.corretorId && typeof data.corretorId === "string" && data.corretorId.trim()) {
+    payload.corretorId = data.corretorId.trim();
+  }
+  if (data.imovelId && typeof data.imovelId === "string" && data.imovelId.trim()) {
+    payload.imovelId = data.imovelId.trim();
+  }
+  if (data.visitaId && typeof data.visitaId === "string" && data.visitaId.trim()) {
+    payload.visitaId = data.visitaId.trim();
+  }
+  if (data.assunto && typeof data.assunto === "string" && data.assunto.trim()) {
+    payload.assunto = data.assunto.trim();
+  }
+  if (data.mensagem && typeof data.mensagem === "string" && data.mensagem.trim()) {
+    payload.mensagem = data.mensagem.trim();
+  }
+  if (data.dataPreferida && typeof data.dataPreferida === "string" && data.dataPreferida.trim()) {
+    payload.dataPreferida = data.dataPreferida.trim();
+  }
+  if (data.horarioPreferido && typeof data.horarioPreferido === "string" && data.horarioPreferido.trim()) {
+    payload.horarioPreferido = data.horarioPreferido.trim();
+  }
+  if (data.tipoVisita && typeof data.tipoVisita === "string" && data.tipoVisita.trim()) {
+    payload.tipoVisita = data.tipoVisita.trim();
+  }
+  if (data.tipoImovel && typeof data.tipoImovel === "string" && data.tipoImovel.trim()) {
+    payload.tipoImovel = data.tipoImovel.trim();
+  }
+  if (data.enderecoImovel && typeof data.enderecoImovel === "string" && data.enderecoImovel.trim()) {
+    payload.enderecoImovel = data.enderecoImovel.trim();
+  }
   if (data.valorEstimado != null && !isNaN(Number(data.valorEstimado))) {
     payload.valorEstimado = Number(data.valorEstimado);
   }
-  if (data.imovelId) payload.imovelId = String(data.imovelId).trim();
-  if (data.dataPreferida) payload.dataPreferida = String(data.dataPreferida).trim();
-  if (data.horarioPreferido) payload.horarioPreferido = String(data.horarioPreferido).trim();
-  if (data.tipoVisita) payload.tipoVisita = String(data.tipoVisita).trim();
-
-  let docId = "lead_" + Date.now();
 
   try {
     const docRef = await addDoc(collection(db, LEADS_COLLECTION), payload);
-    docId = docRef.id;
+    return {
+      id: docRef.id,
+      ...payload
+    };
   } catch (err) {
-    console.warn("Salvando lead em modo resiliente local:", err);
+    console.error("Erro ao salvar lead no Firestore:", err);
+    throw new Error(err.message || "Erro ao conectar com o servidor para registrar o lead. Tente novamente.");
   }
-
-  const stored = getStoredLeads();
-  const newLeadObj = {
-    id: docId,
-    ...payload,
-    criadoEm: new Date().toISOString()
-  };
-  stored.unshift(newLeadObj);
-  saveStoredLeads(stored);
-
-  return newLeadObj;
 }
 
 /**
- * Retorna todos os leads para visualização pelo corretor
+ * Retorna todos os leads (delega para LivingCanvasData.Leads)
  */
-export async function getLeads() {
-  try {
-    const q = query(collection(db, LEADS_COLLECTION), orderBy("criadoEm", "desc"));
-    const snap = await getDocs(q);
-    if (!snap.empty) {
-      const fsLeads = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      return fsLeads;
-    }
-  } catch (e) {
-    // Retorna os dados resilientes de cache
-  }
-
-  return getStoredLeads();
+export async function getLeads(filtros = {}) {
+  return LivingCanvasData.Leads.listar(filtros);
 }
 
 /**
- * Atualiza o status do lead (novo, em_atendimento, concluido)
+ * Atualiza o status do lead (delega para LivingCanvasData.Leads)
  */
 export async function updateLeadStatus(leadId, newStatus) {
-  const leads = getStoredLeads();
-  const idx = leads.findIndex(l => l.id === leadId);
-  if (idx !== -1) {
-    leads[idx].status = newStatus;
-    saveStoredLeads(leads);
-  }
-  return true;
+  return LivingCanvasData.Leads.atualizar(leadId, { status: newStatus });
 }
 
 /**
@@ -294,7 +206,8 @@ export async function updateLeadStatus(leadId, newStatus) {
 export function initLeadForms() {
   // 1. FORMULÁRIO DE CONTATO (contato.html)
   const formContato = document.getElementById("form-contato");
-  if (formContato) {
+  if (formContato && !formContato.dataset.bound) {
+    formContato.dataset.bound = "true";
     formContato.addEventListener("submit", async (e) => {
       e.preventDefault();
       const submitBtn = formContato.querySelector("button[type='submit']");
@@ -322,7 +235,12 @@ export function initLeadForms() {
           mensagem
         });
 
-        showToast("Sua mensagem foi enviada com sucesso! Nossa equipe entrará em contato em breve.", "success");
+        const isUserLoggedIn = Boolean(auth?.currentUser);
+        const feedbackHtml = isUserLoggedIn
+          ? `Mensagem enviada com sucesso! <a href="/dashboard.html" style="color: var(--gold, #d4af7a); text-decoration: underline; margin-left: 0.5rem; font-weight: 600;">Acompanhar no meu painel →</a>`
+          : "Sua mensagem foi enviada com sucesso! Nossa equipe entrará em contato em breve.";
+
+        showToast(feedbackHtml, "success");
         formContato.reset();
 
         if (submitBtn) {
@@ -345,7 +263,8 @@ export function initLeadForms() {
 
   // 2. FORMULÁRIO DE VENDER/AVALIAÇÃO (vender.html)
   const formVender = document.getElementById("form-vender");
-  if (formVender) {
+  if (formVender && !formVender.dataset.bound) {
+    formVender.dataset.bound = "true";
     formVender.addEventListener("submit", async (e) => {
       e.preventDefault();
       const submitBtn = formVender.querySelector("button[type='submit']");
@@ -372,10 +291,15 @@ export function initLeadForms() {
           enderecoImovel,
           origem: "vender",
           assunto: "Avaliação de Imóvel para Venda",
-          mensagem: `Solicitação de avaliação gratuita para imóvel do tipo '${tipoImovel}' localizado no bairro/endereço '${enderecoImovel}'.`
+          mensagem: `Solicitação de avaliação gratuita para imóvel do tipo '${tipoImovel}' localizado em '${enderecoImovel}'.`
         });
 
-        showToast("Solicitação de avaliação recebida com sucesso! Em até 48h você receberá nosso estudo completo.", "success");
+        const isUserLoggedIn = Boolean(auth?.currentUser);
+        const feedbackHtml = isUserLoggedIn
+          ? `Solicitação recebida com sucesso! <a href="/dashboard.html" style="color: var(--gold, #d4af7a); text-decoration: underline; margin-left: 0.5rem; font-weight: 600;">Acompanhar no meu painel →</a>`
+          : "Solicitação de avaliação recebida com sucesso! Em até 48h você receberá nosso estudo completo.";
+
+        showToast(feedbackHtml, "success");
         formVender.reset();
 
         if (submitBtn) {
@@ -397,9 +321,14 @@ export function initLeadForms() {
   }
 
   // 3. FORMULÁRIO DE AGENDAMENTO (agendar.html)
+  // agendar.html tem seu fluxo especializado acoplado à criação de visitas e leads
   const formAgendar = document.getElementById("form-agendar");
-  if (formAgendar) {
+  if (formAgendar && !formAgendar.dataset.bound && !window._agendarCustomHandlerAttached) {
+    formAgendar.dataset.bound = "true";
     formAgendar.addEventListener("submit", async (e) => {
+      // Se agendar.html definiu seu próprio handler especializado, não duplica
+      if (window._agendarHandlesSubmitInternally) return;
+
       e.preventDefault();
       const submitBtn = formAgendar.querySelector("button[type='submit']") || document.getElementById("bookingSubmit");
       const originalText = submitBtn ? submitBtn.innerHTML : "Confirmar Agendamento";
@@ -416,12 +345,12 @@ export function initLeadForms() {
         const tipoVisita = formData.get("tipoVisita") || "presencial";
 
         if (!dataPreferida || !horarioPreferido) {
-          throw new Error("Por favor, selecione uma data e um horário no calendário acima antes de confirmar.");
+          throw new Error("Por favor, selecione uma data e um horário no calendário antes de confirmar.");
         }
 
         if (submitBtn) {
           submitBtn.disabled = true;
-          submitBtn.innerHTML = "Confirmando visita...";
+          submitBtn.innerHTML = "Confirmando agendamento...";
         }
 
         await saveLead({
@@ -437,10 +366,9 @@ export function initLeadForms() {
           assunto: "Agendamento de Visita"
         });
 
-        showToast("Agendamento confirmado com sucesso! Enviamos os detalhes para o seu e-mail e WhatsApp.", "success");
+        showToast("Agendamento confirmado com sucesso! Entraremos em contato com você.", "success");
         formAgendar.reset();
 
-        // Reset dos seletores do calendário se existirem
         if (typeof window.updateSummary === "function") {
           window.selectedDate = null;
           window.selectedTime = null;
